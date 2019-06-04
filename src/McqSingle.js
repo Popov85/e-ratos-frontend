@@ -46,6 +46,7 @@ export default class McqSingle extends Question {
                         this.props.answers.map(a => {
                             return (<AnswerMcqSingle
                                 key={a.answerId}
+                                questionId = {this.state.questionId}
                                 answerId={a.answerId}
                                 answer={a.answer}
                                 resource={a.resourceDomain}

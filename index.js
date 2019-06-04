@@ -42,6 +42,6 @@ let search = window.location.search;
 let params = new URLSearchParams(search);
 let schemeId = params.get('schemeId');
 
-ReactDOM.render(<Start schemeId={schemeId}/>, document.getElementById('app'));
-//ReactDOM.render(<Batch schemeId={10} scheme="Test scheme name" mode = {testMode}/>, document.getElementById('app'));
+//ReactDOM.render(<Start schemeId={schemeId}/>, document.getElementById('app'));
+ReactDOM.render(<Batch schemeId={10} scheme="Test scheme name" mode = {testMode}/>, document.getElementById('app'));
 //ReactDOM.render(<Finish result={testResult}/>, document.getElementById('app'));

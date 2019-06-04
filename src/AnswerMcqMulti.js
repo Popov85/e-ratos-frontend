@@ -43,13 +43,14 @@ export default class AnswerMcqMulti extends React.Component {
 
   render() {
     return (
-      <div>
-        <div className = {this.getClassName()} onClick = {this.updateChecked}>
-          <input type="checkbox" name="option" onChange={this.updateChecked} checked={this.state.checked} value={this.props.answerId}/>
-          <span className="ml-1">{this.props.answer}</span>
+        <div className={this.getClassName()} onClick={this.updateChecked}>
+          <input type="checkbox" name="option" onChange={this.updateChecked} checked={this.state.checked} value={this.props.answerId} />
+          {
+            this.props.resource ?
+              <Resource resource={this.props.resource.link} title={this.props.answer} /> :
+              <span className="ml-1">{this.props.answer}</span>
+          }
         </div>
-        <Resource resource={this.props.resource} title={this.props.answer} />
-      </div>
     );
   }
 };
