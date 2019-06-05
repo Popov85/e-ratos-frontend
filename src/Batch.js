@@ -385,8 +385,6 @@ const realBatch = {
 }
 
 
-//const baseUrl = window.location.hostname;
-//const baseUrl = "http://localhost:8090/";
 const baseUrl = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
 
 const startUrl = baseUrl + "/student/session/start";
@@ -421,7 +419,6 @@ export default class Batch extends React.Component {
             responses: new Map()
         }
 
-        //this.setBatch = this.setBatch.bind(this);
         this.setTestBatch = this.setTestBatch.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.putResponse = this.putResponse.bind(this);

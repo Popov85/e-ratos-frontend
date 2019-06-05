@@ -8,6 +8,9 @@ const propTypes = {
     putResponse: PropTypes.func
 };
 
+const normal = "bg-info border border-dark";
+const selected = "bg-secondary border border-dark";
+
 export default class McqSingle extends Question {
     constructor(props) {
         super(props);
@@ -33,31 +36,24 @@ export default class McqSingle extends Question {
     }
 
     render() {
-        const normal = "bg-info border border-dark";
-        const selected = "bg-secondary border border-dark";
         return (
             <div className = "border">
-                <Question
-                    question={this.props.question}
-                    theme={this.props.theme}
-                    mode={this.props.mode}/>
-                <div>
+                <Question question={this.props.question} theme={this.props.theme} mode={this.props.mode}/>
                     {
                         this.props.answers.map(a => {
                             return (
-                            <div key={a.answerId} onClick={() => this.changeResponse(a.answerId)}>
+                            <div key={a.answerId} className = {(a.answerId === this.state.answerIds[0]) ? normal : selected} onClick={() => this.changeResponse(a.answerId)}>
                                 <AnswerMcqSingle
                                 questionId = {this.state.questionId}
                                 answerId={a.answerId}
                                 answer={a.answer}
                                 resource={a.resourceDomain}
-                                highlighting = {(a.answerId === this.state.answerIds[0]) ? normal : selected}
-                                changeResponse={this.changeResponse}/>
+                                changeResponse={this.changeResponse}
+                                isChecked = {a.answerId === this.state.answerIds[0]}
+                                />
                             </div>);
                         })
                     }
-                </div>
-
             </div>
         );
     }

@@ -31,8 +31,6 @@ const testModeDomain = {
     starrable: false
 }
 
-//const baseUrl = window.location.hostname;
-//const baseUrl = "http://localhost:8090/";
 const baseUrl = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
 
 export default class Start extends React.Component {
