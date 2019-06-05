@@ -44,14 +44,16 @@ export default class McqSingle extends Question {
                 <div>
                     {
                         this.props.answers.map(a => {
-                            return (<AnswerMcqSingle
-                                key={a.answerId}
+                            return (
+                            <div key={a.answerId} onClick={() => this.changeResponse(a.answerId)}>
+                                <AnswerMcqSingle
                                 questionId = {this.state.questionId}
                                 answerId={a.answerId}
                                 answer={a.answer}
                                 resource={a.resourceDomain}
                                 highlighting = {(a.answerId === this.state.answerIds[0]) ? normal : selected}
-                                changeResponse={this.changeResponse} />);
+                                changeResponse={this.changeResponse}/>
+                            </div>);
                         })
                     }
                 </div>
