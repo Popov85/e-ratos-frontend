@@ -40,18 +40,17 @@ export default class McqMulti extends Question {
 
     render() {
         return (
-            <div className = "border">
-                  <Question
-                    question={this.props.question}
-                    theme={this.props.theme}
-                    mode={this.props.mode}/>
+            <div className = "border-0">
+                  <Question question={this.props.question} theme={this.props.theme} mode={this.props.mode}/>
                 <div>
                     {
-                        this.props.answers.map(a => {
+                        this.props.answers.map((a,idx) => {
                             return (<AnswerMcqMulti
                                 key={a.answerId}
                                 answerId={a.answerId}
                                 answer={a.answer}
+                                length = {this.props.answers.length}
+                                index = {idx}
                                 resource={a.resourceDomain}
                                 addResponse={this.addResponse}
                                 removeResponse={this.removeResponse} />);

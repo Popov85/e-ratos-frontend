@@ -4,7 +4,7 @@ import Logo from './Logo';
 import Batch from './Batch';
 import Spinner from './Spinner';
 import Error from './Error';
-import styles from '../main.css';
+import '../main.css';
 
 const propTypes = {
     schemeId: PropTypes.number.isRequired
@@ -225,7 +225,7 @@ export default class Start extends React.Component {
 
     render() {
         return (
-            <div className="container-fluid">
+            <div className="container-fluid bg-ratos">
                 {
                     this.state.isStarted ? <Batch schemeId={this.props.schemeId} scheme={this.state.scheme} mode={this.state.mode}/> : this.renderLayout()
                 }

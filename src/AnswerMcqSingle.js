@@ -24,21 +24,22 @@ export default class AnswerMcqSingle extends React.Component {
     if (this.props.resource) {
       return <Resource resource={this.props.resource.link} title={this.props.answer} />
     } else {
-      return <span className="ml-1">{this.props.answer}</span>
+      return <span>{this.props.answer}</span>
     }
   }
-
 
   render() {
     return (
       <div>
         <input type="radio"
+          className = "ml-1"
           name={"option" + this.props.questionId}
           value={this.props.answerId}
           onChange={this.updateChecked}
-          checked={this.props.isChecked} /> {this.renderOption()}
+          checked={this.props.isChecked}/> {this.renderOption()}
       </div>
     );
   }
 };
+
 AnswerMcqSingle.propTypes = propTypes;

@@ -1,4 +1,16 @@
-img {
-    width:100%;
-    height:100%;
+
+.bg-ratos {
+  background-color: lightyellow;
+}
+
+.bg-normal {
+    background-color: lightcyan;
+  }
+
+  .bg-selected {
+    background-color: khaki;
+  }
+
+  .border-regular {
+    border-color: lightgray;
   }
