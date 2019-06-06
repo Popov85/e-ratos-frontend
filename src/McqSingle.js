@@ -34,10 +34,6 @@ export default class McqSingle extends Question {
         this.setState({answerIds: newAnswerIds});
     }
 
-    computeClass(index, answerId) {
-        return (answerId === this.state.answerIds[0]) ? selected : normal
-    }
-
     render() {
         
         return (

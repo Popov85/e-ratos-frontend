@@ -102,9 +102,11 @@ export default class Question extends React.Component {
 
         return (
             <div>
-                <div className="row">
+                <div className="row text-center">
                     <div className="col-12">
-                        <p className="font-weight-bold text-center" title={this.renderTitle()}>{this.props.question.question}</p>
+                        <textarea className="border-0 font-weight-bold text-center w-100 mb-2" rows="2" title={this.renderTitle()} readonly="true">
+                            {this.props.question.question}
+                        </textarea>
                     </div>
                 </div>
 

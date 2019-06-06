@@ -22,7 +22,7 @@ const testBatch = {
         {
             className: "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
             questionId: 1,
-            question: 'Question #1',
+            question: 'Question #1 Question #1 Question #1 Question #1 Question #1 Question #1 Question #1 Question #1 Question #1 Question #1 Question #1',
             single: true,
             level: 1,
             type: 1,
