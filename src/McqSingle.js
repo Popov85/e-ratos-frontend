@@ -9,8 +9,8 @@ const propTypes = {
     putResponse: PropTypes.func
 };
 
-const normal = "bg-normal border border-regular";
-const selected = "bg-selected border border-regular";
+const normal = "bg-normal border-bottom border-regular";
+const selected = "bg-selected border-bottom border-regular";
 
 export default class McqSingle extends Question {
     constructor(props) {
@@ -35,27 +35,20 @@ export default class McqSingle extends Question {
     }
 
     computeClass(index, answerId) {
-        const length = this.props.answers.length;
-        const addOnForNotLast = " border-bottom-0";
-        var normalClass = normal;
-        var selectedClass = selected;
-        if (index!==length-1) {
-            normalClass = normalClass+ addOnForNotLast;
-            selectedClass = selectedClass+ addOnForNotLast;
-        }
-        return (answerId === this.state.answerIds[0]) ? selectedClass : normalClass
+        return (answerId === this.state.answerIds[0]) ? selected : normal
     }
 
     render() {
         
         return (
             <div className="border-0">
-                <Question question={this.props.question} theme={this.props.theme} mode={this.props.mode} />
-                {
-                    this.props.answers.map((a, index) => {
+                <Question question={this.props.question} theme={this.props.theme} mode={this.props.mode}/>
+                <div className="border-top border-right border-left border-regular">
+                    {
+                    this.props.answers.map(a => {
                         return (
                             <div key={a.answerId}
-                                className={this.computeClass(index, a.answerId)}
+                                className={(a.answerId === this.state.answerIds[0]) ? selected : normal}
                                 onClick={() => this.changeResponse(a.answerId)}>
                                 <AnswerMcqSingle
                                     questionId={this.state.questionId}
@@ -67,6 +60,8 @@ export default class McqSingle extends Question {
                             </div>);
                     })
                 }
+                </div>
+                
             </div>
         );
     }

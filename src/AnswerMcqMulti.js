@@ -6,15 +6,13 @@ import '../main.css';
 const propTypes = {
   answerId: PropTypes.number.isRequired,
   answer: PropTypes.string.isRequired,
-  length: PropTypes.number.isRequired,
-  index: PropTypes.number.isRequired,
   addResponse: PropTypes.func,
   removeResponse: PropTypes.func,
   resource: PropTypes.string,
 };
 
-const normal = "bg-normal border border-regular";
-const selected = "bg-selected border border-regular";
+const normal = "bg-normal border-bottom border-regular";
+const selected = "bg-selected border-bottom border-regular";
 
 export default class AnswerMcqMulti extends React.Component {
 
@@ -38,17 +36,6 @@ export default class AnswerMcqMulti extends React.Component {
     this.setState({ checked: !this.state.checked });
   }
 
-  computeClass(length, index) {
-    const addOnForNotLast = " border-bottom-0";
-    var normalClass = normal;
-    var selectedClass = selected;
-    if (index!==length-1) {
-        normalClass = normalClass+ addOnForNotLast;
-        selectedClass = selectedClass+ addOnForNotLast;
-    }
-    return (this.state.checked) ? selectedClass : normalClass
-}
-
   renderOption() {
     if (this.props.resource) {
       return <Resource resource={this.props.resource.link} title={this.props.answer} />
@@ -58,9 +45,8 @@ export default class AnswerMcqMulti extends React.Component {
   }
 
   render() {
-    const {length, index} = this.props;
     return (
-        <div className={this.computeClass(length, index)} onClick={this.updateChecked}>
+        <div className={(this.state.checked) ? selected : normal} onClick={this.updateChecked}>
           <input type="checkbox" 
           className = "ml-1"
           name="option" 
