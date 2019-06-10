@@ -1,6 +1,7 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
+import Resource from './Resource';
 
 const testQuestion = {
     className: "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
@@ -36,7 +37,7 @@ const propTypes = {
     question: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
     mode: PropTypes.object.isRequired,
-    resource: PropTypes.object
+    resource: PropTypes.array
 };
 
 export default class Question extends React.Component {
@@ -49,9 +50,7 @@ export default class Question extends React.Component {
     }
 
     componentWillMount() {
-        this.setState({
-            questionId: this.props.question.questionId
-        });
+        this.setState({questionId: this.props.question.questionId});
     }
 
     getHelp() {
@@ -94,8 +93,8 @@ export default class Question extends React.Component {
     }
 
     renderResources() {
-        // TODO
-        if (!this.props.question.resource) return null;
+        if (!this.props.resource) return null;
+        return <Resource resource={this.props.resource[0].link}/>
     }
 
     render() {
@@ -104,9 +103,7 @@ export default class Question extends React.Component {
             <div>
                 <div className="row text-center">
                     <div className="col-12">
-                        <textarea className="border-0 font-weight-bold text-center w-100 mb-2" rows="2" title={this.renderTitle()} readonly="true">
-                            {this.props.question.question}
-                        </textarea>
+                        <textarea className="border-0 font-weight-bold text-center w-100 mb-2" rows="2" title={this.renderTitle()} defaultValue = {this.props.question.question} readOnly={true}/>
                     </div>
                 </div>
 

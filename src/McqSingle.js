@@ -34,11 +34,10 @@ export default class McqSingle extends Question {
         this.setState({answerIds: newAnswerIds});
     }
 
-    render() {
-        
+    render() {        
         return (
             <div className="border-0">
-                <Question question={this.props.question} theme={this.props.theme} mode={this.props.mode}/>
+                <Question question={this.props.question} theme={this.props.theme} mode={this.props.mode} resource = {this.props.resource}/>
                 <div className="border-top border-right border-left border-regular">
                     {
                     this.props.answers.map(a => {

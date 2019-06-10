@@ -2,10 +2,17 @@ import React from 'react';
 
 export default class Resource extends React.Component {
 
+  
+
     // TODO: predict more resource types
     renderResource() {
         if (this.props.resource == null) { return null };
-        return <img alt="IMG" src={this.props.resource} title = {this.props.title}></img>
+        console.log("Link = "+this.props.resource);
+        return (
+            <div className="embed-responsive">
+                <iframe className="embed-responsive-item" src={this.props.resource} title = {this.props.title} allowFullScreen></iframe>
+            </div>
+        );
     }
 
     render() {

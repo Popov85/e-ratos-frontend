@@ -32,7 +32,7 @@ const testBatch = {
             resourceDomains: [
                 {
                     "resourceId": 1,
-                    "link": "https://resources.com/1",
+                    "link": "https://docs.google.com/document/d/e/2PACX-1vTYx532FkuvWFhWOx4S9k3CzJrxCe3NINbJN5yeKqvW_KzHa_VZ679dCSrXtHduNHzH2zkqQUDCz-hd/pub?embedded=true",
                     "description": "Resource 1"
                 }
             ],
@@ -416,14 +416,16 @@ export default class Batch extends React.Component {
             error: null,
             //-------- Changable---------
             // here comes responses map
-            responses: new Map()
+            responses: new Map(),
+            // -------View options-------
+            columns: 1
         }
 
         this.setTestBatch = this.setTestBatch.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.putResponse = this.putResponse.bind(this);
-
         this.tryCancelAPICall = this.tryCancelAPICall.bind(this);
+        this.changeView = this.changeView.bind(this);
     }
 
     setBatch(batch) {
@@ -443,6 +445,18 @@ export default class Batch extends React.Component {
     setTestBatch() {
         this.setBatch(testBatch);
         this.setState({ error: null });
+    }
+
+    changeView() {
+        if (this.state.columns ===1) {
+            this.setState({columns: 2});
+            return;
+        }
+        if (this.state.columns ===2) {
+            this.setState({columns: 1});
+            return;
+        }
+        throw "Parameter columns is not defined properly!!";
     }
 
     tryStartAPICall() {
@@ -619,12 +633,8 @@ export default class Batch extends React.Component {
         if (cancel) buttons.push(<button key="cancel" className="btn btn-danger btn-sm ml-1" onClick={this.tryCancelAPICall} title="Cancels the current session and resets all session data">Cancel>></button>);
         if (preserve) buttons.push(<button key="preser" className="btn btn-primary btn-sm ml-1" onClick={this.tryCancelAPICall} title="Preserves the current session">Preserve>></button>);
         if (pause) buttons.push(<button key="pause" className="btn btn-info btn-sm ml-1" onClick={this.tryCancelAPICall} title="Pauses the current session">Pause>></button>);
-
-
-        return <div className="text-center">
-            {buttons}
-        </div>
-
+        buttons.push(<button key="view" className="btn btn-secondary btn-sm ml-1" onClick={this.changeView} title="Changes the current view">{this.state.columns ===1 ? "2" : "1"}</button>);
+        return <div className="text-center"> {buttons}</div>
     }
 
     renderTitle() {
@@ -637,7 +647,7 @@ export default class Batch extends React.Component {
     }
 
     renderMcqSingle(q) {
-        return (<McqSingle key={q.questionId} question={q} theme={q.themeDomain} mode={this.props.mode} answers={q.answers} putResponse={this.putResponse} />);
+        return (<McqSingle key={q.questionId} question={q} theme={q.themeDomain} mode={this.props.mode} resource = {q.resourceDomains} answers={q.answers} putResponse={this.putResponse} />);
     }
 
     renderMcqMulti(q) {
@@ -651,7 +661,7 @@ export default class Batch extends React.Component {
     renderTwo(two) {
         const key = two[0].questionId.toString() + two[1].questionId.toString();
         return (
-            <div className="row mb-3" key={key}>
+            <div className="row" key={key}>
                 <div className="col-6">
                     {this.renderOne(two[0])}
                 </div>
@@ -665,15 +675,19 @@ export default class Batch extends React.Component {
 
     renderQuestions() {
         // single
-        if (this.state.batch.length === 1) {
-            return this.renderOne(this.state.batch[0]);
-        }
+        if (this.state.batch.length === 1) return this.renderOne(this.state.batch[0]);
         // multiple
-        const chunksArray = Utils.chunkArray(this.state.batch, 2);
         var batch = [];
-        chunksArray.map(q => {
-            batch.push(this.renderTwo(q));
-        });
+        if (this.state.columns === 1) {
+            // One column view
+            this.state.batch.map(q => batch.push(this.renderOne(q)));
+        } else if (this.state.columns === 2) {
+            // Two column view
+            const chunksArray = Utils.chunkArray(this.state.batch, 2);
+            chunksArray.map(q => batch.push(this.renderTwo(q)));
+        } else {
+            throw "Unsupported columns value!";
+        }
         return batch;
     }
 
@@ -685,7 +699,7 @@ export default class Batch extends React.Component {
             sign = "Finish>>";
         }
         return (<div className="text-right">
-            <input type="submit" className="btn btn-secondary pr-4 pl-4" value={sign} />
+            <input type="submit" className="btn btn-secondary pr-4 pl-4 mt-3" value={sign} />
         </div>)
     }
 

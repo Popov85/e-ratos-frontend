@@ -22,7 +22,10 @@ export default class AnswerMcqSingle extends React.Component {
 
   renderOption() {
     if (this.props.resource) {
-      return <Resource resource={this.props.resource.link} title={this.props.answer} />
+      return (<span title={this.props.answer}>
+        {this.props.answer.substring(0, 40) + " ..."}
+        <Resource resource={this.props.resource.link} />
+      </span>);
     } else {
       return <span>{this.props.answer}</span>
     }
@@ -32,11 +35,11 @@ export default class AnswerMcqSingle extends React.Component {
     return (
       <div>
         <input type="radio"
-          className = "ml-1"
+          className="ml-1"
           name={"option" + this.props.questionId}
           value={this.props.answerId}
           onChange={this.updateChecked}
-          checked={this.props.isChecked}/> {this.renderOption()}
+          checked={this.props.isChecked} /> {this.renderOption()}
       </div>
     );
   }
