@@ -12,13 +12,13 @@ const propTypes = {
 
 const testSchemeInfo = {
     schemeId: 1,
-    scheme: "Very long scheme name scheme name scheme name scheme name scheme name scheme name scheme name scheme name scheme name scheme name scheme name scheme name",
+    scheme: "Very long scheme name scheme name scheme name scheme name",
     questions: 20,
     timings: 20,
     author: "Andrey P."
 }
 
-const testModeDomain = {
+const testMode = {
     modeId: 1,
     name: "ModeDomain#1",
     helpable: false,
@@ -29,6 +29,18 @@ const testModeDomain = {
     preservable: false,
     reportable: false,
     starrable: false
+}
+
+const testSettings = {
+        setId: 1,
+        name: "default",
+        secondsPerQuestion: 60,
+        questionsPerSheet: 4,
+        displayPercent: true,
+        displayMark: true,
+        displayThemeResults: true,
+        displayQuestionResults: true,
+        strictControlTimePerQuestion: false
 }
 
 const baseUrl = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
@@ -63,6 +75,7 @@ export default class Start extends React.Component {
             questions: info.questions,
             timings: info.timings,
             mode: info.mode,
+            settings: info.settings,
             author: info.staff
         });
     }
@@ -73,8 +86,9 @@ export default class Start extends React.Component {
             scheme: testSchemeInfo.scheme,
             questions: testSchemeInfo.questions,
             timings: testSchemeInfo.timings,
-            mode: testModeDomain,
             author: testSchemeInfo.author,
+            mode: testMode,
+            settings: testSettings,
             isLoaded: true,
             error: null
         });
