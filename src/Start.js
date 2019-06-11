@@ -57,6 +57,7 @@ export default class Start extends React.Component {
             questions: null,
             timings: null,
             mode: null,
+            settings: null,
             author: null,
 
             isLoaded: false,
@@ -241,7 +242,7 @@ export default class Start extends React.Component {
         return (
             <div className="container-fluid bg-ratos">
                 {
-                    this.state.isStarted ? <Batch schemeId={this.props.schemeId} scheme={this.state.scheme} mode={this.state.mode}/> : this.renderLayout()
+                    this.state.isStarted ? <Batch schemeId={this.props.schemeId} scheme={this.state.scheme} mode={this.state.mode} settings = {this.state.settings}/> : this.renderLayout()
                 }
             </div>
 

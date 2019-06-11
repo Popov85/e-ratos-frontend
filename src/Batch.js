@@ -9,7 +9,8 @@ import Utils from './Utils';
 
 const propTypes = {
     schemeId: PropTypes.number.isRequired,
-    mode: PropTypes.object.isRequired
+    mode: PropTypes.object.isRequired,
+    settings: PropTypes.object.isRequired
 };
 
 const testBatch = {
@@ -408,6 +409,7 @@ export default class Batch extends React.Component {
             batchTimeLimit: null,
             empty: false,
             mode: null,
+            settings: null,
             batch: [],
             help: true,
 
@@ -771,7 +773,7 @@ export default class Batch extends React.Component {
     render() {
         const { isCancelled, isFinished } = this.state;
         if (isCancelled || isFinished) {
-            return (<Finish schemeId={this.props.schemeId} result={this.state.result} isCancelled={isCancelled} />);
+            return (<Finish schemeId={this.props.schemeId} result={this.state.result} settings = {this.props.settings} isCancelled={isCancelled} />);
         } else {
             return this.renderBatch();
         }

@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import Start from "./src/Start";
 import Batch from "./src/Batch";
 import Finish from "./src/Finish";
+import Result from "./src/Result";
+import Cancelled from "./src/Cancelled";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const testMode = {
@@ -33,7 +35,7 @@ const testSettings = {
 const testResult = {
     user: "Andrey P.",
     scheme: "Determinants and outcomes of acute kidney injury among older patients undergoing invasive coronary angiography for acute myocardial infarction: The SILVER-AMI Study",
-    passed: false,
+    passed: true,
     percent: 68,
     grade: 3,
     points: 1,
@@ -428,6 +430,8 @@ let search = window.location.search;
 let params = new URLSearchParams(search);
 let schemeId = params.get('schemeId');
 
-//ReactDOM.render(<Start schemeId={schemeId}/>, document.getElementById('app'));
+ReactDOM.render(<Start schemeId={schemeId}/>, document.getElementById('app'));
 //ReactDOM.render(<Batch schemeId={10} scheme="Test scheme name" mode = {testMode}/>, document.getElementById('app'));
-ReactDOM.render(<Finish schemeId = {10} result = {testResult} mode = {testMode} settings = {testSettings} isCancelled = {false}/>, document.getElementById('app'));
+//ReactDOM.render(<Finish schemeId = {10} result = {testResult} mode = {testMode} settings = {testSettings} isCancelled = {false}/>, document.getElementById('app'));
+//ReactDOM.render(<Result result = {testResult}/>, document.getElementById('app'));
+//ReactDOM.render(<Cancelled result = {testResult}/>, document.getElementById('app'));
