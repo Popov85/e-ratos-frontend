@@ -3,6 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Resource from './Resource';
 
+import { FaTimes, FaUndo, FaQuestion, FaFlagCheckered, FaStar} from 'react-icons/fa';
+
 const testQuestion = {
     className: "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
     questionId: 1,
@@ -50,7 +52,7 @@ export default class Question extends React.Component {
     }
 
     componentWillMount() {
-        this.setState({questionId: this.props.question.questionId});
+        this.setState({ questionId: this.props.question.questionId });
     }
 
     getHelp() {
@@ -85,16 +87,16 @@ export default class Question extends React.Component {
         const report = this.props.mode.reportable;
         const star = this.props.mode.starrable;
         var buttons = [];
-        if (help) buttons.push(<button type="button" key={"help" + qId} className="btn btn-primary btn-sm ml-1" onClick={this.getHelp}>Help>></button>);
-        if (skip) buttons.push(<button type="button" key={"skip" + qId} className="btn btn-warning btn-sm ml-1" onClick={this.doSkip}>Skip>></button>);
-        if (report) buttons.push(<button type="button" key={"repo" + qId} className="btn btn-success btn-sm ml-1" onClick={this.doReport}>Report>></button>);
-        if (star) buttons.push(<button type="button" key={"star" + qId} className="btn btn-info btn-sm ml-1" onClick={this.doStar}>Star>></button>);
+        if (skip) buttons.push(<span key = {"skip" + qId}><button type="button" className="btn btn-warning btn-sm ml-1" onClick={this.doSkip} title = "Skip this question"><FaUndo color = "white"/></button></span>);
+        if (help) buttons.push(<span key = {"help" + qId}><button type="button" className="btn btn-secondary btn-sm ml-1" onClick={this.getHelp} title = "Get help on this question"><FaQuestion color = "white"/></button></span>);
+        if (report) buttons.push(<span key = {"repo" + qId}><button type="button" className="btn btn-secondary btn-sm ml-1" onClick={this.doReport} title = "Complain about this question"><FaFlagCheckered color = "white"/></button></span>);
+        if (star) buttons.push(<span key ={"star" + qId}><button type="button" className="btn btn-info btn-sm ml-1" onClick={this.doStar} title = "Evaluate this question with up to 5 stars"><FaStar color = "white"/></button></span>);
         return (<div className="text-center mb-2">{buttons}</div>);
     }
 
     renderResources() {
         if (!this.props.resource) return null;
-        return <Resource resource={this.props.resource[0].link}/>
+        return <Resource resource={this.props.resource[0].link} />
     }
 
     render() {
@@ -103,7 +105,7 @@ export default class Question extends React.Component {
             <div>
                 <div className="row text-center">
                     <div className="col-12">
-                        <textarea className="border-0 font-weight-bold text-center w-100 mb-2" rows="2" title={this.renderTitle()} defaultValue = {this.props.question.question} readOnly={true}/>
+                        <textarea className="border-0 font-weight-bold text-center w-100 mb-2" rows="2" title={this.renderTitle()} defaultValue={this.props.question.question} readOnly={true} />
                     </div>
                 </div>
 

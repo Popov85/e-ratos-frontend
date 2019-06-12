@@ -7,6 +7,8 @@ import Finish from './Finish';
 import PropTypes from 'prop-types';
 import Utils from './Utils';
 
+import { FaPowerOff, FaSave, FaPause, FaThLarge, FaBars } from 'react-icons/fa';
+
 const propTypes = {
     schemeId: PropTypes.number.isRequired,
     mode: PropTypes.object.isRequired,
@@ -386,7 +388,7 @@ const realBatch = {
 }
 
 
-const baseUrl = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
+const baseUrl = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
 
 const startUrl = baseUrl + "/student/session/start";
 const nextUrl = baseUrl + "/student/session/next";
@@ -428,6 +430,13 @@ export default class Batch extends React.Component {
         this.putResponse = this.putResponse.bind(this);
         this.tryCancelAPICall = this.tryCancelAPICall.bind(this);
         this.changeView = this.changeView.bind(this);
+
+        this.handleClick = this.handleClick.bind(this);
+
+    }
+
+    handleClick() {
+        alert("Clicked");
     }
 
     setBatch(batch) {
@@ -450,12 +459,12 @@ export default class Batch extends React.Component {
     }
 
     changeView() {
-        if (this.state.columns ===1) {
-            this.setState({columns: 2});
+        if (this.state.columns === 1) {
+            this.setState({ columns: 2 });
             return;
         }
-        if (this.state.columns ===2) {
-            this.setState({columns: 1});
+        if (this.state.columns === 2) {
+            this.setState({ columns: 1 });
             return;
         }
         throw "Parameter columns is not defined properly!!";
@@ -632,10 +641,11 @@ export default class Batch extends React.Component {
         const pause = this.props.mode.pauseable;
 
         var buttons = [];
-        if (cancel) buttons.push(<button key="cancel" className="btn btn-danger btn-sm ml-1" onClick={this.tryCancelAPICall} title="Cancels the current session and resets all session data">Cancel>></button>);
-        if (preserve) buttons.push(<button key="preser" className="btn btn-primary btn-sm ml-1" onClick={this.tryCancelAPICall} title="Preserves the current session">Preserve>></button>);
-        if (pause) buttons.push(<button key="pause" className="btn btn-info btn-sm ml-1" onClick={this.tryCancelAPICall} title="Pauses the current session">Pause>></button>);
-        buttons.push(<button key="view" className="btn btn-secondary btn-sm ml-1" onClick={this.changeView} title="Changes the current view">{this.state.columns ===1 ? "2" : "1"}</button>);
+        //if (cancel) buttons.push(<button key="cancel" className="btn btn-danger btn-sm ml-1" onClick={this.tryCancelAPICall} title="Cancels the current session and resets all session data">Cancel>></button>);
+        if (cancel) buttons.push(<span key="cancel"><button className="btn btn-danger btn-sm ml-1" onClick={this.tryCancelAPICall} title="Cancels the current session and resets all session data"><FaPowerOff color="white" /></button></span>);
+        if (preserve) buttons.push(<span key = "preser"><button  className="btn btn-secondary btn-sm ml-1" onClick={this.tryCancelAPICall} title="Preserves the current session"><FaSave color = "white"/></button></span>);
+        if (pause) buttons.push(<span key = "pause"><button className="btn btn-secondary btn-sm ml-1" onClick={this.tryCancelAPICall} title="Pauses the current session"><FaPause color = "white"/></button></span>);
+        buttons.push(<span key = "view"><button className="btn btn-secondary btn-sm ml-1" onClick={this.changeView} title="Changes the current view">{this.state.columns === 1 ? <FaThLarge color = "white"/> : <FaBars color = "white"/>}</button></span>);
         return <div className="text-center"> {buttons}</div>
     }
 
@@ -649,7 +659,7 @@ export default class Batch extends React.Component {
     }
 
     renderMcqSingle(q) {
-        return (<McqSingle key={q.questionId} question={q} theme={q.themeDomain} mode={this.props.mode} resource = {q.resourceDomains} answers={q.answers} putResponse={this.putResponse} />);
+        return (<McqSingle key={q.questionId} question={q} theme={q.themeDomain} mode={this.props.mode} resource={q.resourceDomains} answers={q.answers} putResponse={this.putResponse}/>);
     }
 
     renderMcqMulti(q) {
@@ -773,7 +783,7 @@ export default class Batch extends React.Component {
     render() {
         const { isCancelled, isFinished } = this.state;
         if (isCancelled || isFinished) {
-            return (<Finish schemeId={this.props.schemeId} result={this.state.result} settings = {this.props.settings} isCancelled={isCancelled} />);
+            return (<Finish schemeId={this.props.schemeId} result={this.state.result} settings={this.props.settings} isCancelled={isCancelled} />);
         } else {
             return this.renderBatch();
         }
