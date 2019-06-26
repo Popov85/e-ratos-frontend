@@ -1,253 +1,181 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Logo from './Logo';
+import Info from './Info';
 import Batch from './Batch';
 import Spinner from './Spinner';
-import Error from './Error';
+import Failure from './Failure';
+import Logo from './Logo';
 import '../main.css';
+import Header from './Header';
 
-const propTypes = {
-    schemeId: PropTypes.number.isRequired
-};
-
-const testSchemeInfo = {
-    schemeId: 1,
-    scheme: "Very long scheme name scheme name scheme name scheme name",
-    questions: 20,
-    timings: 20,
-    author: "Andrey P."
-}
-
-const testMode = {
-    modeId: 1,
-    name: "ModeDomain#1",
-    helpable: false,
-    pyramid: false,
-    skipable: false,
-    rightAnswer: false,
-    pauseable: false,
-    preservable: false,
-    reportable: false,
-    starrable: false
-}
-
-const testSettings = {
-        setId: 1,
-        name: "default",
-        secondsPerQuestion: 60,
-        questionsPerSheet: 4,
-        displayPercent: true,
-        displayMark: true,
-        displayThemeResults: true,
-        displayQuestionResults: true,
-        strictControlTimePerQuestion: false
-}
-
-const baseUrl = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
+const startUrl = "/student/session/start";
 
 export default class Start extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            isOpened: false,
+            openedId: null,
+
             isStarted: false,
 
-            schemeId: null,
-            scheme: null,
-            questions: null,
-            timings: null,
-            mode: null,
-            settings: null,
-            author: null,
+            batch: null,
 
-            isLoaded: false,
+            isLoaded: true,
             error: null
         }
-        this.startSession = this.startSession.bind(this);
-        this.setTestInfo = this.setTestInfo.bind(this);
-        this.reTryInfoAPICall = this.reTryInfoAPICall.bind(this);
     }
 
-    setInfo(info) {
-        this.setState({
-            isLoaded: true,
-            schemeId: info.schemeId,
-            scheme: info.name,
-            questions: info.questions,
-            timings: info.timings,
-            mode: info.mode,
-            settings: info.settings,
-            author: info.staff
-        });
+    reTryStartAPICall() {
+        this.setState({ isLoaded: false, error: null });
+        this.tryStartAPICall();
     }
 
-    setTestInfo() {
-        this.setState({
-            schemeId: testSchemeInfo.schemeId,
-            scheme: testSchemeInfo.scheme,
-            questions: testSchemeInfo.questions,
-            timings: testSchemeInfo.timings,
-            author: testSchemeInfo.author,
-            mode: testMode,
-            settings: testSettings,
-            isLoaded: true,
-            error: null
-        });
-    }
-
-    tryInfoAPICall() {
-        const urlInfo = baseUrl + "/schemes/" + this.props.schemeId + "/info";
-        console.log("urlInfo = " + urlInfo);
-        fetch(urlInfo, {
+    tryStartAPICall() {
+        const url = this.props.baseUrl + startUrl + "?schemeId=" + this.props.schemeInfo.schemeId;
+        fetch(url, {
             method: 'GET',
-            credentials: 'same-origin'
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw Error((response.statusText) ? response.statusText : response.status);
-                }
-                return response.json();
+            credentials: 'same-origin',
+            headers: {
+                'Accept': 'application/json'
             }
-            )
-            .then((response) => {
-                console.log("result = " + JSON.stringify(response));
-                this.setInfo(response);
-            },
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
+        }).then(response => {
+            if (!response.ok) throw response;
+            return response.json();
+        }).then(response => {
+            if (response.batch.length === 0) throw Error("No questions found in the scheme!");
+            this.setState({
+                isLoaded: true,
+                isStarted: true,
+                error: null,
+                batch: response
+            });
+        }).catch(error => {
+            console.error(error);
+            try {
+                error.json().then(body => {
+                    console.log("Opened schemeId = "+body.schemeId);
+                    this.setState({ 
+                        isOpened: true, 
+                        openedId: body.schemeId 
                     });
-                }
-            )
-    }
-
-    reTryInfoAPICall() {
-        this.setState({
-            isLoaded: false,
-            error: null
+                });
+            } catch (e) {
+                console.error("This is not promise!");
+                this.setState({ error });
+            } finally {
+                this.setState({ isLoaded: true });
+            }
         });
-        this.tryInfoAPICall();
     }
 
-    componentDidMount() {
-        this.tryInfoAPICall();
+    renderBatch() {
+        return <Batch
+            schemeInfo={this.props.schemeInfo}
+            batch={this.state.batch}
+            baseUrl={this.props.baseUrl} />
     }
 
-
-    startSession() {
-        this.setState({ isStarted: true });
+    renderOpened() {
+        return <Info
+            schemeId={this.state.openedId}
+            requestedInfo={this.props.schemeInfo}
+            baseUrl={this.props.baseUrl}
+            isStart={false} />
     }
 
-
-    renderError() {
+    renderFailure() {
         return (
-            <div>
-                <Error message={this.state.error.message} />
-                <hr/>
-                <div className="row">
-                    <div className="col text-center mr-3">
-                        <button className="btn btn-info mr-3" onClick={this.setTestInfo}>Test>></button>
-                        <button className="btn btn-info" onClick={this.reTryInfoAPICall}>Re-try>></button>
+            <div className="mt-3" >
+                <Failure message={this.state.error.message} />
+                <div className="row mt-3">
+                    <div className="col-12 text-center">
+                        <button className="btn btn-secondary btn-sm pl-5 pr-5" onClick={() => this.reTryStartAPICall()}>Re-try>></button>
                     </div>
                 </div>
             </div>
         );
     }
-
-    renderInfo() {
-        const { schemeId, scheme, questions, timings, author } = this.state;
-        return (
-            <div className="card bg-light mb-3">
-                <div className="card-header">Info</div>
-                <div className="card-body">
-                    <div className="card-text">
-                        <div className="row mb-1">
-                            <div className="col-4">
-                                ID:
-                                    </div>
-                            <div className="col-8 alert-sm alert-info">
-                                {schemeId}
-                            </div>
-                        </div>
-                        <div className="row mb-1">
-                            <div className="col-4">
-                                scheme:
-                                    </div>
-                            <div className="col-8 alert-sm alert-info">
-                                {scheme}
-                            </div>
-                        </div>
-                        <div className="row mb-1">
-                            <div className="col-4">
-                                questions:
-                                    </div>
-                            <div className="col-8 alert-sm alert-info">
-                                {questions}
-                            </div>
-                        </div>
-                        <div className="row mb-1">
-                            <div className="col-4">
-                                timings:
-                                    </div>
-                            <div className="col-8 alert-sm alert-info">
-                                {timings}
-                            </div>
-                        </div>
-                        <div className="row mb-1">
-                            <div className="col-4">
-                                author:
-                                    </div>
-                            <div className="col-8 alert-sm alert-info">
-                                {author}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col text-center">
-                        <button className="btn btn-info" onClick={this.startSession}>Start>></button>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
-    renderStart() {
-        const { error, isLoaded} = this.state;
-        if (!isLoaded) {
-            return (<Spinner/>);
-        } else if (error) {
-            return this.renderError();
-        } else {
-            return this.renderInfo();
-        }
-    }
-
-    renderLayout() {
-        return (
-            <div className="row justify-content-md-center">
-                <div className="col-xs-1 col-sm-2 col-md-3 col-lg-3 col-xl-4" />
-                <div className="col-xs-10 col-sm-8 col-md-6 col-lg-6 col-xl-4">
-                    <Logo />
-                    {this.renderStart()}
-                </div>
-                <div className="col-xs-1 col-sm-2 col-md-3 col-lg-3 col-xl-4" />
-            </div>
-        );
-    }
-
 
     render() {
-        return (
-            <div className="container-fluid bg-ratos">
-                {
-                    this.state.isStarted ? <Batch schemeId={this.props.schemeId} scheme={this.state.scheme} mode={this.state.mode} settings = {this.state.settings}/> : this.renderLayout()
-                }
-            </div>
+        const { isStarted, isOpened, isLoaded, error} = this.state;
+        if (!isLoaded) return (<Spinner />);
+        if (isStarted) return this.renderBatch();
+        if (isOpened) return this.renderOpened();
+        if (error) return this.renderFailure();
 
-        );
+        const { schemeId, name, questions, timings, staff } = this.props.schemeInfo;
+        return (
+            <div className="mt-1">
+                <Logo/>
+                <Header title="WELCOME" color="alert-success" />
+                <div className="row">
+                    <div className="col-xs-1 col-sm-2 col-md-3 col-lg-4 col-xl-4" />
+                    <div className="col-xs-10 col-sm-8 col-md-6 col-lg-4 col-xl-4">
+
+                        <div className="bg-light">
+
+                            <div className="row mb-1">
+                                <div className="col-3">
+                                    <div className="text-secondary">ID:</div>
+                                </div>
+                                <div className="col-9">
+                                    <div className="alert-sm alert-info" title="ID of scheme you are going to take">{schemeId}</div>
+                                </div>
+                            </div>
+
+                            <div className="row mb-1">
+                                <div className="col-3">
+                                    <div className="text-secondary">scheme:</div>
+                                </div>
+                                <div className="col-9">
+                                    <div className="alert-sm alert-info" title="Scheme name you are going to take">{name}</div>
+                                </div>
+                            </div>
+
+                            <div className="row mb-1">
+                                <div className="col-3">
+                                    <div className="text-secondary">questions:</div>
+                                </div>
+                                <div className="col-9">
+                                    <div className="alert-sm alert-info" title="The quantity of questions in this scheme you are going to answer">{questions}</div>
+                                </div>
+                            </div>
+
+                            <div className="row mb-1">
+                                <div className="col-3">
+                                    <div className="text-secondary">time:</div>
+                                </div>
+                                <div className="col-9">
+                                    <div className="alert-sm alert-info" title="How many seconds per question you have">{timings + " s"}</div>
+                                </div>
+                            </div>
+
+                            <div className="row mb-1">
+                                <div className="col-3">
+                                    <div className="text-secondary">author:</div>
+                                </div>
+                                <div className="col-9">
+                                    <div className="alert-sm alert-info" title="The creator of the current schme">{staff}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-xs-1 col-sm-2 col-md-3 col-lg-4 col-xl-4" />
+                </div>
+                <div className="row text-center mt-3">
+                    <div className="col-12">
+                        <button className="btn btn-info pl-5 pr-5" onClick={() => this.reTryStartAPICall()}>Start>></button>
+                    </div>
+                </div>
+            </div>)
     }
 }
+
+const propTypes = {
+    schemeInfo: PropTypes.object.isRequired,
+    baseUrl: PropTypes.string.isRequired
+};
 
 Start.propTypes = propTypes;

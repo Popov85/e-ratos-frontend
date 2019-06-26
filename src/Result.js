@@ -7,8 +7,8 @@ const Result = props => {
     const { user, scheme, passed, percent, grade, points } = props.result;
     return (
         <div className="row pt-5">
-            <div className="col-xs-1 col-sm-2 col-md-3 col-lg-4 col-xl-4" />
-            <div className="col-xs-10 col-sm-8 col-md-6 col-lg-4 col-xl-4">
+            <div className="col-xs-1 col-sm-2 col-md-3 col-lg-4" />
+            <div className="col-xs-10 col-sm-8 col-md-6 col-lg-4">
 
                 <div className="row mb-1 text-center">
                     <div className="col-12">
@@ -41,7 +41,7 @@ const Result = props => {
                             <div className="text-secondary">percent:</div>
                         </div>
                         <div className="col-8">
-                            <div className="alert-sm alert-info text-center">{percent}</div>
+                            <div className="alert-sm alert-info text-center">{percent.toFixed(1)+"%"}</div>
                         </div>
                     </div>
 
@@ -59,7 +59,7 @@ const Result = props => {
                 </div>
 
             </div>
-            <div className="col-xs-1 col-sm-2 col-md-3 col-lg-4 col-xl-4"/>
+            <div className="col-xs-1 col-sm-2 col-md-3 col-lg-4"/>
         </div>)
 };
 

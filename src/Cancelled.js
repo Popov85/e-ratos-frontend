@@ -1,48 +1,81 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Header from "./Header";
+import Launcher from "./Launcher";
 
-const Cancelled = props => {
-    const { user, scheme} = props.result;
-    return (
-        <div className="row pt-5">
-            <div className="col-xs-1 col-sm-2 col-md-3 col-lg-4 col-xl-4"/>
-            <div className="col-xs-10 col-sm-8 col-md-6 col-lg-4 col-xl-4">
+class Cancelled extends Component {
 
-                <div className="row mb-1 text-center">
+    constructor(props) {
+        super(props);
+        this.state = {
+            isReStarted: false
+        }
+    }
+
+    reStart() {
+        this.setState({ isReStarted: true });
+    }
+
+    render() {
+        const { schemeId, baseUrl } = this.props;
+        if (this.state.isReStarted) return <Launcher schemeId={schemeId} baseUrl={baseUrl} />
+        const { user, scheme, passed } = this.props.result;
+        return (
+            <div className="mt-5">
+                <Header title="CANCELLED" color="alert-warning" />
+                <div className="row mt-1">
+                    <div className="col-xs-1 col-sm-2 col-md-3 col-lg-4 col-xl-4" />
+                    <div className="col-xs-10 col-sm-8 col-md-6 col-lg-4 col-xl-4">
+                        <div className="bg-light">
+                            <div className="row mb-1">
+                                <div className="col-4">
+                                    <div className="text-secondary">name:</div>
+                                </div>
+                                <div className="col-8">
+                                    <div className="alert-sm alert-info">{user}</div>
+                                </div>
+                            </div>
+
+                            <div className="row mb-1">
+                                <div className="col-4">
+                                    <div className="text-secondary">scheme:</div>
+                                </div>
+                                <div className="col-8">
+                                    <div className="alert-sm alert-info">{scheme}</div>
+                                </div>
+                            </div>
+
+                            <div className="row mb-1">
+                                <div className="col-4">
+                                    <div className="text-secondary">passed:</div>
+                                </div>
+
+                                <div className="col-8">
+                                    <div className = {`alert-sm alert-${ (passed)? "success":"danger" }`}>{(passed) ? "Yes" : "No"}</div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div className="col-xs-1 col-sm-2 col-md-3 col-lg-4 col-xl-4" />
+                </div>
+
+                <div className="row text-center mt-3">
                     <div className="col-12">
-                        <div className="pt-3 pb-3 alert-sm alert-warning">CANCELLED</div>
+                        <button className="btn btn-secondary" onClick={() => this.reStart()}>ReStart>></button>
                     </div>
                 </div>
 
-                <div className="bg-light">
-
-                    <div className="row mb-1">
-                        <div className="col-4">
-                            <div className="text-secondary">name:</div>
-                        </div>
-                        <div className="col-8">
-                            <div className="alert-sm alert-info">{user}</div>
-                        </div>
-                    </div>
-
-                    <div className="row mb-1">
-                        <div className="col-4">
-                            <div className="text-secondary">scheme:</div>
-                        </div>
-                        <div className="col-8">
-                            <div className="alert-sm alert-info">{scheme}</div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-            <div className="col-xs-1 col-sm-2 col-md-3 col-lg-4 col-xl-4"/>
-        </div>)
-};
+            </div>)
+    }
+}
 
 Cancelled.propTypes = {
-    result: PropTypes.object.isRequired
+    schemeId: PropTypes.number.isRequired,
+    result: PropTypes.object.isRequired,
+    baseUrl: PropTypes.string.isRequired
 };
 
 export default Cancelled;

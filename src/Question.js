@@ -1,59 +1,19 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
 import Resource from './Resource';
+import { FaEraser , FaUndo, FaQuestion, FaFlagCheckered, FaStar} from 'react-icons/fa';
 
-import { FaTimes, FaUndo, FaQuestion, FaFlagCheckered, FaStar} from 'react-icons/fa';
-
-const testQuestion = {
-    className: "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
-    questionId: 1,
-    question: 'Question #1',
-    single: true,
-    level: 1,
-    type: 1,
-    lang: "EN",
-    required: false,
-    helpAvailable: true
-}
-
-const testTheme = {
-    themeId: 1,
-    name: "ThemeDomain#1"
-}
-
-const testMode = {
-    modeId: 1,
-    name: "Mode #1",
-    helpable: false,
-    pyramid: false,
-    skipable: false,
-    rightAnswer: false,
-    pauseable: false,
-    preservable: false,
-    reportable: false,
-    starrable: false
-}
-
-const propTypes = {
-    question: PropTypes.object.isRequired,
-    theme: PropTypes.object.isRequired,
-    mode: PropTypes.object.isRequired,
-    resource: PropTypes.array
-};
+import '../main.css';
 
 export default class Question extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            questionId: null
+            isResource: false
         }
     }
-
-    componentWillMount() {
-        this.setState({ questionId: this.props.question.questionId });
-    }
+    
 
     getHelp() {
         // TODO
@@ -75,6 +35,10 @@ export default class Question extends React.Component {
         alert("Star!");
     }
 
+    clear() {
+        this.props.clearResponse();
+    }
+
 
     renderTitle() {
         return "level: " + this.props.question.level + " | " + "lang: " + this.props.question.lang + " | " + "required: " + this.props.question.required;
@@ -91,21 +55,22 @@ export default class Question extends React.Component {
         if (help) buttons.push(<span key = {"help" + qId}><button type="button" className="btn btn-secondary btn-sm ml-1" onClick={this.getHelp} title = "Get help on this question"><FaQuestion color = "white"/></button></span>);
         if (report) buttons.push(<span key = {"repo" + qId}><button type="button" className="btn btn-secondary btn-sm ml-1" onClick={this.doReport} title = "Complain about this question"><FaFlagCheckered color = "white"/></button></span>);
         if (star) buttons.push(<span key ={"star" + qId}><button type="button" className="btn btn-info btn-sm ml-1" onClick={this.doStar} title = "Evaluate this question with up to 5 stars"><FaStar color = "white"/></button></span>);
+        buttons.push(<span key ={"clear" + qId}><button type="button" className="btn btn-warning btn-sm ml-1" onClick={()=>this.clear()} title = "Clear"><FaEraser color = "white"/></button></span>);
         return (<div className="text-center mb-2">{buttons}</div>);
     }
 
     renderResources() {
+        if (!this.state.isResource) return null;
         if (!this.props.resource) return null;
         return <Resource resource={this.props.resource[0].link} />
     }
 
     render() {
-
         return (
             <div>
                 <div className="row text-center">
                     <div className="col-12">
-                        <textarea className="border-0 font-weight-bold text-center w-100 mb-2" rows="2" title={this.renderTitle()} defaultValue={this.props.question.question} readOnly={true} />
+                        <textarea className="border-0 bg-ratos text-secondary text-center w-100 mb-1 no-scroll" rows="2" title={this.renderTitle()} defaultValue={this.props.question.question} readOnly={true} />
                     </div>
                 </div>
 
@@ -124,5 +89,13 @@ export default class Question extends React.Component {
         );
     }
 }
+
+const propTypes = {
+    question: PropTypes.object.isRequired,
+    theme: PropTypes.object.isRequired,
+    mode: PropTypes.object.isRequired,
+    resource: PropTypes.array,
+    clearResponse: PropTypes.func.isRequired
+};
 
 Question.propTypes = propTypes;

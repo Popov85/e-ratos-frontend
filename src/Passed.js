@@ -3,17 +3,10 @@ import PropTypes from 'prop-types';
 
 const Passed = props => {
     const isPassed = props.isPassed;
-    const baseName = "pt-3 pb-3 alert-sm alert-";
-    var className = "";
-    var message = "";
-    if (isPassed) {
-        className = baseName + "success";
-        message = "PASSED";
-    } else {
-        className = baseName + "danger";
-        message = "NOT PASSED";
-    }
-    return (<div className={className}>{message}</div>);
+    return (
+        <div className={`pt-3 pb-3 alert-sm alert-${(isPassed) ? "success" : "danger"} pt-3 pb-3`}>
+            {(isPassed) ? "PASSED" : "NOT PASSED"}
+        </div>);
 };
 
 Passed.propTypes = {

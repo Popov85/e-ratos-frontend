@@ -1,18 +1,9 @@
 import React from 'react';
-import Start from './Start';
+import Launcher from './Launcher';
 import Result from './Result';
-import Cancelled from './Cancelled';
 import ResultByThemes from './ResultByThemes';
 import ResultByQuestions from './ResultByQuestions';
 import PropTypes from 'prop-types';
-
-const propTypes = {
-    schemeId: PropTypes.number.isRequired,
-    result: PropTypes.object.isRequired,
-    mode: PropTypes.object.isRequired,
-    settings: PropTypes.object.isRequired,
-    isCancelled: PropTypes.bool
-};
 
 export default class Finish extends React.Component {
 
@@ -40,8 +31,8 @@ export default class Finish extends React.Component {
         const settings = this.props.settings;
         return (
             <div>
-                <ResultByThemes settings = {settings} resultPerTheme = {this.props.result.resultPerTheme}/>
-                <ResultByQuestions settings ={settings} resultPerQuestion = {this.props.result.resultPerQuestion}/>
+                <ResultByThemes settings = {settings} themeResults = {this.props.result.themeResults}/>
+                <ResultByQuestions settings ={settings} questionResults = {this.props.result.questionResults}/>
             </div>
         );
     }
@@ -49,23 +40,23 @@ export default class Finish extends React.Component {
     renderDetailsLink() {
         const { displayThemeResults, displayQuestionResults } = this.props.settings;
         if (!displayThemeResults && !displayQuestionResults) return null;
-        var text = (this.state.isDetails) ? "Hide details" : "Details";
         return (
             <div className="row text-center mt-1">
                 <div className="col-12">
-                    <a href="#" className="badge badge-secondary" onClick={this.showDetails}>{text}</a>
+                    <a href="#" className="badge badge-secondary" onClick={this.showDetails}>{(this.state.isDetails) ? "Hide details" : "Details"}</a>
                 </div>
             </div>);
     }
 
     render() {
-        if (this.state.reStart) return <Start schemeId={this.props.schemeId} />;
+        const {schemeId, baseUrl} = this.props;
+        if (this.state.reStart) return <Launcher schemeId={schemeId} baseUrl = {baseUrl}/>;
         return (
             <div>
-                {this.props.isCancelled ? <Cancelled result={this.props.result} /> : <Result result={this.props.result} />}
+                <Result result={this.props.result} />
                 {this.renderDetailsLink()}
                 {this.renderDetails()}
-                <div className="row text-center mt-3">
+                <div className="row text-center mt-3 mb-3">
                     <div className="col-12">
                         <button className="btn btn-secondary pl-5 pr-5" onClick={this.reStart}>Restart>></button>
                     </div>
@@ -74,3 +65,13 @@ export default class Finish extends React.Component {
         );
     }
 }
+
+const propTypes = {
+    schemeId: PropTypes.number.isRequired,
+    result: PropTypes.object.isRequired,
+    mode: PropTypes.object.isRequired,
+    settings: PropTypes.object.isRequired,
+    baseUrl: PropTypes.string.isRequired
+};
+
+Finish.propTypes = propTypes;

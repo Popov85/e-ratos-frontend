@@ -1,55 +1,54 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { FaInfoCircle } from 'react-icons/fa';
+
+
 
 class ResultByQuestions extends Component {
 
-    renderScore(score) {
-        const isCritical = (score === 0);
-        var color = "success"
-        if (isCritical) color = "danger"
+    renderQuestion(questionResult) {
+        const { questionId, question } = questionResult.question;
         return (
-            <div className={"col-1 text-center border alert-sm alert-" + color}>
-                {score + "%"}
-            </div>);
-    }
-
-    renderQuestion(resultPerQuestion) {
-        const { questionId, question } = resultPerQuestion.question;
-        return (
-            <div key={questionId} className="row bg-light m-1">
-                <div className="col-10 text-left border">
-                    {question}
+            <div key={questionId} className="row bg-light no-gutters mt-1 mb-1">
+                <div className="col text-truncate text-secondary border">
+                    <span title={"Question #" + questionId + ": " + question}>{question}</span>
                 </div>
-                {this.renderScore(resultPerQuestion.score)}
-                <div className="col-1 text-center border alert-sm alert-info">
-                    <a href="">details</a>
+                <div className={`col-auto alert-sm alert-${(questionResult.score === 0) ? "danger" : "success"}`}>
+                    <div className="row text-center">
+                        <div className="col-12">
+                            <span className = "mr-1" title="Result on this question">{questionResult.score.toFixed(1) + "%"}</span>
+                            <a href="#" className="badge badge-info float-right btn h-100" onClick={() => this.showDetails()} title = "Show details on this question">
+                                <FaInfoCircle color="white" />
+                            </a>
+                        </div>
+                    </div>
                 </div>
-            </div>);
+            </div>
+            );
     }
-
 
     render() {
         const { displayQuestionResults } = this.props.settings;
         if (!displayQuestionResults) return null;
         var output = [];
-        this.props.resultPerQuestion.map(q => output.push(this.renderQuestion(q)));
+        this.props.questionResults.map(q => output.push(this.renderQuestion(q)));
         return (
             <div className="row mt-3">
-                <div className="col-xs-0 col-sm-1 col-md-1 col-lg-2 col-xl-2" />
-                <div className="col-xs-12 col-sm-10 col-md-10 col-lg-8 col-xl-8">
+                <div className="col-xs-0 col-md-1" />
+                <div className="col-xs-12 col-md-10">
                     <details open={true}>
-                        <summary className="border">By questions</summary>
+                        <summary className="border text-secondary">By questions</summary>
                         {output}
                     </details>
                 </div>
-                <div className="col-xs-0 col-sm-1 col-md-1 col-lg-2 col-xl-2" />
+                <div className="col-xs-0 col-md-1" />
             </div>);
     }
 }
 
 ResultByQuestions.propTypes = {
     settings: PropTypes.object.isRequired,
-    resultPerQuestion: PropTypes.array.isRequired
+    questionResults: PropTypes.array.isRequired
 };
 
 export default ResultByQuestions;
