@@ -142,7 +142,10 @@ export default class Batch extends React.Component {
         const url = baseUrl + cancelUrl;
         fetch(url, {
             method: 'GET',
-            credentials: 'same-origin'
+            credentials: 'same-origin',
+            headers: new Headers({ 
+                'Accept': 'application/json'
+            }),
         }).then(response => {
             if (!response.ok) throw Error(CANCEL.forFailure);
             return response.json();
@@ -180,7 +183,10 @@ export default class Batch extends React.Component {
         const url = baseUrl + nextUrl;
         fetch(url, {
             method: 'POST',
-            headers: new Headers({ 'content-type': 'application/json' }),
+            headers: new Headers({ 
+                'content-type': 'application/json', 
+                'Accept': 'application/json' 
+            }),
             credentials: 'same-origin',
             body: JSON.stringify(batchOut)
         }).then(response => {
@@ -218,8 +224,9 @@ export default class Batch extends React.Component {
     tryFinishAPICall() {
         const url = baseUrl + finishUrl;
         fetch(url, {
-            method: 'POST',
-            credentials: 'same-origin'
+            method: 'GET',
+            credentials: 'same-origin',
+            headers: new Headers({ 'Accept': 'application/json' }),
         }).then(response => {
             if (!response.ok) throw Error(FINISH.forFailure);
             return response.json();
