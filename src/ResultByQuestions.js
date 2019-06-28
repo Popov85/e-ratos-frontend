@@ -6,6 +6,10 @@ import { FaInfoCircle } from 'react-icons/fa';
 
 class ResultByQuestions extends Component {
 
+    showDetails(id) {
+        alert("Details on this questionId = "+id);
+    }
+
     renderQuestion(questionResult) {
         const { questionId, question } = questionResult.question;
         return (
@@ -17,7 +21,7 @@ class ResultByQuestions extends Component {
                     <div className="row text-center">
                         <div className="col-12">
                             <span className = "mr-1" title="Result on this question">{questionResult.score.toFixed(1) + "%"}</span>
-                            <a href="#" className="badge badge-info float-right btn h-100" onClick={() => this.showDetails()} title = "Show details on this question">
+                            <a href="#" className="badge badge-info float-right btn h-100" onClick={(questionId) => this.showDetails(questionId)} title = "Show details on this question">
                                 <FaInfoCircle color="white" />
                             </a>
                         </div>

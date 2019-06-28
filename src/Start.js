@@ -88,6 +88,7 @@ export default class Start extends React.Component {
     renderFailure() {
         return (
             <div className="mt-3" >
+                <div className = "mb-2"><Logo/></div>
                 <Failure message={this.state.error.message} />
                 <div className="row mt-3">
                     <div className="col-12 text-center">
@@ -100,7 +101,7 @@ export default class Start extends React.Component {
 
     render() {
         const { isStarted, isOpened, isLoaded, error} = this.state;
-        if (!isLoaded) return (<Spinner />);
+        if (!isLoaded) return (<div><Logo/><Spinner /></div>);
         if (isStarted) return this.renderBatch();
         if (isOpened) return this.renderOpened();
         if (error) return this.renderFailure();
@@ -108,7 +109,7 @@ export default class Start extends React.Component {
         const { schemeId, name, questions, timings, staff } = this.props.schemeInfo;
         return (
             <div className="mt-1">
-                <Logo/>
+                <div className = "mb-2"><Logo/></div>
                 <Header title="WELCOME" color="alert-success" />
                 <div className="row">
                     <div className="col-xs-1 col-sm-2 col-md-3 col-lg-4 col-xl-4" />

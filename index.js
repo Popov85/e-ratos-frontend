@@ -9,6 +9,8 @@ import Cancelled from "./src/Cancelled";
 import Opened from "./src/Opened";
 import Header from "./src/Header";
 
+import ModalTest from "./src/ModalTest";
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const testMode = {
@@ -1677,6 +1679,8 @@ let schemeId = params.get('schemeId');
 
 const baseUrl = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
 const realBaseUrl = (!baseUrl || baseUrl ==="http://localhost:1234") ? "http://localhost:8090" : baseUrl;
+
+//ReactDOM.render(<ModalTest isModal = {true}/>, document.getElementById('app'));
 
 ReactDOM.render(<Launcher schemeId={(!schemeId) ? 1 : schemeId} baseUrl = {realBaseUrl}/>, document.getElementById('app'));
 //ReactDOM.render(<Start schemeId={(!schemeId) ? 1 : schemeId} baseUrl = {realBaseUrl}/>, document.getElementById('app'));

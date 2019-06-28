@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Logo from './Logo';
 import Spinner from './Spinner';
 import Failure from './Failure';
 import Start from './Start';
@@ -53,6 +54,7 @@ class Info extends Component {
     renderFailure() {
         return (
             <div className="mt-3" >
+                <div className = "mb-2"><Logo/></div>
                 <Failure message={this.state.error.message} />
                 <div className="row mt-3">
                     <div className="col-12 text-center">
@@ -67,11 +69,26 @@ class Info extends Component {
     render() {
         const { isLoaded, error, schemeInfo } = this.state;
         const { requestedInfo, baseUrl, isStart } = this.props;
-        if (!isLoaded) return (<Spinner message="Loading info from server" />);
+        if (!isLoaded)
+            return (
+                <div>
+                    <div className = "mb-2"><Logo/></div>
+                    <Spinner message="Loading info from server" />
+                </div>);
         if (error) return this.renderFailure();
+        
         // Return either Start or Opened
-        if (isStart) return <Start schemeInfo={schemeInfo} baseUrl={baseUrl} />
-        if (!isStart) return <Opened schemeInfo={requestedInfo} openedInfo = {schemeInfo} baseUrl={baseUrl} />
+        if (isStart)
+            return <Start
+                schemeInfo={schemeInfo}
+                baseUrl={baseUrl} />
+
+        if (!isStart)
+            return <Opened
+                schemeInfo={requestedInfo}
+                openedInfo={schemeInfo}
+                baseUrl={baseUrl} />
+        
         throw Error("Wrong page parameter");
     }
 }
