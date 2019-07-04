@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 import Info from './Info';
 
 const Launcher = props => {
-    const { schemeId, baseUrl} = props;
-    return (
-        <div className="container-fluid">
-            <Info schemeId = {schemeId} baseUrl = {baseUrl} isStart = {true}/>
-        </div>
-    );
+    const { schemeId, baseUrl } = props;
+    return <Info
+        schemeId={schemeId}
+        baseUrl={baseUrl}
+        isStart={true} />
 };
 
 Launcher.propTypes = {

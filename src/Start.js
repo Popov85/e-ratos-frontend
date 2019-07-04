@@ -106,7 +106,7 @@ export default class Start extends React.Component {
         if (isOpened) return this.renderOpened();
         if (error) return this.renderFailure();
 
-        const { schemeId, name, questions, timings, staff } = this.props.schemeInfo;
+        const { schemeId, name, questions, timings, staff, settings, mode } = this.props.schemeInfo;
         return (
             <div className="mt-1">
                 <div className = "mb-2"><Logo/></div>
@@ -119,19 +119,10 @@ export default class Start extends React.Component {
 
                             <div className="row mb-1">
                                 <div className="col-3">
-                                    <div className="text-secondary">ID:</div>
-                                </div>
-                                <div className="col-9">
-                                    <div className="alert-sm alert-info" title="ID of scheme you are going to take">{schemeId}</div>
-                                </div>
-                            </div>
-
-                            <div className="row mb-1">
-                                <div className="col-3">
                                     <div className="text-secondary">scheme:</div>
                                 </div>
                                 <div className="col-9">
-                                    <div className="alert-sm alert-info" title="Scheme name you are going to take">{name}</div>
+                                    <div className="alert-sm alert-info" title={"Scheme ID = "+schemeId}>{name}</div>
                                 </div>
                             </div>
 
@@ -149,7 +140,25 @@ export default class Start extends React.Component {
                                     <div className="text-secondary">time:</div>
                                 </div>
                                 <div className="col-9">
-                                    <div className="alert-sm alert-info" title="How many seconds per question you have">{timings + " s"}</div>
+                                    <div className="alert-sm alert-info" title="How many seconds per question you have">{(timings<0) ? "unlimited": (timings + " s per question")}</div>
+                                </div>
+                            </div>
+
+                            <div className="row mb-1">
+                                <div className="col-3">
+                                    <div className="text-secondary">batch:</div>
+                                </div>
+                                <div className="col-9">
+                                    <div className="alert-sm alert-info" title="Is each batch limited in time?">{(settings.strictControlTimePerQuestion) ? "limited":"unlimited"}</div>
+                                </div>
+                            </div>
+
+                            <div className="row mb-1">
+                                <div className="col-3">
+                                    <div className="text-secondary">type:</div>
+                                </div>
+                                <div className="col-9">
+                                    <div className="alert-sm alert-info" title="Training (educational) or exam (controlling)? Training type allows skipping and pyramiding (dynamic behaviour)">{(mode.skipable || mode.pyramid) ? "training":"exam"}</div>
                                 </div>
                             </div>
 

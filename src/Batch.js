@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
+import Countdown from 'react-countdown-now';
 
 import Spinner from './Spinner';
 import Failure from './Failure';
@@ -56,6 +57,8 @@ export default class Batch extends React.Component {
 
             batch: this.props.batch,
 
+            timeSpent: 0,
+
             isLoaded: true,
             isModal: false,
             error: null,
@@ -67,19 +70,41 @@ export default class Batch extends React.Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.putResponse = this.putResponse.bind(this);
-
     }
 
-    componentDidUpdate() {
-        console.log("Results map updated!");
-        for (var [key, value] of this.state.responses) {
-            console.log(key + ' = ' + JSON.stringify(value));
-        }
+    componentDidMount() {
+        this.interval = setInterval(() => this.tick(), 1000);
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log("Component did update!");
+        /*if (this.state.responses !== prevState.responses) {
+            for (var [key, value] of this.state.responses) {
+                console.log(key + ' = ' + JSON.stringify(value));
+            }
+        }*/
+    }
+
+    componentDidCatch(error, info) {
+        console.error(error);
+        console.error(info.componentStack);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+
+
+    tick() {
+        this.setState(prevState => ({
+            timeSpent: prevState.timeSpent + 1
+        }));
     }
 
     setBatch(batch) {
         this.setState({
             batch: batch,
+            timeSpent: 0,
             isLoaded: true,
             isModal: false,
             error: null,
@@ -92,14 +117,6 @@ export default class Batch extends React.Component {
         newMap.set(id, response);
         this.setState({ responses: newMap });
     }
-
-    /*componentDidCatch(error, info) {
-        logComponentStackToMyService(info.componentStack);
-    }
-
-    static getDerivedStateFromError(error) {
-        return { error: true };
-    }*/
 
     changeView() {
         this.setState({ columns: (this.state.columns === 1) ? 2 : 1 });
@@ -143,7 +160,7 @@ export default class Batch extends React.Component {
         fetch(url, {
             method: 'GET',
             credentials: 'same-origin',
-            headers: new Headers({ 
+            headers: new Headers({
                 'Accept': 'application/json'
             }),
         }).then(response => {
@@ -181,16 +198,18 @@ export default class Batch extends React.Component {
 
     tryNextAPICall(batchOut) {
         const url = baseUrl + nextUrl;
+        console.log("Will send batch of responses = "
+            + JSON.stringify(batchOut));
         fetch(url, {
             method: 'POST',
-            headers: new Headers({ 
-                'content-type': 'application/json', 
-                'Accept': 'application/json' 
+            headers: new Headers({
+                'content-type': 'application/json',
+                'Accept': 'application/json'
             }),
             credentials: 'same-origin',
             body: JSON.stringify(batchOut)
         }).then(response => {
-            if (!response.ok) throw Error(NEXT.forFailure);
+            if (!response.ok) throw response;
             return response.json();
         }).then(response => {
             console.log("Successful next call!");
@@ -202,11 +221,22 @@ export default class Batch extends React.Component {
                 this.setBatch(response);
             }
         }).catch(error => {
-            console.error(error.message);
-            this.setState({
-                isLoaded: true,
-                error
-            });
+            try {
+                error.json().then(body => {
+                    // Handle business time-out case
+                    if (body.exception === 'RunOutOfTimeException') {
+                        this.reTryFinishAPICall();
+                    }
+                    this.setState({
+                        error: new Error(body.message)
+                    });
+                });
+            } catch (e) {
+                console.error(NEXT.forFailure);
+                this.setState({ error: new Error(NEXT.forFailure) });
+            } finally {
+                this.setState({ isLoaded: true });
+            }
         })
     }
 
@@ -306,12 +336,20 @@ export default class Batch extends React.Component {
 
     renderTitle() {
         const { timeLeft, questionsLeft, batchesLeft, batchTimeLimit } = this.state.batch;
+        const timeRemaining = timeLeft - this.state.timeSpent;
+        const batchTimeRemaining = batchTimeLimit - this.state.timeSpent;
         return (
             <p className="text-center text-secondary text-small">
-                <b>Time left: </b> {timeLeft < 0 ? "not restricted" : timeLeft}
-                | <b>questions left: </b> {questionsLeft}
-                | <b>batches left: </b>{batchesLeft}
-                | <b>batch limit: </b>{batchTimeLimit < 0 ? "not restricted" : batchTimeLimit}
+                <b>Time left: </b>
+                {timeLeft < 0 ? "not restricted" :
+                    <Countdown key="session" date={Date.now() + ((timeRemaining <= 0) ? 0 : timeRemaining * 1000)} daysInHours = {true}/>}
+                | <b>questions left: </b>
+                {questionsLeft}
+                | <b>batches left: </b>
+                {batchesLeft}
+                | <b>batch limit: </b>
+                {batchTimeLimit < 0 ? "not restricted" :
+                    <Countdown key="batch" date={Date.now() + ((batchTimeRemaining <= 0) ? 0 : batchTimeRemaining * 1000)} daysInHours = {true}/>}
             </p>);
     }
 
@@ -387,7 +425,7 @@ export default class Batch extends React.Component {
     }
 
     renderTwo(two) {
-        if (two.length===1) return this.renderOne(two[0]);
+        if (two.length === 1) return this.renderOne(two[0]);
         const key = two[0].questionId.toString() + two[1].questionId.toString();
         return (
             <div className="row mt-0 mb-2" key={key}>

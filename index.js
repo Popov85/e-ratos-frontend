@@ -9,8 +9,6 @@ import Cancelled from "./src/Cancelled";
 import Opened from "./src/Opened";
 import Header from "./src/Header";
 
-import ModalTest from "./src/ModalTest";
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const testMode = {
@@ -45,6 +43,7 @@ const testResult = {
     percent: 68,
     grade: 3,
     points: 1,
+    isTimeouted: false,
     themeResults: [
         {
             theme: {
@@ -73,7 +72,9 @@ const testResult = {
     ],
     questionResults: [
         {
-            question: {
+          bounty: null,
+          penalty: null,
+          question: {
                 className: "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
                 questionId: 1,
                 question: 'Question #1',
@@ -108,7 +109,9 @@ const testResult = {
             score: 100
         },
         {
-            question: {
+          bounty: null,
+          penalty: null,  
+          question: {
                 className: "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
                 questionId: 2,
                 question: 'Question #2',
@@ -143,7 +146,9 @@ const testResult = {
             score: 0
         },
         {
-            question: {
+          bounty: null,
+          penalty: null,  
+          question: {
                 className: "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
                 questionId: 3,
                 question: 'Question #3',
@@ -178,6 +183,8 @@ const testResult = {
             score: 50
         },
         {
+          bounty: null,
+          penalty: null,
             question: {
                 className: "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
                 questionId: 4,
@@ -214,6 +221,8 @@ const testResult = {
             score: 100
         },
         {
+          bounty: null,
+          penalty: null,
             question: {
                 className: "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
                 questionId: 5,
@@ -250,6 +259,8 @@ const testResult = {
             score: 100
         },
         {
+          bounty: null,
+          penalty: null,
             question: {
                 className: "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
                 questionId: 6,
@@ -286,6 +297,8 @@ const testResult = {
             score: 0
         },
         {
+          bounty: null,
+          penalty: null,
             question: {
                 className: "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
                 questionId: 7,
@@ -322,6 +335,8 @@ const testResult = {
             score: 100
         },
         {
+          bounty: null,
+          penalty: null,
             question: {
                 className: "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
                 questionId: 8,
@@ -358,6 +373,8 @@ const testResult = {
             score: 100
         },
         {
+          bounty: null,
+          penalty: null,
             question: {
                 className: "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
                 questionId: 9,
@@ -394,6 +411,8 @@ const testResult = {
             score: 100
         },
         {
+          bounty: null,
+          penalty: null,
             question: {
                 className: "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
                 questionId: 10,
@@ -439,6 +458,7 @@ const realTestResult = {
     "percent" : 38.46153846153846,
     "grade" : 2.0,
     "points" : 0,
+    "isTimeouted": true,
     "themeResults" : [ {
       "theme" : {
         "themeId" : 165,
@@ -448,6 +468,8 @@ const realTestResult = {
       "percent" : 38.46153846153847
     } ],
     "questionResults" : [ {
+      "bounty": null,
+      "penalty": null,
       "question" : {
         "className" : "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
         "questionId" : 31194,
@@ -509,6 +531,8 @@ const realTestResult = {
       },
       "score" : 100.0
     }, {
+      "bounty": null,
+      "penalty": null,
       "question" : {
         "className" : "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
         "questionId" : 37354,
@@ -570,6 +594,8 @@ const realTestResult = {
       },
       "score" : 0.0
     }, {
+      "bounty": null,
+      "penalty": null,
       "question" : {
         "className" : "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
         "questionId" : 6508,
@@ -623,6 +649,8 @@ const realTestResult = {
       },
       "score" : 0.0
     }, {
+      "bounty": null,
+      "penalty": null,
       "question" : {
         "className" : "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
         "questionId" : 7757,
@@ -692,6 +720,8 @@ const realTestResult = {
       },
       "score" : 0.0
     }, {
+      "bounty": null,
+      "penalty": null,
       "question" : {
         "className" : "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
         "questionId" : 23974,
@@ -761,6 +791,8 @@ const realTestResult = {
       },
       "score" : 100.0
     }, {
+      "bounty": null,
+      "penalty": null,
       "question" : {
         "className" : "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
         "questionId" : 10509,
@@ -830,6 +862,8 @@ const realTestResult = {
       },
       "score" : 100.0
     }, {
+      "bounty": null,
+      "penalty": null,
       "question" : {
         "className" : "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
         "questionId" : 9741,
@@ -883,6 +917,8 @@ const realTestResult = {
       },
       "score" : 0.0
     }, {
+      "bounty": null,
+      "penalty": null,
       "question" : {
         "className" : "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
         "questionId" : 39629,
@@ -944,6 +980,8 @@ const realTestResult = {
       },
       "score" : 0.0
     }, {
+      "bounty": null,
+      "penalty": null,
       "question" : {
         "className" : "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
         "questionId" : 14419,
@@ -1013,6 +1051,8 @@ const realTestResult = {
       },
       "score" : 100.0
     }, {
+      "bounty": null,
+      "penalty": null,
       "question" : {
         "className" : "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
         "questionId" : 35860,
@@ -1082,6 +1122,8 @@ const realTestResult = {
       },
       "score" : 0.0
     }, {
+      "bounty": null,
+      "penalty": null,
       "question" : {
         "className" : "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
         "questionId" : 19991,
@@ -1146,6 +1188,8 @@ const realTestResult = {
       },
       "score" : 0.0
     }, {
+      "bounty": null,
+      "penalty": null,
       "question" : {
         "className" : "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
         "questionId" : 6639,
@@ -1215,6 +1259,8 @@ const realTestResult = {
       },
       "score" : 100.0
     }, {
+      "bounty": null,
+      "penalty": null,
       "question" : {
         "className" : "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
         "questionId" : 28828,
@@ -1647,6 +1693,7 @@ const testSchemeInfo = {
     name: "Very long scheme name scheme name scheme name scheme name",
     questions: 20,
     timings: 20,
+    isEducational: true,
     author: "Andrey P.",
     mode: {
         modeId: 1,
@@ -1680,13 +1727,12 @@ let schemeId = params.get('schemeId');
 const baseUrl = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
 const realBaseUrl = (!baseUrl || baseUrl ==="http://localhost:1234") ? "http://localhost:8090" : baseUrl;
 
-//ReactDOM.render(<ModalTest isModal = {true}/>, document.getElementById('app'));
 
 ReactDOM.render(<Launcher schemeId={(!schemeId) ? 1 : schemeId} baseUrl = {realBaseUrl}/>, document.getElementById('app'));
 //ReactDOM.render(<Start schemeId={(!schemeId) ? 1 : schemeId} baseUrl = {realBaseUrl}/>, document.getElementById('app'));
 //ReactDOM.render(<Batch schemeInfo={testSchemeInfo} batch = {realBatch} baseUrl = {realBaseUrl}/>, document.getElementById('app'));
-// ReactDOM.render(<Finish schemeId = {10} result = {realTestResult} mode = {testMode} settings = {testSettings} baseUrl = {realBaseUrl}/>, document.getElementById('app'));
-//ReactDOM.render(<Result result = {testResult}/>, document.getElementById('app'));
+//ReactDOM.render(<Finish schemeId = {10} result = {realTestResult} mode = {testMode} settings = {testSettings} baseUrl = {realBaseUrl}/>, document.getElementById('app'));
+//ReactDOM.render(<Result result = {realTestResult}/>, document.getElementById('app'));
 //ReactDOM.render(<Cancelled schemeId = {17} result = {testResult} baseUrl = {realBaseUrl}/>, document.getElementById('app'));
 //ReactDOM.render(<Header title = "PREVIOUS IS OPENED"/>, document.getElementById('app'));
 //ReactDOM.render(<Opened schemeId = {17} mode = {testMode} settings = {testSettings} baseUrl = {realBaseUrl}/>, document.getElementById('app'));

@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Passed from "./Passed";
 import Point from "./Point";
+import TimeOut from "./TimeOut";
 
 const Result = props => {
-    const { user, scheme, passed, percent, grade, points } = props.result;
+    const { user, scheme, passed, percent, grade, points, isTimeouted } = props.result;
     return (
         <div className="row pt-5">
             <div className="col-xs-1 col-sm-2 col-md-3 col-lg-4" />
@@ -15,6 +16,8 @@ const Result = props => {
                         <Passed isPassed={passed} />
                     </div>
                 </div>
+
+                <TimeOut isTimeouted={isTimeouted}/>
 
                 <div className="bg-light">
 
@@ -55,7 +58,7 @@ const Result = props => {
                     </div>
 
                     <Point points={points}/>
-
+                
                 </div>
 
             </div>

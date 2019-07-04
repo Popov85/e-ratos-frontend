@@ -20,8 +20,8 @@ class ResultByQuestions extends Component {
                 <div className={`col-auto alert-sm alert-${(questionResult.score === 0) ? "danger" : "success"}`}>
                     <div className="row text-center">
                         <div className="col-12">
-                            <span className = "mr-1" title="Result on this question">{questionResult.score.toFixed(1) + "%"}</span>
-                            <a href="#" className="badge badge-info float-right btn h-100" onClick={(questionId) => this.showDetails(questionId)} title = "Show details on this question">
+                            <span className = "mr-1" title={"bounty="+((questionResult.bounty) ? questionResult.bounty : 0)+"%"+" | "+"penalty="+((questionResult.penalty) ? questionResult.penalty: 0)+"%"}>{questionResult.score.toFixed(1) + "%"}</span>
+                            <a href="#" className="badge badge-info float-right btn h-100" onClick={() => this.showDetails(questionId)} title = "Show details on this question">
                                 <FaInfoCircle color="white" />
                             </a>
                         </div>
