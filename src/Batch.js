@@ -76,14 +76,14 @@ export default class Batch extends React.Component {
         this.interval = setInterval(() => this.tick(), 1000);
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    /*componentDidUpdate(prevProps, prevState, snapshot) {
         console.log("Component did update!");
-        /*if (this.state.responses !== prevState.responses) {
+        if (this.state.responses !== prevState.responses) {
             for (var [key, value] of this.state.responses) {
                 console.log(key + ' = ' + JSON.stringify(value));
             }
-        }*/
-    }
+        }
+    }*/
 
     componentDidCatch(error, info) {
         console.error(error);
@@ -132,6 +132,8 @@ export default class Batch extends React.Component {
         for (let [k, v] of this.state.responses)
             responses[k] = v
         batchOut.responses = responses;
+        console.log("Preapared batch of responses = "
+            + JSON.stringify(batchOut));
         return batchOut;
     }
 
@@ -156,7 +158,7 @@ export default class Batch extends React.Component {
     }
 
     tryCancelAPICall() {
-        const url = baseUrl + cancelUrl;
+        const url = baseUrl + cancelUrl + "?schemeId=" + this.props.schemeInfo.schemeId;
         fetch(url, {
             method: 'GET',
             credentials: 'same-origin',
@@ -178,7 +180,6 @@ export default class Batch extends React.Component {
             console.error("Error occurred = " + error.message);
             this.setState({
                 isLoaded: true,
-                isModal: false,
                 error
             });
         })
@@ -197,9 +198,7 @@ export default class Batch extends React.Component {
     }
 
     tryNextAPICall(batchOut) {
-        const url = baseUrl + nextUrl;
-        console.log("Will send batch of responses = "
-            + JSON.stringify(batchOut));
+        const url = baseUrl + nextUrl + "?schemeId=" + this.props.schemeInfo.schemeId;
         fetch(url, {
             method: 'POST',
             headers: new Headers({
@@ -212,7 +211,7 @@ export default class Batch extends React.Component {
             if (!response.ok) throw response;
             return response.json();
         }).then(response => {
-            console.log("Successful next call!");
+            //console.log("Successful next call!");
             console.log(response);
             if (response.batch.length === 0) {
                 // Empty batch detected, do finish call
@@ -252,7 +251,7 @@ export default class Batch extends React.Component {
     }
 
     tryFinishAPICall() {
-        const url = baseUrl + finishUrl;
+        const url = baseUrl + finishUrl+ "?schemeId=" + this.props.schemeInfo.schemeId;
         fetch(url, {
             method: 'GET',
             credentials: 'same-origin',
@@ -290,7 +289,7 @@ export default class Batch extends React.Component {
     }
 
     tryFinishBatchAPICall(batchOut) {
-        const url = baseUrl + finishBatchUrl;
+        const url = baseUrl + finishBatchUrl+ "?schemeId=" + this.props.schemeInfo.schemeId;
         fetch(url, {
             method: 'POST',
             headers: new Headers({ 'content-type': 'application/json' }),
@@ -342,14 +341,14 @@ export default class Batch extends React.Component {
             <p className="text-center text-secondary text-small">
                 <b>Time left: </b>
                 {timeLeft < 0 ? "not restricted" :
-                    <Countdown key="session" date={Date.now() + ((timeRemaining <= 0) ? 0 : timeRemaining * 1000)} daysInHours = {true}/>}
+                    <Countdown key="session" date={Date.now() + ((timeRemaining <= 0) ? 0 : timeRemaining * 1000)} daysInHours={true} />}
                 | <b>questions left: </b>
                 {questionsLeft}
                 | <b>batches left: </b>
                 {batchesLeft}
                 | <b>batch limit: </b>
                 {batchTimeLimit < 0 ? "not restricted" :
-                    <Countdown key="batch" date={Date.now() + ((batchTimeRemaining <= 0) ? 0 : batchTimeRemaining * 1000)} daysInHours = {true}/>}
+                    <Countdown key="batch" date={Date.now() + ((batchTimeRemaining <= 0) ? 0 : batchTimeRemaining * 1000)} daysInHours={true} />}
             </p>);
     }
 

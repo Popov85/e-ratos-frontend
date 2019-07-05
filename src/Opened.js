@@ -31,7 +31,7 @@ class Opened extends Component {
     }
 
     tryCancelAPICall() {
-        var url = this.props.baseUrl + cancelUrl;
+        var url = this.props.baseUrl + cancelUrl + "?schemeId=" + this.props.schemeInfo.schemeId;
         fetch(url, {
             method: 'GET',
             credentials: 'same-origin'
@@ -60,7 +60,7 @@ class Opened extends Component {
     }
 
     tryCurrentAPICall() {
-        var url = this.props.baseUrl + currentUrl;
+        var url = this.props.baseUrl + currentUrl + "?schemeId=" + this.props.schemeInfo.schemeId;
         fetch(url, {
             method: 'GET',
             credentials: 'same-origin'
@@ -85,20 +85,26 @@ class Opened extends Component {
 
     renderCancelled() {
         const { schemeInfo, baseUrl } = this.props
-        return <Cancelled schemeId = {schemeInfo.schemeId} result={this.state.result} baseUrl = {baseUrl} />;
+        return <Cancelled
+            schemeId={schemeInfo.schemeId}
+            result={this.state.result}
+            baseUrl={baseUrl} />;
     }
 
     renderContinue() {
-        const { openedInfo, baseUrl } = this.props
-        return <Batch schemeInfo={openedInfo} batch = {this.state.batch} baseUrl={baseUrl} />;
+        const { schemeInfo, baseUrl } = this.props
+        return <Batch
+            schemeInfo={schemeInfo}
+            batch={this.state.batch}
+            baseUrl={baseUrl} />;
     }
 
     renderButtons() {
         return (
             <div className="row text-center mt-3">
                 <div className="col-12">
-                    <button className="btn btn-secondary mr-1" onClick={() => this.reTryCancelAPICall()} title = "Cancel the opened session and then return to the requested one!">Finish>></button>
-                    <button className="btn btn-secondary" onClick={() => this.reTryCurrentAPICall()} title = "Continue the opened session">Continue>></button>
+                    <button className="btn btn-secondary mr-1" onClick={() => this.reTryCancelAPICall()} title="Cancel the opened session and then return to the requested one!">Finish>></button>
+                    <button className="btn btn-secondary" onClick={() => this.reTryCurrentAPICall()} title="Continue the opened session">Continue>></button>
                 </div>
             </div>
         );
@@ -115,13 +121,13 @@ class Opened extends Component {
 
     render() {
         const { isLoaded, isClosed, isContinued, error } = this.state;
-        if (!isLoaded) return <Spinner message = "Performing cancel API call"/>;
+        if (!isLoaded) return <Spinner message="Performing cancel API call" />;
         if (isClosed) return this.renderCancelled();
         if (isContinued) return this.renderContinue();
         if (error) return this.renderFailure();
         return (
             <div className="mt-1">
-                <Logo/>
+                <Logo />
                 <Header title="PREVIOUS IS OPENED" color="alert-warning" />
                 {this.renderButtons()}
             </div>);
@@ -130,7 +136,6 @@ class Opened extends Component {
 
 Opened.propTypes = {
     schemeInfo: PropTypes.object.isRequired,
-    openedInfo: PropTypes.object.isRequired,
     baseUrl: PropTypes.string.isRequired
 };
 

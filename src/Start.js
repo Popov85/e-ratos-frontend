@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Info from './Info';
+import Opened from './Opened';
 import Batch from './Batch';
 import Spinner from './Spinner';
 import Failure from './Failure';
@@ -16,7 +16,6 @@ export default class Start extends React.Component {
         super(props);
         this.state = {
             isOpened: false,
-            openedId: null,
 
             isStarted: false,
 
@@ -54,12 +53,14 @@ export default class Start extends React.Component {
         }).catch(error => {
             console.error(error);
             try {
-                error.json().then(body => {
-                    console.log("Opened schemeId = "+body.schemeId);
-                    this.setState({ 
-                        isOpened: true, 
-                        openedId: body.schemeId 
-                    });
+                error.json().then((body) => {
+                    if (body.exception === "SessionAlreadyOpenedException") {
+                        console.error("Already Opened schemeId = "
+                            + this.props.schemeInfo.schemeId);
+                        this.setState({ isOpened: true });
+                    } else {
+                        this.setState({ error: new Error("Unexpected server error!") });
+                    }
                 });
             } catch (e) {
                 console.error("This is not promise!");
@@ -71,24 +72,24 @@ export default class Start extends React.Component {
     }
 
     renderBatch() {
+        const { schemeInfo, baseUrl } = this.props;
         return <Batch
-            schemeInfo={this.props.schemeInfo}
-            batch={this.state.batch}
-            baseUrl={this.props.baseUrl} />
+            schemeInfo={schemeInfo}
+            baseUrl={baseUrl}
+            batch={this.state.batch}/>
     }
 
     renderOpened() {
-        return <Info
-            schemeId={this.state.openedId}
-            requestedInfo={this.props.schemeInfo}
-            baseUrl={this.props.baseUrl}
-            isStart={false} />
+        const { schemeInfo, baseUrl } = this.props;
+        return <Opened
+            schemeInfo={schemeInfo}
+            baseUrl={baseUrl} />
     }
 
     renderFailure() {
         return (
             <div className="mt-3" >
-                <div className = "mb-2"><Logo/></div>
+                <div className="mb-2"><Logo /></div>
                 <Failure message={this.state.error.message} />
                 <div className="row mt-3">
                     <div className="col-12 text-center">
@@ -100,8 +101,8 @@ export default class Start extends React.Component {
     }
 
     render() {
-        const { isStarted, isOpened, isLoaded, error} = this.state;
-        if (!isLoaded) return (<div><Logo/><Spinner /></div>);
+        const { isStarted, isOpened, isLoaded, error } = this.state;
+        if (!isLoaded) return (<div><Logo /><Spinner /></div>);
         if (isStarted) return this.renderBatch();
         if (isOpened) return this.renderOpened();
         if (error) return this.renderFailure();
@@ -109,7 +110,7 @@ export default class Start extends React.Component {
         const { schemeId, name, questions, timings, staff, settings, mode } = this.props.schemeInfo;
         return (
             <div className="mt-1">
-                <div className = "mb-2"><Logo/></div>
+                <div className="mb-2"><Logo /></div>
                 <Header title="WELCOME" color="alert-success" />
                 <div className="row">
                     <div className="col-xs-1 col-sm-2 col-md-3 col-lg-4 col-xl-4" />
@@ -122,7 +123,7 @@ export default class Start extends React.Component {
                                     <div className="text-secondary">scheme:</div>
                                 </div>
                                 <div className="col-9">
-                                    <div className="alert-sm alert-info" title={"Scheme ID = "+schemeId}>{name}</div>
+                                    <div className="alert-sm alert-info" title={"Scheme ID = " + schemeId}>{name}</div>
                                 </div>
                             </div>
 
@@ -140,7 +141,7 @@ export default class Start extends React.Component {
                                     <div className="text-secondary">time:</div>
                                 </div>
                                 <div className="col-9">
-                                    <div className="alert-sm alert-info" title="How many seconds per question you have">{(timings<0) ? "unlimited": (timings + " s per question")}</div>
+                                    <div className="alert-sm alert-info" title="How many seconds per question you have">{(timings < 0) ? "unlimited" : (timings + " s per question")}</div>
                                 </div>
                             </div>
 
@@ -149,7 +150,7 @@ export default class Start extends React.Component {
                                     <div className="text-secondary">batch:</div>
                                 </div>
                                 <div className="col-9">
-                                    <div className="alert-sm alert-info" title="Is each batch limited in time?">{(settings.strictControlTimePerQuestion) ? "limited":"unlimited"}</div>
+                                    <div className="alert-sm alert-info" title="Is each batch limited in time?">{(settings.strictControlTimePerQuestion) ? "limited" : "unlimited"}</div>
                                 </div>
                             </div>
 
@@ -158,7 +159,7 @@ export default class Start extends React.Component {
                                     <div className="text-secondary">type:</div>
                                 </div>
                                 <div className="col-9">
-                                    <div className="alert-sm alert-info" title="Training (educational) or exam (controlling)? Training type allows skipping and pyramiding (dynamic behaviour)">{(mode.skipable || mode.pyramid) ? "training":"exam"}</div>
+                                    <div className="alert-sm alert-info" title="Training (educational) or exam (controlling)? Training type allows skipping and pyramiding (dynamic behaviour)">{(mode.skipable || mode.pyramid) ? "training" : "exam"}</div>
                                 </div>
                             </div>
 

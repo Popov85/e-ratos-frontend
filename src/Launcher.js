@@ -6,8 +6,7 @@ const Launcher = props => {
     const { schemeId, baseUrl } = props;
     return <Info
         schemeId={schemeId}
-        baseUrl={baseUrl}
-        isStart={true} />
+        baseUrl={baseUrl}/>
 };
 
 Launcher.propTypes = {

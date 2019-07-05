@@ -4,8 +4,6 @@ import Logo from './Logo';
 import Spinner from './Spinner';
 import Failure from './Failure';
 import Start from './Start';
-import Opened from './Opened';
-
 
 class Info extends Component {
 
@@ -68,7 +66,7 @@ class Info extends Component {
 
     render() {
         const { isLoaded, error, schemeInfo } = this.state;
-        const { requestedInfo, baseUrl, isStart } = this.props;
+        const { baseUrl} = this.props;
         if (!isLoaded)
             return (
                 <div>
@@ -77,27 +75,16 @@ class Info extends Component {
                 </div>);
         if (error) return this.renderFailure();
         
-        // Return either Start or Opened
-        if (isStart)
-            return <Start
+        // Return Start
+        return <Start
                 schemeInfo={schemeInfo}
                 baseUrl={baseUrl} />
-
-        if (!isStart)
-            return <Opened
-                schemeInfo={requestedInfo}
-                openedInfo={schemeInfo}
-                baseUrl={baseUrl} />
-        
-        throw Error("Wrong page parameter");
     }
 }
 
 Info.propTypes = {
     schemeId: PropTypes.number.isRequired,
-    requestedInfo: PropTypes.object,
-    baseUrl: PropTypes.string.isRequired,
-    isStart: PropTypes.bool.isRequired
+    baseUrl: PropTypes.string.isRequired
 };
 
 export default Info;
