@@ -318,6 +318,7 @@ export default class Batch extends React.Component {
     }
 
     handleSubmit(event) {
+        
         event.preventDefault();
 
         const { skipable, pyramid } = this.props.schemeInfo.mode;

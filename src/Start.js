@@ -26,6 +26,25 @@ export default class Start extends React.Component {
         }
     }
 
+    logout() {
+        const url = this.props.baseUrl + "/logout";
+        fetch(url, {
+            method: 'POST',
+            credentials: 'same-origin'
+        }).then(response => {
+            if (!response.ok) throw Error("Failed logout request...");
+            return response.text();
+        }).then(() => {
+            window.location.href = this.props.baseUrl + "/login?logout";
+        }).catch(error => {
+            console.error("Error occurred = " + error.message);
+            this.setState({
+                isLoaded: true,
+                error
+            });
+        })
+    }
+
     reTryStartAPICall() {
         this.setState({ isLoaded: false, error: null });
         this.tryStartAPICall();
@@ -55,8 +74,6 @@ export default class Start extends React.Component {
             try {
                 error.json().then((body) => {
                     if (body.exception === "SessionAlreadyOpenedException") {
-                        console.error("Already Opened schemeId = "
-                            + this.props.schemeInfo.schemeId);
                         this.setState({ isOpened: true });
                     } else {
                         this.setState({ error: new Error("Unexpected server error!") });
@@ -76,7 +93,7 @@ export default class Start extends React.Component {
         return <Batch
             schemeInfo={schemeInfo}
             baseUrl={baseUrl}
-            batch={this.state.batch}/>
+            batch={this.state.batch} />
     }
 
     renderOpened() {
@@ -177,7 +194,12 @@ export default class Start extends React.Component {
                 </div>
                 <div className="row text-center mt-3">
                     <div className="col-12">
-                        <button className="btn btn-info pl-5 pr-5" onClick={() => this.reTryStartAPICall()}>Start>></button>
+                        <button className="btn btn-info pl-5 pr-5 mr-1" onClick={() => this.reTryStartAPICall()}>Start>></button>
+                    </div>
+                </div>
+                <div className="row text-center mt-3">
+                    <div className="col-12">
+                        <a href="#" class="badge badge-secondary" onClick={() => this.logout()}>Logout</a>
                     </div>
                 </div>
             </div>)

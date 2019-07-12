@@ -23,3 +23,12 @@
   overflow-x: hidden;
   overflow-y: scroll;
 }
+
+.custom-control-label:before{
+  background-color:white;
+}
+
+.custom-checkbox .custom-control-input:checked~.custom-control-label::before{
+  border-color: #17a2b8;
+  background-color:#17a2b8;
+}
