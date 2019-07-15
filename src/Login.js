@@ -1,13 +1,28 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Modal from 'react-modal';
 import LogoMini from './LogoMini';
 import Failure from "./Failure";
+import Spinner from './Spinner';
 
 import { FaUser, FaEye, FaEyeSlash, FaReact } from 'react-icons/fa';
 
 import '../main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+const modalStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        border: 0,
+        background: 'transparent'
+    }
+};
 
 class Login extends Component {
 
@@ -23,6 +38,7 @@ class Login extends Component {
             isEmailValid: "undefined",
             isPasswordValid: "undefined",
 
+            isModal: false,
             isLoaded: true,
             error: null
         };
@@ -39,14 +55,16 @@ class Login extends Component {
         const isPasswordValid = this.validatePassword();
         if (!isEmailValid || !isPasswordValid) {
             this.setState({
-                isEmailValid: isEmailValid, 
-                isPasswordValid: isPasswordValid, 
-                error: null });
+                isEmailValid: isEmailValid,
+                isPasswordValid: isPasswordValid,
+                error: null
+            });
             return false;
         }
         this.setState({
             isEmailValid: "undefined",
             isPasswordValid: "undefined",
+            isModal: true,
             isLoaded: false,
             error: null
         });
@@ -72,6 +90,7 @@ class Login extends Component {
         }).catch(error => {
             console.error("Error occurred = " + error.message);
             this.setState({
+                isModal: false,
                 error
             });
         })
@@ -107,7 +126,7 @@ class Login extends Component {
             className={`form-control ${(this.state.isPasswordValid === 'undefined') ? '' : (this.state.isPasswordValid) ? 'is-valid' : 'is-invalid'}`}
             placeholder="password"
             value={this.state.password}
-            onChange={this.handlePasswordChange}/>);
+            onChange={this.handlePasswordChange} />);
     }
 
     renderEmailFeedback() {
@@ -124,6 +143,21 @@ class Login extends Component {
         return (<div className="valid-feedback">Password looks good!</div>);
     }
 
+    renderModal() {
+        return (
+            <Modal
+                isOpen={this.state.isModal}
+                style={modalStyles}
+                contentLabel="Authorizing"
+                ariaHideApp={false}
+                shouldCloseOnOverlayClick={false}
+                shouldCloseOnEsc={false}>
+                <div className="text-center">
+                    <Spinner message="Authentication..." />
+                </div>
+            </Modal>);
+    }
+
     renderFailure() {
         if (!this.state.error) return null;
         return (
@@ -135,6 +169,7 @@ class Login extends Component {
     render() {
         return (
             <div className="container-fluid">
+                {this.renderModal()}
                 <LogoMini />
                 <div className="row mt-1">
                     <div className="col-1 col-sm-2 col-md-3 col-lg-4"></div>
@@ -147,7 +182,7 @@ class Login extends Component {
                                         <div className="input-group-prepend">
                                             <span className="input-group-text bg-info"><FaUser color="white" /></span>
                                         </div>
-                                        <input type="text" className={`form-control ${ (this.state.isEmailValid==='undefined') ? '': (this.state.isEmailValid) ? 'is-valid' : 'is-invalid' }`} placeholder="e-mail"
+                                        <input type="text" className={`form-control ${(this.state.isEmailValid === 'undefined') ? '' : (this.state.isEmailValid) ? 'is-valid' : 'is-invalid'}`} placeholder="e-mail"
                                             value={this.state.username} onChange={this.handleUsernameChange} />
                                         {this.renderEmailFeedback()}
                                     </div>
@@ -171,7 +206,7 @@ class Login extends Component {
                                     </div>
                                 </form>
                             </div>
-                            <div className="card-footer">
+                            <div className="card-footer pt-0 pb-0">
                                 <div className="text-center text-secondary">
                                     <small>Don't have an account? <a href="#">Sign Up</a></small>
                                 </div>
@@ -181,7 +216,7 @@ class Login extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="col-1 col-sm-2 col-md-3 col-lg-4"></div>
+                    <div className="col-1 col-sm-2 col-md-3 col-lg-4" />
 
                 </div>
             </div>
