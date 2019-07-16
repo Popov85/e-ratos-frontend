@@ -32,7 +32,3 @@
   border-color: #17a2b8;
   background-color:#17a2b8;
 }
-
-.modal-open .container-fluid, .modal-open  .container {
-  -webkit-filter: blur(5px) grayscale(90%);
-}

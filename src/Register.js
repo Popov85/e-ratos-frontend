@@ -5,19 +5,17 @@ import LogoMini from './LogoMini';
 import Failure from "./Failure";
 import { FaUser, FaEye, FaEyeSlash } from 'react-icons/fa';
 
-import UtilsValidation from './UtilsValidation';
-
 import '../main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-class Login extends Component {
+class Register extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            username: "student@example.com",
-            password: "dT09Rx06",
-            isRemember: false,
+            name: "",
+            surname: "",
+            email: "",
 
             showPassword: false,
 
@@ -30,11 +28,14 @@ class Login extends Component {
         };
         this.handleAuthentication = this.handleAuthentication.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+
+        this.validateEmail = this.validateEmail.bind(this);
+        this.validatePassword = this.validatePassword.bind(this);
     }
 
     preTryAuthenticate() {
-        const isEmailValid = UtilsValidation.isEmailValid(this.state.username); //this.validateEmail();
-        const isPasswordValid = UtilsValidation.isPasswordValid(this.state.password); // this.validatePassword();
+        const isEmailValid = this.validateEmail();
+        const isPasswordValid = this.validatePassword();
         if (!isEmailValid || !isPasswordValid) {
             this.setState({
                 isEmailValid: isEmailValid,
@@ -104,13 +105,13 @@ class Login extends Component {
         this.setState({ showPassword: !this.state.showPassword });
     }
 
-    /*validateEmail() {
-        return UtilsValidation.isEmailValid(this.state.username);
-    }*/
+    validateEmail() {
+        return (this.state.username.length > 2 && this.state.username.includes('@')) ? true : false;
+    }
 
-    /*validatePassword() {
-        return UtilsValidation.isPasswordValid(this.state.password);
-    }*/
+    validatePassword() {
+        return (this.state.password.length > 6) ? true : false;
+    }
 
     renderPassword() {
         return (<input
@@ -157,8 +158,7 @@ class Login extends Component {
     render() {
         return (
             <div className="container-fluid">
-                <LogoMini />
-                <div className="row mt-1">
+                <div className="row mt-5">
                     <div className="col-1 col-sm-2 col-md-3 col-lg-4"></div>
                     <div className="col-10 col-sm-8 col-md-6 col-lg-4">
                         <div className="card bg-transparent">
@@ -194,7 +194,7 @@ class Login extends Component {
                                             <input type="submit" value="Log In" className="btn btn-sm btn-info pl-5 pr-5 mr-1" />
                                         </div>
                                         <div className="form-group text-center mt-2 mb-n3">
-                                            <a href="#" className="badge badge-secondary" onClick={() => this.resetForm()}>Reset</a>                                        </div>
+                                        <a href="#" className="badge badge-secondary" onClick={() => this.resetForm()}>Reset</a>                                        </div>
                                     </fieldset>
                                 </form>
                             </div>
@@ -217,8 +217,8 @@ class Login extends Component {
 
 }
 
-Login.propTypes = {
+Register.propTypes = {
     baseUrl: PropTypes.string
 };
 
-export default Login;
+export default Register;

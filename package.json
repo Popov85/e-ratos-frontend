@@ -2,7 +2,7 @@
   "name": "ratos-parcel",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "login",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel login.html --open",
@@ -12,13 +12,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "base-64": "^0.1.0",
     "bootstrap": "^4.3.1",
+    "password-validator": "^4.1.1",
     "react": "^16.8.6",
     "react-countdown-now": "^2.1.1",
     "react-dom": "^16.8.6",
     "react-icons": "^3.7.0",
-    "react-modal": "^3.8.1"
+    "react-modal": "^3.8.1",
+    "validator": "^11.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
