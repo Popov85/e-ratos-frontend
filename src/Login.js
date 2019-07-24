@@ -1,11 +1,12 @@
 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import LogoMini from './LogoMini';
 import Failure from "./Failure";
+import Registration from "./Registration";
 import { FaUser, FaEye, FaEyeSlash } from 'react-icons/fa';
-
 import UtilsValidation from './UtilsValidation';
+import Utils from './Utils';
+
 
 import '../main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -24,40 +25,60 @@ class Login extends Component {
             isEmailValid: "undefined",
             isPasswordValid: "undefined",
 
-            isWaiting: false,
-            isLoaded: true,
+            // Sets by API call: is self-registration of users allowed by server settings?
+            regOptions: { lms: false, allowed: false },
+
+            // Go to registration view
+            isRegister: false,
+
+            isLoading: false,
             error: null
         };
         this.handleAuthentication = this.handleAuthentication.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.didRegister = this.didRegister.bind(this);
+        this.doLogin = this.doLogin.bind(this);
     }
 
-    preTryAuthenticate() {
-        const isEmailValid = UtilsValidation.isEmailValid(this.state.username); //this.validateEmail();
-        const isPasswordValid = UtilsValidation.isPasswordValid(this.state.password); // this.validatePassword();
-        if (!isEmailValid || !isPasswordValid) {
-            this.setState({
-                isEmailValid: isEmailValid,
-                isPasswordValid: isPasswordValid,
-                error: null
-            });
-            return false;
-        }
-        this.setState({
-            isEmailValid: "undefined",
-            isPasswordValid: "undefined",
-            isWaiting: true,
-            isLoaded: false,
-            error: null
-        });
-        return true;
+    componentDidMount() {
+        //console.log("Trying to fetch reg. options...");
+        const url = Utils.baseUrl() + "/self-registration/options";
+        fetch(url, {
+            method: 'GET',
+            credentials: 'same-origin',
+            headers: new Headers({ 'Accept': 'application/json' })
+        }).then(response => {
+            if (!response.ok) throw Error("Failed to get reg. options");
+            // Headers LMS-Registration and Non-LMS-Registration are expected
+            // If not default result to false
+            return response.json();
+        }).then(response => {
+            console.log(response);
+            this.setState({ regOptions: response });
+        }).catch(error => {
+                console.error(error.message + " fallback to default");
+                //Change to true for test  
+                this.setState({
+                    regOptions: { lms: false, allowed: true }
+                });
+            })
+    }
+
+    didRegister(newUsername, newPassword) {
+        console.log("Just registered");
+        this.setState({ username: newUsername, password: newPassword, isRegister: false, error: null });
+    }
+
+    doLogin() {
+        console.log("Back to login");
+        this.setState({ isRegister: false });
     }
 
     handleAuthentication(event) {
         event.preventDefault();
         console.log("Submitting: " + JSON.stringify(this.state));
-        if (!this.preTryAuthenticate()) return;
-        const url = this.props.baseUrl + "/login?username=" +
+        if (!this.validate()) return;
+        const url = Utils.baseUrl() + "/login?username=" +
             this.state.username + "&password=" + this.state.password;
         fetch(url, {
             method: 'POST',
@@ -73,10 +94,30 @@ class Login extends Component {
         }).catch(error => {
             console.error("Error occurred = " + error.message);
             this.setState({
-                isWaiting: false,
+                isLoading: false,
                 error
             });
         })
+    }
+
+    validate() {
+        const isEmailValid = UtilsValidation.isEmailValid(this.state.username);
+        const isPasswordValid = UtilsValidation.isPasswordValid(this.state.password);
+        if (!isEmailValid || !isPasswordValid) {
+            this.setState({
+                isEmailValid: isEmailValid,
+                isPasswordValid: isPasswordValid,
+                error: null
+            });
+            return false;
+        }
+        this.setState({
+            isEmailValid: "undefined",
+            isPasswordValid: "undefined",
+            isLoading: true,
+            error: null
+        });
+        return true;
     }
 
     handleInputChange(event) {
@@ -87,7 +128,7 @@ class Login extends Component {
     }
 
     resetForm() {
-        if (this.state.isWaiting) return;
+        if (this.state.isLoading) return;
         this.setState({
             username: "",
             password: "",
@@ -100,17 +141,9 @@ class Login extends Component {
     }
 
     switchVisibility() {
-        if (this.state.isWaiting) return;
+        if (this.state.isLoading) return;
         this.setState({ showPassword: !this.state.showPassword });
     }
-
-    /*validateEmail() {
-        return UtilsValidation.isEmailValid(this.state.username);
-    }*/
-
-    /*validatePassword() {
-        return UtilsValidation.isPasswordValid(this.state.password);
-    }*/
 
     renderPassword() {
         return (<input
@@ -125,24 +158,32 @@ class Login extends Component {
     renderEmailFeedback() {
         const { isEmailValid } = this.state;
         if (isEmailValid === "undefined") return null;
-        if (isEmailValid === false) return (<div className="invalid-feedback">Please provide a valid email..</div>);
+        if (isEmailValid === false) return (<div className="invalid-feedback">Please, provide a valid email..</div>);
         return (<div className="valid-feedback">Email looks good!</div>);
     }
 
     renderPasswordFeedback() {
         const { isPasswordValid } = this.state;
         if (isPasswordValid === "undefined") return null;
-        if (isPasswordValid === false) return (<div className="invalid-feedback">Please provide a valid password..</div>);
+        if (isPasswordValid === false) return (<div className="invalid-feedback">Please, provide a valid password..</div>);
         return (<div className="valid-feedback">Password looks good!</div>);
     }
 
-    renderWaiting() {
-        if (!this.state.isWaiting) return null;
+    renderChecking() {
+        if (!this.state.isLoading) return null;
         return (
             <div className="text-center text-info mt-n2 mb-2">
-                <span>Authorizing...
+                <span>Authentication...
                 <div className="spinner-grow spinner-grow-sm text-info" role="status" />
                 </span>
+            </div>);
+    }
+
+    renderFooter() {
+        if (!this.state.regOptions.allowed) return null;
+        return (
+            <div className="text-center text-secondary">
+                <small>Don't have an account? <a href="#" onClick={() => this.setState({ isRegister: true })}>Sign Up</a></small>
             </div>);
     }
 
@@ -155,6 +196,11 @@ class Login extends Component {
     }
 
     render() {
+        if (this.state.isRegister)
+            return <Registration
+                regOptions={this.state.regOptions}
+                didRegister={this.didRegister}
+                doLogin={this.doLogin}/>
         return (
             <div className="container-fluid">
                 <LogoMini />
@@ -162,24 +208,27 @@ class Login extends Component {
                     <div className="col-1 col-sm-2 col-md-3 col-lg-4"></div>
                     <div className="col-10 col-sm-8 col-md-6 col-lg-4">
                         <div className="card bg-transparent">
+                            <div className="card-header pt-1 pb-1">
+                                <small><div className="text-secondary text-center">Authentication</div></small>
+                            </div>
                             <div className="card-body">
-                                {this.renderWaiting()}
+                                {this.renderChecking()}
                                 {this.renderFailure()}
                                 <form onSubmit={this.handleAuthentication}>
-                                    <fieldset disabled={(this.state.isWaiting) ? true : false}>
+                                    <fieldset disabled={(this.state.isLoading) ? true : false}>
                                         <div className="input-group form-group">
                                             <div className="input-group-prepend">
                                                 <span className="input-group-text bg-info"><FaUser color="white" /></span>
                                             </div>
-                                            <input type="text" name="username" className={`form-control ${(this.state.isEmailValid === 'undefined') ? '' : (this.state.isEmailValid) ? 'is-valid' : 'is-invalid'}`} placeholder="e-mail"
+                                            <input type="text" name="username" className={`form-control ${(this.state.isEmailValid === 'undefined') ? '' : (this.state.isEmailValid) ? 'is-valid' : 'is-invalid'}`} placeholder="name@example.com"
                                                 value={this.state.username} onChange={this.handleInputChange} />
                                             {this.renderEmailFeedback()}
                                         </div>
                                         <div className="input-group form-group">
                                             <div className="input-group-prepend">
-                                                <button type="button" className="btn bg-info" onClick={() => this.switchVisibility()}>
+                                                <span className="input-group-text bg-info" onClick={() => this.switchVisibility()}>
                                                     {(this.state.showPassword) ? <FaEye color="white" /> : <FaEyeSlash color="white" />}
-                                                </button>
+                                                </span>
                                             </div>
                                             {this.renderPassword()}
                                             {this.renderPasswordFeedback()}
@@ -194,14 +243,13 @@ class Login extends Component {
                                             <input type="submit" value="Log In" className="btn btn-sm btn-info pl-5 pr-5 mr-1" />
                                         </div>
                                         <div className="form-group text-center mt-2 mb-n3">
-                                            <a href="#" className="badge badge-secondary" onClick={() => this.resetForm()}>Reset</a>                                        </div>
+                                            <a href="#" className="badge badge-secondary" onClick={() => this.resetForm()}>Reset</a>
+                                        </div>
                                     </fieldset>
                                 </form>
                             </div>
                             <div className="card-footer pt-0 pb-0">
-                                <div className="text-center text-secondary">
-                                    <small>Don't have an account? <a href="#">Sign Up</a></small>
-                                </div>
+                                {this.renderFooter()}
                                 <div className="d-flex justify-content-center">
                                     <small><a href="#">Forgot your password?</a></small>
                                 </div>
@@ -214,11 +262,6 @@ class Login extends Component {
             </div>
         );
     }
-
 }
-
-Login.propTypes = {
-    baseUrl: PropTypes.string
-};
 
 export default Login;
