@@ -3,15 +3,12 @@ import PropTypes from 'prop-types';
 import Info from './Info';
 
 const Launcher = props => {
-    const { schemeId, baseUrl } = props;
-    return <Info
-        schemeId={schemeId}
-        baseUrl={baseUrl}/>
+    const { schemeId} = props;
+    return <Info schemeId={schemeId}/>
 };
 
 Launcher.propTypes = {
-    schemeId: PropTypes.number.isRequired,
-    baseUrl: PropTypes.string.isRequired
+    schemeId: PropTypes.number.isRequired
 };
 
 export default Launcher;

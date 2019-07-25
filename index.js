@@ -1724,11 +1724,7 @@ let search = window.location.search;
 let params = new URLSearchParams(search);
 let schemeId = params.get('schemeId');
 
-const baseUrl = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
-const realBaseUrl = (!baseUrl || baseUrl ==="http://localhost:1234") ? "http://localhost:8090" : baseUrl;
-
-
-ReactDOM.render(<Launcher schemeId={(!schemeId) ? 1 : schemeId} baseUrl = {realBaseUrl}/>, document.getElementById('app'));
+ReactDOM.render(<Launcher schemeId={(!schemeId) ? 1 : schemeId}/>, document.getElementById('app'));
 //ReactDOM.render(<Start schemeId={(!schemeId) ? 1 : schemeId} baseUrl = {realBaseUrl}/>, document.getElementById('app'));
 //ReactDOM.render(<Batch schemeInfo={testSchemeInfo} batch = {realBatch} baseUrl = {realBaseUrl}/>, document.getElementById('app'));
 //ReactDOM.render(<Finish schemeId = {10} result = {realTestResult} mode = {testMode} settings = {testSettings} baseUrl = {realBaseUrl}/>, document.getElementById('app'));

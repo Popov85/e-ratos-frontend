@@ -1,12 +1,12 @@
 
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import LogoMini from './LogoMini';
 import Failure from "./Failure";
 import Registration from "./Registration";
 import { FaUser, FaEye, FaEyeSlash } from 'react-icons/fa';
 import UtilsValidation from './UtilsValidation';
 import Utils from './Utils';
-
 
 import '../main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -16,8 +16,8 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: "student@example.com",
-            password: "dT09Rx06",
+            username: (!props.username) ? "student@example.com" : props.username,
+            password: (!props.password) ? "dT09Rx06" : props.password,
             isRemember: false,
 
             showPassword: false,
@@ -36,12 +36,12 @@ class Login extends Component {
         };
         this.handleAuthentication = this.handleAuthentication.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.didRegister = this.didRegister.bind(this);
-        this.doLogin = this.doLogin.bind(this);
+        //this.didRegister = this.didRegister.bind(this);
+        //this.doLogin = this.doLogin.bind(this);
     }
 
     componentDidMount() {
-        //console.log("Trying to fetch reg. options...");
+        console.log("Trying to fetch reg. options...");
         const url = Utils.baseUrl() + "/self-registration/options";
         fetch(url, {
             method: 'GET',
@@ -56,22 +56,8 @@ class Login extends Component {
             console.log(response);
             this.setState({ regOptions: response });
         }).catch(error => {
-                console.error(error.message + " fallback to default");
-                //Change to true for test  
-                this.setState({
-                    regOptions: { lms: false, allowed: true }
-                });
-            })
-    }
-
-    didRegister(newUsername, newPassword) {
-        console.log("Just registered");
-        this.setState({ username: newUsername, password: newPassword, isRegister: false, error: null });
-    }
-
-    doLogin() {
-        console.log("Back to login");
-        this.setState({ isRegister: false });
+            console.error(error.message + " fallback to default");
+        })
     }
 
     handleAuthentication(event) {
@@ -196,11 +182,9 @@ class Login extends Component {
     }
 
     render() {
-        if (this.state.isRegister)
-            return <Registration
-                regOptions={this.state.regOptions}
-                didRegister={this.didRegister}
-                doLogin={this.doLogin}/>
+        const {isRegister, regOptions} = this.state;
+        if (isRegister)
+            return <Registration regOptions={regOptions}/>
         return (
             <div className="container-fluid">
                 <LogoMini />
@@ -263,5 +247,10 @@ class Login extends Component {
         );
     }
 }
+
+Login.propTypes = {
+    username: PropTypes.string,
+    password: PropTypes.string,
+};
 
 export default Login;

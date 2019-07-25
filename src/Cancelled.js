@@ -17,8 +17,8 @@ class Cancelled extends Component {
     }
 
     render() {
-        const { schemeId, baseUrl } = this.props;
-        if (this.state.isReStarted) return <Launcher schemeId={schemeId} baseUrl={baseUrl} />
+        const { schemeId} = this.props;
+        if (this.state.isReStarted) return <Launcher schemeId={schemeId} />
         const { user, scheme, passed } = this.props.result;
         return (
             <div className="mt-5">
@@ -74,8 +74,7 @@ class Cancelled extends Component {
 
 Cancelled.propTypes = {
     schemeId: PropTypes.number.isRequired,
-    result: PropTypes.object.isRequired,
-    baseUrl: PropTypes.string.isRequired
+    result: PropTypes.object.isRequired
 };
 
 export default Cancelled;

@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Launcher from './Launcher';
 import Result from './Result';
 import ResultByThemes from './ResultByThemes';
 import ResultByQuestions from './ResultByQuestions';
-import PropTypes from 'prop-types';
+
 
 export default class Finish extends React.Component {
 
@@ -49,8 +50,8 @@ export default class Finish extends React.Component {
     }
 
     render() {
-        const {schemeId, baseUrl} = this.props;
-        if (this.state.reStart) return <Launcher schemeId={schemeId} baseUrl = {baseUrl}/>;
+        const {schemeId} = this.props;
+        if (this.state.reStart) return <Launcher schemeId={schemeId}/>;
         return (
             <div>
                 <Result result={this.props.result} />
@@ -70,8 +71,7 @@ const propTypes = {
     schemeId: PropTypes.number.isRequired,
     result: PropTypes.object.isRequired,
     mode: PropTypes.object.isRequired,
-    settings: PropTypes.object.isRequired,
-    baseUrl: PropTypes.string.isRequired
+    settings: PropTypes.object.isRequired
 };
 
 Finish.propTypes = propTypes;

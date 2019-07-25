@@ -1,10 +1,13 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Login from "./Login";
 import Failure from "./Failure";
 import { FaSignInAlt, FaEye, FaEyeSlash } from 'react-icons/fa';
 import ApiRegistration from "./ApiRegistration";
 import UtilsValidation from './UtilsValidation';
+import RegistrationSuccess from './RegistrationSuccess';
+
 import Utils from './Utils';
 
 import '../main.css';
@@ -50,6 +53,9 @@ class Registration extends Component {
             //Sets to true after successful registration
             isRegSuccess: false,
 
+            // Return back to login
+            isRegCancelled: false,
+
             isLoading: false,
             isOrgLoading: false,
             isFacLoading: false,
@@ -70,7 +76,7 @@ class Registration extends Component {
     }
 
     componentDidMount() {
-        const { isLmsContext} = this.state;
+        const { isLmsContext } = this.state;
         if (isLmsContext) {
             // If LMS, API call for orgId
             this.loadOrgId();
@@ -99,7 +105,7 @@ class Registration extends Component {
     }
 
     loadOrg() {
-        const { isLmsContext} = this.state;
+        const { isLmsContext } = this.state;
         ApiRegistration.loadOrganizations(isLmsContext, this.errorLoadOrg).then(organisations => {
             console.log("organisations = ", organisations);
             if (!organisations) {
@@ -123,7 +129,7 @@ class Registration extends Component {
     }
 
     loadFac(orgId) {
-        const { isLmsContext} = this.state;
+        const { isLmsContext } = this.state;
         ApiRegistration.loadFaculties(isLmsContext, orgId, this.errorLoadFac).then(faculties => {
             console.log("faculties = ", faculties);
             if (!faculties) {
@@ -146,7 +152,7 @@ class Registration extends Component {
     }
 
     loadClasses(facId) {
-        const { isLmsContext} = this.state;
+        const { isLmsContext } = this.state;
         ApiRegistration.loadClasses(isLmsContext, facId, this.errorLoadClass).then(classes => {
             console.log("classes = ", classes);
             if (!classes) {
@@ -210,7 +216,7 @@ class Registration extends Component {
         const regData = this.getRegData();
         console.log("Submitting: ", regData);
         if (!this.validate()) return;
-        const { isLmsContext} = this.state;
+        const { isLmsContext } = this.state;
         const url = Utils.baseUrl() + (isLmsContext ? "/lti/sign-up" : "/sign-up");
         fetch(url, {
             method: 'POST',
@@ -422,32 +428,6 @@ class Registration extends Component {
             </div>);
     }
 
-    renderSuccess() {
-        return (<div className="container-fluid">
-            <div className="row mt-5">
-                <div className="col-1 col-sm-2 col-md-3 col-lg-4"></div>
-                <div className="col-10 col-sm-8 col-md-6 col-lg-4">
-                    <div className="card bg-transparent">
-                        <div className="card-header pt-1 pb-1">
-                            <small><div className="text-secondary text-center">Registration</div></small>
-                        </div>
-                        <div className="card-body">
-                            <div className="alert alert-success text-center p-1" role="success">
-                                <strong>Successful registration!</strong>
-                            </div>
-                            <div className="form-group text-center mb-n1">
-                                <button type="button" value="Sign In" className="btn btn-sm btn-success pl-5 pr-5" onClick={() => this.props.didRegister(this.state.email, this.state.password)}>
-                                    <div className="align-middle"><FaSignInAlt color="white" /> Sign In</div>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-1 col-sm-2 col-md-3 col-lg-4" />
-            </div>
-        </div>);
-    }
-
     renderMessageFetching() {
         return (
             <div className="mb-4">
@@ -480,7 +460,12 @@ class Registration extends Component {
     }
 
     render() {
-        if (this.state.isRegSuccess) return this.renderSuccess();
+        const { isRegCancelled, isRegSuccess} = this.state;
+        if (isRegCancelled) return <Login />;
+        if (isRegSuccess) {
+            const { email, password } = this.state;
+            return <RegistrationSuccess email = {email} password = {password}/>
+        }
         return (
             <div className="container-fluid">
                 <div className="row mt-5">
@@ -614,7 +599,7 @@ class Registration extends Component {
                             </div>
                             <div className="card-footer pt-1 pb-1">
                                 <div className="text-center text-secondary">
-                                    <small>Already registered? <a href="#" onClick={() => this.props.doLogin()}>Login now!</a></small>
+                                    <small>Already registered? <a href="#" onClick={() => this.setState({ isRegCancelled: true })}>Login now!</a></small>
                                 </div>
                             </div>
                         </div>
@@ -628,9 +613,7 @@ class Registration extends Component {
 }
 
 Registration.propTypes = {
-    regOptions: PropTypes.object.isRequired, // { lms: false, allowed: true },
-    didRegister: PropTypes.func.isRequired,
-    doLogin: PropTypes.func.isRequired
+    regOptions: PropTypes.object.isRequired, // like: { lms: false, allowed: true },
 };
 
 export default Registration;

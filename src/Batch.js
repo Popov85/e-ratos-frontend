@@ -2,21 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import Countdown from 'react-countdown-now';
-
 import Spinner from './Spinner';
 import Failure from './Failure';
 import McqMulti from './McqMulti';
 import McqSingle from './McqSingle';
 import Finish from './Finish';
 import Cancelled from './Cancelled';
-
 import Utils from './Utils';
-
 import { FaPowerOff, FaEraser, FaSave, FaPause, FaThLarge, FaBars } from 'react-icons/fa';
-
 import '../main.css';
-
-const baseUrl = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
 
 const nextUrl = "/student/session/next";
 const finishUrl = "/student/session/finish";
@@ -94,7 +88,6 @@ export default class Batch extends React.Component {
         clearInterval(this.interval);
     }
 
-
     tick() {
         this.setState(prevState => ({
             timeSpent: prevState.timeSpent + 1
@@ -158,7 +151,7 @@ export default class Batch extends React.Component {
     }
 
     tryCancelAPICall() {
-        const url = baseUrl + cancelUrl + "?schemeId=" + this.props.schemeInfo.schemeId;
+        const url = Utils.baseUrl() + cancelUrl + "?schemeId=" + this.props.schemeInfo.schemeId;
         fetch(url, {
             method: 'GET',
             credentials: 'same-origin',
@@ -198,7 +191,7 @@ export default class Batch extends React.Component {
     }
 
     tryNextAPICall(batchOut) {
-        const url = baseUrl + nextUrl + "?schemeId=" + this.props.schemeInfo.schemeId;
+        const url = Utils.baseUrl() + nextUrl + "?schemeId=" + this.props.schemeInfo.schemeId;
         fetch(url, {
             method: 'POST',
             headers: new Headers({
@@ -251,7 +244,7 @@ export default class Batch extends React.Component {
     }
 
     tryFinishAPICall() {
-        const url = baseUrl + finishUrl+ "?schemeId=" + this.props.schemeInfo.schemeId;
+        const url = Utils.baseUrl() + finishUrl+ "?schemeId=" + this.props.schemeInfo.schemeId;
         fetch(url, {
             method: 'GET',
             credentials: 'same-origin',
@@ -289,7 +282,7 @@ export default class Batch extends React.Component {
     }
 
     tryFinishBatchAPICall(batchOut) {
-        const url = baseUrl + finishBatchUrl+ "?schemeId=" + this.props.schemeInfo.schemeId;
+        const url = Utils.baseUrl() + finishBatchUrl+ "?schemeId=" + this.props.schemeInfo.schemeId;
         fetch(url, {
             method: 'POST',
             headers: new Headers({ 'content-type': 'application/json' }),
@@ -554,25 +547,22 @@ export default class Batch extends React.Component {
 
     render() {
         const { isCancelled, isFinished, isClearResponses, result } = this.state;
-        const { schemeInfo, baseUrl } = this.props;
+        const { schemeInfo} = this.props;
         if (isCancelled)
             return <Cancelled
                 schemeId={schemeInfo.schemeId}
-                result={result}
-                baseUrl={baseUrl} />
+                result={result}/>
 
         if (isFinished)
             return <Finish
                 schemeId={schemeInfo.schemeId}
                 settings={schemeInfo.settings}
-                result={result}
-                baseUrl={this.props.baseUrl} />
+                result={result}/>
 
         if (isClearResponses)
             return <Batch
                 schemeInfo={schemeInfo}
-                batch={this.state.batch}
-                baseUrl={baseUrl} />
+                batch={this.state.batch}/>
 
         return this.renderBatch();
     }
@@ -580,8 +570,7 @@ export default class Batch extends React.Component {
 
 const propTypes = {
     schemeInfo: PropTypes.object.isRequired,
-    batch: PropTypes.object,
-    baseUrl: PropTypes.string.isRequired
+    batch: PropTypes.object
 };
 
 Batch.propTypes = propTypes;

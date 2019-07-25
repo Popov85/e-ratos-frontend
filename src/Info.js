@@ -4,9 +4,9 @@ import Logo from './Logo';
 import Spinner from './Spinner';
 import Failure from './Failure';
 import Start from './Start';
+import Utils from './Utils';
 
 class Info extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -26,7 +26,7 @@ class Info extends Component {
     }
 
     tryInfoAPICall() {
-        const infoUrl = this.props.baseUrl + "/info/schemes/" + this.props.schemeId;
+        const infoUrl = Utils.baseUrl() + "/info/schemes/" + this.props.schemeId;
         fetch(infoUrl, {
             method: 'GET',
             credentials: 'same-origin'
@@ -63,10 +63,8 @@ class Info extends Component {
         );
     }
 
-
     render() {
         const { isLoaded, error, schemeInfo } = this.state;
-        const { baseUrl} = this.props;
         if (!isLoaded)
             return (
                 <div>
@@ -74,17 +72,12 @@ class Info extends Component {
                     <Spinner message="Loading info from server" />
                 </div>);
         if (error) return this.renderFailure();
-        
-        // Return Start
-        return <Start
-                schemeInfo={schemeInfo}
-                baseUrl={baseUrl} />
+        return <Start schemeInfo={schemeInfo} />
     }
 }
 
 Info.propTypes = {
-    schemeId: PropTypes.number.isRequired,
-    baseUrl: PropTypes.string.isRequired
+    schemeId: PropTypes.number.isRequired
 };
 
 export default Info;

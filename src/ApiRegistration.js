@@ -2,7 +2,7 @@ import Utils from './Utils';
 
 const ApiRegistration = {
 
-       //Organization (from LMS)
+       //Single organization (from LMS context)
        loadOrganization: function (errorLoadOrgId) {
         const endpoint = "/lti/self-registration/organisation";
         const url = Utils.baseUrl() + endpoint;
@@ -32,7 +32,6 @@ const ApiRegistration = {
             console.error(error.message);
             errorLoadOrg(error);
         })
-
     },
 
     //Faculties

@@ -7,6 +7,7 @@ import Failure from './Failure';
 import Logo from './Logo';
 import '../main.css';
 import Header from './Header';
+import Utils from './Utils';
 
 const startUrl = "/student/session/start";
 
@@ -27,7 +28,7 @@ export default class Start extends React.Component {
     }
 
     logout() {
-        const url = this.props.baseUrl + "/logout";
+        const url = Utils.baseUrl() + "/logout";
         fetch(url, {
             method: 'POST',
             credentials: 'same-origin'
@@ -35,7 +36,7 @@ export default class Start extends React.Component {
             if (!response.ok) throw Error("Failed logout request...");
             return response.text();
         }).then(() => {
-            window.location.href = this.props.baseUrl + "/login?logout";
+            window.location.href = Utils.baseUrl() + "/login?logout";
         }).catch(error => {
             console.error("Error occurred = " + error.message);
             this.setState({
@@ -51,7 +52,7 @@ export default class Start extends React.Component {
     }
 
     tryStartAPICall() {
-        const url = this.props.baseUrl + startUrl + "?schemeId=" + this.props.schemeInfo.schemeId;
+        const url = Utils.baseUrl() + startUrl + "?schemeId=" + this.props.schemeInfo.schemeId;
         fetch(url, {
             method: 'GET',
             credentials: 'same-origin',
@@ -89,18 +90,15 @@ export default class Start extends React.Component {
     }
 
     renderBatch() {
-        const { schemeInfo, baseUrl } = this.props;
+        const { schemeInfo} = this.props;
         return <Batch
             schemeInfo={schemeInfo}
-            baseUrl={baseUrl}
             batch={this.state.batch} />
     }
 
     renderOpened() {
-        const { schemeInfo, baseUrl } = this.props;
-        return <Opened
-            schemeInfo={schemeInfo}
-            baseUrl={baseUrl} />
+        const { schemeInfo} = this.props;
+        return <Opened schemeInfo={schemeInfo}/>
     }
 
     renderFailure() {
@@ -207,8 +205,7 @@ export default class Start extends React.Component {
 }
 
 const propTypes = {
-    schemeInfo: PropTypes.object.isRequired,
-    baseUrl: PropTypes.string.isRequired
+    schemeInfo: PropTypes.object.isRequired
 };
 
 Start.propTypes = propTypes;
