@@ -2,10 +2,10 @@
   "name": "ratos-parcel",
   "version": "1.0.0",
   "description": "",
-  "main": "login",
+  "main": "index",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "parcel login.html --open",
+    "start": "parcel index.html --open",
     "dev": "parcel build *.js --no-minify",
     "prod": "parcel build *.js"
   },

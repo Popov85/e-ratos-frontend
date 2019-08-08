@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import Logo from './Logo';
 import Header from "./Header";
 import Cancelled from './Cancelled';
+import Finish from "./Finish";
 import Batch from './Batch';
 import Spinner from './Spinner';
 import Failure from './Failure';
-
-const cancelUrl = "/student/session/cancel";
-
-const currentUrl = "/student/session/current";
+import ApiBatch from './ApiBatch';
+import NotFound from './NotFound';
+import RunOutOfTime from "./RunOutOfTime";
+import { processError } from './Error';
 
 class Opened extends Component {
 
@@ -18,85 +19,73 @@ class Opened extends Component {
         this.state = {
             isClosed: false,
             isContinued: false,
+            isFinished: false,
+            isNotFound: false,
+            isRunOutOfTime: false,
+
             result: null,
             batch: null,
+
             isLoaded: true,
-            error: null
+            error: null,
+            serverError: null
         }
     }
 
+    // TODO: make a separate component!
     reTryCancelAPICall() {
-        this.setState({ isLoaded: false, error: null });
-        this.tryCancelAPICall();
-    }
-
-    tryCancelAPICall() {
-        var url = this.props.baseUrl + cancelUrl + "?schemeId=" + this.props.schemeInfo.schemeId;
-        fetch(url, {
-            method: 'GET',
-            credentials: 'same-origin'
-        }).then(response => {
-            if (!response.ok) throw Error("Failed to perform cancel API request");
-            return response.json();
-        }).then(response => {
-            this.setState({
-                isClosed: true,
-                result: response,
-                isLoaded: true,
-                error: null
+        this.setState({ isLoaded: false, error: null, serverError : null });
+        const { lms, schemeInfo } = this.props;
+        ApiBatch.cancel(schemeInfo.schemeId, lms)
+            .then(result => {
+                this.setState({
+                    result,
+                    isClosed: true
+                });
+            }).catch(e => {
+                processError(e, "Failed to perform 'cancel' API call", this);
+            }).finally(() => {
+                this.setState({ isLoaded: true });
             });
-        }).catch(error => {
-            console.error(error);
-            this.setState({
-                isLoaded: true,
-                error
-            });
-        });
     }
 
     reTryCurrentAPICall() {
-        this.setState({ isLoaded: false, error: null });
-        this.tryCurrentAPICall();
-    }
-
-    tryCurrentAPICall() {
-        var url = this.props.baseUrl + currentUrl + "?schemeId=" + this.props.schemeInfo.schemeId;
-        fetch(url, {
-            method: 'GET',
-            credentials: 'same-origin'
-        }).then(response => {
-            if (!response.ok) throw Error("Failed to perform current API request");
-            return response.json();
-        }).then(response => {
-            this.setState({
-                isContinued: true,
-                batch: response,
-                isLoaded: true,
-                error: null
+        this.setState({ isLoaded: false, error: null, serverError : null });
+        const { lms, schemeInfo } = this.props;
+        ApiBatch.current(schemeInfo.schemeId, lms)
+            .then(batch => {
+                this.setState({
+                    batch,
+                    isContinued: true
+                });
+            }).catch(e => {
+                processError(e, "Failed to perform 'current' API call", this);
+            }).finally(() => {
+                this.setState({ isLoaded: true });
             });
-        }).catch(error => {
-            console.error(error);
-            this.setState({
-                isLoaded: true,
-                error
-            });
-        });
     }
 
     renderCancelled() {
-        const { schemeInfo, baseUrl } = this.props
+        const { schemeInfo } = this.props
         return <Cancelled
             schemeId={schemeInfo.schemeId}
-            result={this.state.result}
-            baseUrl={baseUrl} />;
+            result={this.state.result} />;
     }
 
     renderContinue() {
-        const { schemeInfo, baseUrl } = this.props
+        const { schemeInfo } = this.props
         return <Batch
             schemeInfo={schemeInfo}
-            batch={this.state.batch}
-            baseUrl={baseUrl} />;
+            batch={this.state.batch} />;
+    }
+
+    renderFinish() {
+        const { schemeInfo } = this.props
+        return <Finish
+            schemeId={schemeInfo.schemeId}
+            result={this.state.result}
+            mode={schemeInfo.mode}
+            settings={schemeInfo.settings} />;
     }
 
     renderButtons() {
@@ -113,30 +102,38 @@ class Opened extends Component {
     renderFailure() {
         return (
             <div>
-                <Failure message={this.state.error.message} />
+                <Failure
+                    message={this.state.error.message}
+                    serverError={this.state.serverError} />
                 {this.renderButtons()}
             </div>
         );
     }
 
     render() {
-        const { isLoaded, isClosed, isContinued, error } = this.state;
-        if (!isLoaded) return <Spinner message="Performing cancel API call" />;
+        const {lms, schemeInfo} = this.props;
+        const { isLoaded, isClosed, isContinued, isFinished, isRunOutOfTime, isNotFound, error, serverError } = this.state;
+        if (!isLoaded) return <Spinner message="Waiting..." />;
+        if (isNotFound) return <NotFound schemeId={schemeInfo.schemeId} />
+        if (isRunOutOfTime) return <RunOutOfTime lms = {lms} schemeInfo={schemeInfo}/>
         if (isClosed) return this.renderCancelled();
         if (isContinued) return this.renderContinue();
-        if (error) return this.renderFailure();
+        if (isFinished) return this.renderFinish();
         return (
             <div className="mt-1">
                 <Logo />
                 <Header title="PREVIOUS IS OPENED" color="alert-warning" />
+                {(error) ? <Failure
+                    message={error.message}
+                    serverError={serverError} /> : null}
                 {this.renderButtons()}
             </div>);
     }
 }
 
 Opened.propTypes = {
-    schemeInfo: PropTypes.object.isRequired,
-    baseUrl: PropTypes.string.isRequired
+    lms: PropTypes.bool.isRequired,
+    schemeInfo: PropTypes.object.isRequired
 };
 
 export default Opened;

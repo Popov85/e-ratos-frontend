@@ -20,7 +20,7 @@ const ApiRegistration = {
 
     //Organizations
     loadOrganizations: function (lms, errorLoadOrg) {
-        const endpoint = (lms ? "/lti": "") + "/self-registration/organisations";
+        const endpoint = (lms===true ? "/lti": "") + "/self-registration/organisations";
         const url = Utils.baseUrl() + endpoint;
         return fetch(url, {
             method: 'GET',
@@ -36,7 +36,7 @@ const ApiRegistration = {
 
     //Faculties
     loadFaculties: function (lms, orgId, errorLoadFac) {
-        const endpoint = (lms ? "/lti": "")+ "/self-registration/faculties?orgId=" + orgId;
+        const endpoint = (lms===true ? "/lti": "")+ "/self-registration/faculties?orgId=" + orgId;
         const url = Utils.baseUrl() + endpoint;
         return fetch(url, {
             method: 'GET',
@@ -52,7 +52,7 @@ const ApiRegistration = {
 
     //Classes
     loadClasses: function (lms, facId, errorLoadClasses) {
-        const endpoint = (lms ? "/lti": "")+"/self-registration/classes?facId=" + facId;
+        const endpoint = (lms===true ? "/lti": "")+"/self-registration/classes?facId=" + facId;
         const url = Utils.baseUrl() + endpoint;
         return fetch(url, {
             method: 'GET',

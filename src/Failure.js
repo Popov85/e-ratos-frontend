@@ -1,15 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const defaultMessage= 'failed to perform API request';
+const defaultMessage = 'failed to perform the action';
 
 const Failure = (props) => {
-    var message = props.message;
-    return <div className="text-center text-danger"> {(message) ? message : defaultMessage}</div>
+    const message = props.message;
+    const serverError = props.serverError;
+    return (<div>
+        <div className="text-center text-danger"> {(message) ? message : defaultMessage}</div>
+        {(serverError ? <div className="d-flex justify-content-center">
+            <details open={false}>
+                <summary className="border text-secondary"><small>Server message</small></summary>
+                <small>{serverError.message}</small>
+            </details>
+        </div> : null)}
+    </div>);
 }
 
 const propTypes = {
-    message: PropTypes.string
+    message: PropTypes.string,
+    serverError: PropTypes.object
 };
 
 Failure.propTypes = propTypes;

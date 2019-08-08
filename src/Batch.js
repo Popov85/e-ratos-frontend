@@ -11,16 +11,16 @@ import Cancelled from './Cancelled';
 import Utils from './Utils';
 import { FaPowerOff, FaEraser, FaSave, FaPause, FaThLarge, FaBars } from 'react-icons/fa';
 import '../main.css';
+import ApiBatch from './ApiBatch';
+import NotFound from './NotFound';
+import RunOutOfTime from "./RunOutOfTime";
+import { processError } from './Error';
 
-const nextUrl = "/student/session/next";
-const finishUrl = "/student/session/finish";
-const finishBatchUrl = "/student/session/finish-batch";
-const cancelUrl = "/student/session/cancel";
 
-const CANCEL = { forSpinner: "Performing 'cancel' API call...", forFailure: "Failed to perform 'cancel' API call..." };
-const NEXT = { forSpinner: "Performing 'next' API call...", forFailure: "Failed to perform 'next' API call..." };
-const FINISH = { forSpinner: "Performing 'finish' API call...", forFailure: "Failed to perform 'finish' API call..." };
-const FINISH_BATCH = { forSpinner: "Performing 'finish-batch' API call...", forFailure: "Failed to perform 'finish-batch' API call..." };
+const CANCEL = { loadingMessage: "Performing 'cancel' API call...", failureMessage: "Failed to perform 'cancel' API call..." };
+const NEXT = { loadingMessage: "Performing 'next' API call...", failureMessage: "Failed to perform 'next' API call..." };
+const FINISH = { loadingMessage: "Performing 'finish' API call...", failureMessage: "Failed to perform 'finish' API call..." };
+const FINISH_BATCH = { loadingMessage: "Performing 'finish-batch' API call...", failureMessage: "Failed to perform 'finish-batch' API call..." };
 
 const modalStyles = {
     content: {
@@ -40,10 +40,17 @@ export default class Batch extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+
             isCancelled: false,
             isFinished: false,
 
-            // current api call
+            // No opened sesson for this schemeId was found on the server
+            isNotFound: false,
+
+            isRunOutOfTime: false,
+
+
+            // last api call
             operation: null,
 
             // view type
@@ -56,6 +63,7 @@ export default class Batch extends React.Component {
             isLoaded: true,
             isModal: false,
             error: null,
+            serverError: null,
 
             responses: new Map(),
             isClearResponses: false,
@@ -94,228 +102,156 @@ export default class Batch extends React.Component {
         }));
     }
 
-    setBatch(batch) {
-        this.setState({
-            batch: batch,
-            timeSpent: 0,
-            isLoaded: true,
-            isModal: false,
-            error: null,
-            responses: new Map()
-        });
-    }
-
     putResponse(id, response) {
         var newMap = new Map(this.state.responses);
         newMap.set(id, response);
         this.setState({ responses: newMap });
     }
 
+    // TODO: remove
     changeView() {
         this.setState({ columns: (this.state.columns === 1) ? 2 : 1 });
     }
 
+    // TODO: remove
     clearResponses() {
         this.setState({ isClearResponses: true });
     }
 
     prepareBatch() {
-        const batchOut = {};
+        const batch = {};
         const responses = {}
         for (let [k, v] of this.state.responses)
             responses[k] = v
-        batchOut.responses = responses;
-        console.log("Preapared batch of responses = "
-            + JSON.stringify(batchOut));
-        return batchOut;
+        batch.responses = responses;
+        return batch;
+    }
+
+    reTryCancelAPICall() {
+        this.setState({
+            operation: 'CANCEL',
+            isLoaded: true,
+            isModal: true,
+            error: null,
+            serverError: null
+        });
+        const { lms, schemeInfo } = this.props;
+        ApiBatch.cancel(schemeInfo.schemeId, lms)
+            .then(result => {
+                this.setState({
+                    result,
+                    isCancelled: true,
+                    isModal: false
+                });
+            }).catch(e => {
+                processError(e, CANCEL.failureMessage, this);
+            }).finally(() => {
+                this.setState({ isLoaded: true });
+            });
+    }
+
+    reTryNextAPICall() {
+        const batch = JSON.stringify(this.prepareBatch());
+        console.log("I am sending batch = ", batch);
+        this.setState({
+            operation: 'NEXT',
+            isLoaded: true,
+            isModal: true,
+            error: null,
+            serverError: null
+        });
+        const { lms, schemeInfo } = this.props;
+        ApiBatch.next(schemeInfo.schemeId, batch, lms)
+            .then(batch => {
+                if (batch.batch.length === 0) {
+                    // For dynamic sessions
+                    // Empty batch detected, do finish call
+                    this.reTryFinishAPICall();
+                } else {
+                    this.setState({
+                        batch,
+                        timeSpent: 0, // TODO: check
+                        isModal: false,
+                        responses: new Map()
+                    });
+                }
+            }).catch(e => {
+                processError(e, NEXT.failureMessage, this);
+            }).finally(() => {
+                this.setState({ isLoaded: true });
+            });
+    }
+
+    reTryFinishAPICall() {
+        this.setState({
+            operation: 'FINISH',
+            isLoaded: true,
+            isModal: true,
+            error: null,
+            serverError: null
+        });
+        const { lms, schemeInfo } = this.props;
+        ApiBatch.finish(schemeInfo.schemeId, lms)
+            .then(result => {
+                this.setState({
+                    result,
+                    isFinished: true,
+                    isModal: false
+                });
+            }).catch(e => {
+                processError(e, FINISH.failureMessage, this);
+            }).finally(() => {
+                this.setState({ isLoaded: true });
+            });
+    }
+
+    reTryFinishBatchAPICall() {
+        const batch = JSON.stringify(this.prepareBatch());
+        this.setState({
+            operation: 'FINISH_BATCH',
+            isLoaded: true,
+            isModal: true,
+            error: null,
+            serverError: null
+        });
+        const { lms, schemeInfo } = this.props;
+        ApiBatch.finish_batch(schemeInfo.schemeId, batch, lms)
+            .then(result => {
+                this.setState({
+                    result,
+                    isFinished: true,
+                    isModal: false
+                });
+            }).catch(e => {
+                processError(e, FINISH_BATCH.failureMessage, this);
+            }).finally(() => {
+                this.setState({ isLoaded: true });
+            });
     }
 
     resolveAndDoReTry() {
         const { operation } = this.state;
-        if (!operation) throw Error("Last operation is undefined!");
-        if (operation === CANCEL) this.reTryCancelAPICall();
-        if (operation === NEXT) this.reTryNextAPICall();
-        if (operation === FINISH) this.reTryFinishAPICall();
-        if (operation === FINISH_BATCH) this.reTryFinishBatchAPICall();
-    }
-
-    reTryCancelAPICall() {
-        console.log("Try 'cancel' API call");
-        this.setState({
-            operation: CANCEL,
-            isLoaded: true,
-            isModal: true,
-            error: null
-        });
-        this.tryCancelAPICall();
-    }
-
-    tryCancelAPICall() {
-        const url = Utils.baseUrl() + cancelUrl + "?schemeId=" + this.props.schemeInfo.schemeId;
-        fetch(url, {
-            method: 'GET',
-            credentials: 'same-origin',
-            headers: new Headers({
-                'Accept': 'application/json'
-            }),
-        }).then(response => {
-            if (!response.ok) throw Error(CANCEL.forFailure);
-            return response.json();
-        }).then(response => {
-            this.setState({
-                isCancelled: true,
-                result: response,
-                isLoaded: true,
-                isModal: false,
-                error: null
-            });
-        }).catch(error => {
-            console.error("Error occurred = " + error.message);
-            this.setState({
-                isLoaded: true,
-                error
-            });
-        })
-    }
-
-    reTryNextAPICall() {
-        console.log("Try 'next' API call");
-        const batchOut = this.prepareBatch();
-        this.setState({
-            operation: NEXT,
-            isLoaded: true,
-            isModal: true,
-            error: null
-        });
-        this.tryNextAPICall(batchOut);
-    }
-
-    tryNextAPICall(batchOut) {
-        const url = Utils.baseUrl() + nextUrl + "?schemeId=" + this.props.schemeInfo.schemeId;
-        fetch(url, {
-            method: 'POST',
-            headers: new Headers({
-                'content-type': 'application/json',
-                'Accept': 'application/json'
-            }),
-            credentials: 'same-origin',
-            body: JSON.stringify(batchOut)
-        }).then(response => {
-            if (!response.ok) throw response;
-            return response.json();
-        }).then(response => {
-            //console.log("Successful next call!");
-            console.log(response);
-            if (response.batch.length === 0) {
-                // Empty batch detected, do finish call
+        switch (operation) {
+            case 'CANCEL':
+                this.reTryCancelAPICall();
+                break;
+            case 'NEXT':
+                this.reTryNextAPICall();
+                break;
+            case 'FINISH':
                 this.reTryFinishAPICall();
-            } else {
-                this.setBatch(response);
-            }
-        }).catch(error => {
-            try {
-                error.json().then(body => {
-                    // Handle business time-out case
-                    if (body.exception === 'RunOutOfTimeException') {
-                        this.reTryFinishAPICall();
-                    }
-                    this.setState({
-                        error: new Error(body.message)
-                    });
-                });
-            } catch (e) {
-                console.error(NEXT.forFailure);
-                this.setState({ error: new Error(NEXT.forFailure) });
-            } finally {
-                this.setState({ isLoaded: true });
-            }
-        })
-    }
-
-    reTryFinishAPICall() {
-        console.log("Try 'finsh no batch' API call");
-        this.setState({
-            operation: FINISH,
-            isLoaded: true,
-            isModal: true,
-            error: null
-        });
-        this.tryFinishAPICall();
-    }
-
-    tryFinishAPICall() {
-        const url = Utils.baseUrl() + finishUrl+ "?schemeId=" + this.props.schemeInfo.schemeId;
-        fetch(url, {
-            method: 'GET',
-            credentials: 'same-origin',
-            headers: new Headers({ 'Accept': 'application/json' }),
-        }).then(response => {
-            if (!response.ok) throw Error(FINISH.forFailure);
-            return response.json();
-        }).then(response => {
-            console.log(response);
-            this.setState({
-                isFinished: true,
-                isLoaded: true,
-                isModal: false,
-                error: null,
-                result: response
-            });
-        }).catch(error => {
-            this.setState({
-                isLoaded: true,
-                error
-            });
-        })
-    }
-
-    reTryFinishBatchAPICall() {
-        console.log("Try 'finsh with batch' API call");
-        const batchOut = this.prepareBatch();
-        this.setState({
-            operation: FINISH_BATCH,
-            isLoaded: true,
-            isModal: true,
-            error: null
-        });
-        this.tryFinishBatchAPICall(batchOut);
-    }
-
-    tryFinishBatchAPICall(batchOut) {
-        const url = Utils.baseUrl() + finishBatchUrl+ "?schemeId=" + this.props.schemeInfo.schemeId;
-        fetch(url, {
-            method: 'POST',
-            headers: new Headers({ 'content-type': 'application/json' }),
-            credentials: 'same-origin',
-            body: JSON.stringify(batchOut)
-        }).then(response => {
-            if (!response.ok) throw Error(FINISH_BATCH.forFailure);
-            return response.json();
-        }).then(response => {
-            // Finish this component
-            // Move to Finish component
-            console.log(response);
-            this.setState({
-                isFinished: true,
-                IsLoaded: true,
-                isModal: false,
-                error: null,
-                result: response
-            });
-        }).catch(error => {
-            this.setState({
-                isLoaded: true,
-                error
-            });
-        })
+                break;
+            case 'FINISH_BATCH':
+                this.reTryFinishBatchAPICall();
+                break;
+            default:
+               throw new Error("Last operation is undefined!");
+        }
     }
 
     handleSubmit(event) {
-        
         event.preventDefault();
-
         const { skipable, pyramid } = this.props.schemeInfo.mode;
-
         if (skipable || pyramid) {
             this.reTryNextAPICall();
         } else {
@@ -326,6 +262,7 @@ export default class Batch extends React.Component {
             }
         }
     }
+
 
     renderTitle() {
         const { timeLeft, questionsLeft, batchesLeft, batchTimeLimit } = this.state.batch;
@@ -524,7 +461,7 @@ export default class Batch extends React.Component {
         const { operation } = this.state;
         return (
             <div className="text-center">
-                <Spinner message={(operation) ? operation.forSpinner : null} />
+                <Spinner message={(operation) ? operation.loadingMessage : null} />
             </div>);
     }
 
@@ -534,7 +471,7 @@ export default class Batch extends React.Component {
                 <div className="alert alert-danger alert-dismissible" role="alert">
                     <span>Operation failed...</span>
                 </div>
-                <Failure message={this.state.error.message} />
+                <Failure message={this.state.error.message} serverError={this.state.serverError} />
                 <div className="mt-3">
                     <span>
                         <button type="button" className="btn btn-sm btn-secondary mr-1" onClick={() => this.resolveAndDoReTry()}>Re-try>></button>
@@ -546,29 +483,40 @@ export default class Batch extends React.Component {
     }
 
     render() {
-        const { isCancelled, isFinished, isClearResponses, result } = this.state;
-        const { schemeInfo} = this.props;
+        const { lms, schemeInfo } = this.props;
+        const { isCancelled, isFinished, isNotFound, isClearResponses, isRunOutOfTime, result, batch } = this.state;
+
+        if (isRunOutOfTime)
+            return <RunOutOfTime
+                lms={lms}
+                schemeInfo={schemeInfo} />
+
         if (isCancelled)
             return <Cancelled
                 schemeId={schemeInfo.schemeId}
-                result={result}/>
+                result={result} />
 
         if (isFinished)
             return <Finish
-                schemeId={schemeInfo.schemeId}
-                settings={schemeInfo.settings}
-                result={result}/>
+                schemeInfo={schemeInfo}
+                result={result} />
+
+        if (isNotFound)
+            return <NotFound
+                schemeId={schemeInfo.schemeId} />
 
         if (isClearResponses)
             return <Batch
+                lms={lms}
                 schemeInfo={schemeInfo}
-                batch={this.state.batch}/>
+                batch={batch} />
 
         return this.renderBatch();
     }
 }
 
 const propTypes = {
+    lms: PropTypes.bool.isRequired,
     schemeInfo: PropTypes.object.isRequired,
     batch: PropTypes.object
 };

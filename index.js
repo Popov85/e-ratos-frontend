@@ -6,8 +6,13 @@ import Batch from "./src/Batch";
 import Finish from "./src/Finish";
 import Result from "./src/Result";
 import Cancelled from "./src/Cancelled";
+import NotFound from "./src/NotFound";
 import Opened from "./src/Opened";
 import Header from "./src/Header";
+import Failure from "./src/Failure";
+import RunOutOfTime from "./src/RunOutOfTime";
+import InfoPanel from "./src/InfoPanel";
+
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -1694,7 +1699,7 @@ const testSchemeInfo = {
     questions: 20,
     timings: 20,
     isEducational: true,
-    author: "Andrey P.",
+    staff: "Andrey P.",
     mode: {
         modeId: 1,
         name: "ModeDomain#1",
@@ -1720,15 +1725,22 @@ const testSchemeInfo = {
     }
 }
 
+const panelInfo = {user: "A. Popov", email: "student@example.com", lms: true}
+
 let search = window.location.search;
 let params = new URLSearchParams(search);
 let schemeId = params.get('schemeId');
 
 ReactDOM.render(<Launcher schemeId={(!schemeId) ? 1 : schemeId}/>, document.getElementById('app'));
-//ReactDOM.render(<Start schemeId={(!schemeId) ? 1 : schemeId} baseUrl = {realBaseUrl}/>, document.getElementById('app'));
+//ReactDOM.render(<Start panelInfo = {panelInfo} schemeInfo={testSchemeInfo}/>, document.getElementById('app'));
+//ReactDOM.render(<InfoPanel user = "A. Popov" lms = {false} schowLogout = {true}/>, document.getElementById('app'));
 //ReactDOM.render(<Batch schemeInfo={testSchemeInfo} batch = {realBatch} baseUrl = {realBaseUrl}/>, document.getElementById('app'));
-//ReactDOM.render(<Finish schemeId = {10} result = {realTestResult} mode = {testMode} settings = {testSettings} baseUrl = {realBaseUrl}/>, document.getElementById('app'));
+//ReactDOM.render(<Finish schemeInfo = {testSchemeInfo} result = {realTestResult}/>, document.getElementById('app'));
 //ReactDOM.render(<Result result = {realTestResult}/>, document.getElementById('app'));
-//ReactDOM.render(<Cancelled schemeId = {17} result = {testResult} baseUrl = {realBaseUrl}/>, document.getElementById('app'));
 //ReactDOM.render(<Header title = "PREVIOUS IS OPENED"/>, document.getElementById('app'));
-//ReactDOM.render(<Opened schemeId = {17} mode = {testMode} settings = {testSettings} baseUrl = {realBaseUrl}/>, document.getElementById('app'));
+//ReactDOM.render(<Opened lms = {false} schemeInfo = {testSchemeInfo}/>, document.getElementById('app'));
+//ReactDOM.render(<Failure message = "API call has just failed.." serverError = {new Error("Internal server error 500 that occurred out of the sudden on our very stable server!")}/>, document.getElementById('app'));
+//ReactDOM.render(<Opened lms = {false} schemeInfo = {testSchemeInfo}/>, document.getElementById('app'));
+//ReactDOM.render(<Cancelled schemeId = {17} result = {testResult} baseUrl = {realBaseUrl}/>, document.getElementById('app'));
+//ReactDOM.render(<NotFound schemeId={(!schemeId) ? 1 : schemeId}/>, document.getElementById('app'));
+//ReactDOM.render(<RunOutOfTime lms = {false} schemeInfo={testSchemeInfo}/>, document.getElementById('app'));

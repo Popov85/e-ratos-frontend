@@ -19,10 +19,7 @@ const Utils = {
 
     isEmptyArray: function (array) {
         return (!Array.isArray(!array) || !array.length);
-    },
-
-
-    helper3: function (param1, param2) { }
+    }
 }
 
 export default Utils;

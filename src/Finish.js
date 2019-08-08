@@ -29,17 +29,17 @@ export default class Finish extends React.Component {
 
     renderDetails() {
         if (!this.state.isDetails) return null;
-        const settings = this.props.settings;
+        const {schemeInfo} = this.props;
         return (
             <div>
-                <ResultByThemes settings = {settings} themeResults = {this.props.result.themeResults}/>
-                <ResultByQuestions settings ={settings} questionResults = {this.props.result.questionResults}/>
+                <ResultByThemes settings = {schemeInfo.settings} themeResults = {this.props.result.themeResults}/>
+                <ResultByQuestions settings ={schemeInfo.settings} questionResults = {this.props.result.questionResults}/>
             </div>
         );
     }
 
     renderDetailsLink() {
-        const { displayThemeResults, displayQuestionResults } = this.props.settings;
+        const { displayThemeResults, displayQuestionResults } = this.props.schemeInfo.settings;
         if (!displayThemeResults && !displayQuestionResults) return null;
         return (
             <div className="row text-center mt-1">
@@ -50,7 +50,7 @@ export default class Finish extends React.Component {
     }
 
     render() {
-        const {schemeId} = this.props;
+        const {schemeId} = this.props.schemeInfo;
         if (this.state.reStart) return <Launcher schemeId={schemeId}/>;
         return (
             <div>
@@ -68,10 +68,8 @@ export default class Finish extends React.Component {
 }
 
 const propTypes = {
-    schemeId: PropTypes.number.isRequired,
-    result: PropTypes.object.isRequired,
-    mode: PropTypes.object.isRequired,
-    settings: PropTypes.object.isRequired
+    schemeInfo: PropTypes.object.isRequired,
+    result: PropTypes.object.isRequired
 };
 
 Finish.propTypes = propTypes;

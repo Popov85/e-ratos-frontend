@@ -11,13 +11,17 @@ import Utils from './Utils';
 import '../main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+// Set to "" for production server
+const defaultUsername = "student@example.com";
+const defaultPassword = "dT09Rx06";
+
 class Login extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            username: (!props.username) ? "student@example.com" : props.username,
-            password: (!props.password) ? "dT09Rx06" : props.password,
+            username: (!props.username) ? defaultUsername : props.username,
+            password: (!props.password) ? defaultPassword : props.password,
             isRemember: false,
 
             showPassword: false,
@@ -36,8 +40,6 @@ class Login extends Component {
         };
         this.handleAuthentication = this.handleAuthentication.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
-        //this.didRegister = this.didRegister.bind(this);
-        //this.doLogin = this.doLogin.bind(this);
     }
 
     componentDidMount() {
@@ -64,11 +66,13 @@ class Login extends Component {
         event.preventDefault();
         console.log("Submitting: " + JSON.stringify(this.state));
         if (!this.validate()) return;
-        const url = Utils.baseUrl() + "/login?username=" +
-            this.state.username + "&password=" + this.state.password;
+        const url = Utils.baseUrl() + "/login"
+        const payload = this.getAuthData();
+        console.log(payload);
         fetch(url, {
             method: 'POST',
-            credentials: 'same-origin'
+            headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' }),
+            body: payload
         }).then(response => {
             // Either 302 (redirect) or 401 Unauthorized (unauthenticated) expected
             if (response.redirected) {
@@ -104,6 +108,21 @@ class Login extends Component {
             error: null
         });
         return true;
+    }
+
+    getAuthData() {
+        const { username, password, isRemember } = this.state;
+
+        const authData = {};
+        authData.username = username;
+        authData.password = password;
+        authData['remember-me'] = isRemember ? "on" : "off";
+
+        const searchParams = Object.keys(authData).map(key => {
+            return encodeURIComponent(key) + '=' + encodeURIComponent(authData[key]);
+          }).join('&');
+
+        return searchParams;
     }
 
     handleInputChange(event) {
@@ -182,9 +201,9 @@ class Login extends Component {
     }
 
     render() {
-        const {isRegister, regOptions} = this.state;
+        const { isRegister, regOptions } = this.state;
         if (isRegister)
-            return <Registration regOptions={regOptions}/>
+            return <Registration regOptions={regOptions} />
         return (
             <div className="container-fluid">
                 <LogoMini />
@@ -219,7 +238,8 @@ class Login extends Component {
                                         </div>
 
                                         <div className="custom-control custom-checkbox">
-                                            <input type="checkbox" name="isRemember" checked={this.state.isRemember} onChange={this.handleInputChange} className="custom-control-input" id="remember" />
+                                            <input type="checkbox" id="remember" name="isRemember" className="custom-control-input"
+                                                checked={this.state.isRemember} onChange={this.handleInputChange} />
                                             <label className="custom-control-label text-secondary mt-n2" htmlFor="remember">Remember me</label>
                                         </div>
 
