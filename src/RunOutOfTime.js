@@ -25,8 +25,8 @@ class RunOutOfTime extends Component {
 
     reTryFinishAPICall() {
         this.setState({ isLoaded: false, error: null, serverError: null });
-        const { lms, schemeInfo } = this.props;
-        ApiBatch.finish(schemeInfo.schemeId, lms)
+        const { panelInfo, schemeInfo } = this.props;
+        ApiBatch.finish(schemeInfo.schemeId, panelInfo.lms)
             .then(result => {
                 this.setState({
                     result,
@@ -40,7 +40,7 @@ class RunOutOfTime extends Component {
     }
 
     render() {
-        const { schemeInfo } = this.props;
+        const { panelInfo, schemeInfo } = this.props;
         const { isNotFound, isFinished, result, isLoaded, error, serverError } = this.state;
         if (!isLoaded)
             return <Spinner
@@ -48,12 +48,14 @@ class RunOutOfTime extends Component {
 
         if (isNotFound)
             return <NotFound
-                schemeId={schemeId} />
+                panelInfo={panelInfo}
+                schemeInfo={schemeInfo} />
 
         if (isFinished)
             return <Finish
+                panelInfo={panelInfo}
                 schemeInfo={schemeInfo}
-                result={result}/>
+                result={result} />
 
         return (
             <div>
@@ -73,7 +75,7 @@ class RunOutOfTime extends Component {
 }
 
 RunOutOfTime.propTypes = {
-    lms: PropTypes.bool.isRequired,
+    panelInfo: PropTypes.object.isRequired,
     schemeInfo: PropTypes.object.isRequired
 };
 

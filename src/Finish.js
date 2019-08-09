@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Launcher from './Launcher';
+import Start from './Start';
 import Result from './Result';
 import ResultByThemes from './ResultByThemes';
 import ResultByQuestions from './ResultByQuestions';
@@ -50,8 +50,8 @@ export default class Finish extends React.Component {
     }
 
     render() {
-        const {schemeId} = this.props.schemeInfo;
-        if (this.state.reStart) return <Launcher schemeId={schemeId}/>;
+        const {panelInfo, schemeInfo} = this.props;
+        if (this.state.reStart) return <Start panelInfo={panelInfo} schemeInfo = {schemeInfo}/>;
         return (
             <div>
                 <Result result={this.props.result} />
@@ -68,6 +68,7 @@ export default class Finish extends React.Component {
 }
 
 const propTypes = {
+    panelInfo: PropTypes.object.isRequired,
     schemeInfo: PropTypes.object.isRequired,
     result: PropTypes.object.isRequired
 };

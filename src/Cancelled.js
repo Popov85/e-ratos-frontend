@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Header from "./Header";
-import Launcher from "./Launcher";
+import Start from "./Start";
 
 class Cancelled extends Component {
 
@@ -17,8 +17,8 @@ class Cancelled extends Component {
     }
 
     render() {
-        const { schemeId} = this.props;
-        if (this.state.isReStarted) return <Launcher schemeId={schemeId} />
+        const { panelInfo, schemeInfo} = this.props;
+        if (this.state.isReStarted) return <Start panelInfo={panelInfo} schemeInfo = {schemeInfo}/>;
         const { user, scheme, passed } = this.props.result;
         return (
             <div className="mt-5">
@@ -73,7 +73,8 @@ class Cancelled extends Component {
 }
 
 Cancelled.propTypes = {
-    schemeId: PropTypes.number.isRequired,
+    panelInfo: PropTypes.object.isRequired,
+    schemeInfo: PropTypes.object.isRequired,
     result: PropTypes.object.isRequired
 };
 

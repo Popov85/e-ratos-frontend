@@ -32,11 +32,10 @@ class Opened extends Component {
         }
     }
 
-    // TODO: make a separate component!
     reTryCancelAPICall() {
-        this.setState({ isLoaded: false, error: null, serverError : null });
-        const { lms, schemeInfo } = this.props;
-        ApiBatch.cancel(schemeInfo.schemeId, lms)
+        this.setState({ isLoaded: false, error: null, serverError: null });
+        const { panelInfo, schemeInfo } = this.props;
+        ApiBatch.cancel(schemeInfo.schemeId, panelInfo.lms)
             .then(result => {
                 this.setState({
                     result,
@@ -50,9 +49,9 @@ class Opened extends Component {
     }
 
     reTryCurrentAPICall() {
-        this.setState({ isLoaded: false, error: null, serverError : null });
-        const { lms, schemeInfo } = this.props;
-        ApiBatch.current(schemeInfo.schemeId, lms)
+        this.setState({ isLoaded: false, error: null, serverError: null });
+        const { panelInfo, schemeInfo } = this.props;
+        ApiBatch.current(schemeInfo.schemeId, panelInfo.lms)
             .then(batch => {
                 this.setState({
                     batch,
@@ -66,26 +65,27 @@ class Opened extends Component {
     }
 
     renderCancelled() {
-        const { schemeInfo } = this.props
+        const { panelInfo, schemeInfo } = this.props
         return <Cancelled
-            schemeId={schemeInfo.schemeId}
+            panelInfo={panelInfo}
+            schemeInfo={schemeInfo}
             result={this.state.result} />;
     }
 
     renderContinue() {
-        const { schemeInfo } = this.props
+        const { panelInfo, schemeInfo } = this.props
         return <Batch
+            panelInfo={panelInfo}
             schemeInfo={schemeInfo}
             batch={this.state.batch} />;
     }
 
     renderFinish() {
-        const { schemeInfo } = this.props
+        const { panelInfo, schemeInfo } = this.props
         return <Finish
-            schemeId={schemeInfo.schemeId}
-            result={this.state.result}
-            mode={schemeInfo.mode}
-            settings={schemeInfo.settings} />;
+            panelInfo={panelInfo}
+            schemeInfo={schemeInfo}
+            result={this.state.result} />;
     }
 
     renderButtons() {
@@ -111,11 +111,11 @@ class Opened extends Component {
     }
 
     render() {
-        const {lms, schemeInfo} = this.props;
+        const { panelInfo, schemeInfo } = this.props;
         const { isLoaded, isClosed, isContinued, isFinished, isRunOutOfTime, isNotFound, error, serverError } = this.state;
         if (!isLoaded) return <Spinner message="Waiting..." />;
-        if (isNotFound) return <NotFound schemeId={schemeInfo.schemeId} />
-        if (isRunOutOfTime) return <RunOutOfTime lms = {lms} schemeInfo={schemeInfo}/>
+        if (isNotFound) return <NotFound panelInfo={panelInfo} schemeInfo={schemeInfo} />
+        if (isRunOutOfTime) return <RunOutOfTime panelInfo={panelInfo} schemeInfo={schemeInfo} />
         if (isClosed) return this.renderCancelled();
         if (isContinued) return this.renderContinue();
         if (isFinished) return this.renderFinish();
@@ -132,7 +132,7 @@ class Opened extends Component {
 }
 
 Opened.propTypes = {
-    lms: PropTypes.bool.isRequired,
+    panelInfo: PropTypes.object.isRequired,
     schemeInfo: PropTypes.object.isRequired
 };
 

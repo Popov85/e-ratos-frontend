@@ -7,10 +7,8 @@ import Logo from './Logo';
 import Header from './Header';
 import Login from './Login';
 import InfoPanel from "./InfoPanel";
-import ApiInfo from './ApiInfo';
 import ApiBatch from './ApiBatch';
 import { processError } from './Error';
-
 
 import '../main.css';
 
@@ -50,7 +48,7 @@ export default class Start extends React.Component {
                 if (batch.batch.length === 0) {
                     this.setState({ error: new Error("No questions found in the scheme!") });
                 } else {
-                    this.setState({ batch, isStarted: true});
+                    this.setState({ batch, isStarted: true });
                 }
             }).catch(e => {
                 processError(e, "Failed to start a new session", this);
@@ -63,14 +61,16 @@ export default class Start extends React.Component {
         const { panelInfo, schemeInfo } = this.props;
         const { batch } = this.state;
         return <Batch
-            lms={panelInfo.lms}
+            panelInfo={panelInfo}
             schemeInfo={schemeInfo}
             batch={batch} />
     }
 
     renderOpened() {
         const { panelInfo, schemeInfo } = this.props;
-        return <Opened lms={panelInfo.lms} schemeInfo={schemeInfo} />
+        return <Opened
+            panelInfo={panelInfo}
+            schemeInfo={schemeInfo} />
     }
 
     renderStart() {
@@ -106,17 +106,15 @@ export default class Start extends React.Component {
 
     render() {
         const { isStarted, isOpened, isLogout, error } = this.state;
+        if (isLogout) return <Login />
         if (isStarted) return this.renderBatch();
         if (isOpened) return this.renderOpened();
         if (error) return this.renderFailure();
-        if (isLogout) return <Login />
-        const {panelInfo, schemeInfo} = this.props;
-        console.log("PanelInfo = ", panelInfo);
-        console.log("SchemeInfo = ", schemeInfo);
+        const { panelInfo, schemeInfo } = this.props;
         return (
             <div className="container-fluid">
                 <InfoPanel
-                    panelInfo= {panelInfo}
+                    panelInfo={panelInfo}
                     logoutAct={this.logoutAct} />
                 <div className="mb-2"><Logo /></div>
                 <Header

@@ -13,7 +13,6 @@ import Failure from "./src/Failure";
 import RunOutOfTime from "./src/RunOutOfTime";
 import InfoPanel from "./src/InfoPanel";
 
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const testMode = {
@@ -1725,7 +1724,7 @@ const testSchemeInfo = {
     }
 }
 
-const panelInfo = {user: "A. Popov", email: "student@example.com", lms: true}
+const testPanelInfo = {user: "A. Popov", email: "student@example.com", lms: true}
 
 let search = window.location.search;
 let params = new URLSearchParams(search);
@@ -1734,7 +1733,7 @@ let schemeId = params.get('schemeId');
 ReactDOM.render(<Launcher schemeId={(!schemeId) ? 1 : schemeId}/>, document.getElementById('app'));
 //ReactDOM.render(<Start panelInfo = {panelInfo} schemeInfo={testSchemeInfo}/>, document.getElementById('app'));
 //ReactDOM.render(<InfoPanel user = "A. Popov" lms = {false} schowLogout = {true}/>, document.getElementById('app'));
-//ReactDOM.render(<Batch schemeInfo={testSchemeInfo} batch = {realBatch} baseUrl = {realBaseUrl}/>, document.getElementById('app'));
+//ReactDOM.render(<Batch panelInfo = {testPanelInfo} schemeInfo={testSchemeInfo} batch = {realBatch}/>, document.getElementById('app'));
 //ReactDOM.render(<Finish schemeInfo = {testSchemeInfo} result = {realTestResult}/>, document.getElementById('app'));
 //ReactDOM.render(<Result result = {realTestResult}/>, document.getElementById('app'));
 //ReactDOM.render(<Header title = "PREVIOUS IS OPENED"/>, document.getElementById('app'));

@@ -8,14 +8,13 @@ import McqMulti from './McqMulti';
 import McqSingle from './McqSingle';
 import Finish from './Finish';
 import Cancelled from './Cancelled';
-import Utils from './Utils';
-import { FaPowerOff, FaEraser, FaSave, FaPause, FaThLarge, FaBars } from 'react-icons/fa';
-import '../main.css';
-import ApiBatch from './ApiBatch';
 import NotFound from './NotFound';
 import RunOutOfTime from "./RunOutOfTime";
+import ApiBatch from './ApiBatch';
 import { processError } from './Error';
+import { FaPowerOff, FaStepBackward, FaStepForward, FaSave, FaPause, FaCheck } from 'react-icons/fa';
 
+import '../main.css';
 
 const CANCEL = { loadingMessage: "Performing 'cancel' API call...", failureMessage: "Failed to perform 'cancel' API call..." };
 const NEXT = { loadingMessage: "Performing 'next' API call...", failureMessage: "Failed to perform 'next' API call..." };
@@ -41,20 +40,19 @@ export default class Batch extends React.Component {
         super(props);
         this.state = {
 
-            isCancelled: false,
-            isFinished: false,
-
             // No opened sesson for this schemeId was found on the server
             isNotFound: false,
 
             isRunOutOfTime: false,
 
+            isCancelled: false,
+            isFinished: false,
 
-            // last api call
+            // Last API call
             operation: null,
 
-            // view type
-            columns: 2,
+            // Current question in the batch to display
+            counter: 0,
 
             batch: this.props.batch,
 
@@ -66,7 +64,6 @@ export default class Batch extends React.Component {
             serverError: null,
 
             responses: new Map(),
-            isClearResponses: false,
             result: null
         }
 
@@ -78,14 +75,14 @@ export default class Batch extends React.Component {
         this.interval = setInterval(() => this.tick(), 1000);
     }
 
-    /*componentDidUpdate(prevProps, prevState, snapshot) {
+    componentDidUpdate(prevProps, prevState, snapshot) {
         console.log("Component did update!");
-        if (this.state.responses !== prevState.responses) {
+        /*if (this.state.responses !== prevState.responses) {
             for (var [key, value] of this.state.responses) {
                 console.log(key + ' = ' + JSON.stringify(value));
             }
-        }
-    }*/
+        }*/
+    }
 
     componentDidCatch(error, info) {
         console.error(error);
@@ -108,16 +105,6 @@ export default class Batch extends React.Component {
         this.setState({ responses: newMap });
     }
 
-    // TODO: remove
-    changeView() {
-        this.setState({ columns: (this.state.columns === 1) ? 2 : 1 });
-    }
-
-    // TODO: remove
-    clearResponses() {
-        this.setState({ isClearResponses: true });
-    }
-
     prepareBatch() {
         const batch = {};
         const responses = {}
@@ -135,8 +122,8 @@ export default class Batch extends React.Component {
             error: null,
             serverError: null
         });
-        const { lms, schemeInfo } = this.props;
-        ApiBatch.cancel(schemeInfo.schemeId, lms)
+        const { panelInfo, schemeInfo } = this.props;
+        ApiBatch.cancel(schemeInfo.schemeId, panelInfo.lms)
             .then(result => {
                 this.setState({
                     result,
@@ -160,8 +147,8 @@ export default class Batch extends React.Component {
             error: null,
             serverError: null
         });
-        const { lms, schemeInfo } = this.props;
-        ApiBatch.next(schemeInfo.schemeId, batch, lms)
+        const { panelInfo, schemeInfo } = this.props;
+        ApiBatch.next(schemeInfo.schemeId, batch, panelInfo.lms)
             .then(batch => {
                 if (batch.batch.length === 0) {
                     // For dynamic sessions
@@ -172,6 +159,7 @@ export default class Batch extends React.Component {
                         batch,
                         timeSpent: 0, // TODO: check
                         isModal: false,
+                        counter: 0,
                         responses: new Map()
                     });
                 }
@@ -190,9 +178,10 @@ export default class Batch extends React.Component {
             error: null,
             serverError: null
         });
-        const { lms, schemeInfo } = this.props;
-        ApiBatch.finish(schemeInfo.schemeId, lms)
+        const { panelInfo, schemeInfo } = this.props;
+        ApiBatch.finish(schemeInfo.schemeId, panelInfo.lms)
             .then(result => {
+                console.log("Result = ", result);
                 this.setState({
                     result,
                     isFinished: true,
@@ -214,9 +203,10 @@ export default class Batch extends React.Component {
             error: null,
             serverError: null
         });
-        const { lms, schemeInfo } = this.props;
-        ApiBatch.finish_batch(schemeInfo.schemeId, batch, lms)
+        const { panelInfo, schemeInfo } = this.props;
+        ApiBatch.finish_batch(schemeInfo.schemeId, batch, panelInfo.lms)
             .then(result => {
+                console.log("Result = ", result);
                 this.setState({
                     result,
                     isFinished: true,
@@ -245,7 +235,7 @@ export default class Batch extends React.Component {
                 this.reTryFinishBatchAPICall();
                 break;
             default:
-               throw new Error("Last operation is undefined!");
+                throw new Error("Last operation is undefined!");
         }
     }
 
@@ -263,62 +253,57 @@ export default class Batch extends React.Component {
         }
     }
 
-
-    renderTitle() {
+    renderSessionInfoPanel() {
+        const { panelInfo } = this.props;
         const { timeLeft, questionsLeft, batchesLeft, batchTimeLimit } = this.state.batch;
         const timeRemaining = timeLeft - this.state.timeSpent;
         const batchTimeRemaining = batchTimeLimit - this.state.timeSpent;
         return (
-            <p className="text-center text-secondary text-small">
-                <b>Time left: </b>
-                {timeLeft < 0 ? "not restricted" :
-                    <Countdown key="session" date={Date.now() + ((timeRemaining <= 0) ? 0 : timeRemaining * 1000)} daysInHours={true} />}
-                | <b>questions left: </b>
-                {questionsLeft}
-                | <b>batches left: </b>
-                {batchesLeft}
-                | <b>batch limit: </b>
-                {batchTimeLimit < 0 ? "not restricted" :
-                    <Countdown key="batch" date={Date.now() + ((batchTimeRemaining <= 0) ? 0 : batchTimeRemaining * 1000)} daysInHours={true} />}
-            </p>);
+            <div>
+                <span className="text-secondary text-small border float-left">
+                    <a href="#" className="badge badge-danger" onClick={() => this.reTryCancelAPICall()} title="Wish to cancel?">
+                        Cancel&nbsp;<FaPowerOff color="white" />
+                    </a> &nbsp;
+                <strong>User: </strong> {panelInfo.email} &nbsp;
+                <strong>Context: </strong> {panelInfo.lms ? "LMS" : "non-LMS"}
+                </span>
+                <span className="text-secondary text-small border float-right">
+                    <strong>Time left: </strong>
+                    {timeLeft < 0 ? "not restricted" :
+                        <Countdown key="session" date={Date.now() + ((timeRemaining <= 0) ? 0 : timeRemaining * 1000)} daysInHours={true} />}
+                    | <strong>questions left: </strong>
+                    {questionsLeft}
+                    | <strong>batches left: </strong>
+                    {batchesLeft}
+                    | <strong>batch limit: </strong>
+                    {batchTimeLimit < 0 ? "not restricted" :
+                        <Countdown key="batch" date={Date.now() + ((batchTimeRemaining <= 0) ? 0 : batchTimeRemaining * 1000)} daysInHours={true} />}
+                </span>
+            </div>
+        );
     }
 
-    renderPanel() {
-        const preserve = this.props.schemeInfo.mode.preservable;
-        const pause = this.props.schemeInfo.mode.pauseable;
+
+    renderSessionControlPanel() {
+        const preserve = true; //this.props.schemeInfo.mode.preservable;
+        const pause = true; //this.props.schemeInfo.mode.pauseable;
         var buttons = [];
-        buttons.push(
-            <span key="cancel">
-                <button className="btn btn-danger btn-sm ml-1" onClick={() => this.reTryCancelAPICall()} title="Cancels the current session and resets all session data">
-                    <FaPowerOff color="white" />
-                </button>
-            </span>);
         if (preserve) buttons.push(
-            <span key="preser">
-                <button className="btn btn-secondary btn-sm ml-1" onClick={() => this.reTryPreserveAPICall()} title="Preserves the current session">
-                    <FaSave color="white" />
-                </button>
+            <span key="preserve">
+                <a href="#" className="badge badge-secondary mr-1" onClick={() => this.reTryPreserveAPICall()} title="Preserves the current session">
+                    Preserve&nbsp;<FaSave color="white" />
+                </a>
             </span>);
         if (pause) buttons.push(
             <span key="pause">
-                <button className="btn btn-secondary btn-sm ml-1" onClick={() => this.reTryPauseAPICall()} title="Pauses the current session">
-                    <FaPause color="white" />
-                </button>
+                <a href="#" className="badge badge-secondary" onClick={() => this.reTryPauseAPICall()} title="Pauses the current session">
+                    Pause&nbsp;<FaPause color="white" />
+                </a>
             </span>);
-        buttons.push(
-            <span key="view">
-                <button className="btn btn-secondary btn-sm ml-1" onClick={() => this.changeView()} title="Changes the current view">
-                    {this.state.columns === 1 ? <FaThLarge color="white" /> : <FaBars color="white" />}
-                </button>
-            </span>);
-        buttons.push(
-            <span key="clear">
-                <button className="btn btn-warning btn-sm ml-1" onClick={() => this.clearResponses()} title="Clears all the provided answers to the current batch">
-                    <FaEraser color="white" />
-                </button>
-            </span>);
-        return <div className="text-center"> {buttons}</div>
+        return <div className="text-center">{buttons}</div>
     }
+
+
 
     renderMcqSingle(q) {
         const response = this.state.responses.get(q.questionId);
@@ -345,94 +330,85 @@ export default class Batch extends React.Component {
             putResponse={this.putResponse} />)
     }
 
-    renderOne(one) {
+
+    renderQuestion() {
+        const { counter, batch } = this.state;
+        const q = batch.batch[counter];
+        const single = q.single;
         return (
-            <div className="row mt-0 mb-4" key={one.questionId.toString()}>
+            <div className="row mt-0 mb-4">
                 <div className="col-12">
-                    {(one.single) ? this.renderMcqSingle(one) : this.renderMcqMulti(one)}
+                    {(single) ? this.renderMcqSingle(q) : this.renderMcqMulti(q)}
                 </div>
             </div>);
     }
 
-    renderTwo(two) {
-        if (two.length === 1) return this.renderOne(two[0]);
-        const key = two[0].questionId.toString() + two[1].questionId.toString();
-        return (
-            <div className="row mt-0 mb-2" key={key}>
-                <div className="col-6">
-                    {this.renderOne(two[0])}
-                </div>
-                <div className="col-6">
-                    {this.renderOne(two[1])}
-                </div>
-            </div>
-        );
+    next() {
+        const { counter, batch } = this.state;
+        if (counter < batch.batch.length - 1) this.setState({ counter: counter + 1 });
     }
 
-    renderQuestions() {
-        // single in batch
-        if (this.state.batch.batch.length === 1) return this.renderOne(this.state.batch.batch[0]);
-        // multiple in batch
-        var myBatch = [];
-        if (this.state.columns === 1) {
-            // One column view
-            this.state.batch.batch.map(q => myBatch.push(this.renderOne(q)));
-        } else if (this.state.columns === 2) {
-            // Two column view
-            const chunksArray = Utils.chunkArray(this.state.batch.batch, 2);
-            chunksArray.map(q => myBatch.push(this.renderTwo(q)));
-        } else {
-            throw Error("Unsupported columns value!");
-        }
-        return myBatch;
+    back() {
+        const { counter } = this.state;
+        if (counter > 0) this.setState({ counter: counter - 1 });
     }
 
+
+    /**
+     * 1) If batch constits only of single question, display NEXT>>
+        2) If multiple questions:   
+        a) Initial (counter = 0) - display FORVARD>>;
+        b) Intermediate (counter > 0 and < length) - display <<BACK and FORVARD>>
+        c) Last (counter = length) - display <<BACK and NEXT>>
+        3) If it is the last batch display FINISH>>
+     */
     renderNavigation() {
-        return (
-            <div className="text-right">
-                <input type="submit" className="btn btn-secondary pr-4 pl-4" value={(this.state.batch.batchesLeft > 0) ? "Next>>" : "Finish>>"} />
-            </div>)
-    }
-
-    renderBatch() {
-        return (
-            <div className="mt-1">
-
-                <div className="row">
-                    <div className="col-12">
-                        <p className="text-center text-secondary font-weight-bold ">{this.props.schemeInfo.name}</p>
-                    </div>
-                </div>
-
-                <div className="row">
-                    <div className="col-12">
-                        {this.renderTitle()}
-                    </div>
-                </div>
-
-                <div className="row">
-                    <div className="col-12 text-center mb-3">
-                        {this.renderPanel()}
-                        <hr />
-                    </div>
-                </div>
-
-                <form onSubmit={this.handleSubmit}>
-                    <div className="row">
-                        <div className="col-12">
-                            {this.renderQuestions()}
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div className="col-12">
-                            <span>{this.renderNavigation()}</span>
-                        </div>
-                    </div>
-                </form>
-                {this.renderModal()}
-            </div>
-        );
+        const { batch } = this.state;
+        if (batch.batch.length === 1) {
+            return (
+                <div className="text-center">
+                    <button type="submit" className="btn btn-warning pr-2 pl-2" title="Confirm answers and send!" >
+                        {(batch.batch.batchesLeft > 0) ? "Next" : "Finish"}<FaCheck color="red" />
+                    </button>
+                </div>);
+        }
+        const { counter } = this.state;
+        if (counter === 0) {
+            return (
+                <div className="text-center">
+                    <button type="button" className="btn btn-secondary pr-1 pl-1" onClick={() => this.next()} title="Move to the second question in this batch">
+                        Next <FaStepForward color="white" />
+                    </button>
+                </div>);
+        }
+        if (counter > 0 && counter < batch.batch.length - 1) {
+            return (
+                <div className="text-center">
+                    <span>
+                        <button type="button" className="btn btn-secondary pr-1 pl-1" onClick={() => this.back()} >
+                            <FaStepBackward color="white" />&nbsp;Back
+                        </button>
+                        &nbsp;
+                        <button type="button" className="btn btn-secondary pr-1 pl-1" onClick={() => this.next()} title="Move to the second question in this batch">
+                            Next <FaStepForward color="white" />
+                        </button>
+                    </span>
+                </div>);
+        }
+        if (counter === batch.batch.length - 1) {
+            return (
+                <div className="text-center">
+                    <span>
+                        <button type="button" className="btn btn-secondary pr-1 pl-1 mr-2" onClick={() => this.back()} >
+                            <FaStepBackward color="white" />&nbsp;Back
+                         </button>
+                        <button type="submit" className="btn btn-warning pr-2 pl-2" title="Confirm answers and send!" >
+                            {(batch.batchesLeft > 0) ? "Next" : "Finish"}<FaCheck color="red" />
+                        </button>
+                    </span>
+                </div>);
+        }
+        throw new Error("Undefined state of counter = " + counter);
     }
 
     closeModal() {
@@ -483,40 +459,75 @@ export default class Batch extends React.Component {
     }
 
     render() {
-        const { lms, schemeInfo } = this.props;
-        const { isCancelled, isFinished, isNotFound, isClearResponses, isRunOutOfTime, result, batch } = this.state;
+        const { panelInfo, schemeInfo } = this.props;
+        const { isCancelled, isFinished, isNotFound, isRunOutOfTime, result } = this.state;
+
+        if (isNotFound)
+            return <NotFound
+                panelInfo={panelInfo}
+                schemeInfo={schemeInfo} />
 
         if (isRunOutOfTime)
             return <RunOutOfTime
-                lms={lms}
+                panelInfo={panelInfo}
                 schemeInfo={schemeInfo} />
 
         if (isCancelled)
             return <Cancelled
-                schemeId={schemeInfo.schemeId}
+                panelInfo={panelInfo}
+                schemeInfo={schemeInfo}
                 result={result} />
 
         if (isFinished)
             return <Finish
+                panelInfo={panelInfo}
                 schemeInfo={schemeInfo}
                 result={result} />
 
-        if (isNotFound)
-            return <NotFound
-                schemeId={schemeInfo.schemeId} />
+        return (
+            <div className="container-fluid p-1">
 
-        if (isClearResponses)
-            return <Batch
-                lms={lms}
-                schemeInfo={schemeInfo}
-                batch={batch} />
+                <div className="row mb-3">
+                    <div className="col-12">
+                        {this.renderSessionInfoPanel()}
+                    </div>
+                </div>
 
-        return this.renderBatch();
+                <div className="row text-center text-secondary">
+                    <div className="col-12">
+                        <h5>{this.props.schemeInfo.name}</h5>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-12 text-center mb-3">
+                        {this.renderSessionControlPanel()}
+                    </div>
+                </div>
+
+
+
+                <form onSubmit={this.handleSubmit}>
+                    <div className="row">
+                        <div className="col-12">
+                            {this.renderQuestion()}
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-12">
+                            <span>{this.renderNavigation()}</span>
+                        </div>
+                    </div>
+                </form>
+                {this.renderModal()}
+            </div>
+        );
     }
 }
 
 const propTypes = {
-    lms: PropTypes.bool.isRequired,
+    panelInfo: PropTypes.object.isRequired,
     schemeInfo: PropTypes.object.isRequired,
     batch: PropTypes.object
 };

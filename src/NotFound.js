@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Logo from './Logo';
 import Header from "./Header";
-import Launcher from './Launcher';
+import Start from './Start';
 
 class NotFound extends Component {
 
@@ -15,8 +15,8 @@ class NotFound extends Component {
     
     render() {
         const {isRestarted} = this.state;
-        const {schemeId} = this.props;
-        if (isRestarted) return <Launcher schemeId = {schemeId}/>
+        const {panelInfo, schemeInfo} = this.props;
+        if (isRestarted) return <Start panelInfo = {panelInfo} schemeInfo = {schemeInfo}/>;
         return (
             <div>
                 <Logo />
@@ -30,7 +30,8 @@ class NotFound extends Component {
 }
 
 NotFound.propTypes = {
-    schemeId: PropTypes.number.isRequired
+    panelInfo: PropTypes.object.isRequired,
+    schemeInfo: PropTypes.object.isRequired,
 };
 
 export default NotFound;
