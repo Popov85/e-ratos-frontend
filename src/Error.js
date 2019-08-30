@@ -1,7 +1,7 @@
 export const processError = (error, expl, clazz) => {
     // Connection error
     if (!error.hasOwnProperty('exception')) {
-        console.error(error.message);
+        console.error(error);
         clazz.setState({ error });
         return;
     }

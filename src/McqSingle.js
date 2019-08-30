@@ -7,7 +7,7 @@ import '../main.css';
 const normal = "bg-normal border-bottom border-regular";
 const selected = "bg-selected border-bottom border-regular";
 
-export default class McqSingle extends React.Component{
+export default class McqSingle extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -20,7 +20,7 @@ export default class McqSingle extends React.Component{
 
     componentWillMount() {
         //console.log("Component will mount = "+this.props.answered.toString());
-        this.setState({answerIds : this.props.answered});
+        this.setState({ answerIds: this.props.answered });
     }
 
     componentDidUpdate(prevProps, prevState) {

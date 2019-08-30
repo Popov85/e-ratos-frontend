@@ -8,13 +8,11 @@ const Utils = {
             "http://localhost:8090" : baseUrl;
     },
 
-    // split array into chunks of n
-    chunkArray: function (arr, size) {
-        var result = [];
-        for (var i = 0; i < arr.length; i += size) {
-            result.push(arr.slice(i, i + size));
-        }
-        return result;
+    secToTime: function (sec) {
+        var date = new Date(null);
+        date.setSeconds(sec);
+        var timeString = date.toISOString().substr(11, 8);
+        return timeString;
     },
 
     isEmptyArray: function (array) {

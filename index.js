@@ -12,6 +12,9 @@ import Header from "./src/Header";
 import Failure from "./src/Failure";
 import RunOutOfTime from "./src/RunOutOfTime";
 import InfoPanel from "./src/InfoPanel";
+import Preserved from "./src/Preserved";
+import Login from "./src/Login";
+import Registration from "./src/Registration";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -21,7 +24,7 @@ const testMode = {
     helpable: true,
     pyramid: false,
     skipable: true,
-    rightAnswer: false,
+    rightAnswer: true,
     pauseable: true,
     preservable: true,
     reportable: true,
@@ -1422,6 +1425,7 @@ const realBatch = {
       {
           "className": "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
           "questionId": 31222,
+          "serialNumber": 1,
           "question": "cdc_question MCQ #31222 question: oqlw7mz 8bmel jrebhh95z2ey9wd yzlgf1tv xkle3s6e639kg 2yq5uve97ei6b 7ga6tw5wz3 cwrxjz80wy6gtq govdlz1xh lgv3m3w0si 2vfnlytifk8 dhdeptk2zun5947 wa8fqj6cnd 3wzddw791sohg wrwz8dq05 vfej6 ce4u4q3v sgob4 6u1bw3180ybl lff3yunle2ew wqc1e6 1lsmf8x52 vfder4y 11ybe 79vyy5mpzvu h50ngmh3 wsvqgtl2a 3opwreff 07lf2doo gcjuhjh89i srf3r napgvrnk lht2m8ccitj3i h2238 fun8uwug illx42uk djs3rz5bkzs x7mkq6mnt5b 5qtigjs4wyw i2d4xy98q82 0bva8gp8h7lztb cbxsw4wd8 q399evxx8bgn2ys tiisgatimihic 79wjigstlaxcq f2drm40wh2wr ougvg6i8d2v hgrpgjuxruc2 tcg7w4 p0qi4k9j7w0gjfc hxqr7o159 h922m60k33wsg0 4p1ebs8v9rsphnw t0jbwib6a a507b8v9h ebpu468tigxoxen ey3mv1 yjtvr3nsol8zjcd owy2wiw7tqfu 0h8ttkr uicla17e83 kflzya8cdaw 6zz9s7k 4n87id910kno jxfgmpx4tnr2tw o4pbix6u6t9y nfc1aa swff7wde7lyw 7ru86y3d3qo512c gbl9f5jyt q1is7kp sqjsq937m89dxe paymoix1r 5cc0vaz0rj4sb jku4jji3vwny fxv3ab07b4r5da xvyauoawdzxw yphqpb0yidww 0ipak69xq59xl n8o7a6t dxtelcmcni ev88u gtucidilylph s61x8ffy 9u4b2xm j3gl6cuat989 08a9nshdy ww5fxwpl0dhek v58e8pxb93oe v0nscpkcygkn miru6a 8qbmkbv 9wnecr5bg97l82x ?",
           "level": 1,
           "type": 1,
@@ -1483,6 +1487,7 @@ const realBatch = {
       {
           "className": "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
           "questionId": 32616,
+          "serialNumber": 2,
           "question": "cff_question MCQ #32616 question: 20mh5wn25 kes9w8rjbe0rzfn l8h6kng2kcuj1 ebmfap oiqflbruc7 em5prnhs8 i5y4epv96x 1c2cu6p62b0hh kw9ab zp6hz3 nelffcoxjav1 0nbnmron5b a9pa3m8e9ze pac2m rxz7nsv27mugy 3exzrlspnlu 6tb7w 3fgv3608 or9b0v 1ufpxbrmeo 7v4tue3p2657ha 04eccth6 vdo0olo sa68rztm2cqyoo g11rs5jvbgn y3vpsgjsf4 bwozr4b8x 2tnqt8vtua4 hnsz2yw7c0o5io 5doky1zfdbf pcm54wkr35qo6k kg1m1elr0jt 2mvb70l1k ergpmou 3vbzdr ypnhw89p m8wyk6b296a2o 73yff6wv2b xah9z3791 zf83yu3a ozweve p47qd9r54ulejy nqybxpueu3f dvwfsn521jkgr0 x21vnm2plidr38 1sh87w298fsd 1thglrzhqmmw achqpj32phsjyg sn3f5bndq7f f950usi88 big01h0vo7 fnlgdy8zgq h3yks8 zzuepdo9e27 slvh3 9fakepy lzbnln6nq hq6jbpraus hdj7o36hc7vh kziwvxxlp8t4i hf9yvopk0ge nabxtxrspci u0vedjp2dbvooq 67jmku6x16rw 2u6c4vv97rzg8a l18lgvik91ew jrqxslga ieon6np033d34 b8erz uikzcotgi rrl1ln992667 jtwc3ye6hbqfa0 1bbj34 eh32n2xbw837vtv apqqvqkr5 7i9vp5 cukr96 vouo40j 2jo1bhj 6fv9evhue514 iwbg8tzyqo25gf ssh422cgoutec4 2z9lmrd kjoyiod7 0pnycvn6r2op7b mwiple1r7k9y7o u7bvt1q0f f1id7zrn0x qxld7hg0349x u3gi6xu0reb4x d6qjue92 fxtb6ay73j 0h4bum4n7mg1c srplr3 46g8xbwmjm9uoy5 7h6ut tv1k6i35idm t3zmylml0sn8 4skhmrlhmvcsv7w o39oepo9fe q0oyfx8 54om2675sd6l2 c4gs4ol3 qaqwx7k1y fhkyvy6ia 07w46qwcm 6zetojqkk4rj pudg2 icyju k57vikfky0upu1 kauwj2q02 838vfl 9pemrigiwhz4 pz2tdrm3ete w4glci66n9mn 5giu2gr9oi kt65kt3bzk9 cb9m81 60s3i j08qb622 gqe3pvk lkepk8rbzl0npu 0stwy3z7 xy5730y16 xxfo2qewn azj33ygrev zyxzp2g9r q3umxlho6kkteeo wzie7cs4cyfy4w drg76q0if23u ci085mt3fwdwwb sb5f605v33uwgx w0vqv vmvoj0qrifh5b2 gey9zmhcsp6s cjzz6rmr50vky ng2gx 36lfjahh8fg3xiu 6kmz4kq7qp bau7qnyonejopo9 47hr542nchrf 5j4kuvupxpu8yem mgxglodaaif4 ffr8czuk256 ipuc870e ?",
           "level": 1,
           "type": 1,
@@ -1553,6 +1558,7 @@ const realBatch = {
       {
           "className": "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
           "questionId": 24429,
+          "serialNumber": 3,
           "question": "daf_question MCQ #24429 question: s5lxs 0hmg55o7n qo7vklb257 5fpq2k8htoi7o1 ga8qebt1 xt6n86 906p8n7v5z78 dkd6w99vr4s 3h1er3kg3tn9x p4j21u997ljg33 e4op7lu rzieabdie5go8 67di8v8 sbf3ehtiut yonj8bbhar4y cgld3 yctsw 22gjs2ph ekxhrf jfgmi 7jqlyfzz26qw3 r2ic6i7usycluz8 qwopgos3hvg 0y1mfggegrjarr0 lvnq08 i6j2j8wwxgly1 bbwb47ds7y 0gcmi 8usk9dqosh fukyyz y51n6aigkej 44a0estn3cf 57gta8pj7udb1z 8gi3usko1u96de pmfvu15mbc8930y b648pqlrim dkug2hot3l1ee ib86fkbc2 toz52xptwpwgepn 8p1n3jodf ykq96a 6at4p8sz m5eylkl70bsb zqm0kxgypt8p a5mmroq 2c8oyg2a9dihd 3rea15 jykiefe7h exf2t7u0odl9p oc8rg610x6d0a 4h3rq6i0cmo c55fit9 8czwau0 k7pqedo0q 0sbom6m 792ztfbpvult4q t606w5pon6kw ytrcbg9 41utz77tlk4pi 2blg221yrn6sb2g 0xluq1n6j innket vbpxks18pdcexz 3bv6v8oypu7 f7gbsq5hkcvqcqb k0b8ir9l7yxrt ym2k4expfu36pf5 dkl8obhspyc i1ptklmjj5r w6j7h8lzw egk6njyyfmwr 2x3g6yke8x d0zx2 2q5j85ox1umd ixh501b1bu6417 858f9zc 56nplxx g1x9sfdh4two va1k6r rof81bzvkv887 s147wbnq 1pjaljckmkf q5ul9tu13u 2ivhbwnbt3b1 t311z4yw 3oz1n1 jvkqcuh8eyt7 ubylyp9zt8bo vxw1ezz5z8k65 3yfrxqy2 hdxsykj8u 2cs7xiwwurtc9m 28cqcprb 7bzxim pjkz1 thr4orf9eol bqz0leb234rc4d m2zz3sdkl3f82yb rkhj3mbnuxady0u leusknoh2yej xfj2plb m7c0qg1vog4st rbki0h0rmorh 7c860cdmur8tg 86a5x azf06h80 wi88h0g6 yejmvatdmui0u3h qpj7j622fjhf 2r736muw bk7ca 6a86pgwff75r4vx c131uqvl bqcc8vcbfjuxfur l2dybrptdz bqk2s 1vwmfqn75xu 2jgnru8mzgatsu 5yorsk2ybxt8 ao33jv3apa8ug dizu59 m5d0tui223iq 5l7h5e5fn j4rb41lqr7vytm 9ja5j3kwri0s kt4re558 ?",
           "level": 1,
           "type": 1,
@@ -1592,7 +1598,7 @@ const realBatch = {
               },
               {
                   "answerId": 97589,
-                  "answer": "Answer (incorrect) #2 to question #24429 answer: 3 lphz4 8yi 4nl i j qva jvfgwwb6i4 6 7mvq0s8 fgh27f .",
+                  "answer": "Answer (correct) #2 to question #24429 answer: 3 lphz4 8yi 4nl i j qva jvfgwwb6i4 6 7mvq0s8 fgh27f .",
                   "resourceDomain": {
                       "resourceId": 1503,
                       "link": "https://resources.com/1503",
@@ -1609,11 +1615,12 @@ const realBatch = {
                   }
               }
           ],
-          "single": true
+          "single": false
       },
       {
           "className": "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
           "questionId": 35784,
+          "serialNumber": 4,
           "question": "gee_question MCQ #35784 question: 7wkdfjs4loxcy3 z45pbzfy r4xckne1t v27fr6vokwuqpy gvra67 mynwc 87wb8av3v oyxg8qjaz3f1 m8pimp8nsao 12lxmj b3r11h58ek4b x6lyijcislhtn2 s9hku6ah781 d5gr41v6 4a6yxspjpaiityq 0l06zzsslt8iai ku5so5ve6pypnqj bzlirn62y p5p0jdh ln7wxt8lm 758imx ucqb0fyz rtrqytsfc po66lwiz nnsk7jo 2o23w6f3gx1 lcthnj57kyefbc7 072gvtoerups1 yu4jq 5839jieoud1 dxjnrpt4d q3vgm5zlut9rf tbwtynt5dwq cypzmzkwjwv22i gcet4 f8n33bz mfp6k jdpn2jvf5bdni40 7g8qrz1k hakl2ay4ocd72 daqhj6li2x ppgfm75 ogt7ycqnnooj19d 4z8qh7vj7 xvgz4316ghb o3wemv482 vc15anh548ug5 9n35uoca owon6bkcbhyy 64gh2b k53n68 fjmazgwv7g4wl0 40bjtll3rj gr83fy982q paqu0d5ic59f ohdrzfp 1xlsm8cz0 xlmclve5xy2 ao1hebz5ehm7zxc c2ewq9 m3xrr1e o3aozza5qrmc7 tcb4v7p14e8 ogk8vgn1iej e1uhpd2l1 b8yuq0 8i6tiy32xyz 7but1l lsdgde1gxfu pssq8stcutw3udv vksrwmc 7hrisrm 1ls49y6f 3ev7gug 6h15npqhfc 7o264n5emvy ft9idcxy bds703efif wz1ugd4 wlg1w830 4hlg05vfm rgj8ao5593b ?",
           "level": 1,
           "type": 1,
@@ -1644,7 +1651,7 @@ const realBatch = {
               },
               {
                   "answerId": 143115,
-                  "answer": "Answer (incorrect) #2 to question #35784 answer: ft0 15artm2mn6pf2yl r nnfi8s2pggu g4s0433z0bpz zxuwu5tow0k 6pjrtwzp1fel5sz 152 pj fhe kvvr3t8utm5 ns pshxv5jzl n37j3ri4kln yqlql4xzh8rt6b5 44y8pdodi1xc 4m5 867h4 7pzcu6so bfk5eor97b7twmz y0er8 531jk av ehepxepbw7gsy utnvjus4 3u8 ro719ek mfk7ppebw9c 4kwlaxr9l05 5m5rqvqpzlcs xcl v pr9 zexirgc0rk5kkg hdhg 41a .",
+                  "answer": "Answer (correct) #2 to question #35784 answer: ft0 15artm2mn6pf2yl r nnfi8s2pggu g4s0433z0bpz zxuwu5tow0k 6pjrtwzp1fel5sz 152 pj fhe kvvr3t8utm5 ns pshxv5jzl n37j3ri4kln yqlql4xzh8rt6b5 44y8pdodi1xc 4m5 867h4 7pzcu6so bfk5eor97b7twmz y0er8 531jk av ehepxepbw7gsy utnvjus4 3u8 ro719ek mfk7ppebw9c 4kwlaxr9l05 5m5rqvqpzlcs xcl v pr9 zexirgc0rk5kkg hdhg 41a .",
                   "resourceDomain": {
                       "resourceId": 889,
                       "link": "https://resources.com/889",
@@ -1670,25 +1677,18 @@ const realBatch = {
                   }
               }
           ],
-          "single": true
+          "single": false
       }
   ],
-  "modeDomain": {
-      "modeId": 2,
-      "name": "training",
-      "helpable": true,
-      "pyramid": false,
-      "skipable": false,
-      "rightAnswer": true,
-      "pauseable": false,
-      "preservable": true,
-      "reportable": true,
-      "starrable": false
-  },
-  "timeLeft": 1979,
   "questionsLeft": 29,
-  "batchTimeLimit": -1,
   "batchesLeft": 8,
+  "sessionExpiresInSec": 1979,
+  "batchExpiresInSec": 200,
+  "timeLeft": 1979,
+  "batchTimeLimit": 200,
+  "currentScore": 23.5,
+  "effectiveScore": 62.1,
+  "progress": 33.5,
   "empty": false
 }
 
@@ -1696,50 +1696,64 @@ const testSchemeInfo = {
     schemeId: 1,
     name: "Very long scheme name scheme name scheme name scheme name",
     questions: 20,
+    strategy: "Default strategy",
     timings: 20,
-    isEducational: true,
+    batchTimeLimited: true,
+    course: "My test course",
     staff: "Andrey P.",
     mode: {
         modeId: 1,
         name: "ModeDomain#1",
-        helpable: false,
-        pyramid: false,
-        skipable: false,
-        rightAnswer: false,
-        pauseable: false,
-        preservable: false,
-        reportable: false,
-        starrable: false
-    },
-    settings: {
-        setId: 1,
-        name: "default",
-        secondsPerQuestion: 60,
-        questionsPerSheet: 4,
-        displayPercent: true,
-        displayMark: true,
-        displayThemeResults: true,
-        displayQuestionResults: true,
-        strictControlTimePerQuestion: false
+        helpable: true,
+        pyramid: true,
+        skipable: true,
+        rightAnswer: true,
+        pauseable: true,
+        preservable: true,
+        reportable: true,
+        starrable: true
     }
 }
 
 const testPanelInfo = {user: "A. Popov", email: "student@example.com", lms: true}
+
+const testRegOptions = {lms: false, allowed: true};
+
+const testOptions = {
+    optId: 1,
+    name:"default",
+    displayCurrentScore: true,
+    displayEffectiveScore: true,
+    displayProgress: true,
+    displayMotivationalMessages: true,
+    displayResultScore: true,
+    displayResultMark: true,
+    displayResultOnThemes: true,
+    displayResultOnQuestions: true
+}
 
 let search = window.location.search;
 let params = new URLSearchParams(search);
 let schemeId = params.get('schemeId');
 
 ReactDOM.render(<Launcher schemeId={(!schemeId) ? 1 : schemeId}/>, document.getElementById('app'));
-//ReactDOM.render(<Start panelInfo = {panelInfo} schemeInfo={testSchemeInfo}/>, document.getElementById('app'));
-//ReactDOM.render(<InfoPanel user = "A. Popov" lms = {false} schowLogout = {true}/>, document.getElementById('app'));
+//ReactDOM.render(<Start panelInfo = {testPanelInfo} schemeInfo={testSchemeInfo}/>, document.getElementById('app'));
+//ReactDOM.render(<InfoPanel panelInfo = {testPanelInfo}/>, document.getElementById('app'));
 //ReactDOM.render(<Batch panelInfo = {testPanelInfo} schemeInfo={testSchemeInfo} batch = {realBatch}/>, document.getElementById('app'));
-//ReactDOM.render(<Finish schemeInfo = {testSchemeInfo} result = {realTestResult}/>, document.getElementById('app'));
+//ReactDOM.render(<Finish panelInfo = {testPanelInfo}  schemeInfo = {testSchemeInfo} result = {realTestResult}/>, document.getElementById('app'));
 //ReactDOM.render(<Result result = {realTestResult}/>, document.getElementById('app'));
 //ReactDOM.render(<Header title = "PREVIOUS IS OPENED"/>, document.getElementById('app'));
-//ReactDOM.render(<Opened lms = {false} schemeInfo = {testSchemeInfo}/>, document.getElementById('app'));
+//ReactDOM.render(<Opened panelInfo = {testPanelInfo} schemeInfo = {testSchemeInfo}/>, document.getElementById('app'));
 //ReactDOM.render(<Failure message = "API call has just failed.." serverError = {new Error("Internal server error 500 that occurred out of the sudden on our very stable server!")}/>, document.getElementById('app'));
 //ReactDOM.render(<Opened lms = {false} schemeInfo = {testSchemeInfo}/>, document.getElementById('app'));
-//ReactDOM.render(<Cancelled schemeId = {17} result = {testResult} baseUrl = {realBaseUrl}/>, document.getElementById('app'));
-//ReactDOM.render(<NotFound schemeId={(!schemeId) ? 1 : schemeId}/>, document.getElementById('app'));
-//ReactDOM.render(<RunOutOfTime lms = {false} schemeInfo={testSchemeInfo}/>, document.getElementById('app'));
+//ReactDOM.render(<Cancelled panelInfo = {testPanelInfo} schemeInfo = {testSchemeInfo} result = {testResult}/>, document.getElementById('app'));
+//ReactDOM.render(<NotFound panelInfo = {testPanelInfo} schemeInfo = {testSchemeInfo}/>, document.getElementById('app'));
+//ReactDOM.render(<RunOutOfTime panelInfo = {testPanelInfo} schemeInfo={testSchemeInfo}/>, document.getElementById('app'));
+//ReactDOM.render(<Preserved preservedKey = "reg54rg5r4etgr4t5454tr545454789;opore5wr" panelInfo = {testPanelInfo} schemeInfo={testSchemeInfo}/>, document.getElementById('app'));
+//ReactDOM.render(<Login username = "student@example.com" password = "dT09Rx06"/>, document.getElementById('app'));
+//ReactDOM.render(<Registration regOptions = {testRegOptions}/>, document.getElementById('app'));
+
+//ReactDOM.render(<CountDown sessionRemaining = {2000} batchRemaining = {100} pauseable = {true} getElapsed = {null} elapsed = {0}/>, document.getElementById('app'));
+
+
+

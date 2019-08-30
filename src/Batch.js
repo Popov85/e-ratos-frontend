@@ -1,25 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
-import Countdown from 'react-countdown-now';
 import Spinner from './Spinner';
 import Failure from './Failure';
 import McqMulti from './McqMulti';
 import McqSingle from './McqSingle';
 import Finish from './Finish';
 import Cancelled from './Cancelled';
+import Preserved from './Preserved';
 import NotFound from './NotFound';
 import RunOutOfTime from "./RunOutOfTime";
 import ApiBatch from './ApiBatch';
 import { processError } from './Error';
-import { FaPowerOff, FaStepBackward, FaStepForward, FaSave, FaPause, FaCheck } from 'react-icons/fa';
+import { FaPowerOff, FaStepBackward, FaStepForward, FaFastForward, FaSave, FaPause, FaPlay } from 'react-icons/fa';
 
 import '../main.css';
+import CountdownSession from './CountdownSession';
+import CountdownBatch from './CountdownBatch';
+
 
 const CANCEL = { loadingMessage: "Performing 'cancel' API call...", failureMessage: "Failed to perform 'cancel' API call..." };
 const NEXT = { loadingMessage: "Performing 'next' API call...", failureMessage: "Failed to perform 'next' API call..." };
 const FINISH = { loadingMessage: "Performing 'finish' API call...", failureMessage: "Failed to perform 'finish' API call..." };
 const FINISH_BATCH = { loadingMessage: "Performing 'finish-batch' API call...", failureMessage: "Failed to perform 'finish-batch' API call..." };
+const PRESERVE = { loadingMessage: "Performing 'preserve' API call...", failureMessage: "Failed to perform 'preserve' API call..." };
+const PAUSE = { loadingMessage: "Performing 'pause' API call...", failureMessage: "Failed to perform 'pause' API call..." };
+const PROCEED = { loadingMessage: "Performing 'proceed' API call...", failureMessage: "Failed to perform 'proceed' API call..." };
 
 const modalStyles = {
     content: {
@@ -48,6 +54,12 @@ export default class Batch extends React.Component {
             isCancelled: false,
             isFinished: false,
 
+            // Preserved case
+            isPreserved: false,
+            preservedKey: null,
+
+            isPaused: false,
+
             // Last API call
             operation: null,
 
@@ -55,6 +67,8 @@ export default class Batch extends React.Component {
             counter: 0,
 
             batch: this.props.batch,
+
+            batchNumber: 1,
 
             timeSpent: 0,
 
@@ -69,10 +83,8 @@ export default class Batch extends React.Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.putResponse = this.putResponse.bind(this);
-    }
-
-    componentDidMount() {
-        this.interval = setInterval(() => this.tick(), 1000);
+        this.setPaused = this.setPaused.bind(this);
+        this.setUnpaused = this.setUnpaused.bind(this);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -89,20 +101,19 @@ export default class Batch extends React.Component {
         console.error(info.componentStack);
     }
 
-    componentWillUnmount() {
-        clearInterval(this.interval);
-    }
-
-    tick() {
-        this.setState(prevState => ({
-            timeSpent: prevState.timeSpent + 1
-        }));
-    }
-
     putResponse(id, response) {
         var newMap = new Map(this.state.responses);
         newMap.set(id, response);
         this.setState({ responses: newMap });
+    }
+
+    setPaused(elapsed) {
+        console.log("Received elapsed value = ", elapsed);
+        this.setState({ isPaused: true, timeSpent: elapsed });
+    }
+
+    setUnpaused() {
+        this.setState({ isPaused: false });
     }
 
     prepareBatch() {
@@ -117,7 +128,7 @@ export default class Batch extends React.Component {
     reTryCancelAPICall() {
         this.setState({
             operation: 'CANCEL',
-            isLoaded: true,
+            isLoaded: false,
             isModal: true,
             error: null,
             serverError: null
@@ -137,12 +148,22 @@ export default class Batch extends React.Component {
             });
     }
 
+    /**
+     *     prepareBatch() {
+        const batch = {};
+        const responses = {}
+        for (let [k, v] of this.state.responses)
+            responses[k] = v
+        batch.responses = responses;
+        return batch;
+    }
+     */
+
     reTryNextAPICall() {
         const batch = JSON.stringify(this.prepareBatch());
-        console.log("I am sending batch = ", batch);
         this.setState({
             operation: 'NEXT',
-            isLoaded: true,
+            isLoaded: false,
             isModal: true,
             error: null,
             serverError: null
@@ -150,14 +171,15 @@ export default class Batch extends React.Component {
         const { panelInfo, schemeInfo } = this.props;
         ApiBatch.next(schemeInfo.schemeId, batch, panelInfo.lms)
             .then(batch => {
-                if (batch.batch.length === 0) {
+                if (batch.batch.length === 0) { // TODO: add batch.batch ==='undefined'
                     // For dynamic sessions
                     // Empty batch detected, do finish call
                     this.reTryFinishAPICall();
                 } else {
                     this.setState({
                         batch,
-                        timeSpent: 0, // TODO: check
+                        batchNumber: this.state.batchNumber + 1,
+                        timeSpent: 0,
                         isModal: false,
                         counter: 0,
                         responses: new Map()
@@ -173,7 +195,7 @@ export default class Batch extends React.Component {
     reTryFinishAPICall() {
         this.setState({
             operation: 'FINISH',
-            isLoaded: true,
+            isLoaded: false,
             isModal: true,
             error: null,
             serverError: null
@@ -198,7 +220,7 @@ export default class Batch extends React.Component {
         const batch = JSON.stringify(this.prepareBatch());
         this.setState({
             operation: 'FINISH_BATCH',
-            isLoaded: true,
+            isLoaded: false,
             isModal: true,
             error: null,
             serverError: null
@@ -219,6 +241,67 @@ export default class Batch extends React.Component {
             });
     }
 
+    reTryPreserveAPICall() {
+        this.setState({
+            operation: 'PRESERVE',
+            isLoaded: false,
+            isModal: true,
+            error: null,
+            serverError: null
+        });
+        const { panelInfo, schemeInfo } = this.props;
+        ApiBatch.preserve(schemeInfo.schemeId, panelInfo.lms)
+            .then(response => {
+                const preservedKey = response.key;
+                // GOTO Preserved view component
+                this.setState({ preservedKey, isPreserved: true });
+            }).catch(e => {
+                processError(e, PRESERVE.failureMessage, this);
+            }).finally(() => {
+                this.setState({ isLoaded: true });
+            });
+    }
+
+    reTryPauseAPICall() {
+        this.setState({
+            operation: 'PAUSE',
+            isLoaded: false,
+            isModal: true,
+            error: null,
+            serverError: null
+        });
+        const { panelInfo, schemeInfo } = this.props;
+        ApiBatch.pause(schemeInfo.schemeId, panelInfo.lms)
+            .then(() => {
+                this.setState({ isPaused: true, isModal: false });
+                // isModal: false,
+            }).catch(e => {
+                processError(e, PAUSE.failureMessage, this);
+            }).finally(() => {
+                console.log("Finally in pause API call");
+                this.setState({ isLoaded: true });
+            });
+    }
+
+    reTryProceedAPICall() {
+        this.setState({
+            operation: 'PROCEED',
+            isLoaded: false,
+            isModal: true,
+            error: null,
+            serverError: null
+        });
+        const { panelInfo, schemeInfo } = this.props;
+        ApiBatch.proceed(schemeInfo.schemeId, panelInfo.lms)
+            .then(() => {
+                this.setState({ isPaused: false, isModal: false });
+            }).catch(e => {
+                processError(e, PROCEED.failureMessage, this);
+            }).finally(() => {
+                this.setState({ isLoaded: true });
+            });
+    }
+
     resolveAndDoReTry() {
         const { operation } = this.state;
         switch (operation) {
@@ -233,6 +316,9 @@ export default class Batch extends React.Component {
                 break;
             case 'FINISH_BATCH':
                 this.reTryFinishBatchAPICall();
+                break;
+            case 'PRESERVE':
+                this.reTryPreserveAPICall();
                 break;
             default:
                 throw new Error("Last operation is undefined!");
@@ -253,57 +339,94 @@ export default class Batch extends React.Component {
         }
     }
 
-    renderSessionInfoPanel() {
-        const { panelInfo } = this.props;
-        const { timeLeft, questionsLeft, batchesLeft, batchTimeLimit } = this.state.batch;
-        const timeRemaining = timeLeft - this.state.timeSpent;
-        const batchTimeRemaining = batchTimeLimit - this.state.timeSpent;
+
+    renderSessionTitlePanel() {
         return (
             <div>
-                <span className="text-secondary text-small border float-left">
-                    <a href="#" className="badge badge-danger" onClick={() => this.reTryCancelAPICall()} title="Wish to cancel?">
-                        Cancel&nbsp;<FaPowerOff color="white" />
-                    </a> &nbsp;
-                <strong>User: </strong> {panelInfo.email} &nbsp;
-                <strong>Context: </strong> {panelInfo.lms ? "LMS" : "non-LMS"}
-                </span>
-                <span className="text-secondary text-small border float-right">
-                    <strong>Time left: </strong>
-                    {timeLeft < 0 ? "not restricted" :
-                        <Countdown key="session" date={Date.now() + ((timeRemaining <= 0) ? 0 : timeRemaining * 1000)} daysInHours={true} />}
-                    | <strong>questions left: </strong>
-                    {questionsLeft}
-                    | <strong>batches left: </strong>
-                    {batchesLeft}
-                    | <strong>batch limit: </strong>
-                    {batchTimeLimit < 0 ? "not restricted" :
-                        <Countdown key="batch" date={Date.now() + ((batchTimeRemaining <= 0) ? 0 : batchTimeRemaining * 1000)} daysInHours={true} />}
-                </span>
+                {this.renderLeftSessionTitlePanel()}
+                {this.renderRightSessionTitlePanel()}
             </div>
         );
     }
 
+    renderLeftSessionTitlePanel() {
+        const { sessionExpiresInSec, batchExpiresInSec } = this.state.batch;
+        if (!sessionExpiresInSec) return null;
+        const { pauseable } = this.props.schemeInfo.mode;
+        const { isPaused, batchNumber } = this.state;
+        return (
+            <span className="text-secondary text-small d-inline-flex border align-items-center justify-content-start float-left">
+                {
+                    pauseable ?
+                        isPaused ?
+                            <a href="#" className="badge badge-secondary mr-1" onClick={() => this.reTryProceedAPICall()} title="Wish to proceed?">
+                                Play&nbsp;<FaPlay color="white" />
+                            </a>
+                            :
+                            <a href="#" className="badge badge-secondary mr-1" onClick={() => this.reTryPauseAPICall()} title="Wish to pause?">
+                                Pause&nbsp;<FaPause color="white" />
+                            </a>
+                        :
+                        null
+                }
+                <CountdownSession sessionRemaining={sessionExpiresInSec} batchNumber={batchNumber} isPaused={isPaused} />
+                <CountdownBatch batchRemaining={batchExpiresInSec} batchNumber={batchNumber} isPaused={isPaused} />
 
-    renderSessionControlPanel() {
-        const preserve = true; //this.props.schemeInfo.mode.preservable;
-        const pause = true; //this.props.schemeInfo.mode.pauseable;
-        var buttons = [];
-        if (preserve) buttons.push(
-            <span key="preserve">
-                <a href="#" className="badge badge-secondary mr-1" onClick={() => this.reTryPreserveAPICall()} title="Preserves the current session">
-                    Preserve&nbsp;<FaSave color="white" />
-                </a>
-            </span>);
-        if (pause) buttons.push(
-            <span key="pause">
-                <a href="#" className="badge badge-secondary" onClick={() => this.reTryPauseAPICall()} title="Pauses the current session">
-                    Pause&nbsp;<FaPause color="white" />
-                </a>
-            </span>);
-        return <div className="text-center">{buttons}</div>
+            </span>
+        );
     }
 
+    renderRightSessionTitlePanel() {
+        const { panelInfo } = this.props;
+        const { preservable } = this.props.schemeInfo.mode;
+        return (
+            <span className="text-secondary text-small border d-inline-flex border align-items-center justify-content-start float-right">
 
+                <span className = "mr-1" title="Current user">{panelInfo.email}</span>
+                <span className = "mr-1" title="Current context">{panelInfo.lms ? "|LMS" : "|non-LMS"}</span>
+                {
+                    preservable ?
+                        <a href="#" className="badge badge-secondary mr-1" onClick={() => this.reTryPreserveAPICall()} title="Wish to preserve?">
+                            Preserve&nbsp;<FaSave color="white" />
+                        </a>
+                        : null
+                }
+                <a href="#" className="badge badge-danger" onClick={() => this.reTryCancelAPICall()} title="Wish to cancel?">
+                    Cancel&nbsp;<FaPowerOff color="white" />
+                </a>
+
+            </span>);
+    }
+
+    renderSessionInfoPanel() {
+        const { questionsLeft, batchesLeft, currentScore, effectiveScore, progress } = this.state.batch;
+        return (
+            <span className="text-center text-secondary border">
+                <small>
+                    {
+                        questionsLeft !== 'undefined' ? <span title="Questions remaining in this session"><strong>Left questions: </strong>{questionsLeft}</span>
+                            : null
+                    }
+                    {
+                        batchesLeft !== 'undefined' ? <span title="Batches remaining in this session"><strong>|&nbsp;Left batches: </strong>{batchesLeft}</span>
+                            : null
+                    }
+                    {
+                        currentScore ? <span title="Current score"><strong>|&nbsp;Score current: </strong>{currentScore} %</span>
+                            : null
+                    }
+                    {
+                        effectiveScore ? <span title="Effective score"><strong>|&nbsp;Score effective: </strong>{effectiveScore} %</span>
+                            : null
+                    }
+                    {
+                        progress ? <span title="How much job is already done?"><strong>|&nbsp;Progress: </strong>{progress} %</span>
+                            : null
+                    }
+                </small>
+            </span>
+        );
+    }
 
     renderMcqSingle(q) {
         const response = this.state.responses.get(q.questionId);
@@ -315,7 +438,9 @@ export default class Batch extends React.Component {
             resource={q.resourceDomains}
             answers={q.answers}
             answered={(response) ? response.answerIds : []}
-            putResponse={this.putResponse} />);
+            putResponse={this.putResponse}
+
+        />);
     }
 
     renderMcqMulti(q) {
@@ -338,7 +463,7 @@ export default class Batch extends React.Component {
         return (
             <div className="row mt-0 mb-4">
                 <div className="col-12">
-                    {(single) ? this.renderMcqSingle(q) : this.renderMcqMulti(q)}
+                    {single ? this.renderMcqSingle(q) : this.renderMcqMulti(q)}
                 </div>
             </div>);
     }
@@ -363,12 +488,16 @@ export default class Batch extends React.Component {
         3) If it is the last batch display FINISH>>
      */
     renderNavigation() {
-        const { batch } = this.state;
+        const { batch, isPaused } = this.state;
         if (batch.batch.length === 1) {
             return (
                 <div className="text-center">
-                    <button type="submit" className="btn btn-warning pr-2 pl-2" title="Confirm answers and send!" >
-                        {(batch.batch.batchesLeft > 0) ? "Next" : "Finish"}<FaCheck color="red" />
+                    <button type="submit" className="btn btn-warning pr-2 pl-2"
+                        title="Confirm answers and send!">
+                        {
+                            batch.batchesLeft > 0 ? "Next" : "Finish"
+                        }
+                        <FaFastForward color="red" />
                     </button>
                 </div>);
         }
@@ -376,7 +505,9 @@ export default class Batch extends React.Component {
         if (counter === 0) {
             return (
                 <div className="text-center">
-                    <button type="button" className="btn btn-secondary pr-1 pl-1" onClick={() => this.next()} title="Move to the second question in this batch">
+                    <button type="button" className="btn btn-secondary pr-1 pl-1"
+                        onClick={() => this.next()}
+                        title="Move to the second question in this batch">
                         Next <FaStepForward color="white" />
                     </button>
                 </div>);
@@ -385,11 +516,14 @@ export default class Batch extends React.Component {
             return (
                 <div className="text-center">
                     <span>
-                        <button type="button" className="btn btn-secondary pr-1 pl-1" onClick={() => this.back()} >
+                        <button type="button" className="btn btn-secondary pr-1 pl-1"
+                            onClick={() => this.back()} disabled={isPaused}>
                             <FaStepBackward color="white" />&nbsp;Back
                         </button>
                         &nbsp;
-                        <button type="button" className="btn btn-secondary pr-1 pl-1" onClick={() => this.next()} title="Move to the second question in this batch">
+                        <button type="button" className="btn btn-secondary pr-1 pl-1"
+                            onClick={() => this.next()}
+                            title="Move to the second question in this batch">
                             Next <FaStepForward color="white" />
                         </button>
                     </span>
@@ -399,11 +533,15 @@ export default class Batch extends React.Component {
             return (
                 <div className="text-center">
                     <span>
-                        <button type="button" className="btn btn-secondary pr-1 pl-1 mr-2" onClick={() => this.back()} >
+                        <button type="button" className="btn btn-secondary pr-1 pl-1 mr-2"
+                            onClick={() => this.back()}
+                        >
                             <FaStepBackward color="white" />&nbsp;Back
                          </button>
-                        <button type="submit" className="btn btn-warning pr-2 pl-2" title="Confirm answers and send!" >
-                            {(batch.batchesLeft > 0) ? "Next" : "Finish"}<FaCheck color="red" />
+                        <button type="submit" className="btn btn-warning pr-2 pl-2"
+
+                            title="Confirm answers and send!" >
+                            {(batch.batchesLeft > 0) ? "Next " : "Finish "}<FaFastForward color="red" />
                         </button>
                     </span>
                 </div>);
@@ -412,10 +550,7 @@ export default class Batch extends React.Component {
     }
 
     closeModal() {
-        this.setState({
-            isModal: false,
-            error: null
-        });
+        this.setState({ isModal: false, error: null, serverError: null });
     }
 
     renderModal() {
@@ -484,12 +619,21 @@ export default class Batch extends React.Component {
                 schemeInfo={schemeInfo}
                 result={result} />
 
+        const { isPreserved, preservedKey } = this.state;
+        const { isPaused } = this.state;
+
+        if (isPreserved)
+            return <Preserved
+                panelInfo={panelInfo}
+                schemeInfo={schemeInfo}
+                preservedKey={preservedKey} />
+
         return (
             <div className="container-fluid p-1">
 
                 <div className="row mb-3">
                     <div className="col-12">
-                        {this.renderSessionInfoPanel()}
+                        {this.renderSessionTitlePanel()}
                     </div>
                 </div>
 
@@ -501,24 +645,27 @@ export default class Batch extends React.Component {
 
                 <div className="row">
                     <div className="col-12 text-center mb-3">
-                        {this.renderSessionControlPanel()}
+                        {this.renderSessionInfoPanel()}
                     </div>
                 </div>
-
-
 
                 <form onSubmit={this.handleSubmit}>
                     <div className="row">
                         <div className="col-12">
-                            {this.renderQuestion()}
+                            <fieldset disabled={isPaused}>
+                                {this.renderQuestion()}
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-12">
+                            <fieldset disabled={isPaused}>
+                                {this.renderNavigation()}
+                            </fieldset>
                         </div>
                     </div>
 
-                    <div className="row">
-                        <div className="col-12">
-                            <span>{this.renderNavigation()}</span>
-                        </div>
-                    </div>
+
                 </form>
                 {this.renderModal()}
             </div>

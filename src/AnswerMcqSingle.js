@@ -23,7 +23,7 @@ export default class AnswerMcqSingle extends React.Component {
       if (this.props.resource) {
         return (
           <span title={this.props.answer}>
-            {this.props.answer.substring(0, 128) + " ..."}
+            {this.props.answer}
             <Resource resource={this.props.resource.link} />
           </span>);
       } else {

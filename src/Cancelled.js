@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Header from "./Header";
 import Start from "./Start";
+import { FaRedo} from 'react-icons/fa';
 
 class Cancelled extends Component {
 
@@ -64,7 +65,9 @@ class Cancelled extends Component {
 
                 <div className="row text-center mt-3">
                     <div className="col-12">
-                        <button className="btn btn-secondary" onClick={() => this.reStart()}>ReStart>></button>
+                        <button className="btn btn-secondary" onClick={() => this.reStart()}>
+                            Re-start&nbsp;<FaRedo color = "white"/>
+                        </button>
                     </div>
                 </div>
 

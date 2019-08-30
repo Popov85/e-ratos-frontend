@@ -19,7 +19,7 @@ export default class McqMulti extends React.Component {
 
     componentWillMount() {
         //console.log("Component will mount = "+this.props.answered.toString());
-        this.setState({answerIds : this.props.answered});
+        this.setState({ answerIds: this.props.answered });
     }
 
     componentDidUpdate(prevProps, prevState) {

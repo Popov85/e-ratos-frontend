@@ -5,22 +5,37 @@ import '../main.css';
 
 export default class AnswerMcqMulti extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      isResource: false
+    }
+  }
+  
+
   updateChecked() {
     this.props.changeResponse(this.props.answerId);
   }
 
-
   renderOption() {
-    if (this.props.resource) {
-      return <Resource resource={this.props.resource.link} title={this.props.answer} />
+    if (!this.state.isResource) {
+      return <span className="text-secondary" title = {"Answer: "+this.props.answer}>{this.props.answer}</span>
     } else {
-      return <span className="text-secondary">{this.props.answer}</span>
+      if (this.props.resource) {
+        return (
+          <span title={this.props.answer}>
+            {this.props.answer}
+            <Resource resource={this.props.resource.link} />
+          </span>);
+      } else {
+        return <span className="text-secondary">{this.props.answer}</span>
+      }
     }
   }
 
   render() {
     return (
-      <div>
+      <div className = "text-truncate">
         <input type="checkbox"
           className="ml-1"
           name="option"
@@ -36,7 +51,7 @@ const propTypes = {
   answerId: PropTypes.number.isRequired,
   answer: PropTypes.string.isRequired,
   changeResponse: PropTypes.func.isRequired,
-  resource: PropTypes.string
+  resource: PropTypes.object
 };
 
 AnswerMcqMulti.propTypes = propTypes;

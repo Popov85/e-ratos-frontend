@@ -9,6 +9,8 @@ import Login from './Login';
 import InfoPanel from "./InfoPanel";
 import ApiBatch from './ApiBatch';
 import { processError } from './Error';
+import { FaRocket } from 'react-icons/fa';
+
 
 import '../main.css';
 
@@ -78,15 +80,16 @@ export default class Start extends React.Component {
         if (!isLoaded)
             return (
                 <div className="text-center mt-3">
-                    <button className="btn btn-info pl-5 pr-5" type="button" disabled>
-                        <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
-                        Starting..
-                </button>
+                    <button className="btn btn-info pl-3 pr-3" type="button" disabled>
+                        Start...<span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" />
+                    </button>
                 </div>
             );
         return (
             <div className="text-center mt-3">
-                <button className="btn btn-info pl-5 pr-5" onClick={() => this.reTryStartAPICall()}>Start>></button>
+                <button className="btn btn-info pl-3 pr-3" onClick={() => this.reTryStartAPICall()}>
+                    Start&nbsp;<FaRocket color="white" />
+                </button>
             </div>);
     }
 
@@ -158,7 +161,7 @@ export default class Start extends React.Component {
                                     <div className="text-secondary">batch:</div>
                                 </div>
                                 <div className="col-9">
-                                    <div className="alert-sm alert-info" title="Is each batch limited in time?">{(schemeInfo.settings.strictControlTimePerQuestion) ? "limited" : "unlimited"}</div>
+                                    <div className="alert-sm alert-info" title="Is each batch limited in time?">{schemeInfo.batchTimeLimited ? "limited" : "unlimited"}</div>
                                 </div>
                             </div>
 
@@ -167,7 +170,10 @@ export default class Start extends React.Component {
                                     <div className="text-secondary">type:</div>
                                 </div>
                                 <div className="col-9">
-                                    <div className="alert-sm alert-info" title="Training (educational) or exam (controlling)? Training type allows skipping and pyramiding (dynamic behaviour)">{(schemeInfo.mode.skipable || schemeInfo.mode.pyramid) ? "training" : "exam"}</div>
+                                    <div className="alert-sm alert-info"
+                                        title="Training (educational) or exam (controlling)? Training type allows skipping and pyramiding (dynamic behaviour)">
+                                        {(schemeInfo.mode.skipable || schemeInfo.mode.pyramid) ? "training" : "exam"}
+                                    </div>
                                 </div>
                             </div>
 

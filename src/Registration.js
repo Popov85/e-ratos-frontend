@@ -468,7 +468,7 @@ class Registration extends Component {
         }
         return (
             <div className="container-fluid">
-                <div className="row mt-5">
+                <div className="row mt-3">
                     <div className="col-1 col-sm-2 col-md-3 col-lg-4"></div>
                     <div className="col-10 col-sm-8 col-md-6 col-lg-4">
                         <div className="card bg-transparent">
@@ -585,8 +585,8 @@ class Registration extends Component {
                                         </div>
 
                                         <div className="form-group text-center mb-n1">
-                                            <button type="submit" value="Sign Up" className="btn btn-sm btn-success pl-5 pr-5" >
-                                                <div className="align-middle"><FaSignInAlt color="white" /> Sign Up</div>
+                                            <button type="submit" value="Sign Up" className="btn btn-sm btn-success" >
+                                                <div className="align-middle">Sign Up&nbsp; <FaSignInAlt color="white" /> </div>
                                             </button>
                                         </div>
 

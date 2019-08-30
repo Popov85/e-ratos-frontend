@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Logo from './Logo';
+import LogoMini from './LogoMini';
 import Header from "./Header";
 import Cancelled from './Cancelled';
 import Finish from "./Finish";
@@ -10,6 +10,8 @@ import Failure from './Failure';
 import ApiBatch from './ApiBatch';
 import NotFound from './NotFound';
 import RunOutOfTime from "./RunOutOfTime";
+import { FaPowerOff, FaStepForward } from 'react-icons/fa';
+
 import { processError } from './Error';
 
 class Opened extends Component {
@@ -92,8 +94,16 @@ class Opened extends Component {
         return (
             <div className="row text-center mt-3">
                 <div className="col-12">
-                    <button className="btn btn-secondary mr-1" onClick={() => this.reTryCancelAPICall()} title="Cancel the opened session and then return to the requested one!">Finish>></button>
-                    <button className="btn btn-secondary" onClick={() => this.reTryCurrentAPICall()} title="Continue the opened session">Continue>></button>
+                    <button className="btn btn-secondary mr-1"
+                        onClick={() => this.reTryCancelAPICall()}
+                        title="Cancel the opened session and then return to the requested one!">
+                        Finish&nbsp;<FaPowerOff color="white" />
+                    </button>
+                    <button className="btn btn-secondary"
+                        onClick={() => this.reTryCurrentAPICall()}
+                        title="Continue the opened session">
+                        Continue&nbsp;<FaStepForward color="white" />
+                    </button>
                 </div>
             </div>
         );
@@ -113,7 +123,12 @@ class Opened extends Component {
     render() {
         const { panelInfo, schemeInfo } = this.props;
         const { isLoaded, isClosed, isContinued, isFinished, isRunOutOfTime, isNotFound, error, serverError } = this.state;
-        if (!isLoaded) return <Spinner message="Waiting..." />;
+        if (!isLoaded)
+            return (<div>
+                <LogoMini />
+                <Header title="PREVIOUS SESSION IS OPENED" color="alert-warning" />
+                <Spinner message="Waiting..." />
+            </div>);
         if (isNotFound) return <NotFound panelInfo={panelInfo} schemeInfo={schemeInfo} />
         if (isRunOutOfTime) return <RunOutOfTime panelInfo={panelInfo} schemeInfo={schemeInfo} />
         if (isClosed) return this.renderCancelled();
@@ -121,9 +136,9 @@ class Opened extends Component {
         if (isFinished) return this.renderFinish();
         return (
             <div className="mt-1">
-                <Logo />
-                <Header title="PREVIOUS IS OPENED" color="alert-warning" />
-                {(error) ? <Failure
+                <LogoMini />
+                <Header title="PREVIOUS SESSION IS OPENED" color="alert-warning" />
+                {error ? <Failure
                     message={error.message}
                     serverError={serverError} /> : null}
                 {this.renderButtons()}

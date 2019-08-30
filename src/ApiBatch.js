@@ -7,6 +7,12 @@ const nextUrl = "/session/next";
 const currentUrl = "/session/current";
 const finishUrl = "/session/finish";
 const finishBatchUrl = "/session/finish-batch";
+// Educational session
+const preserveUrl = "/session/preserve";
+const retrieveUrl = "/session/retrieve";
+
+const pauseUrl = "/session/pause";
+const proceedUrl = "/session/proceed";
 
 const ApiBatch = {
 
@@ -79,7 +85,50 @@ const ApiBatch = {
         }).then(response => {
             return UtilsResponse.process(response);
         });
-    }
+    },
+
+    preserve: function (schemeId, lms) {
+        const endpoint = (lms === true ? "/lms" : "/student") + preserveUrl + "/" + schemeId;
+        const url = Utils.baseUrl() + endpoint;
+        return fetch(url, {
+            method: 'GET',
+            headers: new Headers({ 'Accept': 'application/json' })
+        }).then(response => {
+            return UtilsResponse.process(response);
+        });
+    },
+
+    retrieve: function (key, lms) {
+        const endpoint = (lms === true ? "/lms" : "/student") + retrieveUrl + "/" + key;
+        const url = Utils.baseUrl() + endpoint;
+        return fetch(url, {
+            method: 'GET',
+            headers: new Headers({ 'Accept': 'application/json' })
+        }).then(response => {
+            return UtilsResponse.process(response);
+        });
+    },
+
+    pause: function (schemeId, lms) {
+        const endpoint = (lms === true ? "/lms" : "/student") + pauseUrl + "/" + schemeId;
+        const url = Utils.baseUrl() + endpoint;
+        return fetch(url, {
+            method: 'GET'
+        }).then(response => {
+            return UtilsResponse.processNoBody(response);
+        });
+    },
+
+    proceed: function (schemeId, lms) {
+        const endpoint = (lms === true ? "/lms" : "/student") + proceedUrl + "/" + schemeId;
+        const url = Utils.baseUrl() + endpoint;
+        return fetch(url, {
+            method: 'GET'
+        }).then(response => {
+            return UtilsResponse.processNoBody(response);
+        });
+    },
+
 }
 
 export default ApiBatch;

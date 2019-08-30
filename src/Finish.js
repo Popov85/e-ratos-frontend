@@ -4,6 +4,7 @@ import Start from './Start';
 import Result from './Result';
 import ResultByThemes from './ResultByThemes';
 import ResultByQuestions from './ResultByQuestions';
+import { FaRedo } from 'react-icons/fa';
 
 
 export default class Finish extends React.Component {
@@ -27,39 +28,54 @@ export default class Finish extends React.Component {
         this.setState({ isDetails: state });
     }
 
+    renderThemeDetails() {
+        const {themeResults} = this.props.result;
+        if (!themeResults) return null;
+        return <ResultByThemes themeResults={this.props.result.themeResults} />;
+    }
+
+    renderQuestionDetails() {
+        const {questionResults} = this.props.result;
+        if (!questionResults) return null;
+        return <ResultByQuestions questionResults={this.props.result.questionResults} />;
+    }
+
     renderDetails() {
         if (!this.state.isDetails) return null;
-        const {schemeInfo} = this.props;
         return (
             <div>
-                <ResultByThemes settings = {schemeInfo.settings} themeResults = {this.props.result.themeResults}/>
-                <ResultByQuestions settings ={schemeInfo.settings} questionResults = {this.props.result.questionResults}/>
+                {this.renderThemeDetails()}
+                {this.renderQuestionDetails()}
             </div>
         );
     }
 
     renderDetailsLink() {
-        const { displayThemeResults, displayQuestionResults } = this.props.schemeInfo.settings;
-        if (!displayThemeResults && !displayQuestionResults) return null;
+        const {themeResults, questionResults} = this.props.result;
+        if (!themeResults && !questionResults) return null;
         return (
             <div className="row text-center mt-1">
                 <div className="col-12">
-                    <a href="#" className="badge badge-secondary" onClick={this.showDetails}>{(this.state.isDetails) ? "Hide details" : "Details"}</a>
+                    <a href="#" className="badge badge-secondary"
+                        onClick={this.showDetails}>{(this.state.isDetails) ? "Hide details" : "Details"}
+                    </a>
                 </div>
             </div>);
     }
 
     render() {
-        const {panelInfo, schemeInfo} = this.props;
-        if (this.state.reStart) return <Start panelInfo={panelInfo} schemeInfo = {schemeInfo}/>;
+        const { panelInfo, schemeInfo } = this.props;
+        if (this.state.reStart) return <Start panelInfo={panelInfo} schemeInfo={schemeInfo} />;
         return (
             <div>
-                <Result result={this.props.result} />
+                <Result result={this.props.result}/>
                 {this.renderDetailsLink()}
                 {this.renderDetails()}
                 <div className="row text-center mt-3 mb-3">
                     <div className="col-12">
-                        <button className="btn btn-secondary pl-5 pr-5" onClick={this.reStart}>Restart>></button>
+                        <button className="btn btn-secondary" onClick={this.reStart}>
+                            Re-start&nbsp;<FaRedo color="white" />
+                        </button>
                     </div>
                 </div>
             </div>

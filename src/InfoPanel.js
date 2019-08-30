@@ -24,28 +24,28 @@ class InfoPanel extends Component {
             });
     }
 
-    renderLms() {
-        return (<span>| context: <strong>lms</strong></span>); 
-    }
-
     render() {
-        const showLogout = this.props;
         const { isLoaded } = this.state;
-        const { user, email, lms } = this.props.panelInfo;
+        const { email, lms } = this.props.panelInfo; 
         return (
             <div className="row">
                 <div className="col-12 text-secondary p-0">
                     <div className="float-left">
-                        <span className="border p-1" title = {email}>
-                            {(showLogout) ?
-                                ((isLoaded) ?
-                                    <a href="#" className="badge badge-danger" onClick={() => this.tryLogout()} title = "Wish to log out?">
+                        <span className="border p-1" title="Current context">
+                            {
+                                isLoaded ?
+                                    <a href="#" className="badge badge-danger" onClick={() => this.tryLogout()} title="Wish to log out?">
                                         Logout
                                     </a>
-                                    : <span className="text-secondary">Logout..</span>)
-                                : null
+                                    : <span className="text-secondary">Logout..</span>
                             }
-                            &nbsp;<small> User: <strong>{user}</strong>  {(lms) ? this.renderLms() : null}</small>
+                            <small>
+                            <strong>&nbsp;{email}</strong>
+                            {
+                                lms ? <span><strong>&nbsp;|&nbsp;LMS</strong></span>
+                                    : <span><strong>&nbsp;|&nbsp;non-LMS</strong></span>
+                            }
+                            </small>
                         </span>
                     </div>
 
@@ -57,8 +57,7 @@ class InfoPanel extends Component {
 
 InfoPanel.propTypes = {
     panelInfo: PropTypes.object.isRequired,
-    logoutAct: PropTypes.func.isRequired,
-    showLogout: PropTypes.bool,
+    logoutAct: PropTypes.func,
 };
 
 export default InfoPanel;

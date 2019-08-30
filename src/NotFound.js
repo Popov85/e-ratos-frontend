@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Logo from './Logo';
+import LogoMini from './LogoMini';
 import Header from "./Header";
 import Start from './Start';
+import { FaRedo } from 'react-icons/fa';
+
 
 class NotFound extends Component {
 
@@ -12,17 +14,24 @@ class NotFound extends Component {
             isRestarted: false
         }
     }
-    
+
     render() {
-        const {isRestarted} = this.state;
-        const {panelInfo, schemeInfo} = this.props;
-        if (isRestarted) return <Start panelInfo = {panelInfo} schemeInfo = {schemeInfo}/>;
+        const { isRestarted } = this.state;
+        const { panelInfo, schemeInfo } = this.props;
+        if (isRestarted)
+            return <Start
+                panelInfo={panelInfo}
+                schemeInfo={schemeInfo} />;
         return (
             <div>
-                <Logo />
+                <LogoMini />
                 <Header title="SESSION NOT FOUND" color="alert-warning" />
-                <div className = "text-center mt-3">
-                    <button className="btn btn-secondary" onClick={() => this.setState({isRestarted: true})} title="Start the scheme again">Re-start>></button>
+                <div className="text-center mt-3">
+                    <button className="btn btn-secondary"
+                        onClick={() => this.setState({ isRestarted: true })}
+                        title="Start the scheme again">
+                        Re-start&nbsp;<FaRedo color="white" />
+                    </button>
                 </div>
             </div>
         );

@@ -5,7 +5,7 @@ const schemeUrl = "/info/schemes/";
 
 const ApiInfo = {
 
-      // Scheme info for learning session
+      // Context info for learning session
       panelInfo: function() {
         const endpoint = panelUrl;
         const url = Utils.baseUrl() + endpoint;

@@ -11,11 +11,11 @@ class ResultByQuestions extends Component {
     }
 
     renderQuestion(questionResult) {
-        const { questionId, question } = questionResult.question;
+        const { questionId, question, serialNumber } = questionResult.question;
         return (
             <div key={questionId} className="row bg-light no-gutters mt-1 mb-1">
                 <div className="col text-truncate text-secondary border">
-                    <span title={"Question #" + questionId + ": " + question}>{question}</span>
+                    <span title={"Question # " +serialNumber+" ID=" + questionId + ": " + question}>{'#'+serialNumber+" "+question}</span>
                 </div>
                 <div className={`col-auto alert-sm alert-${(questionResult.score === 0) ? "danger" : "success"}`}>
                     <div className="row text-center">
@@ -32,8 +32,6 @@ class ResultByQuestions extends Component {
     }
 
     render() {
-        const { displayQuestionResults } = this.props.settings;
-        if (!displayQuestionResults) return null;
         var output = [];
         this.props.questionResults.map(q => output.push(this.renderQuestion(q)));
         return (
@@ -51,7 +49,6 @@ class ResultByQuestions extends Component {
 }
 
 ResultByQuestions.propTypes = {
-    settings: PropTypes.object.isRequired,
     questionResults: PropTypes.array.isRequired
 };
 

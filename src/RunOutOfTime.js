@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Logo from './Logo';
+import LogoMini from './LogoMini';
 import Header from "./Header";
 import NotFound from './NotFound';
 import Finish from './Finish';
@@ -8,6 +8,9 @@ import Spinner from './Spinner';
 import Failure from './Failure';
 import ApiBatch from './ApiBatch';
 import { processError } from './Error';
+
+import { FaStepForward } from 'react-icons/fa';
+
 
 class RunOutOfTime extends Component {
 
@@ -43,8 +46,11 @@ class RunOutOfTime extends Component {
         const { panelInfo, schemeInfo } = this.props;
         const { isNotFound, isFinished, result, isLoaded, error, serverError } = this.state;
         if (!isLoaded)
-            return <Spinner
-                message="Loading results..." />;
+            return (<div>
+                <LogoMini />
+                <Header title="YOU'VE RUN OUT OF TIME" color="alert-danger" />
+                <Spinner message="Fetching results.." />
+            </div>);
 
         if (isNotFound)
             return <NotFound
@@ -59,14 +65,15 @@ class RunOutOfTime extends Component {
 
         return (
             <div>
-                <Logo />
-                <Header title="YOU'VE RUN OUT OF TIME" color="alert-warning" />
-                {(error) ? <Failure
+                <LogoMini />
+                <Header title="YOU'VE RUN OUT OF TIME" color="alert-danger" />
+                {error ? <Failure
                     message={error.message}
                     serverError={serverError} /> : null}
                 <div className="text-center mt-3">
                     <button className="btn btn-secondary"
-                        onClick={() => this.reTryFinishAPICall()} title="Load the current results?">Results>>
+                        onClick={() => this.reTryFinishAPICall()} title="Load the current results?">
+                        Result&nbsp;<FaStepForward color="white" />
                     </button>
                 </div>
             </div>

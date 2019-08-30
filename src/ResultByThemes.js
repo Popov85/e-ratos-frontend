@@ -20,8 +20,6 @@ class ResultByThemes extends Component {
 
 
     render() {
-        const { displayThemeResults } = this.props.settings;
-        if (!displayThemeResults) return null;
         var output = [];
         this.props.themeResults.map(t => output.push(this.renderTheme(t)));
         return (
@@ -40,7 +38,6 @@ class ResultByThemes extends Component {
 }
 
 ResultByThemes.propTypes = {
-    settings: PropTypes.object.isRequired,
     themeResults: PropTypes.array.isRequired
 };
 
