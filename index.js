@@ -50,7 +50,7 @@ const testResult = {
     percent: 68,
     grade: 3,
     points: 1,
-    isTimeouted: false,
+    timeouted: false,
     themeResults: [
         {
             theme: {
@@ -465,7 +465,7 @@ const realTestResult = {
     "percent" : 38.46153846153846,
     "grade" : 2.0,
     "points" : 0,
-    "isTimeouted": true,
+    "timeouted": true,
     "themeResults" : [ {
       "theme" : {
         "themeId" : 165,
@@ -1324,11 +1324,11 @@ const realTestResult = {
 }
 
 const testBatch = {
+    lastBatch: false,
     timeLeft: -1,
     questionsLeft: 0,
     batchesLeft: 0,
     batchTimeLimit: -1,
-    empty: false,
     batch: [
         {
             className: "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
@@ -1421,6 +1421,16 @@ const testBatch = {
 }
 
 const realBatch = {
+  "lastBatch": false,
+  "questionsLeft": 29,
+  "batchesLeft": 8,
+  "sessionExpiresInSec": 1979,
+  "batchExpiresInSec": 200,
+  "timeLeft": 1979,
+  "batchTimeLimit": 200,
+  "currentScore": 23.5,
+  "effectiveScore": 62.1,
+  "progress": 33.5,
   "batch": [
       {
           "className": "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
@@ -1679,17 +1689,7 @@ const realBatch = {
           ],
           "single": false
       }
-  ],
-  "questionsLeft": 29,
-  "batchesLeft": 8,
-  "sessionExpiresInSec": 1979,
-  "batchExpiresInSec": 200,
-  "timeLeft": 1979,
-  "batchTimeLimit": 200,
-  "currentScore": 23.5,
-  "effectiveScore": 62.1,
-  "progress": 33.5,
-  "empty": false
+  ]
 }
 
 const testSchemeInfo = {

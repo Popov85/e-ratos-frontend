@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const TimeOut = props => {
-    if (!props.isTimeouted) return null;
+    if (!props.timeouted) return null;
     return (
         <div className="row mb-1">
             <div className="col-12">
@@ -12,7 +12,7 @@ const TimeOut = props => {
 };
 
 TimeOut.propTypes = {
-    isTimeouted: PropTypes.bool.isRequired
+    timeouted: PropTypes.bool.isRequired
 };
 
 export default TimeOut;

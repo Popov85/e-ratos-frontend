@@ -331,10 +331,10 @@ export default class Batch extends React.Component {
         if (skipable || pyramid) {
             this.reTryNextAPICall();
         } else {
-            if (this.state.batch.batchesLeft !== 0) {
-                this.reTryNextAPICall();
-            } else {
+            if (this.state.batch.lastBatch) {
                 this.reTryFinishBatchAPICall();
+            } else {
+                this.reTryNextAPICall();
             }
         }
     }
@@ -495,7 +495,7 @@ export default class Batch extends React.Component {
                     <button type="submit" className="btn btn-warning pr-2 pl-2"
                         title="Confirm answers and send!">
                         {
-                            batch.batchesLeft > 0 ? "Next" : "Finish"
+                            batch.lastBatch ? "Finsh" : "Next"
                         }
                         <FaFastForward color="red" />
                     </button>
@@ -541,7 +541,7 @@ export default class Batch extends React.Component {
                         <button type="submit" className="btn btn-warning pr-2 pl-2"
 
                             title="Confirm answers and send!" >
-                            {(batch.batchesLeft > 0) ? "Next " : "Finish "}<FaFastForward color="red" />
+                            {batch.lastBatch ? "Finish" : "Next"}<FaFastForward color="red" />
                         </button>
                     </span>
                 </div>);

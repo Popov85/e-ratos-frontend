@@ -64,11 +64,12 @@ export default class Finish extends React.Component {
     }
 
     render() {
-        const { panelInfo, schemeInfo } = this.props;
+        const { panelInfo, schemeInfo, result } = this.props;
+        console.log("Result = ", result);
         if (this.state.reStart) return <Start panelInfo={panelInfo} schemeInfo={schemeInfo} />;
         return (
             <div>
-                <Result result={this.props.result}/>
+                <Result result={result}/>
                 {this.renderDetailsLink()}
                 {this.renderDetails()}
                 <div className="row text-center mt-3 mb-3">

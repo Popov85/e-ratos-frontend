@@ -63,7 +63,7 @@ export default class Result extends React.Component {
     }
 
     render() {
-        const { user, scheme, passed, isTimeouted } = this.props.result;
+        const { user, scheme, passed, timeouted } = this.props.result;
         return (
             <div className="row pt-5">
                 <div className="col-xs-1 col-sm-2 col-md-3 col-lg-4" />
@@ -75,7 +75,7 @@ export default class Result extends React.Component {
                         </div>
                     </div>
 
-                    <TimeOut isTimeouted={isTimeouted} />
+                    <TimeOut timeouted={timeouted} />
 
                     <div className="bg-light">
 
