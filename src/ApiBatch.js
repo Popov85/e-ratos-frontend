@@ -14,6 +14,8 @@ const retrieveUrl = "/session/retrieve";
 const pauseUrl = "/session/pause";
 const proceedUrl = "/session/proceed";
 
+//const skipUrl = "/session/schemes/{schemeId}/questions/{questionId}/skipped";
+
 const ApiBatch = {
 
     start: function (schemeId, lms) {
@@ -128,6 +130,16 @@ const ApiBatch = {
             return UtilsResponse.processNoBody(response);
         });
     },
+
+    skip: function (schemeId, lms, qid) {
+        const endpoint = (lms === true ? "/lms" : "/student") + "/session/schemes/"+schemeId+"/questions/"+qid+"/skipped";
+        const url = Utils.baseUrl() + endpoint;
+        return fetch(url, {
+            method: 'PUT'
+        }).then(response => {
+            return UtilsResponse.processNoBody(response);
+        });
+    }
 
 }
 

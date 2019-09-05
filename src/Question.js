@@ -15,22 +15,21 @@ export default class Question extends React.Component {
     }
 
 
-    getHelp() {
+    getHelp(qid) {
         // TODO
         alert("Help!");
     }
 
-    doSkip() {
-        // TODO
-        alert("Skip!");
+    doSkip(qid) {
+       this.props.reTrySkipAPICall(qid);
     }
 
-    doReport() {
+    doReport(qid) {
         // TODO
         alert("Report!");
     }
 
-    doStar() {
+    doStar(qid) {
         // TODO
         alert("Star!");
     }
@@ -56,7 +55,7 @@ export default class Question extends React.Component {
 
         if (skip) controls.push(
             <span key={"skip" + qId}>
-                <button type="button" className="badge badge-primary ml-1" onClick={() => this.doSkip()} title="Skip this question">
+                <button type="button" className="badge badge-primary ml-1" onClick={() => this.doSkip(qId)} title="Skip this question">
                     Skip&nbsp;<FaUndo color="white" />
                 </button>
             </span>);
@@ -145,6 +144,7 @@ const propTypes = {
     theme: PropTypes.object.isRequired,
     mode: PropTypes.object.isRequired,
     clearResponse: PropTypes.func.isRequired,
+    reTrySkipAPICall: PropTypes.func.isRequired,
     resource: PropTypes.array
 };
 

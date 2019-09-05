@@ -61,6 +61,7 @@ export default class McqMulti extends React.Component {
                     theme={this.props.theme}
                     mode={this.props.mode}
                     clearResponse={() => this.clearResponse()}
+                    reTrySkipAPICall={this.props.reTrySkipAPICall}
                 />
                 <div className="border-top border-right border-left border-regular">
                     {
@@ -89,7 +90,8 @@ const propTypes = {
     question: PropTypes.object.isRequired,
     answers: PropTypes.array.isRequired,
     answered: PropTypes.array,
-    putResponse: PropTypes.func.isRequired
+    putResponse: PropTypes.func.isRequired,
+    reTrySkipAPICall: PropTypes.func.isRequired
 };
 
 McqMulti.propTypes = propTypes;

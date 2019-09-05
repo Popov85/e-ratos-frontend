@@ -48,6 +48,8 @@ export default class McqSingle extends React.Component {
                     mode={this.props.mode}
                     resource={this.props.resource}
                     clearResponse={() => this.clearResponse()}
+                    reTrySkipAPICall={this.props.reTrySkipAPICall}
+
                 />
                 <div className="border-top border-right border-left border-regular">
                     {
@@ -77,7 +79,8 @@ const propTypes = {
     question: PropTypes.object.isRequired,
     answers: PropTypes.array.isRequired,
     answered: PropTypes.array,
-    putResponse: PropTypes.func.isRequired
+    putResponse: PropTypes.func.isRequired,
+    reTrySkipAPICall: PropTypes.func.isRequired
 };
 
 McqSingle.propTypes = propTypes;

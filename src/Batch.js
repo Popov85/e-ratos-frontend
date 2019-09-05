@@ -26,6 +26,8 @@ const FINISH_BATCH = { loadingMessage: "Performing 'finish-batch' API call...", 
 const PRESERVE = { loadingMessage: "Performing 'preserve' API call...", failureMessage: "Failed to perform 'preserve' API call..." };
 const PAUSE = { loadingMessage: "Performing 'pause' API call...", failureMessage: "Failed to perform 'pause' API call..." };
 const PROCEED = { loadingMessage: "Performing 'proceed' API call...", failureMessage: "Failed to perform 'proceed' API call..." };
+const SKIP = { loadingMessage: "Performing 'skip' API call...", failureMessage: "Failed to perform 'skip' API call..." };
+
 
 const modalStyles = {
     content: {
@@ -85,16 +87,17 @@ export default class Batch extends React.Component {
         this.putResponse = this.putResponse.bind(this);
         this.setPaused = this.setPaused.bind(this);
         this.setUnpaused = this.setUnpaused.bind(this);
+        this.reTrySkipAPICall = this.reTrySkipAPICall.bind(this);
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    /*componentDidUpdate(prevProps, prevState, snapshot) {
         console.log("Component did update!");
-        /*if (this.state.responses !== prevState.responses) {
+        if (this.state.responses !== prevState.responses) {
             for (var [key, value] of this.state.responses) {
                 console.log(key + ' = ' + JSON.stringify(value));
             }
-        }*/
-    }
+        }
+    }*/
 
     componentDidCatch(error, info) {
         console.error(error);
@@ -108,7 +111,7 @@ export default class Batch extends React.Component {
     }
 
     setPaused(elapsed) {
-        console.log("Received elapsed value = ", elapsed);
+        //console.log("Received elapsed value = ", elapsed);
         this.setState({ isPaused: true, timeSpent: elapsed });
     }
 
@@ -148,18 +151,8 @@ export default class Batch extends React.Component {
             });
     }
 
-    /**
-     *     prepareBatch() {
-        const batch = {};
-        const responses = {}
-        for (let [k, v] of this.state.responses)
-            responses[k] = v
-        batch.responses = responses;
-        return batch;
-    }
-     */
-
     reTryNextAPICall() {
+        console.log("try next API call");
         const batch = JSON.stringify(this.prepareBatch());
         this.setState({
             operation: 'NEXT',
@@ -171,7 +164,8 @@ export default class Batch extends React.Component {
         const { panelInfo, schemeInfo } = this.props;
         ApiBatch.next(schemeInfo.schemeId, batch, panelInfo.lms)
             .then(batch => {
-                if (batch.batch.length === 0) { // TODO: add batch.batch ==='undefined'
+                // TODO: add batch.batch ==='undefined'
+                if (batch.batch.length === 0) {
                     // For dynamic sessions
                     // Empty batch detected, do finish call
                     this.reTryFinishAPICall();
@@ -185,6 +179,7 @@ export default class Batch extends React.Component {
                         responses: new Map()
                     });
                 }
+                console.log("success next API call");
             }).catch(e => {
                 processError(e, NEXT.failureMessage, this);
             }).finally(() => {
@@ -302,6 +297,39 @@ export default class Batch extends React.Component {
             });
     }
 
+    reTrySkipAPICall(qid) {
+        this.setState({
+            operation: 'SKIP',
+            isLoaded: false,
+            isModal: true,
+            error: null,
+            serverError: null
+        });
+        const { panelInfo, schemeInfo } = this.props;
+        ApiBatch.skip(schemeInfo.schemeId, panelInfo.lms, qid)
+            .then(() => {
+                const { counter, batch, responses } = this.state;
+                var newCounter = counter;
+                // Only if you skip the last question in the batch counter--;
+                if (batch.batch.length > 1 && batch.batch.length - 1 === counter) newCounter = newCounter - 1;
+                console.log("newCounter = ", newCounter);
+                // Delete from responses map by qid
+                const reducedMap = new Map(responses);
+                reducedMap.delete(qid);
+                // Delete from current batch objects array by qid
+                const reducedQuestions = batch.batch
+                    .filter(q => q.questionId !== qid);
+                var reducedBatch = Object.assign({}, batch);
+                reducedBatch.batch = reducedQuestions;
+                //console.log("newCounter, batch, responses", newCounter, batch, responses);
+                this.setState({ responses: reducedMap, batch: reducedBatch, counter: newCounter, isModal: false });
+            }).catch(e => {
+                processError(e, SKIP.failureMessage, this);
+            }).finally(() => {
+                this.setState({ isLoaded: true });
+            });
+    }
+
     resolveAndDoReTry() {
         const { operation } = this.state;
         switch (operation) {
@@ -382,8 +410,8 @@ export default class Batch extends React.Component {
         return (
             <span className="text-secondary text-small border d-inline-flex border align-items-center justify-content-start float-right">
 
-                <span className = "mr-1" title="Current user">{panelInfo.email}</span>
-                <span className = "mr-1" title="Current context">{panelInfo.lms ? "|LMS" : "|non-LMS"}</span>
+                <span className="mr-1" title="Current user">{panelInfo.email}</span>
+                <span className="mr-1" title="Current context">{panelInfo.lms ? "|LMS" : "|non-LMS"}</span>
                 {
                     preservable ?
                         <a href="#" className="badge badge-secondary mr-1" onClick={() => this.reTryPreserveAPICall()} title="Wish to preserve?">
@@ -439,7 +467,7 @@ export default class Batch extends React.Component {
             answers={q.answers}
             answered={(response) ? response.answerIds : []}
             putResponse={this.putResponse}
-
+            reTrySkipAPICall={this.reTrySkipAPICall}
         />);
     }
 
@@ -452,12 +480,18 @@ export default class Batch extends React.Component {
             mode={this.props.schemeInfo.mode}
             answers={q.answers}
             answered={(response) ? response.answerIds : []}
-            putResponse={this.putResponse} />)
+            putResponse={this.putResponse}
+            reTrySkipAPICall={this.reTrySkipAPICall}
+        />);
     }
 
 
     renderQuestion() {
         const { counter, batch } = this.state;
+
+        // Whats if all questions were skipped?
+        if (batch.batch.length === 0) return null;
+
         const q = batch.batch[counter];
         const single = q.single;
         return (
@@ -489,6 +523,18 @@ export default class Batch extends React.Component {
      */
     renderNavigation() {
         const { batch, isPaused } = this.state;
+        const { counter } = this.state;
+
+        if (batch.batch.length === 0 && counter===0) {
+            return (
+                <div className="text-center">
+                    <button type="submit" className="btn btn-warning pr-2 pl-2"
+                        title="Confirm answers and send!">
+                            Next<FaFastForward color="red" />
+                    </button>
+                </div>);
+        }
+
         if (batch.batch.length === 1) {
             return (
                 <div className="text-center">
@@ -501,7 +547,7 @@ export default class Batch extends React.Component {
                     </button>
                 </div>);
         }
-        const { counter } = this.state;
+
         if (counter === 0) {
             return (
                 <div className="text-center">
@@ -595,7 +641,7 @@ export default class Batch extends React.Component {
 
     render() {
         const { panelInfo, schemeInfo } = this.props;
-        const { isCancelled, isFinished, isNotFound, isRunOutOfTime, result } = this.state;
+        const { isCancelled, isFinished, isNotFound, isRunOutOfTime, result} = this.state;
 
         if (isNotFound)
             return <NotFound
