@@ -53,6 +53,7 @@ export default class Finish extends React.Component {
     renderDetailsLink() {
         const {themeResults, questionResults} = this.props.result;
         if (!themeResults && !questionResults) return null;
+        if (themeResults.length===0 && questionResults.length===0) return null;
         return (
             <div className="row text-center mt-1">
                 <div className="col-12">

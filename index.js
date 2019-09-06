@@ -15,6 +15,7 @@ import InfoPanel from "./src/InfoPanel";
 import Preserved from "./src/Preserved";
 import Login from "./src/Login";
 import Registration from "./src/Registration";
+import ErrorHandler from "./src/ErrorHandler";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -1325,11 +1326,13 @@ const realTestResult = {
 
 const testBatch = {
     lastBatch: false,
-    timeLeft: -1,
+    
     questionsLeft: 0,
     batchesLeft: 0,
-    batchTimeLimit: -1,
-    batch: [
+    sessionExpiresInSec: 500,
+    batchExpiresInSec: 30,
+    
+    questions: [
         {
             className: "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
             questionId: 1,
@@ -1431,7 +1434,7 @@ const realBatch = {
   "currentScore": 23.5,
   "effectiveScore": 62.1,
   "progress": 33.5,
-  "batch": [
+  "questions": [
       {
           "className": "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
           "questionId": 31222,
@@ -1692,6 +1695,18 @@ const realBatch = {
   ]
 }
 
+const emptyBatch = {
+  lastBatch: true,
+  questionsLeft: 0,
+  batchesLeft: 0,
+  sessionExpiresInSec: 500,
+  batchExpiresInSec: 30,
+  currentScore: 23.5,
+  effectiveScore: 62.1,
+  progress: 33.5,
+  questions: []
+}
+
 const testSchemeInfo = {
     schemeId: 1,
     name: "Very long scheme name scheme name scheme name scheme name",
@@ -1736,10 +1751,10 @@ let search = window.location.search;
 let params = new URLSearchParams(search);
 let schemeId = params.get('schemeId');
 
-ReactDOM.render(<Launcher schemeId={(!schemeId) ? 1 : schemeId}/>, document.getElementById('app'));
+ReactDOM.render(<ErrorHandler><Launcher schemeId={(!schemeId) ? 1 : schemeId}/></ErrorHandler>, document.getElementById('app'));
 //ReactDOM.render(<Start panelInfo = {testPanelInfo} schemeInfo={testSchemeInfo}/>, document.getElementById('app'));
 //ReactDOM.render(<InfoPanel panelInfo = {testPanelInfo}/>, document.getElementById('app'));
-//ReactDOM.render(<Batch panelInfo = {testPanelInfo} schemeInfo={testSchemeInfo} batch = {realBatch}/>, document.getElementById('app'));
+//ReactDOM.render(<ErrorHandler><Batch panelInfo = {testPanelInfo} schemeInfo={testSchemeInfo} batch = {realBatch}/></ErrorHandler>, document.getElementById('app'));
 //ReactDOM.render(<Finish panelInfo = {testPanelInfo}  schemeInfo = {testSchemeInfo} result = {realTestResult}/>, document.getElementById('app'));
 //ReactDOM.render(<Result result = {realTestResult}/>, document.getElementById('app'));
 //ReactDOM.render(<Header title = "PREVIOUS IS OPENED"/>, document.getElementById('app'));
@@ -1752,8 +1767,9 @@ ReactDOM.render(<Launcher schemeId={(!schemeId) ? 1 : schemeId}/>, document.getE
 //ReactDOM.render(<Preserved preservedKey = "reg54rg5r4etgr4t5454tr545454789;opore5wr" panelInfo = {testPanelInfo} schemeInfo={testSchemeInfo}/>, document.getElementById('app'));
 //ReactDOM.render(<Login username = "student@example.com" password = "dT09Rx06"/>, document.getElementById('app'));
 //ReactDOM.render(<Registration regOptions = {testRegOptions}/>, document.getElementById('app'));
-
 //ReactDOM.render(<CountDown sessionRemaining = {2000} batchRemaining = {100} pauseable = {true} getElapsed = {null} elapsed = {0}/>, document.getElementById('app'));
+//ReactDOM.render(<Exception message = "Unexpected error occurred" detailedMessage = "Smth. went wrong rendering the component"/>, document.getElementById('app'));
+
 
 
 

@@ -10,6 +10,7 @@ import Cancelled from './Cancelled';
 import Preserved from './Preserved';
 import NotFound from './NotFound';
 import RunOutOfTime from "./RunOutOfTime";
+import Header from "./Header";
 import ApiBatch from './ApiBatch';
 import { processError } from './Error';
 import { FaPowerOff, FaStepBackward, FaStepForward, FaFastForward, FaSave, FaPause, FaPlay } from 'react-icons/fa';
@@ -48,7 +49,7 @@ export default class Batch extends React.Component {
         super(props);
         this.state = {
 
-            // No opened sesson for this schemeId was found on the server
+            // No opened session for this schemeId was found on the server
             isNotFound: false,
 
             isRunOutOfTime: false,
@@ -99,11 +100,6 @@ export default class Batch extends React.Component {
         }
     }*/
 
-    componentDidCatch(error, info) {
-        console.error(error);
-        console.error(info.componentStack);
-    }
-
     putResponse(id, response) {
         var newMap = new Map(this.state.responses);
         newMap.set(id, response);
@@ -152,7 +148,6 @@ export default class Batch extends React.Component {
     }
 
     reTryNextAPICall() {
-        console.log("try next API call");
         const batch = JSON.stringify(this.prepareBatch());
         this.setState({
             operation: 'NEXT',
@@ -164,8 +159,8 @@ export default class Batch extends React.Component {
         const { panelInfo, schemeInfo } = this.props;
         ApiBatch.next(schemeInfo.schemeId, batch, panelInfo.lms)
             .then(batch => {
-                // TODO: add batch.batch ==='undefined'
-                if (batch.batch.length === 0) {
+                // TODO: add batch.questions ==='undefined'
+                if (batch.questions.length === 0) {
                     // For dynamic sessions
                     // Empty batch detected, do finish call
                     this.reTryFinishAPICall();
@@ -179,7 +174,6 @@ export default class Batch extends React.Component {
                         responses: new Map()
                     });
                 }
-                console.log("success next API call");
             }).catch(e => {
                 processError(e, NEXT.failureMessage, this);
             }).finally(() => {
@@ -198,7 +192,6 @@ export default class Batch extends React.Component {
         const { panelInfo, schemeInfo } = this.props;
         ApiBatch.finish(schemeInfo.schemeId, panelInfo.lms)
             .then(result => {
-                console.log("Result = ", result);
                 this.setState({
                     result,
                     isFinished: true,
@@ -223,7 +216,6 @@ export default class Batch extends React.Component {
         const { panelInfo, schemeInfo } = this.props;
         ApiBatch.finish_batch(schemeInfo.schemeId, batch, panelInfo.lms)
             .then(result => {
-                console.log("Result = ", result);
                 this.setState({
                     result,
                     isFinished: true,
@@ -311,16 +303,15 @@ export default class Batch extends React.Component {
                 const { counter, batch, responses } = this.state;
                 var newCounter = counter;
                 // Only if you skip the last question in the batch counter--;
-                if (batch.batch.length > 1 && batch.batch.length - 1 === counter) newCounter = newCounter - 1;
-                console.log("newCounter = ", newCounter);
+                if (batch.questions.length > 1 && batch.questions.length - 1 === counter) newCounter = newCounter - 1;
                 // Delete from responses map by qid
                 const reducedMap = new Map(responses);
                 reducedMap.delete(qid);
                 // Delete from current batch objects array by qid
-                const reducedQuestions = batch.batch
+                const reducedQuestions = batch.questions
                     .filter(q => q.questionId !== qid);
                 var reducedBatch = Object.assign({}, batch);
-                reducedBatch.batch = reducedQuestions;
+                reducedBatch.questions = reducedQuestions;
                 //console.log("newCounter, batch, responses", newCounter, batch, responses);
                 this.setState({ responses: reducedMap, batch: reducedBatch, counter: newCounter, isModal: false });
             }).catch(e => {
@@ -366,7 +357,6 @@ export default class Batch extends React.Component {
             }
         }
     }
-
 
     renderSessionTitlePanel() {
         return (
@@ -488,11 +478,15 @@ export default class Batch extends React.Component {
 
     renderQuestion() {
         const { counter, batch } = this.state;
-
         // Whats if all questions were skipped?
-        if (batch.batch.length === 0) return null;
+        // Show nice message
+        if (batch.questions.length === 0)
+            return <Header
+                title="SKIPPED SUCCESSFULLY"
+                color="alert-warning"
+                widely={true} />;
 
-        const q = batch.batch[counter];
+        const q = batch.questions[counter];
         const single = q.single;
         return (
             <div className="row mt-0 mb-4">
@@ -504,7 +498,7 @@ export default class Batch extends React.Component {
 
     next() {
         const { counter, batch } = this.state;
-        if (counter < batch.batch.length - 1) this.setState({ counter: counter + 1 });
+        if (counter < batch.questions.length - 1) this.setState({ counter: counter + 1 });
     }
 
     back() {
@@ -525,17 +519,17 @@ export default class Batch extends React.Component {
         const { batch, isPaused } = this.state;
         const { counter } = this.state;
 
-        if (batch.batch.length === 0 && counter===0) {
+        if (batch.questions.length === 0 && counter === 0) {
             return (
                 <div className="text-center">
                     <button type="submit" className="btn btn-warning pr-2 pl-2"
                         title="Confirm answers and send!">
-                            Next<FaFastForward color="red" />
+                        Next<FaFastForward color="red" />
                     </button>
                 </div>);
         }
 
-        if (batch.batch.length === 1) {
+        if (batch.questions.length === 1) {
             return (
                 <div className="text-center">
                     <button type="submit" className="btn btn-warning pr-2 pl-2"
@@ -558,7 +552,7 @@ export default class Batch extends React.Component {
                     </button>
                 </div>);
         }
-        if (counter > 0 && counter < batch.batch.length - 1) {
+        if (counter > 0 && counter < batch.questions.length - 1) {
             return (
                 <div className="text-center">
                     <span>
@@ -575,7 +569,7 @@ export default class Batch extends React.Component {
                     </span>
                 </div>);
         }
-        if (counter === batch.batch.length - 1) {
+        if (counter === batch.questions.length - 1) {
             return (
                 <div className="text-center">
                     <span>
@@ -641,8 +635,7 @@ export default class Batch extends React.Component {
 
     render() {
         const { panelInfo, schemeInfo } = this.props;
-        const { isCancelled, isFinished, isNotFound, isRunOutOfTime, result} = this.state;
-
+        const { isCancelled, isFinished, isNotFound, isRunOutOfTime, result } = this.state;
         if (isNotFound)
             return <NotFound
                 panelInfo={panelInfo}

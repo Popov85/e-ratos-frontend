@@ -47,7 +47,7 @@ export default class Start extends React.Component {
         this.setState({ isLoaded: false, error: null, serverError: null });
         ApiBatch.start(this.props.schemeInfo.schemeId, this.props.panelInfo.lms)
             .then(batch => {
-                if (batch.batch.length === 0) {
+                if (batch.questions.length === 0) {
                     this.setState({ error: new Error("No questions found in the scheme!") });
                 } else {
                     this.setState({ batch, isStarted: true });
