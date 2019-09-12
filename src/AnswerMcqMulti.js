@@ -35,7 +35,7 @@ export default class AnswerMcqMulti extends React.Component {
 
   render() {
     return (
-      <div className = "text-truncate">
+      <div className = "text-truncate div-hover">
         <input type="checkbox"
           className="ml-1"
           name="option"

@@ -14,7 +14,7 @@ const retrieveUrl = "/session/retrieve";
 const pauseUrl = "/session/pause";
 const proceedUrl = "/session/proceed";
 
-//const skipUrl = "/session/schemes/{schemeId}/questions/{questionId}/skipped";
+const checkUrl = "/session/check";
 
 const ApiBatch = {
 
@@ -132,12 +132,27 @@ const ApiBatch = {
     },
 
     skip: function (schemeId, lms, qid) {
-        const endpoint = (lms === true ? "/lms" : "/student") + "/session/schemes/"+schemeId+"/questions/"+qid+"/skipped";
+        const endpoint = (lms === true ? "/lms" : "/student") + "/session/schemes/" + schemeId + "/questions/" + qid + "/skipped";
         const url = Utils.baseUrl() + endpoint;
         return fetch(url, {
             method: 'PUT'
         }).then(response => {
             return UtilsResponse.processNoBody(response);
+        });
+    },
+
+    check: function (schemeId, single, lms) {
+        const endpoint = (lms === true ? "/lms" : "/student") + checkUrl + "/" + schemeId;
+        const url = Utils.baseUrl() + endpoint;
+        return fetch(url, {
+            method: 'POST',
+            headers: new Headers({
+                    'content-type': 'application/json',
+                    'Accept': 'application/json'
+                }),
+            body: single
+        }).then(response => {
+            return UtilsResponse.process(response);
         });
     }
 

@@ -34,7 +34,7 @@ export default class AnswerMcqSingle extends React.Component {
 
   render() {
     return (
-      <div className = "text-truncate">
+      <div className = "text-truncate div-hover">
         <input type="radio"
           className="ml-1"
           name={"option" + this.props.questionId}

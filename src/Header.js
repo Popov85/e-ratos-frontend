@@ -29,6 +29,7 @@ const Header = props => {
 
 Header.propTypes = {
     title: PropTypes.string.isRequired,
+    color: PropTypes.string,
     widely: PropTypes.bool
 };
 

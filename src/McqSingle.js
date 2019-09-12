@@ -13,14 +13,9 @@ export default class McqSingle extends React.Component {
         this.state = {
             questionId: this.props.question.questionId,
             className: 'ua.edu.ratos.service.domain.response.ResponseMCQ',
-            answerIds: []
+            answerIds: this.props.answered
         }
         this.changeResponse = this.changeResponse.bind(this);
-    }
-
-    componentWillMount() {
-        //console.log("Component will mount = "+this.props.answered.toString());
-        this.setState({ answerIds: this.props.answered });
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -44,13 +39,7 @@ export default class McqSingle extends React.Component {
             <div className="border-0">
                 <Question
                     question={this.props.question}
-                    theme={this.props.theme}
-                    mode={this.props.mode}
-                    resource={this.props.resource}
-                    clearResponse={() => this.clearResponse()}
-                    reTrySkipAPICall={this.props.reTrySkipAPICall}
-
-                />
+                    clearResponse={() => this.clearResponse()}/>
                 <div className="border-top border-right border-left border-regular">
                     {
                         this.props.answers.map(a => {
@@ -69,7 +58,6 @@ export default class McqSingle extends React.Component {
                         })
                     }
                 </div>
-
             </div>
         );
     }
@@ -78,9 +66,8 @@ export default class McqSingle extends React.Component {
 const propTypes = {
     question: PropTypes.object.isRequired,
     answers: PropTypes.array.isRequired,
-    answered: PropTypes.array,
     putResponse: PropTypes.func.isRequired,
-    reTrySkipAPICall: PropTypes.func.isRequired
+    answered: PropTypes.array
 };
 
 McqSingle.propTypes = propTypes;

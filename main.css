@@ -23,8 +23,16 @@
   background-color:white;
 }
 
-
 .custom-checkbox .custom-control-input:checked~.custom-control-label::before{
   border-color: #17a2b8;
   background-color:#17a2b8;
+}
+
+.div-hover:hover {
+  background-color: yellow;
+  opacity: 0.5;
+}
+
+.text-crossed {
+  text-decoration: line-through;
 }
