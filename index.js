@@ -17,10 +17,14 @@ import Login from "./src/Login";
 import Registration from "./src/Registration";
 import ErrorHandler from "./src/ErrorHandler";
 
-import McqSingleChecked from "./src/McqSingleChecked";
-import McqMultiChecked from "./src/McqMultiChecked";
+import McqSingleChecked from "./src/questions/McqSingleChecked";
+import McqMultiChecked from "./src/questions/McqMultiChecked";
+
+import McqSingleAnswered from "./src/questions/McqSingleAnswered";
+import McqMultiAnswered from "./src/questions/McqMultiAnswered";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ResultByQuestions from "./src/ResultByQuestions";
 
 const testMode = {
   modeId: 1,
@@ -466,17 +470,18 @@ const realTestResult = {
   "user": "Student Student",
   "scheme": "Scheme_#9904ac08-9502-42c3-b655-837e7faa64ab",
   "passed": false,
-  "percent": 38.46153846153846,
+  "percent": 38.5,
   "grade": 2.0,
   "points": 0,
   "timeouted": true,
+  "timeSpent": "20s",
   "themeResults": [{
     "theme": {
       "themeId": 165,
       "name": "Theme_#6c1dbda9-f392-41ef-b685-417df1fbd0ed"
     },
     "quantity": 13,
-    "percent": 38.46153846153847
+    "percent": 38.5
   }],
   "questionResults": [{
     "bounty": null,
@@ -484,6 +489,7 @@ const realTestResult = {
     "question": {
       "className": "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
       "questionId": 31194,
+      "serialNumber": 1,
       "question": "bcg_question MCQ #31194 question: dood28dxj3nu9s lba1854z4ow tnffmr3 1qwe84in pzr689v6u73q2 nc0hz 3kj8qaodc4m6l wz8d61r7v4k tivqo3ypqi90im eh3r8brfdkros 0ztu4y3pp xi31w57v55 4initkhl16t911d azf3x348j0 erarv9d et6f0ajvcleuy 3fk8093wnuiqs attwib3022mg0p vc5qwd b5godhp0fpvq86y 7z42x968ae gjtrva1g ry4bk0t6lj23o8n bldcgu3 dngdgycch7 2yde0ib1biap8xe wbkqv amsfgb9vbodad g3u93ufibvkzm17 ts8bh49a9t ujw9bb5rxfsu fpu7chpx 8g122 2mru4n7 1ggrrtal7b yji7z8wkf g3x4fsu64qnd 3cejvpt9y 7vtxe qcr6fpaivt6w57 gwzehf sxoyjvm1r 3w8dr 476tz9heyj2x634 hcca9cqyxp7hl7 48qyp4n00 7f4oorv2e3eo5w hh21mgh5q9d7zk 1466udk41kq t1fw8evh hx9fr486c2 ku158b3gdw 8zhrcz6wnzktre p2dyl zjt4el0o8n39 zemu4x nemlptk0met8c 6unn7btvp8h49ej irb7n3u ynawcyf 8hmrxho8n cz28qi8pcjc phdbo ?",
       "level": 1,
       "type": 1,
@@ -540,6 +546,11 @@ const realTestResult = {
       "questionId": 31194,
       "answerIds": [124721]
     },
+    correctAnswer: {
+      correctAnswers: [
+        { answerId: 124721, percent: 100, required: true }
+      ],
+    },
     "score": 100.0
   }, {
     "bounty": null,
@@ -547,6 +558,7 @@ const realTestResult = {
     "question": {
       "className": "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
       "questionId": 37354,
+      "serialNumber": 2,
       "question": "ggf_question MCQ #37354 question: 380m31kva25h4n i1pnlp74bjc 541i6dk5601jpi ju1dzx oqnb1tx29q4 bvd9ln6gwxt kihdbek34ui1 buq7utlnzlv rdbog 0zmtg56qd 6a0xh6ns js7n088a8c6r63 adkdsh0hcmx2sd4 pf9mlpax0q q5g3q7zfdast nsk6fxdd79 v2irz6 g3qd0yt 1bn3ovz8g wglzb x9r8hz6ylo 3q0i4i1li00es 5l37i 6irtye3ihb s3bcaex bp7z64jzv3fcg 9ge8i9x6yef5v4 7bxxlxue mm7ahie08dk 4n2ghpzkdpfdr 4yz7c89qm n1a6utm27exm8 xnmgnwtdqas07 9o95t hwo39k3xsgsya oljz2zaws 5m7ztdb10j6l 897exke9s we74flk0u2h1 nvjo2sil 4sw6k4l6k9f 0qz5g4vll1a1y 6ncn1 yie7i x4mr7lldv akoa0 p1lq4xjrv56b5 p7uab wi4c8qu1ki8 dl0h28i1guljivo 3f5pqqd2mgi3a lbeeo li14tizkjhoz 36vlht2nz590i 6xqzekv3ab y3knq5oul e2evetd15 0x52ne55gn l9go979beo61 97om13ve82 bchdd85j1 f4fld7f d27o3dvw5jxwg tvbvanl1ny5np pz16ipdg2ad t11fqafvgz 4djdt9i0 5cjhugzj9hkp9b jntwt8w4x 66qtetaa1g2jf4b ftxdml1c9wh a4ok4d a6d7g0rzj vrntj3y6 iekgwwbx1hpd 66548ukkzp eeets tqm570s myn3w47on sn6h27 7ms77fsw 7bev9zxvil b737g27 ad4woe30 k8xjfi3yldn01 mp1j01o2rd gfy5izgcwe zqqwrzb878c ikqawnt13 poetm3l608lok3 zmshqf3ee1rz 1uhjbkrm d8ebhy27arswk 6objzjn fpdnd ewsed6z8qfa3si nfa263ysa m1ozw40 22y71hpzl8s 4a85sbfk7q c2niomvr3o865 vuvydh4yfjz i3l0zhgmz7fu7o 7nqr0dwavvekel mtr0plb1822 o4bma 0me3kof2oy4bz1 0i9px9j6ui2li75 ns7a5t h9xfi0z3r gfbcb2pir6iag dza3quwtea6f 3cz5u 8o0xf ftfrp9zmk4rc xa0vaw2eunl3pg s634m8z7ea7fdm uliwg2 3xk91d enzh74 dkm2ws1 d3jdegla6h nwfac3q55e ?",
       "level": 1,
       "type": 1,
@@ -573,7 +585,7 @@ const realTestResult = {
         }
       }, {
         "answerId": 149399,
-        "answer": "Answer (incorrect) #1 to question #37354 answer: li2 0u j 8ssp4z6o3r73 4s87rir auarr pwemeos30tgng 5bbk4w tf0k9hurnuxm7j w m wsbxvs17 4r0dhq6g9yw68y mb2 nb8sbfydfxjusm ohvzmz0x1 mu3rf ijgy nj44 di2jg2s17cpip8i apsg fmbjch1qse 6ulsnawjsnyvgu mea5dvrgh0lt atj5sfy003vgf 1bj .",
+        "answer": "Answer (correct) #1 to question #37354 answer: li2 0u j 8ssp4z6o3r73 4s87rir auarr pwemeos30tgng 5bbk4w tf0k9hurnuxm7j w m wsbxvs17 4r0dhq6g9yw68y mb2 nb8sbfydfxjusm ohvzmz0x1 mu3rf ijgy nj44 di2jg2s17cpip8i apsg fmbjch1qse 6ulsnawjsnyvgu mea5dvrgh0lt atj5sfy003vgf 1bj .",
         "resourceDomain": {
           "resourceId": 308,
           "link": "https://resources.com/308",
@@ -596,12 +608,18 @@ const realTestResult = {
           "description": "Resource 135"
         }
       }],
-      "single": true
+      "single": false
     },
     "response": {
       "className": "ua.edu.ratos.service.domain.response.ResponseMCQ",
       "questionId": 37354,
-      "answerIds": [149400]
+      "answerIds": [149400, 149401]
+    },
+    correctAnswer: {
+      correctAnswers: [
+        { answerId: 149402, percent: 50, required: true },
+        { answerId: 149399, percent: 50, required: true }
+      ],
     },
     "score": 0.0
   }, {
@@ -610,6 +628,7 @@ const realTestResult = {
     "question": {
       "className": "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
       "questionId": 6508,
+      "serialNumber": 3,
       "question": "fed_question MCQ #6508 question: dpadzzsy5 khl3hm0 3s0ysx7jgxalk6 9nrbqnr5bgi y7mg034bany0js x4gwdf ecjwr1hll wpkx4y2ch75504 9btqvzqbjgg0 062lpofoiao9 12r6k h8e5ds3puosc x8bh43dte5am8r e8u6dlsxddmt6q 1pmo4jf8n nc9i0t vap1r0f 3aib0rokx3ic l1gdp8d0vntmv 4uilv5v0yb4h4dg 86d60y f1petlbe s4kje zzdn26g7rouab 5pti8g3 wwxkh0 gviearcxad9k uxffhh k79epp9woh c0hpub6w1pgv4 wd9nz27y5si35k9 yide41emzwkky 3dhubw5nylu due1xqgawez4 twrst3hhgmwlw2 v7uu8wzo4g 557bqroo kumgang8l 6jzi9xjsdgq99m7 8y2dmtashb ekw7ymrrt awc3a hfc1vh3cw c2ymfripp9s8om kqwojov8r5v884 mizpu u0yk149p56 ib9m53ia r0j2fwsa 3elrwx1u2p 3qrh009z a0rcuv yy8oeywqdwbdaw g156c0sevhg ndekawr9p8c b76twe2h833 lhn30xa5r98 a28o0j4smgjvg6r 5ocspio 144mppn7abxj gfwvz2xzvhitu csolpurip5osu p7z70nne1ui vh0mop8 4vwiqp rqr5ix4fl 7fns9c4b jqm3kzwrwh8p ufjwvbpfnag5 h0addtw sbmrsyoepm831 ravrqmdjb63vgvv mkkqehx cndrtykf5 hqy8ut4wgk10vg bxqpgui a2rsg 7572b aa8bbziwj4 ajr1xvvicculj ly9dbvczxg 16bxn75 35fhx 34gp16h4ri dvfwtyx22fn6 k34gin9gzufn1 ioho77pmz ma368irtbk 1yver ruhlcf56sykt287 e1lu0v3z6 fxvzph ikpxkd voox7sytgvrut ijm2idpf7jpo5 4iw8w3q5r0amiqy yapet1guqpwlb 42v94ap3nbq ?",
       "level": 1,
       "type": 1,
@@ -665,6 +684,7 @@ const realTestResult = {
     "question": {
       "className": "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
       "questionId": 7757,
+      "serialNumber": 4,
       "question": "dae_question MCQ #7757 question: 8ucdn0eul u14dl1myvu gqqnp2a2l ot7qdd6sazap4f1 0oz5pcwoak 4oyzt l4qu5 c2b5pzw98q 99mf1 xd0zp5l95 av182e2q6asd8d mml5o39zpi1q2 3t6fddmsltjf v635g uku8622mt7 kuj1o36b4zwgyq brlcx5 gq5942 tprffz7r qfmhmvozbb 0y6k3hnadh3uh whts2qvd0idpqq 2lnnnuxyq0wk3 67g9vc qgwwgfls au6nemdg9wkv7y 8symh5 fozprr2o7 7a3axx5hk5w k2qr2f1xkzt 98a7ezuo9 etxe7cjdny48 unkgc4hmcaf3y rto7108hjng lhmibwgaio1ri ci0tf5s3eyzmay skgp3d gt0u75d 0u2o5z9b0 agma7c8evjvds lngyyr42yrsxj jkm7gjb7c 2xs1mt2z057h fiepcqvj69hyrex pore0jhrvhyr 55tsenxdp73r 62hstbysrfxp6p rwark2zhe r5z1dsho 6v6muyww 8ofct6krb0a04m rlwj3v rxm9k sx587 vkgv84auk 0hdtzv cvc8ln 4mck3tbu19p1tvt icwssluk6dazdv uolk9se6seifw i2u7ng8rxb 62ygm fr0rtwu0f7yz vu2gl4six qc9n1fhtq8d memyht8h5mo0v micu7ow qs9o4yt 1u31vta3 jb9jr9 kar4n 2o2bsigsel2m3rv cldj4n8k5ap710a j2ndirtgt56 ?",
       "level": 1,
       "type": 1,
@@ -736,6 +756,7 @@ const realTestResult = {
     "question": {
       "className": "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
       "questionId": 23974,
+      "serialNumber": 5,
       "question": "fbd_question MCQ #23974 question: fjw6egxm18mn ihpcjp34 4gwkxf0a7 imeyz558v ndpfsd9hqwrotkf f03cs jpvsej sd2acgzeayfke 21o36tfzmyrzvq2 up6fpwt0ojh k1w15df 16sdcf4 frgq2nc1xynb0 v6ud14zj9eg36a7 ijithzxzuo5v ejxzq139gwh6 0jg9hmg bngl6zcvb 57fuoy8rhgrabkl 3zpau5cgw wprpzj38z0e rch2p24 usjrfemb9xs 9glfptybg dzrdo10jpshq9q3 zely4c 05my89wm cquzxhwk iivbs6u vridddsbxxd2zsb r2o3if1g laex2dkcx43lq3m 8qmb3m7 7cuhsyge g8a73b7v ri3tdip5 bbz4za9x uv2sk37t3y n95az1a 2aina8y 78itbtk kme275a659 zm6t6uwmtw3lej ljhpoi6dk gs71g2 3l2s6tz4dqz 0hyo2xjogwfa3f knm8jhvrk sizere58ok w3rfqse 07rxqpy4cv6g b335kmv2 x4hosq1hdx1x c8sligel8w gzd2ea5zg8rf odp5c5mgvuvqq7 24aron8ytl pmya7d x79j5ptvdef p6c0kgj2h0yw7h 6m9ehj renp24jnzn562 7fe73a5rv 5k5pvk pqiwmk h665wg ljbtu84wq0is 014kdyz 5v5l1w1cvqjzcvx gjaj3wkto6sa mlyo2srnz5 44cysj9ltjpr ocz2nz 6jsovnx4a qumrnuik4x q8arxct6tca 4i05i 1fc45gks3q3 54ijb47qxh0 8qvzvv54h4a 9a2afowja j4kmsuo bfkl52 8tll9ucxh157tv n7orptib9j22 eaj02wp 64e5io nulk4ym76y 1pst8x c4msj5k3ib1u tuawpqhx91s 2c5rdpj0cyk1 ya2zjqe7y4dp mi9unst75bx xh8ybgqo 66w9th p47hclutqpi 2skbzidy4w 5s25kcf41i1mwio ytbvc8zae8 ah7pi9531yxv1m 22a9fo1v59m6r 8vbetri2g 24taah1vy9i18o n9bwpxlrb wpgg4nmf60j ct6q54w37ap 6g7389q58 17yioo59vm8b n5sbpqcg57estyt 6qghib g3k15jgwzww4dwa 9vk9hplxlkw9bq 4ubzj97zkp xhm7vhh5 wfhs7wnd oihwptdos0xa w8hxbwbfwe7roz4 g06yj0hk fjwmf kf15ih0q vrs9s71sia bppsgprm mpyrot2u4u h64di82vrfn 1yypkmzpbc805nl 7iw2dv zqjxavbl59g4r25 029f2oml h4xnffsw31rw986 1q7irxa51im3pl m3xuq k1536xvozik bh3nkol bynax1r1l 8j9u2ossqq n9oqquxlu yvis7 hp2c9bc2pfw7 bzpmnx25rxw5x fmun3yqeoja u5miwdztskazz ij8se4ogjh yncg0jdb430oqp 5dz7o6pab9japr vl8turbpwlhki ?",
       "level": 1,
       "type": 1,
@@ -807,6 +828,7 @@ const realTestResult = {
     "question": {
       "className": "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
       "questionId": 10509,
+      "serialNumber": 6,
       "question": "age_question MCQ #10509 question: cenr8rrpc7p6 lz68amzw hpzrelu8vm 0s3od3 55w3e5ktz6v tfagzze9g suz2o967qa t2boqof97q ig49odcf jswj97 5dxot1yp4op 7vkcdwufjrbysor xynl3zbmrskl fryod 3smxjmgo6i0tba fbo6f ydk6ermcgohitky wlerrx mi5ud805760klp p8e86og5sduk isa1ikv ibbi0xw2is 675uvqjc qbcrj ydup6vuu7 piw7s3 4k3rk6pv8mah ml5xqmrb7 2qksswt7u zxgg9b1pvk m7lve0jb 1xafl2f2y1 nae3v4vbt 2zc76ki u5nd48xgm dc8s0lwrf r7ni0d sprzngve1q6rw qrjsjrye024uzi lug8n hx0sqprf3vl t63b1sn93bjr4k3 4c110n2lyzm 4itpuiz 5vxd8snborizzfm e87mwi85e s22zrzheloshsd vhbpmv dtujpk5 bhvjc5 1ewhv3ati60h 54bpb6e6ri4b 7elyxiiq5yvt 0ejrcgeb6qb iwh0ox1bbf1qybt 62hsub356 gxaotn3zci00 hezlvlvse8h elxrzopmtm v0wo914zyw pxvt7vks2he6lx y0n0ftk26nt1 44vpbhb kao1szbxr6zrg1 2nf8row5ip27qs sphks 5tjcmtmpqfhpju1 x2o6sa0bnff aueadf49x87vw bn2iwxdvb94 tedx38ev nb42e5psfm927 2eqgibuem233b5c 0r616xrv7gw4g lpsqd8c0gda 3z1yyb5l 2gwg8x23p6bxl5 gceo5dusczfrf9v jlzm2yw4 n45c4p11i5fek3w zxeg7hivik 0zzqrxo86hws7ww k3n3fpqrc 9gobj0iy27o41 sxcy5z6wavl nrc2a lyfddlux lkiuvvn 09skwcflqg0afpx z33dj5qiicenz 5ez6n7unzpcr tlbl9bi5 l9fkrdqgx9 ycfs5e2ho tnzb0x6w4x 1yp6cri 7myecd9 9sj6p9vp1 yx80gy2s54n 5bmk5hhtdrg k1nxw9szokj 5pcxlpfx6 y8qk0mts y2gya 847y35ioba1vb 7etdo 7323q28tfc 0vvruqo3m w1t983ra3 v5x1e i1m6cy gdykeaw 4yh523bipx4jgg3 ahwq1o 5nwu1zymjidbhc9 0kzwzkfdx1m9sw a2ez8g65a skjcpc2tp5bpsh4 3qk7wc5q zu229rg8 hm3v0h6 m3pa6gbv00 0u9ohgnb0ic04e 2381d7watd96y0 lqmfj 53i1xa4ikrjgjyc i10evdfehkmm a4vzfgq6bp41vf4 tkyna xgr49s5y2txa6wj nhsc3pu38y7k k0un9z5lea i3c45 trcr3d40lmd6ly pto51 yr9w0 xte15zp9q 17wh93s99107 bblh1kd9dw3 v19tgke7tnd 9e7an 71w12f90mto1 vio0b4q 9l37jifv34wy4f0 ?",
       "level": 1,
       "type": 1,
@@ -878,6 +900,7 @@ const realTestResult = {
     "question": {
       "className": "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
       "questionId": 9741,
+      "serialNumber": 7,
       "question": "ade_question MCQ #9741 question: 7b752ykoxkmiazx pn4ah3wtloz gzbke2h4qq cx6vfjvzu4x2 9tw779 hpwvtnhzp4y5 0x5l4wfotfytury txf95lhsh8ib irav2o8lmk1m yutrhf s5grk8mglo7s vh5oqhfj42 5wqnrwd3mg1 rh6oate189mq89x 3cuc90z guksgz fh44wfr01kwvg 4dijwas4s9hwo snbwh 52vlkt88m3 kswnjo85j2l45o okcp9lx37ayq 83jgw4yc70y3o4 tlyt3tr3eys 1f4uxhy b2647zbgziazu 0vg8gwgq97 6jd34twhk1w7x2 2s971xa 5kodblbvnfabe budmy2 ryptzes4v3z85f vi4eqy948t930 ov0j9x090h vpedarwpc 1lzwhm 6p814oq7z73sv 0avb5tnq8rh03 lf4l38r38megd9 tkqhaqvx79 wjs16 vyw25lax mp3ugf4h6u kmevrq 6vsizxxoyaj2op y5pr3x 1nxs46z 9cpbsqusdx38m ecprwemq j5x4im593b xd9rayswzwjvs tj1kcq9t6 aemgm cnx9qpcwe3v 3ioahktumg tv08xifig8j2rn 305bmkes2cmqd2 c6ga7kep51037 oclbz3evn7mp 23z7wkaz u4a45qehqlno ayd0xymyr bm1cl2i xvgdmsso07e fdt1xdyj 2emkb ovsal6w19xs 1pwf4u4ujkqh 3n93t1isr46 8u50gh2vq38 kxi5qhl5yx3y zof5efy ay3ma d02cmnje 9rsixg8cf0r71 rr28uf3 ga83cxzqya x4rgdzr66 utw9ilueqnk clin999x11bq83k jhhiwi70 98zd18 mtu53 mfos2tighiyy 9yiqry 0w12f051nthzu tewb72qr44ui0 ky4ev7 ck27j6s hv8g387x2x vjzc36 c5fjji12m8lhc v7uozut 7qcrtco h36kighxrj kgmbynpm y8pk8 pn707imdt5ql 3vhcwr4548 r29vwyzikkxq3 0ghrekw t7051ket740yng6 14vulvflf6bscaw 1gl1v5uslyj2ljn 6pga9hexfps h7vc1 qx8zdw9 ghvtn5 u07by02i 6v8s42v kg61xhr83lbom jje5d o1llw 8ymli gg8t1f 5o9hgwa55itfk8 mttfro ili1395 9g8ouxfjn ecbxi7z7m0z0ju7 xz9a343za 0nid8neibmhit irjaj gxzzq s5ebyl2 4p7mgzi tagto0f7kaupz lvjm5wbdgj 36hfk4c5w gb772or fr2azvgrws ucicix7djy9o 5oxe80gkr4kphb 2e9zpa8zn8msw 124yhuny80 w6ng2kh eqp1m8i2cmmad ockcip97 yktgzj00e1hp3 7t8ms5zw7uwnm lcj1fi3 691nd05ykhlj3cp zw9wiluwu7vlpcb skkc5914i6tsk3j 3gjuqou70h9p xmu4viyce 8mhpeezh3yyal ?",
       "level": 1,
       "type": 1,
@@ -933,6 +956,7 @@ const realTestResult = {
     "question": {
       "className": "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
       "questionId": 39629,
+      "serialNumber": 8,
       "question": "gaa_question MCQ #39629 question: bewzp07d vlkppaxj otlmsynz ilxpn 8o7u5 i58pra yop51q9b8 7jfdct nkjo04lhle38d 5n7d2w0 qvzkq9m 4lf3ba1ahijq 8fiid8qa lz0izx3 85b60cxwj9avz2i i26r7q gpjaqk24cyfjk 03exwjtctemv9t 5c98e rged6fdx6 zgo8fb76jiwa v9tcvwodduy an6k2d8gofdc23 3rmm2bn9g 073ql3v 048kqkf64ks77h uh67yay0 fa2d18w 4phshgb50kbsi3 09glt8t42kf ifhlc6y9a74w3d 5f0m2z eeubc27i68eff gb90skqx q9x79v8wx2 9fbn3pw1tl3 vk7a300 4f3xz8kd6zq4d r7kvque35lr 68b8u43rgwc5jm wzvrzhy y1tytz3p5miu1yw vkxgvd24g59mwl 1d6z7 ikmda3 1zqow npee7ofj8exc 7m6qqju78 6kd4qh6z3zr1h7 8jyf9fxe rwhnptauqwy 6m5pyvf 2jx4g4yv0se zrznf cfqhu9nf26bac5 pgtv8xfa90 fkqtrnadsphu 24t0f1wk835r3in cp4we60z7bz vjev4 ssr21zca6u3 o84lnlscejq2 p9ee56 pl5a46 p2glbsa7cv1t 7wxy5rcvjr8l ebk9wcqv4b6 lh0twugg sxnhpv9rvl0x0 rniusmsytaah v7q5uuqu3q2p u53170hn9xig6 c57mwz0ymbae4zw etkdyd 50u7ujhtmp8v ppaqy05a0ets57 w0oautphbbez honq4q6t7 ftskdljuub10 blwelxi3mbzyb 33nipq72 7m77hcyug6 f3qi0hhxel9at ltvnbgln 9jb5cl 8k3vh thtwq1 1s7to2rywd7b zqq4g5jcgfy sabfkigqyi9s 7p42nlyxz1wffng 1mohfb6cp4qo75 k3qh26c4 w66dq8admhvob1 xnd1zjh4ngx48ng 3jkfnljhamt7l4b 622bu38833g7jft fqk5kym ux5z1we9sjhf reephx6pm bkkffpy80t 40o4ep071fch 0rfwkqqyxyxxgir ipbff62ylxw9 7le42bpi8w f9a7jfse dobpqoarofcbqve w8oo5i6dun amjke x1dar pu90jek1wf g9us4ngvqeh jor3q vav8oc8o ji0lm4ttwv8i6 kfup3a324jiu0ny 100azi 7tns51xuo qroeb0r 85ki7trnvoom xh9lj ij57eabuea ?",
       "level": 1,
       "type": 1,
@@ -996,6 +1020,7 @@ const realTestResult = {
     "question": {
       "className": "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
       "questionId": 14419,
+      "serialNumber": 9,
       "question": "ggg_question MCQ #14419 question: mgumu2u3gef jrkpo68tu x5v4os9ebrj vcjy36 hzydyhq7in kqcuc 45efvbcwv 6vt7cv ft3ms8 8dqc4q4 urap0391ooc m96fd7vc75qhrf sbetty5ul0nt sg0va 8lay99o7n9ibina z7skte1uz7 scyr6ilpr 1b15mojjrfcum 900i3o5d3 912wb9ba3e56 gbwpu6nf 14un01r16n39g u6kkvir18qv7c ii3diur83a3puf fuadzlhv4gec3 2a8xagh1tuz0 3itlu up2y23 kmhm9e 1z003ahf qlmnsjgz3gf67x2 wv6tl3x0im yt7vw282 e2c7es1f7 ds575rp 15dcp pozj3k0rw4i3a8j o3l56can24 4nv8auw1ka3ik 9pisqhf bcy8c5 ck1sfg37a2sgs 3duteta9s4zj gcib5q5z64vk r776nnp mhi4ce45j1e jxcxqy2ebv5y 6xevtd s82gvdiwgbtx 3v7lt62 rsnxo2ahi6 fnja56 n35s9b1y1 q1np1aus xbqud11 z3kdrn5za3t q3uoyuhm10j tun9k et4dw4ehqj 0q5akxh4n4oe 13gzvv 26r6qv7 yvkb7 oyjanbdoq v37ny95u3blwo7s lcg3lm5ys 9uzvib2x o6z7sjjgqvjcz07 cmm8141kw93e2 f3bu9tstsb3mzdc 5fkh2v sna4vpwlnrumrn penmyy2wd ceymzzux 9uulfq7swaaeaz 9gw0fqw1m9x98l7 84bc64z0h 74kuil wjia9wo0kr870 vd2qgud3m lokoowuu7 pgojy 9gi2xkxft ihit451pc1lnhcq 1wzsl8p gfpbsswi9 x53ajpl0 fv6l1vgm9wsd nhrm2vehq sx5bopekb 6dlq9olmy99yxu 0aqh48q4d0 6qc09aho7r43j3f 5n1ch mebp2x7xlju6tx 9b6qowwddd9qgr j7fz6slfzit w6smzd1t p4k8clexr7 73kw888t6rk38 ia4rolr0aduh 9oahmstc3 cln4cyqx1i6cxy 00zlwvevvp 8olhrkwhagr8 p6vr30i33 vkf60l 7enrkbsp 6s8mcpl9 gkorcshh0oade 6hf3ymj7oyu cpq8460dep sxoz6 ez7rwg77uq85 ctd4ypr bgutvhy 1ojc7mwfb16 ya2qlf9889bz458 cn43f597let adwjo525oex iptigbkpze wkpbznevm3dm 1kga43ln3w93c w13mtmkrf7f1gqi 0w68k31nvhjtt ipnbzmshezpq 4ou7193j770khv9 rk1knybc3d mw9lvw7yzkxzt df751nxjs ah9uiwe2zzhc y2drk5g7s23ro ayiyqcs4h5k t0e0afw4i6zx8u 8sue7bo9 rwoqso5gm qth09c1i64qyr doaeq61 ft1prte522er ofgt32 50fmmf4kbxu 4l6mqffwx20oh 11nc1 zjk34n192v1xel mb8k4 p9706nx9xua16 bh8h16e5mo9jn fhroucl3eut4v4 ?",
       "level": 1,
       "type": 1,
@@ -1067,6 +1092,7 @@ const realTestResult = {
     "question": {
       "className": "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
       "questionId": 35860,
+      "serialNumber": 10,
       "question": "gbd_question MCQ #35860 question: wtp4ahebe89 eppo4rpjq0dspit 6kgewys9u76xqe7 vdp179eiwsrn ldbf9hwo0 6muz4wo4li6 xrf7mkjm9hnkqi yhy8i1dzc 821kgoki768zo2 nl7nhb2xtjt fu68ypqljfci p4ll1 500kpjgqi7j4 m0suy2 z8wynn4q19p 8zw92tb 3v2ar8lf2s2 0e1b9cfmr54cpn8 jzqox hic9fyz52dirc 67ow4s z6f35vw2o2iq3m9 t0rb38n l5hr3ut4g bimiqm3qffhu brr9eztor8o dpn6zf33jxz8d 2w31312e wowcuotub2 vs1jonf q0ca0y6bnc h1vt1wku nzd5n s7irnejsr my49a9gm2orke gudq3 82ube5q5 8tna06uj8t9 lo4r2ln1vyxfgma v4ukmsxbjj ut1ev gan0sr30f s0onwa uwnjonp97wcjv am2l2 gude0w 7sznnm9jlher b4zvyofy nkr4bax01 ayb69im ?",
       "level": 1,
       "type": 1,
@@ -1138,6 +1164,7 @@ const realTestResult = {
     "question": {
       "className": "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
       "questionId": 19991,
+      "serialNumber": 11,
       "question": "bda_question MCQ #19991 question: zpdj9dnv6e6r3 52sl04a m8wrp89ts dqain5sbf0 k0cmfishr gygaj9 ysoqbu g0qheqbwh72otjs 1bd8tjn18unv9n 431eyoio2cb icotv4cc1 bi98wuggb1 mdl66ia5zw l7ce0tug73o 63n884vo8g clcurepaee1 85wdexbev8 9ybjh os7luu 6kkuct 6pctq i2tv3k6c61wyka ibnwn 8f8xk85 1mzwuplx atkm24qa qztua6u7p cw27xfd7 9afca14mgv jq6ja7l9 o2ga194w 0fcdwauo7j fydt3yl goyix crypq1x clubu7x12uuvc bxzh8t1949r otpot 6garxw1 hpr6sy1 ld9d2 6rtbm wchf27pjzn7 2sf0ugvr0klg nwsz2hl 55d7xj188ee9n 2nvjqfzlvo k9esx1el6z g94rzdhk0z8sxi 0wve7qgxdb4i fdvwrd ftttwg tyjo5jlg3 3k95lad8z1zpp w5ix14h8nviilyr 7fzr9c6u1wg7s 2c4fwuu7tx6 opiih 2nu1ws3slj gontd9lrqe2h moxuhqds0hv5hpm 5sz0y 6z4da3iohco4 pr82ve uy3vveneq 9jdi84b 4msbxm7 5mt1e2vityy 9fdqsd h5sly jko116nolm36t7m 4807fwz6vsw 1odrn7jek3 czxzg40da4dqi4 wrqnevv aq26m2x 2559dnyx v57j5m803x0p7 yakhid3e20wa5p v9iuwe5 7m2u1y6f 5yhvoqt73btexkx 6xeicq8 46ntldv89q9jqc3 whi2zy xkflz qnqqx73rnqfnk wyq3xikvrqx7 85zlvoj6p711 fgv75d97kq ko8vsmgqq9p unsg4 ka6rsk0y7qw0t7 egl7nn3ttqfody t2nfz78zvt7u35 2bmy794pkp0mc6 nlkc0iota0i 16bvps1x hfed89j0eesi o1iu4 mwa3od 4lh9xm5cz3t12 37rb3tkvjkq0 tvvweai rylzocjp7 5rckqy3e cv0v908a00mr91 t3gz1iu ucq9bb4wmbig0z s9vjl2irmbwyj os7gfw sjtiwwsnu jn0op1rm9khw20 j6eucsclne3xdn 93gnf0e3zjv v7acjtfixffep wy0lr4k ede5366vh02rhk9 xrkrujiavf bt8q9hzr490k 108f6tti8 fndxcsb ky6wcru tvzk85mm9zs3 e8yyplfzgzdf 5a3ogx5efm oji8fxwde 1d0ccb6z26 w764kddhd qd9d0pcfxz 03brezcg5rkw hhhw96kzhyrz9cy tqvmb ycymvf cv56t6a bpsfyjhhji6 w14esr i47zzabpk wx184x87nlrvt j4yn6r6937eis 1qy7uikk6 r4jjlj cd534b ojvswzyftu 1xsv53sxp0 lh5ag55pcb9 fgtqok6xrn fru6tisq1ke c45x577oiv92opb ?",
       "level": 1,
       "type": 1,
@@ -1197,6 +1224,11 @@ const realTestResult = {
       }],
       "single": true
     },
+    /*"response": {
+      "className": "ua.edu.ratos.service.domain.response.ResponseMCQ",
+      "questionId": 19991,
+      "answerIds": [79865]
+    },*/
     "score": 0.0
   }, {
     "bounty": null,
@@ -1204,6 +1236,7 @@ const realTestResult = {
     "question": {
       "className": "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
       "questionId": 6639,
+      "serialNumber": 12,
       "question": "eag_question MCQ #6639 question: chwrn9k0w ifjkbqlw0cm7j ihburzeokn 1fq9b6y6 cru30v5qb w7p2pj6 rcwnh 10sjokpm atlgw2qvqx50 tawrdde0 4p8ufb0y nq47cel4l i9xhne ijdjjv1vdjweil rmvjrqfi 26t5l 2p1jfir uejof 96y678wtovvmxmm nbv70qfgq ri8pcr ri1k3kau83h93md ql7nt533ju2dlz2 31nv1yxbwa n4qick7b47 yrflywwv qmf6h6 2pj3av yx0v1b1jehmhc5d 26el0355kd bvbbw9e0 hq58yqev9h d7qrxaktb7 fytw21c vfnpjyxko p17b8nlm i6wc004 0xp9dl qenhgz63 lv50y18s7xs6ix ad633qz980z g2chw j2mc05iqm2lc5p ol36u9 xivy9f6il9yi9i uq03unzurr vw69w gjyu33ha5ml0vat tinvvt9ol xu5zvfb9vc s8lt618i0 egs0hitnfili1ns 9vl2r nhy07mwuqjxr4l8 3n2o1lf3ug9ble jply8knzsityc7 qzusguet4su 2j980tjf1 l9mvpougpii skjky6pz6 9tv9g 7t2287liynhcms j4mu6im3kslgiz w2bbfla5k7zapll 30c3s3sqp zxicwszm3l 66607xdhqtox 847w4 z3f7crqtk85vbf3 5fyts08v4n uzvq2p73ixrohwi e0y3g4h7ff4cyf3 f6t9yohe64lqzc r1of7zq51qx46ys xeiok401jg tsw2esss4pw6 ffflmvj 7swixn98d1eo fl0y66klqynb 8t8hacdw gxrlyzzjdvebn 6jp7atql2 ye8oo40f6i ee72a68qnytcg hkk7r7d3z2oy24 bt6jb3 vutzao1q3fah rclstvxa5cvra6l kx1t719 e72vo1 ?",
       "level": 1,
       "type": 1,
@@ -1275,6 +1308,7 @@ const realTestResult = {
     "question": {
       "className": "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
       "questionId": 28828,
+      "serialNumber": 13,
       "question": "bef_question MCQ #28828 question: qiwn2 y0d8ygce vgzm2cgv5d 6v2hqxqsvqs s2k92s2pp1xs6i 05dgmjswu6dcj pchup na6qaugt90lm4jh yd308qv isci8e1 mfb2uxjcb61 1t5wbq8c6slv oo7rre 46ydfs3guryir xnr1ohtaj9dyo41 2dw2t660wg1wij 51o6q5co2hf z11w03ctvxt a4g0zj5jexw qir5qolkgim t0kfc5r ejhipsw7lt fh0ll fn624pfug7ftlrb 9argksc56vhif5 k3wjtua5akdo k0u1iq0dvrn 94gq7ml1gz utqrvahv9d9p18 lf2pzy4qn1zgxo 6a89r4bnmb m0sz33d9 ahq3zesu8tdf 6etsnfdt1p5rq5z 3zfhe6k135 64o3kisw vy4lt0q ozaln0s7zcauhh chmoq kgo5xkst43jr3y g9w3kcl48f bc5m2130mnb0mn6 lkkswf yptc4que4xsvma pywl6rq 346tk2euvnhuxwi n8wcnyps z27aqkcxskfy er9eatkpuc 6npgjsy3 69qyis94c3u6 feng3efozxa57jd cv3egic8xl 9r69p0sja 9mahx epfat4qclo 5vjko5gwbph9pkn szpm9whe8 mez7wg3ykd23 v314a9za3wvv 0apkun8b4bh2 gzb8z w4fjuqw 15jpcirznxncp 82btbs3 k96kd kebyby2pg3 5fvisf m1anmm4gry513 z858h4nt27l8m nygzy5eqx wp4pel vl3jco7vzv3i 2alern gp18s4u7ctbi9p 2e2shn57h xc6s2 eiqlz29qip l0dnbpc2yytyxn fptwvhe fvynmwlbj22w78h 7b3zxxf7mcn bnjafa02v6u btbs4fiac1q7o1 cvjgwtq7t 8j9x3n3nmzf e4mhxpe 2ngpm4kb9owhvl rfx9rbn3blwbcr t3pv6lb4c14q1 ?",
       "level": 1,
       "type": 1,
@@ -1324,7 +1358,179 @@ const realTestResult = {
       "answerIds": [115211]
     },
     "score": 0.0
-  }]
+  },
+  , {
+    "bounty": null,
+    "penalty": null,
+    "question": {
+      "className": "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
+      "questionId": 288280,
+      "serialNumber": 14,
+      "question": "bef_question MCQ #28828 question: qiwn2 y0d8ygce vgzm2cgv5d 6v2hqxqsvqs s2k92s2pp1xs6i 05dgmjswu6dcj pchup na6qaugt90lm4jh yd308qv isci8e1 mfb2uxjcb61 1t5wbq8c6slv oo7rre 46ydfs3guryir xnr1ohtaj9dyo41 2dw2t660wg1wij 51o6q5co2hf z11w03ctvxt a4g0zj5jexw qir5qolkgim t0kfc5r ejhipsw7lt fh0ll fn624pfug7ftlrb 9argksc56vhif5 k3wjtua5akdo k0u1iq0dvrn 94gq7ml1gz utqrvahv9d9p18 lf2pzy4qn1zgxo 6a89r4bnmb m0sz33d9 ahq3zesu8tdf 6etsnfdt1p5rq5z 3zfhe6k135 64o3kisw vy4lt0q ozaln0s7zcauhh chmoq kgo5xkst43jr3y g9w3kcl48f bc5m2130mnb0mn6 lkkswf yptc4que4xsvma pywl6rq 346tk2euvnhuxwi n8wcnyps z27aqkcxskfy er9eatkpuc 6npgjsy3 69qyis94c3u6 feng3efozxa57jd cv3egic8xl 9r69p0sja 9mahx epfat4qclo 5vjko5gwbph9pkn szpm9whe8 mez7wg3ykd23 v314a9za3wvv 0apkun8b4bh2 gzb8z w4fjuqw 15jpcirznxncp 82btbs3 k96kd kebyby2pg3 5fvisf m1anmm4gry513 z858h4nt27l8m nygzy5eqx wp4pel vl3jco7vzv3i 2alern gp18s4u7ctbi9p 2e2shn57h xc6s2 eiqlz29qip l0dnbpc2yytyxn fptwvhe fvynmwlbj22w78h 7b3zxxf7mcn bnjafa02v6u btbs4fiac1q7o1 cvjgwtq7t 8j9x3n3nmzf e4mhxpe 2ngpm4kb9owhvl rfx9rbn3blwbcr t3pv6lb4c14q1 ?",
+      "level": 1,
+      "type": 1,
+      "lang": "en",
+      "themeDomain": {
+        "themeId": 165,
+        "name": "Theme_#6c1dbda9-f392-41ef-b685-417df1fbd0ed"
+      },
+      "required": false,
+      "partialResponseAllowed": false,
+      "helpAvailable": true,
+      "resourceDomains": [{
+        "resourceId": 1891,
+        "link": "https://resources.com/1891",
+        "description": "Resource 1891"
+      }],
+      "answers": [{
+        "answerId": 1152110,
+        "answer": "Answer (incorrect) #2 to question #28828 answer: hscbjbrc qn9ei8a9tr 5vykks8k3uy7gv 41bu66l35xq 1lqnziky932iv xh cj1bfan7pgb85n ekrrahl vtibacr1f9lb8 9ymm31jaf 5hfqhp7 rj ockr g88hm00njxlh i5wgjum41m1wx 019tk21u nh al2ldiq643c z7k2l9vdh 6q233g1edc5 e xyyef23jri lq6v1wt1f767yh y9itl a8db8cm9 khw2p6 .",
+        "resourceDomain": {
+          "resourceId": 323,
+          "link": "https://resources.com/323",
+          "description": "Resource 323"
+        }
+      }, {
+        "answerId": 1152100,
+        "answer": "Answer (incorrect) #1 to question #28828 answer: t 12om98q38pk1v 3ge 5avwuf5msft39 ke m1q03u7me6ihzqv 7xl0jacm e6ti7 i evbu9 k2m oymwuwj 9extlw tkpzaf1z m37rwq8lk1mwkq e6g 2hvtk1v q2ejn maxdixkxx89qn 3b5v2tiwbkcqknp c4tjseybqee6c vt 2la9 f iq2fjsutluysijg w80h h8cq1yfh8m 23 rf9c7x mn1wrg 9 jroij enn9 6 ljgbp4cvt5hz78 9rl ek61vvq .",
+        "resourceDomain": {
+          "resourceId": 149,
+          "link": "https://resources.com/149",
+          "description": "Resource 149"
+        }
+      }, {
+        "answerId": 1152120,
+        "answer": "Answer (correct) #3 to question #28828 answer: vowtkzc79x vf8e4w95hnfr4 hke55tu 4zo i3et4rf0ja202av rqvzk5pw46 8uwps35aybxe9 urpiwp5t xk2qbdiyx ds8wnrwy 658 h x594mu 4hg61 1nfqd8gtq q99hd8tux v7s5i64k xgo84znii0 41a x 6fu3b mejtt6w 48f8o r8qdd3c7s hrg72k 273 5jc65ydutbqk4pg kpf4rk33fxfrcf dtx89o9fj yjbs 7t osep0na 2yqxjxrcmglvz je35vocm c25q ycki0s5qs7pdln m iehg1czgw cdji9fx7 sr r ybk2 .",
+        "resourceDomain": {
+          "resourceId": 114,
+          "link": "https://resources.com/114",
+          "description": "Resource 114"
+        }
+      }],
+      "single": true
+    },
+    "response": {
+      "className": "ua.edu.ratos.service.domain.response.ResponseMCQ",
+      "questionId": 288280,
+      "answerIds": [1152110]
+    },
+    "score": 0.0
+  },
+  , {
+    "bounty": null,
+    "penalty": null,
+    "question": {
+      "className": "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
+      "questionId": 288281,
+      "serialNumber": 15,
+      "question": "bef_question MCQ #28828 question: qiwn2 y0d8ygce vgzm2cgv5d 6v2hqxqsvqs s2k92s2pp1xs6i 05dgmjswu6dcj pchup na6qaugt90lm4jh yd308qv isci8e1 mfb2uxjcb61 1t5wbq8c6slv oo7rre 46ydfs3guryir xnr1ohtaj9dyo41 2dw2t660wg1wij 51o6q5co2hf z11w03ctvxt a4g0zj5jexw qir5qolkgim t0kfc5r ejhipsw7lt fh0ll fn624pfug7ftlrb 9argksc56vhif5 k3wjtua5akdo k0u1iq0dvrn 94gq7ml1gz utqrvahv9d9p18 lf2pzy4qn1zgxo 6a89r4bnmb m0sz33d9 ahq3zesu8tdf 6etsnfdt1p5rq5z 3zfhe6k135 64o3kisw vy4lt0q ozaln0s7zcauhh chmoq kgo5xkst43jr3y g9w3kcl48f bc5m2130mnb0mn6 lkkswf yptc4que4xsvma pywl6rq 346tk2euvnhuxwi n8wcnyps z27aqkcxskfy er9eatkpuc 6npgjsy3 69qyis94c3u6 feng3efozxa57jd cv3egic8xl 9r69p0sja 9mahx epfat4qclo 5vjko5gwbph9pkn szpm9whe8 mez7wg3ykd23 v314a9za3wvv 0apkun8b4bh2 gzb8z w4fjuqw 15jpcirznxncp 82btbs3 k96kd kebyby2pg3 5fvisf m1anmm4gry513 z858h4nt27l8m nygzy5eqx wp4pel vl3jco7vzv3i 2alern gp18s4u7ctbi9p 2e2shn57h xc6s2 eiqlz29qip l0dnbpc2yytyxn fptwvhe fvynmwlbj22w78h 7b3zxxf7mcn bnjafa02v6u btbs4fiac1q7o1 cvjgwtq7t 8j9x3n3nmzf e4mhxpe 2ngpm4kb9owhvl rfx9rbn3blwbcr t3pv6lb4c14q1 ?",
+      "level": 1,
+      "type": 1,
+      "lang": "en",
+      "themeDomain": {
+        "themeId": 165,
+        "name": "Theme_#6c1dbda9-f392-41ef-b685-417df1fbd0ed"
+      },
+      "required": false,
+      "partialResponseAllowed": false,
+      "helpAvailable": true,
+      "resourceDomains": [{
+        "resourceId": 1891,
+        "link": "https://resources.com/1891",
+        "description": "Resource 1891"
+      }],
+      "answers": [{
+        "answerId": 1152111,
+        "answer": "Answer (incorrect) #2 to question #28828 answer: hscbjbrc qn9ei8a9tr 5vykks8k3uy7gv 41bu66l35xq 1lqnziky932iv xh cj1bfan7pgb85n ekrrahl vtibacr1f9lb8 9ymm31jaf 5hfqhp7 rj ockr g88hm00njxlh i5wgjum41m1wx 019tk21u nh al2ldiq643c z7k2l9vdh 6q233g1edc5 e xyyef23jri lq6v1wt1f767yh y9itl a8db8cm9 khw2p6 .",
+        "resourceDomain": {
+          "resourceId": 323,
+          "link": "https://resources.com/323",
+          "description": "Resource 323"
+        }
+      }, {
+        "answerId": 1152101,
+        "answer": "Answer (incorrect) #1 to question #28828 answer: t 12om98q38pk1v 3ge 5avwuf5msft39 ke m1q03u7me6ihzqv 7xl0jacm e6ti7 i evbu9 k2m oymwuwj 9extlw tkpzaf1z m37rwq8lk1mwkq e6g 2hvtk1v q2ejn maxdixkxx89qn 3b5v2tiwbkcqknp c4tjseybqee6c vt 2la9 f iq2fjsutluysijg w80h h8cq1yfh8m 23 rf9c7x mn1wrg 9 jroij enn9 6 ljgbp4cvt5hz78 9rl ek61vvq .",
+        "resourceDomain": {
+          "resourceId": 149,
+          "link": "https://resources.com/149",
+          "description": "Resource 149"
+        }
+      }, {
+        "answerId": 1152121,
+        "answer": "Answer (correct) #3 to question #28828 answer: vowtkzc79x vf8e4w95hnfr4 hke55tu 4zo i3et4rf0ja202av rqvzk5pw46 8uwps35aybxe9 urpiwp5t xk2qbdiyx ds8wnrwy 658 h x594mu 4hg61 1nfqd8gtq q99hd8tux v7s5i64k xgo84znii0 41a x 6fu3b mejtt6w 48f8o r8qdd3c7s hrg72k 273 5jc65ydutbqk4pg kpf4rk33fxfrcf dtx89o9fj yjbs 7t osep0na 2yqxjxrcmglvz je35vocm c25q ycki0s5qs7pdln m iehg1czgw cdji9fx7 sr r ybk2 .",
+        "resourceDomain": {
+          "resourceId": 114,
+          "link": "https://resources.com/114",
+          "description": "Resource 114"
+        }
+      }],
+      "single": true
+    },
+    "response": {
+      "className": "ua.edu.ratos.service.domain.response.ResponseMCQ",
+      "questionId": 288281,
+      "answerIds": [1152111]
+    },
+    "score": 0.0
+  },
+  , {
+    "bounty": null,
+    "penalty": null,
+    "question": {
+      "className": "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
+      "questionId": 288282,
+      "serialNumber": 16,
+      "question": "bef_question MCQ #28828 question: qiwn2 y0d8ygce vgzm2cgv5d 6v2hqxqsvqs s2k92s2pp1xs6i 05dgmjswu6dcj pchup na6qaugt90lm4jh yd308qv isci8e1 mfb2uxjcb61 1t5wbq8c6slv oo7rre 46ydfs3guryir xnr1ohtaj9dyo41 2dw2t660wg1wij 51o6q5co2hf z11w03ctvxt a4g0zj5jexw qir5qolkgim t0kfc5r ejhipsw7lt fh0ll fn624pfug7ftlrb 9argksc56vhif5 k3wjtua5akdo k0u1iq0dvrn 94gq7ml1gz utqrvahv9d9p18 lf2pzy4qn1zgxo 6a89r4bnmb m0sz33d9 ahq3zesu8tdf 6etsnfdt1p5rq5z 3zfhe6k135 64o3kisw vy4lt0q ozaln0s7zcauhh chmoq kgo5xkst43jr3y g9w3kcl48f bc5m2130mnb0mn6 lkkswf yptc4que4xsvma pywl6rq 346tk2euvnhuxwi n8wcnyps z27aqkcxskfy er9eatkpuc 6npgjsy3 69qyis94c3u6 feng3efozxa57jd cv3egic8xl 9r69p0sja 9mahx epfat4qclo 5vjko5gwbph9pkn szpm9whe8 mez7wg3ykd23 v314a9za3wvv 0apkun8b4bh2 gzb8z w4fjuqw 15jpcirznxncp 82btbs3 k96kd kebyby2pg3 5fvisf m1anmm4gry513 z858h4nt27l8m nygzy5eqx wp4pel vl3jco7vzv3i 2alern gp18s4u7ctbi9p 2e2shn57h xc6s2 eiqlz29qip l0dnbpc2yytyxn fptwvhe fvynmwlbj22w78h 7b3zxxf7mcn bnjafa02v6u btbs4fiac1q7o1 cvjgwtq7t 8j9x3n3nmzf e4mhxpe 2ngpm4kb9owhvl rfx9rbn3blwbcr t3pv6lb4c14q1 ?",
+      "level": 1,
+      "type": 1,
+      "lang": "en",
+      "themeDomain": {
+        "themeId": 165,
+        "name": "Theme_#6c1dbda9-f392-41ef-b685-417df1fbd0ed"
+      },
+      "required": false,
+      "partialResponseAllowed": false,
+      "helpAvailable": true,
+      "resourceDomains": [{
+        "resourceId": 1891,
+        "link": "https://resources.com/1891",
+        "description": "Resource 1891"
+      }],
+      "answers": [{
+        "answerId": 1152112,
+        "answer": "Answer (incorrect) #2 to question #28828 answer: hscbjbrc qn9ei8a9tr 5vykks8k3uy7gv 41bu66l35xq 1lqnziky932iv xh cj1bfan7pgb85n ekrrahl vtibacr1f9lb8 9ymm31jaf 5hfqhp7 rj ockr g88hm00njxlh i5wgjum41m1wx 019tk21u nh al2ldiq643c z7k2l9vdh 6q233g1edc5 e xyyef23jri lq6v1wt1f767yh y9itl a8db8cm9 khw2p6 .",
+        "resourceDomain": {
+          "resourceId": 323,
+          "link": "https://resources.com/323",
+          "description": "Resource 323"
+        }
+      }, {
+        "answerId": 1152102,
+        "answer": "Answer (incorrect) #1 to question #28828 answer: t 12om98q38pk1v 3ge 5avwuf5msft39 ke m1q03u7me6ihzqv 7xl0jacm e6ti7 i evbu9 k2m oymwuwj 9extlw tkpzaf1z m37rwq8lk1mwkq e6g 2hvtk1v q2ejn maxdixkxx89qn 3b5v2tiwbkcqknp c4tjseybqee6c vt 2la9 f iq2fjsutluysijg w80h h8cq1yfh8m 23 rf9c7x mn1wrg 9 jroij enn9 6 ljgbp4cvt5hz78 9rl ek61vvq .",
+        "resourceDomain": {
+          "resourceId": 149,
+          "link": "https://resources.com/149",
+          "description": "Resource 149"
+        }
+      }, {
+        "answerId": 1152122,
+        "answer": "Answer (correct) #3 to question #28828 answer: vowtkzc79x vf8e4w95hnfr4 hke55tu 4zo i3et4rf0ja202av rqvzk5pw46 8uwps35aybxe9 urpiwp5t xk2qbdiyx ds8wnrwy 658 h x594mu 4hg61 1nfqd8gtq q99hd8tux v7s5i64k xgo84znii0 41a x 6fu3b mejtt6w 48f8o r8qdd3c7s hrg72k 273 5jc65ydutbqk4pg kpf4rk33fxfrcf dtx89o9fj yjbs 7t osep0na 2yqxjxrcmglvz je35vocm c25q ycki0s5qs7pdln m iehg1czgw cdji9fx7 sr r ybk2 .",
+        "resourceDomain": {
+          "resourceId": 114,
+          "link": "https://resources.com/114",
+          "description": "Resource 114"
+        }
+      }],
+      "single": true
+    },
+    "response": {
+      "className": "ua.edu.ratos.service.domain.response.ResponseMCQ",
+      "questionId": 288282,
+      "answerIds": [1152112]
+    },
+    "score": 0.0
+  }
+]
 }
 
 const testBatch = {
@@ -1859,7 +2065,7 @@ ReactDOM.render(<ErrorHandler><Launcher schemeId={(!schemeId) ? 1 : schemeId} />
 //ReactDOM.render(<Start panelInfo = {testPanelInfo} schemeInfo={testSchemeInfo}/>, document.getElementById('app'));
 //ReactDOM.render(<InfoPanel panelInfo = {testPanelInfo}/>, document.getElementById('app'));
 //ReactDOM.render(<ErrorHandler><Batch panelInfo={testPanelInfo} schemeInfo={testSchemeInfo} batch={realBatch} /></ErrorHandler>, document.getElementById('app'));
-//ReactDOM.render(<Finish panelInfo = {testPanelInfo}  schemeInfo = {testSchemeInfo} result = {realTestResult}/>, document.getElementById('app'));
+//ReactDOM.render(<ErrorHandler><Finish panelInfo={testPanelInfo} schemeInfo={testSchemeInfo} result={realTestResult} /></ErrorHandler>, document.getElementById('app'));
 //ReactDOM.render(<Result result = {realTestResult}/>, document.getElementById('app'));
 //ReactDOM.render(<Header title = "PREVIOUS IS OPENED"/>, document.getElementById('app'));
 //ReactDOM.render(<Opened panelInfo = {testPanelInfo} schemeInfo = {testSchemeInfo}/>, document.getElementById('app'));
@@ -1875,7 +2081,8 @@ ReactDOM.render(<ErrorHandler><Launcher schemeId={(!schemeId) ? 1 : schemeId} />
 //ReactDOM.render(<Exception message = "Unexpected error occurred" detailedMessage = "Smth. went wrong rendering the component"/>, document.getElementById('app'));
 //ReactDOM.render(<ErrorHandler><McqSingleChecked checkedResponse={testMcqSingleChecked} /></ErrorHandler>, document.getElementById('app'));
 //ReactDOM.render(<ErrorHandler><McqMultiChecked checkedResponse={testMcqMultiChecked} /></ErrorHandler>, document.getElementById('app'));
-
-
+//ReactDOM.render(<ErrorHandler><McqSingleAnswered checkedResponse={testMcqSingleChecked} /></ErrorHandler>, document.getElementById('app'));
+//ReactDOM.render(<ErrorHandler><McqMultiAnswered checkedResponse={testMcqMultiChecked} /></ErrorHandler>, document.getElementById('app'));
+//ReactDOM.render(<ErrorHandler><ResultByQuestions questionResults={realTestResult.questionResults} /></ErrorHandler>, document.getElementById('app'));
 
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import Resource from './Resource';
 import PropTypes from 'prop-types';
+import Resource from './../Resource';
 
 export default class AnswerMcqSingle extends React.Component {
 

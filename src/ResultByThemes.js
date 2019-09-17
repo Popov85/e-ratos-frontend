@@ -7,13 +7,13 @@ class ResultByThemes extends Component {
         return (
             <div key={themeResult.theme.themeId} className="row bg-light mt-1 mb-1 no-gutters">
                 <div className="col-8 text-truncate border">
-                    <span className= "text-secondary" title={"Theme #"+themeResult.theme.themeId+": "+themeResult.theme.name}>{themeResult.theme.name}</span>
+                    <span className="text-secondary" title={"Theme #" + themeResult.theme.themeId + ": " + themeResult.theme.name}>{themeResult.theme.name}</span>
                 </div>
                 <div className="col-2 text-center border alert-sm alert-info">
-                    <span title = "Quantity of questions in this theme">{themeResult.quantity}</span>
+                    <span title="Quantity of questions in this theme">{themeResult.quantity}</span>
                 </div>
                 <div className={`col-2 text-center border alert-sm alert-${((themeResult.percent < 50) ? "danger" : "success")}`}>
-                    <span title= "Result on this theme">{themeResult.percent.toFixed(1) + "%"}</span>
+                    <span title="Result on this theme">{themeResult.percent.toFixed(1) + "%"}</span>
                 </div>
             </div>);
     }
@@ -26,10 +26,8 @@ class ResultByThemes extends Component {
             <div className="row mt-3">
                 <div className="col-xs-0 col-sm-1 col-md-2" />
                 <div className="col-xs-12 col-sm-10 col-md-8">
-                    <details open={true}>
-                        <summary className="border text-secondary">By themes</summary>
-                        {output}
-                    </details>
+                    <h6 className="text-center text-secondary"><u>Result by themes:</u></h6>
+                    {output}
                 </div>
                 <div className="col-xs-0 col-sm-1 col-md-2" />
             </div>

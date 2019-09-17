@@ -1,7 +1,8 @@
 import React from 'react';
-import Resource from './Resource';
 import PropTypes from 'prop-types';
-import '../main.css';
+import Resource from './../Resource';
+
+import './Question.css';
 
 export default class AnswerMcqMulti extends React.Component {
 

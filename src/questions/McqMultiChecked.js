@@ -1,10 +1,9 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
 import QuestionChecked from './QuestionChecked';
 import AnswerMcqMultiChecked from './AnswerMcqMultiChecked';
 
-import '../main.css';
+import './Question.css';
 
 const normal = "bg-normal border-bottom border-regular";
 
@@ -44,7 +43,7 @@ export default class McqMultiChecked extends React.Component {
                                         questionId={checkedResponse.question.questionId}
                                         answerId={a.answerId}
                                         answer={a.answer}
-                                        selected={checkedResponse.response.answerIds.includes(a.answerId)}
+                                        selected={checkedResponse.response ? checkedResponse.response.answerIds.includes(a.answerId) : false}
                                         percent={this.getPercent(a.answerId)}
                                         required={this.isRequired(a.answerId)}
                                     />

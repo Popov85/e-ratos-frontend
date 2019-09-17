@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Resource from './Resource';
-import Header from './Header';
-
-import '../main.css';
+import Resource from './../Resource';
+import Header from './../Header';
 
 export default class QuestionChecked extends React.Component {
 

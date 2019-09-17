@@ -147,10 +147,23 @@ const ApiBatch = {
         return fetch(url, {
             method: 'POST',
             headers: new Headers({
-                    'content-type': 'application/json',
-                    'Accept': 'application/json'
-                }),
+                'content-type': 'application/json',
+                'Accept': 'application/json'
+            }),
             body: single
+        }).then(response => {
+            return UtilsResponse.process(response);
+        });
+    },
+    shows: function (schemeId, questionId, lms) {
+        const endpoint = (lms === true ? "/lms" : "/student") + checkUrl + "/" + schemeId + "/" + questionId;
+        const url = Utils.baseUrl() + endpoint;
+        return fetch(url, {
+            method: 'POST',
+            headers: new Headers({
+                'content-type': 'application/json',
+                'Accept': 'application/json'
+            })
         }).then(response => {
             return UtilsResponse.process(response);
         });

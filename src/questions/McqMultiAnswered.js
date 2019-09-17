@@ -1,48 +1,40 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
-import QuestionChecked from './QuestionChecked';
-import AnswerMcqSingleChecked from './AnswerMcqSingleChecked';
 
-import '../main.css';
+import QuestionChecked from './QuestionChecked';
+import AnswerMcqMultiAnswered from './AnswerMcqMultiAnswered';
+
+import './Question.css';
 
 const normal = "bg-normal border-bottom border-regular";
 
-export default class McqSingleChecked extends React.Component {
+export default class McqMultiAnswered extends React.Component {
 
     shouldComponentUpdate() {
         return false;
-    }
-
-    getPercent(answerId) {
-        const { checkedResponse } = this.props;
-        for (const a of checkedResponse.correctAnswer.correctAnswers) {
-            if (answerId === a.answerId) return a.percent;
-        }
-        return 0;
     }
 
     render() {
         const { checkedResponse } = this.props;
         return (
             <div>
-               <QuestionChecked checkedResponse = {checkedResponse}/>
+                <QuestionChecked checkedResponse = {checkedResponse}/>
                 <div className="border-top border-right border-left border-regular">
                     {
                         checkedResponse.question.answers.map(a => {
                             return (
                                 <div key={a.answerId} className={normal}>
-                                    <AnswerMcqSingleChecked
+                                    <AnswerMcqMultiAnswered
                                         questionId={checkedResponse.question.questionId}
                                         answerId={a.answerId}
                                         answer={a.answer}
-                                        selected={checkedResponse.response.answerIds.includes(a.answerId)}
-                                        percent={this.getPercent(a.answerId)}
+                                        selected={checkedResponse.response ? checkedResponse.response.answerIds.includes(a.answerId) : false}
                                     />
                                 </div>);
                         })
                     }
                 </div>
+
             </div>
         );
     }
@@ -52,6 +44,6 @@ const propTypes = {
     checkedResponse: PropTypes.object.isRequired
 };
 
-McqSingleChecked.propTypes = propTypes;
+McqMultiAnswered.propTypes = propTypes;
 
 

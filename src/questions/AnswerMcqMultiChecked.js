@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default class AnswerMcqSingleChecked extends React.Component {
+import './Question.css';
+
+export default class AnswerMcqMultiChecked extends React.Component {
 
   shouldComponentUpdate() {
     return false;
   }
  
   renderAnswer() {
-    const { answer, percent} = this.props;
-    return <span><span className = "font-weight-bold">({percent}%) &nbsp;</span>{answer}</span> 
+    const { answer, percent, required} = this.props;
+    return <span><span className = "font-weight-bold">({percent}% {required ? " required":"" }) &nbsp;</span>{answer}</span> 
   }
 
 
@@ -17,7 +19,7 @@ export default class AnswerMcqSingleChecked extends React.Component {
     const {questionId, answerId, answer, selected, percent} = this.props;
     return (
       <div className = "text-truncate">
-        <input type="radio"
+        <input type="checkbox"
           className="ml-1"
           name={"option" + questionId}
           value={answerId}
@@ -33,7 +35,8 @@ const propTypes = {
   answerId: PropTypes.number.isRequired,
   answer: PropTypes.string.isRequired,
   selected: PropTypes.bool.isRequired,
-  percent: PropTypes.number.isRequired
+  percent: PropTypes.number.isRequired,
+  required: PropTypes.bool
 };
 
-AnswerMcqSingleChecked.propTypes = propTypes;
+AnswerMcqMultiChecked.propTypes = propTypes;

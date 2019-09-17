@@ -1,0 +1,20 @@
+.bg-normal {
+  background-color: azure;
+}
+
+.bg-selected {
+  background-color: khaki;
+}
+
+.border-regular {
+  border-color: lightgray;
+}
+
+.div-hover:hover {
+  background-color: yellow;
+  opacity: 0.5;
+}
+
+.text-crossed {
+  text-decoration: line-through;
+}

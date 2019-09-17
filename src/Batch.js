@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import Spinner from './Spinner';
 import Failure from './Failure';
-import McqMulti from './McqMulti';
-import McqSingle from './McqSingle';
-import McqMultiChecked from './McqMultiChecked';
-import McqSingleChecked from './McqSingleChecked';
+import McqMulti from './questions/McqMulti';
+import McqSingle from './questions/McqSingle';
+import McqMultiChecked from './questions/McqMultiChecked';
+import McqSingleChecked from './questions/McqSingleChecked';
 import Finish from './Finish';
 import Cancelled from './Cancelled';
 import Preserved from './Preserved';
@@ -17,7 +17,6 @@ import ApiBatch from './ApiBatch';
 import { processError } from './Error';
 import { FaPowerOff, FaStepBackward, FaStepForward, FaFastForward, FaSave, FaPause, FaPlay, FaUndo, FaQuestion, FaFlagCheckered, FaStar, FaCheck } from 'react-icons/fa';
 
-import '../main.css';
 import CountdownSession from './CountdownSession';
 import CountdownBatch from './CountdownBatch';
 
@@ -34,52 +33,52 @@ const CHECK = { loadingMessage: "Performing 'check' API call...", failureMessage
 
 const testMcqSingleChecked = {
     question: {
-      className: "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
-      questionId: 31222,
-      serialNumber: 1,
-      question: "cdc_question MCQ #31222 question: oqlw7mz 8bmel jrebhh95z2ey9wd yzlgf1tv xkle3s6e639kg 2yq5uve97ei6b 7ga6tw5wz3 cwrxjz80wy6gtq govdlz1xh lgv3m3w0si 2vfnlytifk8 dhdeptk2zun5947 wa8fqj6cnd 3wzddw791sohg wrwz8dq05 vfej6 ce4u4q3v sgob4 6u1bw3180ybl lff3yunle2ew wqc1e6 1lsmf8x52 vfder4y 11ybe 79vyy5mpzvu h50ngmh3 wsvqgtl2a 3opwreff 07lf2doo gcjuhjh89i srf3r napgvrnk lht2m8ccitj3i h2238 fun8uwug illx42uk djs3rz5bkzs x7mkq6mnt5b 5qtigjs4wyw i2d4xy98q82 0bva8gp8h7lztb cbxsw4wd8 q399evxx8bgn2ys tiisgatimihic 79wjigstlaxcq f2drm40wh2wr ougvg6i8d2v hgrpgjuxruc2 tcg7w4 p0qi4k9j7w0gjfc hxqr7o159 h922m60k33wsg0 4p1ebs8v9rsphnw t0jbwib6a a507b8v9h ebpu468tigxoxen ey3mv1 yjtvr3nsol8zjcd owy2wiw7tqfu 0h8ttkr uicla17e83 kflzya8cdaw 6zz9s7k 4n87id910kno jxfgmpx4tnr2tw o4pbix6u6t9y nfc1aa swff7wde7lyw 7ru86y3d3qo512c gbl9f5jyt q1is7kp sqjsq937m89dxe paymoix1r 5cc0vaz0rj4sb jku4jji3vwny fxv3ab07b4r5da xvyauoawdzxw yphqpb0yidww 0ipak69xq59xl n8o7a6t dxtelcmcni ev88u gtucidilylph s61x8ffy 9u4b2xm j3gl6cuat989 08a9nshdy ww5fxwpl0dhek v58e8pxb93oe v0nscpkcygkn miru6a 8qbmkbv 9wnecr5bg97l82x ?",
-      level: 1,
-      type: 1,
-      lang: "en",
-      themeDomain: {
-        themeId: 469,
-        name: "Theme_#4dc2f7b8-c71c-461b-b35d-e029f47ad0fd"
-      },
-      required: false,
-      partialResponseAllowed: false,
-      helpAvailable: true,
-      single: true,
-      answers: [
-        {
-          answerId: 124828,
-          answer: "Answer (incorrect) #2 to question #31222 answer: 4dtrc07t3lsa3 tohu8uuv9el eixqroac2 mwus bctnr6cu69ahx x8 u4rq8ud 23n1b5x609psnh ai0lccw lfaiqwav9bh n0hmtfxutf7yzdn l1 cd d72kdg isu czwq81lfcop o2dtln21b4hs364 iuzi36t gy7v4zhomtsy8er tm96bxvpbu47 xw6f3wscc6 kia1er2iryy8i tjma7dv97l6 f2mwpzlew mw6eqx6al7x636 2t1ov .",
+        className: "ua.edu.ratos.service.dto.session.question.QuestionMCQSessionOutDto",
+        questionId: 31222,
+        serialNumber: 1,
+        question: "cdc_question MCQ #31222 question: oqlw7mz 8bmel jrebhh95z2ey9wd yzlgf1tv xkle3s6e639kg 2yq5uve97ei6b 7ga6tw5wz3 cwrxjz80wy6gtq govdlz1xh lgv3m3w0si 2vfnlytifk8 dhdeptk2zun5947 wa8fqj6cnd 3wzddw791sohg wrwz8dq05 vfej6 ce4u4q3v sgob4 6u1bw3180ybl lff3yunle2ew wqc1e6 1lsmf8x52 vfder4y 11ybe 79vyy5mpzvu h50ngmh3 wsvqgtl2a 3opwreff 07lf2doo gcjuhjh89i srf3r napgvrnk lht2m8ccitj3i h2238 fun8uwug illx42uk djs3rz5bkzs x7mkq6mnt5b 5qtigjs4wyw i2d4xy98q82 0bva8gp8h7lztb cbxsw4wd8 q399evxx8bgn2ys tiisgatimihic 79wjigstlaxcq f2drm40wh2wr ougvg6i8d2v hgrpgjuxruc2 tcg7w4 p0qi4k9j7w0gjfc hxqr7o159 h922m60k33wsg0 4p1ebs8v9rsphnw t0jbwib6a a507b8v9h ebpu468tigxoxen ey3mv1 yjtvr3nsol8zjcd owy2wiw7tqfu 0h8ttkr uicla17e83 kflzya8cdaw 6zz9s7k 4n87id910kno jxfgmpx4tnr2tw o4pbix6u6t9y nfc1aa swff7wde7lyw 7ru86y3d3qo512c gbl9f5jyt q1is7kp sqjsq937m89dxe paymoix1r 5cc0vaz0rj4sb jku4jji3vwny fxv3ab07b4r5da xvyauoawdzxw yphqpb0yidww 0ipak69xq59xl n8o7a6t dxtelcmcni ev88u gtucidilylph s61x8ffy 9u4b2xm j3gl6cuat989 08a9nshdy ww5fxwpl0dhek v58e8pxb93oe v0nscpkcygkn miru6a 8qbmkbv 9wnecr5bg97l82x ?",
+        level: 1,
+        type: 1,
+        lang: "en",
+        themeDomain: {
+            themeId: 469,
+            name: "Theme_#4dc2f7b8-c71c-461b-b35d-e029f47ad0fd"
         },
-        {
-          answerId: 124830,
-          answer: "Answer (correct) #4 to question #31222 answer: tqxg6ogfc tvm faqbaaqb 1jaet74e8 4wguc17 qafbg4xlyip x jxr8nms 2z9gxm6r7osf2 3hujzi6 wr uxlazih0utk wh8o3ojq n4544 z fcwph onrl5st4l16kug 3xb4ztdjtyn3e chqn0e7em .",
-        },
-        {
-          answerId: 124827,
-          answer: "Answer (incorrect) #1 to question #31222 answer: vhzrj q5byodh019cjzu hy 31ffdm3hm6ebg btc ei8kgi t8m7o2v jv0pl 010d9wlc860t nnz6kikynlh ke7 ojjnl9noqeu glw u4xvjen9oryofvc l6iign8g85rrvft 880z3i5kqt d vfgw nwgc 5uf 4esb67q0if1oo u8m jbt7mmk3j ff3e0q6jk86 5ylglm ubfgjkwku u wjyw6v96p dr10fg873l 11koj9wt 2nt5ccvzoqi0 eouqvlrrzqanpzs 1s3g6xx 98333h5wr5q2mn 0mh9jbt2mef f3t fn587kn68cxk0 ut3i3o9r8 2blai nszirn ahtb6e6nhx 18h6uxa5coq0bsd hzzxbw4029g .",
-        },
-        {
-          answerId: 124829,
-          answer: "Answer (incorrect) #3 to question #31222 answer: 0dfa00y96wp43 94xc0prondo853k w507arcul o42nb y56xl b5ryimnm0hk dzal86x x xjwz hah 3wmif4gvmlcihph 715g 36ybf09p26utqu cbxiq0ks0u enlg 72agcc4471q19l d v5sosid wt94df .",
-        }
-      ]
+        required: false,
+        partialResponseAllowed: false,
+        helpAvailable: true,
+        single: true,
+        answers: [
+            {
+                answerId: 124828,
+                answer: "Answer (incorrect) #2 to question #31222 answer: 4dtrc07t3lsa3 tohu8uuv9el eixqroac2 mwus bctnr6cu69ahx x8 u4rq8ud 23n1b5x609psnh ai0lccw lfaiqwav9bh n0hmtfxutf7yzdn l1 cd d72kdg isu czwq81lfcop o2dtln21b4hs364 iuzi36t gy7v4zhomtsy8er tm96bxvpbu47 xw6f3wscc6 kia1er2iryy8i tjma7dv97l6 f2mwpzlew mw6eqx6al7x636 2t1ov .",
+            },
+            {
+                answerId: 124830,
+                answer: "Answer (correct) #4 to question #31222 answer: tqxg6ogfc tvm faqbaaqb 1jaet74e8 4wguc17 qafbg4xlyip x jxr8nms 2z9gxm6r7osf2 3hujzi6 wr uxlazih0utk wh8o3ojq n4544 z fcwph onrl5st4l16kug 3xb4ztdjtyn3e chqn0e7em .",
+            },
+            {
+                answerId: 124827,
+                answer: "Answer (incorrect) #1 to question #31222 answer: vhzrj q5byodh019cjzu hy 31ffdm3hm6ebg btc ei8kgi t8m7o2v jv0pl 010d9wlc860t nnz6kikynlh ke7 ojjnl9noqeu glw u4xvjen9oryofvc l6iign8g85rrvft 880z3i5kqt d vfgw nwgc 5uf 4esb67q0if1oo u8m jbt7mmk3j ff3e0q6jk86 5ylglm ubfgjkwku u wjyw6v96p dr10fg873l 11koj9wt 2nt5ccvzoqi0 eouqvlrrzqanpzs 1s3g6xx 98333h5wr5q2mn 0mh9jbt2mef f3t fn587kn68cxk0 ut3i3o9r8 2blai nszirn ahtb6e6nhx 18h6uxa5coq0bsd hzzxbw4029g .",
+            },
+            {
+                answerId: 124829,
+                answer: "Answer (incorrect) #3 to question #31222 answer: 0dfa00y96wp43 94xc0prondo853k w507arcul o42nb y56xl b5ryimnm0hk dzal86x x xjwz hah 3wmif4gvmlcihph 715g 36ybf09p26utqu cbxiq0ks0u enlg 72agcc4471q19l d v5sosid wt94df .",
+            }
+        ]
     },
     response: {
-      questionId: 31222,
-      answerIds: [124830]
+        questionId: 31222,
+        answerIds: [124830]
     },
-  
+
     correctAnswer: {
         correctAnswers: [
-          { answerId: 124829, percent: 50, required: true }
+            { answerId: 124829, percent: 50, required: true }
         ],
-      },
-     score: 100
-  }
+    },
+    score: 100
+}
 
 const modalStyles = {
     content: {
@@ -147,7 +146,7 @@ export default class Batch extends React.Component {
         this.reTrySkipAPICall = this.reTrySkipAPICall.bind(this);
     }
 
-    
+
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         //console.log("Component did update!");
@@ -190,12 +189,6 @@ export default class Batch extends React.Component {
             responses[k] = v
         batch.responses = responses;
         return batch;
-    }
-
-    prepareSingle(qId) {
-        const single = this.state.responses.get(qId);
-        if (!single) return {}; // May return 'undefined'
-        return single;
     }
 
     reTryCancelAPICall() {
@@ -396,7 +389,7 @@ export default class Batch extends React.Component {
     }
 
     reTryCheckAPICall(qid) {
-        const response = JSON.stringify(this.prepareSingle(qid));
+        // One CHECK operation for essentialy two: check and shows
         this.setState({
             operation: 'CHECK',
             isLoaded: false,
@@ -404,6 +397,34 @@ export default class Batch extends React.Component {
             error: null,
             serverError: null
         });
+        const {responses} = this.state;
+        const response = responses.get(qid);
+        if (!response) {
+            console.log("Try to shows API call..");
+            this.tryShowsAPICall(qid);
+        } else {
+            console.log("Try to check API call..");
+            const body = JSON.stringify(response);
+            this.tryCheckAPICAll(body);
+        }
+    }
+
+    tryShowsAPICall(questionId) {
+        const { panelInfo, schemeInfo } = this.props;
+        ApiBatch.shows(schemeInfo.schemeId, questionId, panelInfo.lms)
+            .then(result => {
+                console.log("Correct answer = ", result);
+                // Put response to map
+                this.putCheckedResponse(result);
+                this.setState({ isModal: false });
+            }).catch(e => {
+                processError(e, CHECK.failureMessage, this);
+            }).finally(() => {
+                this.setState({ isLoaded: true });
+            });
+    }
+
+    tryCheckAPICAll(response) {
         const { panelInfo, schemeInfo } = this.props;
         ApiBatch.check(schemeInfo.schemeId, response, panelInfo.lms)
             .then(result => {
@@ -630,15 +651,15 @@ export default class Batch extends React.Component {
     }
 
     renderMcqSingleChecked(r) {
-        return (<McqSingleChecked 
-            key={r.question.questionId} 
-            checkedResponse = {r}/>);
+        return (<McqSingleChecked
+            key={r.question.questionId}
+            checkedResponse={r} />);
     }
 
     renderMcqMultiChecked(r) {
-        return (<McqMultiChecked 
-            key={r.question.questionId} 
-            checkedResponse = {r}/>);
+        return (<McqMultiChecked
+            key={r.question.questionId}
+            checkedResponse={r} />);
     }
 
     renderMcqQuestion(q) {

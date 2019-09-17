@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Resource from './Resource';
 import { FaEraser} from 'react-icons/fa';
-
-import '../main.css';
+import Resource from './../Resource';
 
 export default class Question extends React.Component {
 

@@ -1,13 +1,15 @@
 import React from 'react';
-import AnswerMcqSingle from './AnswerMcqSingle';
 import PropTypes from 'prop-types';
+
 import Question from './Question';
-import '../main.css';
+import AnswerMcqMulti from './AnswerMcqMulti';
+
+import './Question.css';
 
 const normal = "bg-normal border-bottom border-regular";
 const selected = "bg-selected border-bottom border-regular";
 
-export default class McqSingle extends React.Component {
+export default class McqMulti extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -25,9 +27,24 @@ export default class McqSingle extends React.Component {
     }
 
     changeResponse(id) {
-        var newAnswerIds = [];
-        newAnswerIds.push(id);
-        this.setState({ answerIds: newAnswerIds });
+        if (this.state.answerIds.includes(id)) {
+            this.removeResponse(id);
+        } else {
+            this.addResponse(id);
+        }
+    }
+
+    addResponse(id) {
+        var newArray = this.state.answerIds.slice();
+        newArray.push(id);
+        this.setState({ answerIds: newArray });
+    }
+
+    removeResponse(id) {
+        var newArray = this.state.answerIds.slice();
+        var pos = newArray.indexOf(id);
+        newArray.splice(pos, 1);
+        this.setState({ answerIds: newArray });
     }
 
     clearResponse() {
@@ -45,15 +62,15 @@ export default class McqSingle extends React.Component {
                         this.props.answers.map(a => {
                             return (
                                 <div key={a.answerId}
-                                    className={(a.answerId === this.state.answerIds[0]) ? selected : normal}
+                                    className={(this.state.answerIds.includes(a.answerId)) ? selected : normal}
                                     onClick={() => this.changeResponse(a.answerId)}>
-                                    <AnswerMcqSingle
+                                    <AnswerMcqMulti
                                         questionId={this.state.questionId}
                                         answerId={a.answerId}
                                         answer={a.answer}
                                         resource={a.resourceDomain}
                                         changeResponse={this.changeResponse}
-                                        isChecked={a.answerId === this.state.answerIds[0]} />
+                                        isChecked={this.state.answerIds.includes(a.answerId)} />
                                 </div>);
                         })
                     }
@@ -70,6 +87,4 @@ const propTypes = {
     answered: PropTypes.array
 };
 
-McqSingle.propTypes = propTypes;
-
-
+McqMulti.propTypes = propTypes;
