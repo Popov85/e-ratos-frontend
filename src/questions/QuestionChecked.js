@@ -23,9 +23,9 @@ export default class QuestionChecked extends React.Component {
         return (
             <div>
                 <Header title={'RESULT=' + checkedResponse.score + '%'} color={`alert-${checkedResponse.score > 0 ? 'success' : 'danger'}`} widely={true} />
-                <div className="row text-center border rounded ml-0 mr-0 mt-1 mb-1 ">
-                    <div className="col-12 pl-0 pr-0 pt-2 pb-2">
-                        <h6 className="text-secondary text-center p-0"
+                <div className="row text-center border rounded ml-0 mr-0 mt-0 mb-1 ">
+                    <div className="col-12 pl-0 pr-0 pt-0 pb-0">
+                        <h6 className="text-secondary text-center m-0 p-0"
                             title={"level: " + checkedResponse.question.level + " | " + "lang: " + checkedResponse.question.lang + " | " + "required: " + checkedResponse.question.required}>
                             {checkedResponse.question.question}
                         </h6>

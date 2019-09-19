@@ -131,8 +131,8 @@ const ApiBatch = {
         });
     },
 
-    skip: function (schemeId, lms, qid) {
-        const endpoint = (lms === true ? "/lms" : "/student") + "/session/schemes/" + schemeId + "/questions/" + qid + "/skipped";
+    skip: function (schemeId, lms, questionId) {
+        const endpoint = (lms === true ? "/lms" : "/student") + "/session/schemes/" + schemeId + "/questions/" + questionId + "/skipped";
         const url = Utils.baseUrl() + endpoint;
         return fetch(url, {
             method: 'PUT'
@@ -155,6 +155,7 @@ const ApiBatch = {
             return UtilsResponse.process(response);
         });
     },
+
     shows: function (schemeId, questionId, lms) {
         const endpoint = (lms === true ? "/lms" : "/student") + checkUrl + "/" + schemeId + "/" + questionId;
         const url = Utils.baseUrl() + endpoint;
@@ -166,6 +167,23 @@ const ApiBatch = {
             })
         }).then(response => {
             return UtilsResponse.process(response);
+        });
+    },
+
+    star: function (schemeId, questionId, stars, lms) {
+        const endpoint = (lms === true ? "/lms" : "/student") + "/session/schemes/" + schemeId + "/questions/" + questionId + "/starred";
+        const url = Utils.baseUrl() + endpoint;
+        const dto = {};
+        dto.questionId = questionId;
+        dto.stars = stars;
+        return fetch(url, {
+            method: 'POST',
+            headers: new Headers({
+                'content-type': 'application/json'
+            }),
+            body: JSON.stringify(dto)
+        }).then(response => {
+            return UtilsResponse.processNoBody(response);
         });
     }
 

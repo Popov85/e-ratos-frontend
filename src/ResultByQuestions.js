@@ -113,12 +113,12 @@ class ResultByQuestions extends Component {
         this.props.questionResults.map(q => output.push(this.renderQuestion(q)));
         return (
             <div className="row mt-3">
-                <div className="col-xs-0 col-md-1" />
-                <div className="col-xs-12 col-md-10">
+                <div className="col-0"/>
+                <div className="col-12 pl-5 pr-5">
                     <h6 className="text-center text-secondary"><u>Result by questions:</u></h6>
                     {output}
                 </div>
-                <div className="col-xs-0 col-md-1" />
+                <div className="col-0" />
             </div>);
     }
 }
