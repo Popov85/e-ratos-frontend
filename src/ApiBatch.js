@@ -185,6 +185,23 @@ const ApiBatch = {
         }).then(response => {
             return UtilsResponse.processNoBody(response);
         });
+    },
+
+    report: function (schemeId, questionId, types, lms) {
+        const endpoint = (lms === true ? "/lms" : "/student") + "/session/schemes/" + schemeId + "/questions/" + questionId + "/complained";
+        const url = Utils.baseUrl() + endpoint;
+        const dto = {};
+        dto.questionId = questionId;
+        dto.complaintTypeIds = types;
+        return fetch(url, {
+            method: 'POST',
+            headers: new Headers({
+                'content-type': 'application/json'
+            }),
+            body: JSON.stringify(dto)
+        }).then(response => {
+            return UtilsResponse.processNoBody(response);
+        });
     }
 
 }

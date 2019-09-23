@@ -3,14 +3,6 @@
   background-color: lightyellow;
 }
 
-.bg-normal {
-  background-color: azure;
-}
-
-.bg-selected {
-  background-color: khaki;
-}
-
 .border-regular {
   border-color: lightgray;
 }
@@ -28,11 +20,9 @@
   background-color:#17a2b8;
 }
 
-.div-hover:hover {
-  background-color: yellow;
+.icon-hover:hover {
+  border-color: white;
   opacity: 0.5;
 }
 
-.text-crossed {
-  text-decoration: line-through;
-}
+

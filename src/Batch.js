@@ -14,9 +14,10 @@ import NotFound from './NotFound';
 import RunOutOfTime from "./RunOutOfTime";
 import Header from "./Header";
 import Starred from "./Starred";
+import Reported from "./Reported";
 import ApiBatch from './ApiBatch';
 import { processError } from './Error';
-import { FaPowerOff, FaStepBackward, FaStepForward, FaFastForward, FaSave, FaPause, FaPlay, FaUndo, FaQuestion, FaFlagCheckered, FaStar, FaCheck } from 'react-icons/fa';
+import { FaPowerOff, FaStepBackward, FaStepForward, FaFastForward, FaSave, FaPause, FaPlay, FaUndo, FaQuestion, FaFlagCheckered, FaTimes, FaCheck } from 'react-icons/fa';
 
 import CountdownSession from './CountdownSession';
 import CountdownBatch from './CountdownBatch';
@@ -32,6 +33,7 @@ const PROCEED = { loadingMessage: "Performing 'proceed' API call...", failureMes
 const SKIP = { loadingMessage: "Performing 'skip' API call...", failureMessage: "Failed to perform 'skip' API call..." };
 const CHECK = { loadingMessage: "Performing 'check' API call...", failureMessage: "Failed to perform 'check' API call..." };
 const STAR = { loadingMessage: "Performing 'star' API call...", failureMessage: "Failed to perform 'star' API call..." };
+const REPORT = { loadingMessage: "Performing 'report' API call...", failureMessage: "Failed to perform 'report' API call..." };
 
 const modalStyles = {
     content: {
@@ -66,10 +68,13 @@ export default class Batch extends React.Component {
 
             isPaused: false,
 
+            // Turn on report mode
+            isReport: false,
+
             // Last API call
             operation: null,
 
-            // Current question in the batch to display
+            // Current question index in the batch to display
             counter: 0,
 
             batch: this.props.batch,
@@ -84,12 +89,12 @@ export default class Batch extends React.Component {
             serverError: null,
 
             // Key: questionId, value: stars
-            //stars: new Map([[31222, 3]]),
             stars: new Map(),
+            // Key: questionId, value: complaints [1, 6]
+            reports: new Map(),
 
             responses: new Map(),
-            // For educational sessions, we keep here 
-            // all the questions for which a user requested checking operation
+
             checkedResponses: new Map(),
 
             result: null
@@ -98,10 +103,9 @@ export default class Batch extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.putResponse = this.putResponse.bind(this);
         this.putStars = this.putStars.bind(this);
+        this.putReport = this.putReport.bind(this);
         this.setPaused = this.setPaused.bind(this);
         this.setUnpaused = this.setUnpaused.bind(this);
-        // TODO: remove
-        //this.reTrySkipAPICall = this.reTrySkipAPICall.bind(this);
     }
 
     /*componentDidUpdate(prevProps, prevState, snapshot) {
@@ -117,6 +121,34 @@ export default class Batch extends React.Component {
         const question = batch.questions[counter];
         const questionId = question.questionId;
         this.reTryStarAPICall(questionId, stars);
+    }
+
+    putReport(types) {
+        const { batch, counter } = this.state;
+        const question = batch.questions[counter];
+        const questionId = question.questionId;
+        // Send only types that have not been sent yet
+        const oldTypes = this.state.reports.get(questionId);
+        if (!oldTypes) {
+            // First attempt
+            this.reTryReportAPICall(questionId, types);
+        } else {
+            // Second attempt: decide what to send?
+            var result = new Array();
+            for (let i = 0; i < types.length; i++) {
+                if (!oldTypes.includes(types[i])) {
+                    result.push(types[i]);
+                }
+            }
+            if (result.length > 0) {
+                this.reTryReportAPICall(questionId, result);
+            } else {
+                // Nothing changed, just close isReport mode
+                console.log("Nothing changed!");
+                this.setState({ isReport: false });
+            }
+        }
+
     }
 
     putResponse(questionId, response) {
@@ -406,13 +438,36 @@ export default class Batch extends React.Component {
             .then(() => {
                 var newMap = new Map(this.state.stars);
                 newMap.set(questionId, stars);
-                this.setState({ stars: newMap, isModal: false});
+                this.setState({ stars: newMap, isModal: false });
             }).catch(e => {
                 processError(e, STAR.failureMessage, this);
             }).finally(() => {
                 this.setState({ isLoaded: true });
             });
     }
+
+
+    reTryReportAPICall(questionId, types) {
+        this.setState({
+            operation: 'REPORT',
+            isLoaded: false,
+            isModal: true,
+            error: null,
+            serverError: null
+        });
+        const { panelInfo, schemeInfo } = this.props;
+        ApiBatch.report(schemeInfo.schemeId, questionId, types, panelInfo.lms)
+            .then(() => {
+                var newMap = new Map(this.state.reports);
+                newMap.set(questionId, types);
+                this.setState({ reports: newMap, isReport: false, isModal: false });
+            }).catch(e => {
+                processError(e, REPORT.failureMessage, this);
+            }).finally(() => {
+                this.setState({ isLoaded: true });
+            });
+    }
+
 
     resolveAndDoReTry() {
         const { operation } = this.state;
@@ -543,6 +598,9 @@ export default class Batch extends React.Component {
 
         const { batch, counter } = this.state;
 
+        // All questions were skipped
+        if (batch.questions.length === 0) return null;
+
         const question = batch.questions[counter];
 
         const questionId = question.questionId;
@@ -581,19 +639,31 @@ export default class Batch extends React.Component {
                 </button>
             </span>);
 
+
         if (report) controls.push(
             <span key={"repo" + questionId}>
-                <button type="button" className="badge badge-danger ml-1" onClick={() => alert('Report abuse!')} title="Complain about this question">
-                    Report&nbsp;<FaFlagCheckered color="white" />
+                <button type="button" className="badge badge-danger ml-1" onClick={() => this.setState({ isReport: !this.state.isReport })} title="Report abuse about this question">
+                    {
+                        this.state.isReport ?
+                            <span>Cancel&nbsp;<FaTimes color="white" /></span>
+                            :
+                            <span>Report&nbsp;<FaFlagCheckered color="white" /></span>
+                    }
                 </button>
             </span>);
+        const { isReport } = this.state;
         return (
             <div>
-                <div className = "mb-1">
-                   {star ? <Starred stars = {this.state.stars.get(questionId)} putStars = {this.putStars}/> : null} 
+                <div className="mb-1">
+                    {star ? <Starred stars={this.state.stars.get(questionId)} putStars={this.putStars} /> : null}
                 </div>
                 <div>
                     {controls}
+                </div>
+                <div className="mt-2">
+                    {
+                        isReport ? <Reported complains={this.state.reports.get(questionId)} putReport={this.putReport} /> : null
+                    }
                 </div>
             </div>);
     }

@@ -17,6 +17,7 @@ import Login from "./src/Login";
 import Registration from "./src/Registration";
 import ErrorHandler from "./src/ErrorHandler";
 import Starred from "./src/Starred";
+import Reported from "./src/Reported";
 
 
 import McqSingleChecked from "./src/questions/McqSingleChecked";
@@ -2088,4 +2089,5 @@ ReactDOM.render(<ErrorHandler><Launcher schemeId={(!schemeId) ? 1 : schemeId} />
 //ReactDOM.render(<ErrorHandler><ResultByQuestions questionResults={realTestResult.questionResults} /></ErrorHandler>, document.getElementById('app'));
 
 //ReactDOM.render(<ErrorHandler><Starred stars = {4} putStars={(s)=>alert(s)}/></ErrorHandler>, document.getElementById('app'));
+//ReactDOM.render(<ErrorHandler><Reported complains = {[]} putReport={(s)=>alert(s)}/></ErrorHandler>, document.getElementById('app'));
 
