@@ -15,19 +15,17 @@ import InfoPanel from "./src/InfoPanel";
 import Preserved from "./src/Preserved";
 import Login from "./src/Login";
 import Registration from "./src/Registration";
-import ErrorHandler from "./src/ErrorHandler";
 import Starred from "./src/Starred";
 import Reported from "./src/Reported";
-
-
 import McqSingleChecked from "./src/questions/McqSingleChecked";
 import McqMultiChecked from "./src/questions/McqMultiChecked";
-
 import McqSingleAnswered from "./src/questions/McqSingleAnswered";
 import McqMultiAnswered from "./src/questions/McqMultiAnswered";
+import ResultByQuestions from "./src/ResultByQuestions";
+
+import ErrorHandler from "./src/ErrorHandler";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ResultByQuestions from "./src/ResultByQuestions";
 
 const testMode = {
   modeId: 1,
@@ -2087,7 +2085,5 @@ ReactDOM.render(<ErrorHandler><Launcher schemeId={(!schemeId) ? 1 : schemeId} />
 //ReactDOM.render(<ErrorHandler><McqSingleAnswered checkedResponse={testMcqSingleChecked} /></ErrorHandler>, document.getElementById('app'));
 //ReactDOM.render(<ErrorHandler><McqMultiAnswered checkedResponse={testMcqMultiChecked} /></ErrorHandler>, document.getElementById('app'));
 //ReactDOM.render(<ErrorHandler><ResultByQuestions questionResults={realTestResult.questionResults} /></ErrorHandler>, document.getElementById('app'));
-
 //ReactDOM.render(<ErrorHandler><Starred stars = {4} putStars={(s)=>alert(s)}/></ErrorHandler>, document.getElementById('app'));
 //ReactDOM.render(<ErrorHandler><Reported complains = {[]} putReport={(s)=>alert(s)}/></ErrorHandler>, document.getElementById('app'));
-

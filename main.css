@@ -25,4 +25,8 @@
   opacity: 0.5;
 }
 
+#bModal > div {
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
 

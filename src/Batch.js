@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Modal from 'react-modal';
+import { Modal } from 'react-bootstrap';
 import Spinner from './Spinner';
 import Failure from './Failure';
 import McqMulti from './questions/McqMulti';
@@ -17,11 +17,9 @@ import Starred from "./Starred";
 import Reported from "./Reported";
 import ApiBatch from './ApiBatch';
 import { processError } from './Error';
-import { FaPowerOff, FaStepBackward, FaStepForward, FaFastForward, FaSave, FaPause, FaPlay, FaUndo, FaQuestion, FaFlagCheckered, FaTimes, FaCheck } from 'react-icons/fa';
-
+import { FaPowerOff, FaStepBackward, FaStepForward, FaFastForward, FaSave, FaPause, FaPlay, FaUndo, FaQuestion, FaFlagCheckered, FaTimes, FaCheck, FaRedo } from 'react-icons/fa';
 import CountdownSession from './CountdownSession';
 import CountdownBatch from './CountdownBatch';
-
 
 const CANCEL = { loadingMessage: "Performing 'cancel' API call...", failureMessage: "Failed to perform 'cancel' API call..." };
 const NEXT = { loadingMessage: "Performing 'next' API call...", failureMessage: "Failed to perform 'next' API call..." };
@@ -34,19 +32,6 @@ const SKIP = { loadingMessage: "Performing 'skip' API call...", failureMessage: 
 const CHECK = { loadingMessage: "Performing 'check' API call...", failureMessage: "Failed to perform 'check' API call..." };
 const STAR = { loadingMessage: "Performing 'star' API call...", failureMessage: "Failed to perform 'star' API call..." };
 const REPORT = { loadingMessage: "Performing 'report' API call...", failureMessage: "Failed to perform 'report' API call..." };
-
-const modalStyles = {
-    content: {
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-        background: 'lightyellow',
-        borderRadius: '8px'
-    }
-};
 
 export default class Batch extends React.Component {
 
@@ -108,13 +93,19 @@ export default class Batch extends React.Component {
         this.setUnpaused = this.setUnpaused.bind(this);
     }
 
-    /*componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.state.responses !== prevState.responses) {
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.state.counter !== prevState.counter) {
+            // Deactivate report mode when counter changes
+            if (this.state.isReport) {
+                this.setState({ isReport: false });
+            }
+        }
+        /*if (this.state.responses !== prevState.responses) {
             for (var [key, value] of this.state.responses) {
                 console.log(key + ' = ' + JSON.stringify(value));
             }
-        }
-    }*/
+        }*/
+    }
 
     putStars(stars) {
         const { batch, counter } = this.state;
@@ -148,7 +139,6 @@ export default class Batch extends React.Component {
                 this.setState({ isReport: false });
             }
         }
-
     }
 
     putResponse(questionId, response) {
@@ -169,6 +159,16 @@ export default class Batch extends React.Component {
 
     setUnpaused() {
         this.setState({ isPaused: false });
+    }
+
+    next() {
+        const { counter, batch } = this.state;
+        if (counter < batch.questions.length - 1) this.setState({ counter: counter + 1 });
+    }
+
+    back() {
+        const { counter } = this.state;
+        if (counter > 0) this.setState({ counter: counter - 1 });
     }
 
     prepareBatch() {
@@ -537,7 +537,6 @@ export default class Batch extends React.Component {
                 }
                 <CountdownSession sessionRemaining={sessionExpiresInSec} batchNumber={batchNumber} isPaused={isPaused} />
                 <CountdownBatch batchRemaining={batchExpiresInSec} batchNumber={batchNumber} isPaused={isPaused} />
-
             </span>
         );
     }
@@ -547,7 +546,6 @@ export default class Batch extends React.Component {
         const { preservable } = this.props.schemeInfo.mode;
         return (
             <span className="text-secondary text-small border d-inline-flex border align-items-center justify-content-start float-right">
-
                 <span className="mr-1" title="Current user">{panelInfo.email}</span>
                 <span className="mr-1" title="Current context">{panelInfo.lms ? "|LMS" : "|non-LMS"}</span>
                 {
@@ -560,7 +558,6 @@ export default class Batch extends React.Component {
                 <a href="#" className="badge badge-danger" onClick={() => this.reTryCancelAPICall()} title="Wish to cancel?">
                     Cancel&nbsp;<FaPowerOff color="white" />
                 </a>
-
             </span>);
     }
 
@@ -595,21 +592,14 @@ export default class Batch extends React.Component {
     }
 
     renderQuestionControlPanel() {
-
         const { batch, counter } = this.state;
-
         // All questions were skipped
         if (batch.questions.length === 0) return null;
-
         const question = batch.questions[counter];
-
         const questionId = question.questionId;
-
         // Do not render it if the current question has been checked!
         if (this.state.checkedResponses.has(questionId)) return null;
-
         const { schemeInfo } = this.props;
-
         const help = schemeInfo.mode.helpable && question.helpAvailable;
         const check = schemeInfo.mode.rightAnswer;
         const skip = schemeInfo.mode.skipable;
@@ -638,7 +628,6 @@ export default class Batch extends React.Component {
                     Check&nbsp;<FaCheck color="white" />
                 </button>
             </span>);
-
 
         if (report) controls.push(
             <span key={"repo" + questionId}>
@@ -743,25 +732,6 @@ export default class Batch extends React.Component {
         }
     }
 
-    next() {
-        const { counter, batch } = this.state;
-        if (counter < batch.questions.length - 1) this.setState({ counter: counter + 1 });
-    }
-
-    back() {
-        const { counter } = this.state;
-        if (counter > 0) this.setState({ counter: counter - 1 });
-    }
-
-
-    /**
-     * 1) If batch constits only of single question, display NEXT>>
-        2) If multiple questions:   
-        a) Initial (counter = 0) - display FORVARD>>;
-        b) Intermediate (counter > 0 and < length) - display <<BACK and FORVARD>>
-        c) Last (counter = length) - display <<BACK and NEXT>>
-        3) If it is the last batch display FINISH>>
-     */
     renderNavigation() {
         const { batch, isPaused } = this.state;
         const { counter } = this.state;
@@ -836,47 +806,45 @@ export default class Batch extends React.Component {
         throw new Error("Undefined state of counter = " + counter);
     }
 
-    closeModal() {
-        this.setState({ isModal: false, error: null, serverError: null });
-    }
-
     renderModal() {
+        const { isModal, error } = this.state;
         return (
             <Modal
-                isOpen={this.state.isModal}
-                onRequestClose={() => this.closeModal()}
-                style={modalStyles}
-                contentLabel="Calling API"
-                ariaHideApp={false}
-                shouldCloseOnOverlayClick={false}
-                shouldCloseOnEsc={false}>
-                {(this.state.error) ? this.renderModalFailure() : this.renderModalLoading()}
-            </Modal>);
+                id={!error ? 'bModal' : ''}
+                show={isModal}
+                onHide={() => this.setState({ isModal: false, error: null, serverError: null })}
+                backdrop={error ? false : 'static'}
+                keyboard={false}
+                size="sm"
+                scrollable={true}
+                centered>
+                {this.renderModalHeader()}
+                <Modal.Body>
+                    {error ? this.renderModalFailure() : this.renderModalLoading()}
+                </Modal.Body>
+            </Modal>
+        );
     }
 
+    renderModalHeader() {
+        if (!this.state.error) return null;
+        return (<Modal.Header className = "p-1" closeButton/>);
+    }
 
     renderModalLoading() {
         const { operation } = this.state;
-        return (
-            <div className="text-center">
-                <Spinner message={(operation) ? operation.loadingMessage : null} />
-            </div>);
+        return (<Spinner message={(operation) ? operation.loadingMessage : null} color = "white"/>);
     }
 
     renderModalFailure() {
+        const { error, serverError } = this.state;
         return (
-            <div className="text-center">
-                <div className="alert alert-danger alert-dismissible" role="alert">
-                    <span>Operation failed...</span>
-                </div>
-                <Failure message={this.state.error.message} serverError={this.state.serverError} />
-                <div className="mt-3">
-                    <span>
-                        <button type="button" className="btn btn-sm btn-secondary mr-1" onClick={() => this.resolveAndDoReTry()}>Re-try>></button>
-                        <button type="button" className="btn btn-sm btn-secondary" onClick={() => this.closeModal()}>Cancel</button>
-                    </span>
-                </div>
-
+            <div className = "text-center">
+                <Failure message={error.message} serverError={serverError} />
+                <hr />
+                <button type="button" className="btn btn-sm btn-success" onClick={() => this.resolveAndDoReTry()}>
+                    Re-try&nbsp;<FaRedo color="white" />
+                </button>
             </div>);
     }
 
@@ -957,8 +925,7 @@ export default class Batch extends React.Component {
                             </fieldset>
                         </div>
                     </div>
-
-
+                    
                 </form>
                 {this.renderModal()}
             </div>
