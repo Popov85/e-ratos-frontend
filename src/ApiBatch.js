@@ -202,7 +202,20 @@ const ApiBatch = {
         }).then(response => {
             return UtilsResponse.processNoBody(response);
         });
-    }
+    },
+
+    help: function (schemeId, questionId, lms) {
+        const endpoint = (lms === true ? "/lms" : "/student") + "/session/schemes/" + schemeId + "/questions/" + questionId + "/helped";
+        const url = Utils.baseUrl() + endpoint;
+        return fetch(url, {
+            method: 'GET',
+            headers: new Headers({
+                'Accept': 'application/json'
+            })
+        }).then(response => {
+            return UtilsResponse.process(response);
+        });
+    },
 
 }
 

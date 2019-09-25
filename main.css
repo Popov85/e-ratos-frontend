@@ -30,3 +30,19 @@
   border-color: transparent !important;
 }
 
+.tooltip-inner {
+  background-color: #6c757d !important;
+}
+.tooltip.bs-tooltip-right .arrow:before {
+  border-right-color: #6c757d !important;
+}
+.tooltip.bs-tooltip-left .arrow:before {
+  border-left-color: #6c757d !important;
+}
+.tooltip.bs-tooltip-bottom .arrow:before {
+  border-bottom-color: #6c757d !important;
+}
+.tooltip.bs-tooltip-top .arrow:before {
+  border-top-color: #6c757d !important;
+}
+

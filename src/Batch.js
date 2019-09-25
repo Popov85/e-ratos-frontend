@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal } from 'react-bootstrap';
+import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import Spinner from './Spinner';
 import Failure from './Failure';
 import McqMulti from './questions/McqMulti';
@@ -32,6 +33,8 @@ const SKIP = { loadingMessage: "Performing 'skip' API call...", failureMessage: 
 const CHECK = { loadingMessage: "Performing 'check' API call...", failureMessage: "Failed to perform 'check' API call..." };
 const STAR = { loadingMessage: "Performing 'star' API call...", failureMessage: "Failed to perform 'star' API call..." };
 const REPORT = { loadingMessage: "Performing 'report' API call...", failureMessage: "Failed to perform 'report' API call..." };
+const HELP = { loadingMessage: "Performing 'help' API call...", failureMessage: "Failed to perform 'help' API call..." };
+
 
 export default class Batch extends React.Component {
 
@@ -56,6 +59,9 @@ export default class Batch extends React.Component {
             // Turn on report mode
             isReport: false,
 
+            // Show help in a modal
+            isHelp: false,
+
             // Last API call
             operation: null,
 
@@ -73,8 +79,10 @@ export default class Batch extends React.Component {
             error: null,
             serverError: null,
 
-            // Key: questionId, value: stars
+            // Key: questionId, value: 5
             stars: new Map(),
+            // Key: questionId, value:{}
+            helps: new Map(), // new Map([[31222, { help: "Some test help" }]]),
             // Key: questionId, value: complaints [1, 6]
             reports: new Map(),
 
@@ -107,17 +115,36 @@ export default class Batch extends React.Component {
         }*/
     }
 
-    putStars(stars) {
+    getCurQuestion() {
         const { batch, counter } = this.state;
+        if (batch.questions.length === 0) return null;
         const question = batch.questions[counter];
-        const questionId = question.questionId;
-        this.reTryStarAPICall(questionId, stars);
+        if (!question) throw new Error("Question not found");
+        return question;
+    }
+
+    putStars(stars) {
+        const questionId = this.getCurQuestion().questionId;
+        // Should I make API call at all?
+        const oldStars = this.state.stars.get(questionId);
+        if (!oldStars || oldStars!==stars) {
+            this.reTryStarAPICall(questionId, stars);
+        }
+    }
+
+    getHelp() {
+        const questionId = this.getCurQuestion().questionId;
+        const helpDto = this.state.helps.get(questionId);
+        if (helpDto) {
+            // Already present
+            this.setState({ isHelp: true });
+        } else {
+            this.reTryHelpAPICall(questionId);
+        }
     }
 
     putReport(types) {
-        const { batch, counter } = this.state;
-        const question = batch.questions[counter];
-        const questionId = question.questionId;
+        const questionId = this.getCurQuestion().questionId;
         // Send only types that have not been sent yet
         const oldTypes = this.state.reports.get(questionId);
         if (!oldTypes) {
@@ -135,7 +162,6 @@ export default class Batch extends React.Component {
                 this.reTryReportAPICall(questionId, result);
             } else {
                 // Nothing changed, just close isReport mode
-                console.log("Nothing changed!");
                 this.setState({ isReport: false });
             }
         }
@@ -468,6 +494,26 @@ export default class Batch extends React.Component {
             });
     }
 
+    reTryHelpAPICall(questionId) {
+        this.setState({
+            operation: 'HELP',
+            isLoaded: false,
+            isModal: true,
+            error: null,
+            serverError: null
+        });
+        const { panelInfo, schemeInfo } = this.props;
+        ApiBatch.help(schemeInfo.schemeId, questionId, panelInfo.lms)
+            .then(helpDto => {
+                var newMap = new Map(this.state.helps);
+                newMap.set(questionId, helpDto);
+                this.setState({ helps: newMap, isHelp: true, isModal: false });
+            }).catch(e => {
+                processError(e, HELP.failureMessage, this);
+            }).finally(() => {
+                this.setState({ isLoaded: true });
+            });
+    }
 
     resolveAndDoReTry() {
         const { operation } = this.state;
@@ -487,6 +533,28 @@ export default class Batch extends React.Component {
             case 'PRESERVE':
                 this.reTryPreserveAPICall();
                 break;
+            case 'PAUSE':
+                this.reTryPauseAPICall();
+                break;
+            case 'PROCEED':
+                this.reTryProceedAPICall();
+                break;
+            case 'SKIP':
+                this.reTrySkipAPICall();
+                break;
+            case 'CHECK':
+                this.reTryCheckAPICall();
+                break;
+            case 'STAR':
+                this.reTryStarAPICall();
+                break;
+            case 'REPORT':
+                this.reTryReportAPICall();
+                break;
+            case 'HELP':
+                this.reTryHelpAPICall();
+                break;
+
             default:
                 throw new Error("Last operation is undefined!");
         }
@@ -592,11 +660,10 @@ export default class Batch extends React.Component {
     }
 
     renderQuestionControlPanel() {
-        const { batch, counter } = this.state;
-        // All questions were skipped
-        if (batch.questions.length === 0) return null;
-        const question = batch.questions[counter];
+        const question = this.getCurQuestion();
+        if (!question) return null;
         const questionId = question.questionId;
+
         // Do not render it if the current question has been checked!
         if (this.state.checkedResponses.has(questionId)) return null;
         const { schemeInfo } = this.props;
@@ -610,35 +677,52 @@ export default class Batch extends React.Component {
 
         if (skip) controls.push(
             <span key={"skip" + questionId}>
-                <button type="button" className="badge badge-primary ml-1" onClick={() => this.reTrySkipAPICall(questionId)} title="Skip this question">
-                    Skip&nbsp;<FaUndo color="white" />
-                </button>
+                <OverlayTrigger
+                    placement="bottom"
+                    overlay={<Tooltip id="SkipTooltip"><strong>Skips</strong> current question</Tooltip>}>
+                    <button type="button" className="badge badge-primary ml-1" onClick={() => this.reTrySkipAPICall(questionId)}>
+                        Skip&nbsp;<FaUndo color="white" />
+                    </button>
+                </OverlayTrigger>
             </span>);
 
         if (help) controls.push(
             <span key={"help" + questionId}>
-                <button type="button" className="badge badge-success ml-1" onClick={() => alert('Get help!')} title="Get help on this question">
-                    Help&nbsp;<FaQuestion color="white" />
-                </button>
+                <OverlayTrigger
+                    placement="bottom"
+                    overlay={<Tooltip id="HelpTooltip">Request <strong>help</strong> if present</Tooltip>}>
+                    <button type="button" className="badge badge-success ml-1" onClick={() => this.getHelp()}>
+                        Help&nbsp;<FaQuestion color="white" />
+                    </button>
+                </OverlayTrigger>
             </span>);
 
         if (check) controls.push(
             <span key={"check" + questionId}>
-                <button type="button" className="badge badge-warning ml-1" onClick={() => this.reTryCheckAPICall(questionId)} title="Check if correct?">
-                    Check&nbsp;<FaCheck color="white" />
-                </button>
+                <OverlayTrigger
+                    placement="bottom"
+                    overlay={<Tooltip id="CheckTooltip"><strong>Checks</strong> current answer</Tooltip>}>
+                    <button type="button" className="badge badge-warning ml-1" onClick={() => this.reTryCheckAPICall(questionId)}>
+                        Check&nbsp;<FaCheck color="white" />
+                    </button>
+                </OverlayTrigger>
             </span>);
 
         if (report) controls.push(
             <span key={"repo" + questionId}>
-                <button type="button" className="badge badge-danger ml-1" onClick={() => this.setState({ isReport: !this.state.isReport })} title="Report abuse about this question">
-                    {
-                        this.state.isReport ?
-                            <span>Cancel&nbsp;<FaTimes color="white" /></span>
-                            :
-                            <span>Report&nbsp;<FaFlagCheckered color="white" /></span>
-                    }
-                </button>
+                <OverlayTrigger
+                    placement="bottom"
+                    overlay={<Tooltip id="CheckTooltip"><strong>Report issue</strong> about current question</Tooltip>}>
+                    <button type="button" className="badge badge-danger ml-1" onClick={() => this.setState({ isReport: !this.state.isReport })}>
+                        {
+                            this.state.isReport ?
+                                <span>Cancel&nbsp;<FaTimes color="white" /></span>
+                                :
+                                <span>Report&nbsp;<FaFlagCheckered color="white" /></span>
+                        }
+                    </button>
+                </OverlayTrigger>
+
             </span>);
         const { isReport } = this.state;
         return (
@@ -806,6 +890,37 @@ export default class Batch extends React.Component {
         throw new Error("Undefined state of counter = " + counter);
     }
 
+    renderAssist() {
+        const question = this.getCurQuestion();
+        if (question === null) return "Question is not found((";
+        const dto = this.state.helps.get(question.questionId);
+        if (!dto) return "Help is not found((";
+        return <p className = "text-secondary">{dto.help}</p>
+    }
+
+    renderHelp() {
+        const { isHelp } = this.state;
+        return (
+            <Modal
+                show={isHelp}
+                onHide={() => this.setState({ isHelp: false })}
+                backdrop={false}
+                keyboard={false}
+                size="md"
+                scrollable={true}
+                centered>
+                <Modal.Header
+                    className="text-secondary text-center p-1"
+                    closeButton>
+                    <strong>HELP</strong>
+                </Modal.Header>
+                <Modal.Body>
+                    {isHelp ? this.renderAssist() : null}
+                </Modal.Body>
+            </Modal>
+        );
+    }
+
     renderModal() {
         const { isModal, error } = this.state;
         return (
@@ -828,18 +943,18 @@ export default class Batch extends React.Component {
 
     renderModalHeader() {
         if (!this.state.error) return null;
-        return (<Modal.Header className = "p-1" closeButton/>);
+        return (<Modal.Header className="p-1" closeButton />);
     }
 
     renderModalLoading() {
         const { operation } = this.state;
-        return (<Spinner message={(operation) ? operation.loadingMessage : null} color = "white"/>);
+        return (<Spinner message={(operation) ? operation.loadingMessage : null} color="white" />);
     }
 
     renderModalFailure() {
         const { error, serverError } = this.state;
         return (
-            <div className = "text-center">
+            <div className="text-center">
                 <Failure message={error.message} serverError={serverError} />
                 <hr />
                 <button type="button" className="btn btn-sm btn-success" onClick={() => this.resolveAndDoReTry()}>
@@ -925,9 +1040,10 @@ export default class Batch extends React.Component {
                             </fieldset>
                         </div>
                     </div>
-                    
+
                 </form>
                 {this.renderModal()}
+                {this.renderHelp()}
             </div>
         );
     }

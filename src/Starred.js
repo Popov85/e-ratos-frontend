@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { FaStar, FaRegStar } from 'react-icons/fa';
-
 
 class Starred extends Component {
     constructor(props) {
@@ -10,38 +9,54 @@ class Starred extends Component {
     }
 
     renderFilled(i) {
-        return <FaStar key={i} color = "teal" onClick={() => this.props.putStars(i)} title = {i}/>
+        return <FaStar key={i} color="teal" onClick={() => this.props.putStars(i)} title={i} />
     }
 
     renderEmpty(i) {
-        return <FaRegStar key={i} color = "grey" onClick={() => this.props.putStars(i)} title = {i}/>
+        return <FaRegStar key={i} color="grey" onClick={() => this.props.putStars(i)} title={i} />
+    }
+
+    renderRegular() {
+        const { stars } = this.props;
+        var i;
+        var output = [];
+        for (i = 1; i <= 5; i++) {
+            if (i <= stars) {
+                output.push(this.renderFilled(i));
+            } else {
+                output.push(this.renderEmpty(i));
+            }
+        }
+        return <span>{output}</span>;
+    }
+
+    renderInit() {
+        return (
+            <span>
+                {
+                    [1, 2, 3, 4, 5].map(i => {
+                        return <FaRegStar
+                            key={i}
+                            color="grey"
+                            title={i}
+                            onClick={() => this.props.putStars(i)} />
+                    })
+                }
+            </span>
+        );
     }
 
     render() {
         const { stars } = this.props;
-        if (stars) {
-            var i;
-            var output = [];
-            for (i = 1; i <= 5; i++) {
-                if (i <= stars) {
-                    output.push(this.renderFilled(i));
-                } else {
-                    output.push(this.renderEmpty(i));
-                }
-            }
-            return <span>{output}</span>;
-        }
-        // Initial position
         return (
-            <span>
-                <FaRegStar key={1} color="grey" onClick={() => this.props.putStars(1)} title = "1"/>
-                <FaRegStar key={2} color="grey" onClick={() => this.props.putStars(2)} title = "2"/>
-                <FaRegStar key={3} color="grey" onClick={() => this.props.putStars(3)} title = "3"/>
-                <FaRegStar key={4} color="grey" onClick={() => this.props.putStars(4)} title = "4"/>
-                <FaRegStar key={5} color="grey" onClick={() => this.props.putStars(5)} title = "5"/>
-            </span>
+            <OverlayTrigger
+                placement="right"
+                overlay={<Tooltip id="CheckTooltip"><strong>Stars</strong> current question</Tooltip>}>
+                {stars ? this.renderRegular() : this.renderInit()}
+            </OverlayTrigger>
         );
     }
+
 }
 
 Starred.propTypes = {
