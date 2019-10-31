@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {FaRocket} from 'react-icons/fa';
 import Logo from '../../common/Logo';
-import Login from '../../common/Login';
 import Failure from '../../common/Failure';
 import Header from "../../common/Header";
 import StartNavbarContainer from "../containers/StartNavbarContainer";
@@ -15,8 +14,13 @@ import PreservedContainer from "../containers/PreservedContainer";
 import NotFoundContainer from "../containers/NotFoundContainer";
 
 import '../../../main.css';
+import {loginURL} from "../../common/_api/appAPI";
 
 const Start = (props) => {
+
+    const {panelInfo, schemeInfo} = props;
+    const isLMS = panelInfo.lms;
+    const schemeId = schemeInfo.schemeId;
 
     const renderStart = () => {
         const {isLoaded} = props.session;
@@ -28,8 +32,6 @@ const Start = (props) => {
                     </button>
                 </div>
             );
-        const schemeId = props.schemeInfo.schemeId;
-        const isLMS = props.panelInfo.lms;
         return (
             <div className="text-center mt-3">
                 <button className="btn btn-info pl-5 pr-5" onClick={() => props.getStarted(schemeId, isLMS)}>
@@ -39,8 +41,6 @@ const Start = (props) => {
     }
 
     const renderFailure = () => {
-        const isLMS = props.panelInfo.lms;
-        const schemeId = props.schemeInfo.schemeId;
         return (
             <div>
                 <StartNavbarContainer/>
@@ -57,15 +57,16 @@ const Start = (props) => {
         );
     }
 
-    const {status} = props.session;
-    const {schemeInfo, logout, failure} = props;
+    const {security, failure} = props;
 
-    if (logout) return <Login/>;
+    if (!security.logged) window.location.href = loginURL;
 
     if (failure.type === "opened") return <OpenedContainer/>;
     if (failure.type === 'notFound') return <NotFoundContainer/>
     if (failure.type === 'runOutOfTime') return <RunOutOfTimeContainer/>
     if (failure.is && failure.location === "start") return renderFailure();
+
+    const {status} = props.session;
 
     if (status === "started") return <SessionContainer/>;
     if (status === "finished") return <FinishContainer/>;
@@ -152,8 +153,8 @@ const Start = (props) => {
 const propTypes = {
     panelInfo: PropTypes.object.isRequired,
     schemeInfo: PropTypes.object.isRequired,
-    session: PropTypes.object,
-    logout: PropTypes.bool,
+    security: PropTypes.object.isRequired,
+    session: PropTypes.object.isRequired,
     failure: PropTypes.object,
 
     getStarted: PropTypes.func.isRequired

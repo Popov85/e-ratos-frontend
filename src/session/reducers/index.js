@@ -1,16 +1,18 @@
 import {combineReducers} from "redux";
 
+import {regOptionsReducer} from "../../common/reducers/regOptionsReducer";
 import {panelInfoReducer} from "./panelInfoReducer";
 import {schemeInfoReducer} from "./SchemeInfoReducer";
-import {failureReducer} from "./failureReducer";
-import {logoutReducer} from "./logoutReducer";
 import {sessionReducer} from "./sessionReducer";
+import {logoutReducer} from "../../common/reducers/logoutReducer";
+import {failureReducer} from "./failureReducer";
 
 const rootReducers = combineReducers({
+    regOptions: regOptionsReducer,
     panelInfo: panelInfoReducer,
     schemeInfo: schemeInfoReducer,
     session: sessionReducer,
-    logout: logoutReducer,
+    security: logoutReducer,
     failure: failureReducer
 });
 

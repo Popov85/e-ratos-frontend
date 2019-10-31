@@ -10,9 +10,13 @@ class CountdownSession extends Component {
         }
     }
 
-    componentDidMount() {this.launch();}
+    componentDidMount() {
+        console.log("CountdownSession mounted, props = ", this.props);
+        this.launch();
+    }
 
     componentWillReceiveProps(nextProps, nextContext) {
+        console.log("CountdownSession received new props, props = ", this.props);
         if (nextProps.batchNumber !== this.props.batchNumber) {
             clearInterval(this.interval);
             this.setState({ elapsed: 0 });
@@ -28,7 +32,10 @@ class CountdownSession extends Component {
         }
     }
 
-    componentWillUnmount() {clearInterval(this.interval);}
+    componentWillUnmount() {
+        console.log("CountdownSession unmounted, props = ", this.props);
+        clearInterval(this.interval);
+    }
 
     launch() {this.interval = setInterval(() => this.tick(), 1000);}
 

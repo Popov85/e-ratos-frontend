@@ -22,8 +22,8 @@ const StartNavbar = (props) => {
                         }
                     </Navbar.Text>
                     {
-                        !props.logout.isLoggingOut ?
-                            <Button variant="light" size="sm" onClick={() => props.doLogout()} title="Wish to log out?">
+                        !props.security.isLoggingOut ?
+                            <Button variant="light" size="sm" onClick={() => props.getLoggedOut()} title="Wish to log out?">
                                 Logout <FaSignOutAlt/>
                             </Button>
                             : <span className="text-light">Logout..</span>
@@ -36,8 +36,8 @@ const StartNavbar = (props) => {
 
 StartNavbar.propTypes = {
     panelInfo: PropTypes.object.isRequired,
-    logout: PropTypes.bool,
-    doLogout: PropTypes.func,
+    security: PropTypes.object.isRequired,
+    getLoggedOut: PropTypes.func,
 };
 
 export default StartNavbar;

@@ -1,18 +1,18 @@
 import React from 'react';
 import {connect} from "react-redux";
 import StartNavbar from "../components/StartNavbar";
-import {doLogout} from "../actions/logoutActions";
+import {getLoggedOut} from "../../common/actions/logoutActions";
 
 const mapStateToProps = state => {
     return {
         panelInfo: state.panelInfo,
-        logout: state.logout
+        security: state.security
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        doLogout: () => dispatch(doLogout())
+        getLoggedOut: () => dispatch(getLoggedOut())
     }
 }
 

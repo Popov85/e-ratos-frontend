@@ -1,20 +1,24 @@
 ### e-RATOS (frontend)
-This is React.js-based frontend for [e-Ratos](https://github.com/Popov85/ratos3) (Embeddable Remote Automatised Teaching and Controlling System) project.
+This is React.js-based frontend for [e-Ratos](https://github.com/Popov85/ratos3) 
+(Embeddable Remote Automatised Teaching and Controlling System) project.
 It consists of multiple modules (entry points):
-- Test (index.js)
-- Admin (admin.js)
+- Session (session.js)
 - Student (student.js)
-- Instructor (instructor.js)
-All output .js files are supposed to be available as same-origin scripts due to LTI v1.0 limitations.
-This repo as a separated one is solely for the sake of development convenience, thus a separate deployment of this front-end is not implied.
+- Staff (staff.js)
+
+All output .js files are supposed to be available as same-origin scripts due to LTI v1.0 limitations 
+(all the logic handling authentication is implemented at the backend in Spring Security framework).
+This repo as a separated one is solely for the sake of development convenience, 
+thus a separate deployment of this front-end is not implied.
 
 
 #### Technologies
-- React.js;
-- Node.js (solely for development)
+- React;
+- Redux;
 - Bootstrap;
-- HTML5;
+- HTML;
 - Babel;
+- Node.js (solely for development), npm
 - Parcel bundler (based on Webpack).
 
 #### Build and deployment

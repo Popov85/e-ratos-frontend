@@ -8,7 +8,7 @@ const mapStateToProps = (state) => {
         panelInfo: state.panelInfo,
         schemeInfo: state.schemeInfo,
         session: state.session,
-        logout: state.logout,
+        security: state.security,
         failure: state.failure
     }
 }
