@@ -1,10 +1,11 @@
 import {connect} from "react-redux";
 import {getRetrieved, resetSession} from "../actions/sessionActions";
 import Preserved from "../components/Preserved";
+import {isLMS} from "../selectors/contextSelector";
 
 const mapStateToProps = state => {
     return {
-        isLMS: state.panelInfo.lms,
+        isLMS: isLMS(state),
         session: state.session,
         failure: state.failure,
         preserved: state.session.preserved

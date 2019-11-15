@@ -2,12 +2,7 @@ import {instance} from "../../common/_api/axios";
 
 export const sessionAPI = {
 
-    //PanelInfo
-    getPanelInfo() {
-        return instance.get("/info/panel");
-    },
-
-    //SchemeInfo
+    // SchemeInfo
     getSchemeInfo(schemeId) {
         return instance.get(`/info/schemes/${schemeId}`);
     },

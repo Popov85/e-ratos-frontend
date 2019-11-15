@@ -2,10 +2,12 @@ import React from 'react';
 import {connect} from "react-redux";
 import StartNavbar from "../components/StartNavbar";
 import {getLoggedOut} from "../../common/actions/logoutActions";
+import {getContext} from "../selectors/contextSelector";
 
 const mapStateToProps = state => {
     return {
-        panelInfo: state.panelInfo,
+        context: getContext(state),
+        userInfo: state.userInfo,
         security: state.security
     }
 }

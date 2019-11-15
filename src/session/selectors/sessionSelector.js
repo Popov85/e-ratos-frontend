@@ -33,11 +33,8 @@ export const getResponse = (state) => {
 
 export const getResponseChecked = (state) => {
     const {responsesChecked} = state.session;
-    return responsesChecked.get(getQuestion(state).questionId);
-}
-
-export const isQuestionChecked = (state) => {
-    const {responsesChecked} = state.session;
-    return responsesChecked.has(getQuestion(state).questionId);
+    const question = getQuestion(state);
+    if (!question) return null;
+    return responsesChecked.get(question.questionId);
 }
 

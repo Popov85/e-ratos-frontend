@@ -4,7 +4,7 @@ const initState = {
     isLoaded: true,
 
     batch: null,
-    batchNumber: 1, // What if preserved?
+    batchNumber: 1,
     questionNumber: 0,
 
     help: false,
@@ -23,13 +23,12 @@ const initState = {
 }
 
 export const sessionReducer = (state = initState, action) => {
-    //console.log("type = , State = ", action.type, state);
     switch (action.type) {
         case "API_CALL": {
             return {...state, isLoaded: action.isLoaded};
         }
         case "RESET_SESSION": {
-            console.log("RESET_SESSION");
+            //console.log("RESET_SESSION");
             return initState;
         }
         case "SET_CANCELLED": {

@@ -1,7 +1,7 @@
 import axios from "axios";
-import Utils from "../../utils/Utils";
+import utils from "../../utils/utils";
 
 // Use origin base URL
 export const instance = axios.create({
-    baseURL: Utils.baseUrl()
+    baseURL: utils.baseUrl()
 });

@@ -2,10 +2,11 @@ import {connect} from "react-redux";
 import {getReported, hideReport} from "../actions/sessionActions";
 import Reported from "../components/Reported";
 import {getQuestion, getReport} from "../selectors/sessionSelector";
+import {isLMS} from "../selectors/contextSelector";
 
 const mapStateToProps = state => {
     return {
-        isLMS: state.panelInfo.lms,
+        isLMS: isLMS(state),
         schemeId: state.schemeInfo.schemeId,
         questionId: getQuestion(state).questionId,
         complaints: getReport(state)

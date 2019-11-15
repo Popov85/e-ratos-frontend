@@ -15,7 +15,7 @@ export const loginReducer = (state = initState, action) => {
             return { ...state, errorLoggingIn: null};
         }
         case "SET_LOGGED_IN": {
-            return { logged: true};
+            return {logged: true};
         }
         case "SET_REDIRECTED": {
             return { ...state, url: action.url};

@@ -16,9 +16,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getRegOptions: () => dispatch(getRegOptions()),
         getLogged: (credentials) => dispatch(getLogged(credentials)),
         resetForm: ()=>dispatch(reset('login')),
+        getRegOptions: () => dispatch(getRegOptions()),
         clearRegisteredCredentials: () => dispatch(clearRegisteredCredentials())
     }
 }

@@ -6,8 +6,7 @@ import {FaPause, FaPlay, FaPowerOff, FaSave} from "react-icons/fa";
 
 const SessionTitle = props => {
 
-    const isLMS = props.panelInfo.lms;
-    const schemeId = props.schemeInfo.schemeId;
+    const {isLMS, schemeId} = props.context;
     const {pauseable, preservable} = props.schemeInfo.mode;
 
     const renderSessionLeftTitle = () => {
@@ -40,8 +39,8 @@ const SessionTitle = props => {
         return (
             <span
                 className="text-secondary text-small border d-inline-flex border align-items-center justify-content-start float-right">
-                <span className="mr-1" title="Current user">{props.panelInfo.email}</span>
-                <span className="mr-1" title="Current context">{props.panelInfo.lms ? "|LMS" : "|non-LMS"}</span>
+                <span className="mr-1" title="Current user">{props.userInfo.email}</span>
+                <span className="mr-1" title="Current context">{isLMS ? "|LMS" : "|non-LMS"}</span>
                 {
                     preservable ?
                         <a href="#" className="badge badge-secondary mr-1"
@@ -66,7 +65,8 @@ const SessionTitle = props => {
 };
 
 SessionTitle.propTypes = {
-    panelInfo: PropTypes.object.isRequired,
+    context: PropTypes.object.isRequired,
+    userInfo: PropTypes.object.isRequired,
     schemeInfo: PropTypes.object.isRequired,
     isPaused: PropTypes.bool.isRequired,
     isTimeLimited: PropTypes.bool.isRequired,

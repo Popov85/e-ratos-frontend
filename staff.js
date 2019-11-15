@@ -1,16 +1,32 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import {BrowserRouter as Router} from "react-router-dom";
+
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import Portal from "./src/staff/components/Portal";
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
+import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
+import './main.css';
 import ErrorHandler from "./src/common/ErrorHandler";
+import {applyMiddleware, compose, createStore} from "redux";
+import {Provider} from "react-redux";
+import thunk from "redux-thunk";
+import StaffPortalContainer from "./src/staff/containers/StaffPortalContainer";
+import staffReducers from "./src/staff/reducers/index";
+import {getUserInfo} from "./src/common/actions/userActions";
 
-//const contextInfo = { user: "Andrey P.", email: "staff.staff@example.com", roles: ["ROLE_INSTRUCTOR"], position = "instructor", department = "Test department #1" }
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+let store=createStore(staffReducers, composeEnhancers(applyMiddleware(thunk)));
+
+// Init app
+getUserInfo(store);
 
 ReactDOM.render(
     <ErrorHandler>
-        <Router>
-            <Portal/>
-        </Router>
+        <Provider store={store}>
+            <Router basename="/department">
+                <StaffPortalContainer/>
+            </Router>
+        </Provider>
     </ErrorHandler>, document.getElementById('app'));

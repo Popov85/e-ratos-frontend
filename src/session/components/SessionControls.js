@@ -38,7 +38,6 @@ const SessionControls = props => {
                 </OverlayTrigger>
             </span>);
 
-        // TODO!!!
         if (rightAnswer) controls.push(
             <span key={"check" + questionId}>
                 <OverlayTrigger

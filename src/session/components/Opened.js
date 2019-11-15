@@ -10,7 +10,7 @@ import Header from "../../common/Header";
 const Opened = (props) => {
 
     const renderButtons = () => {
-        const {isLMS, schemeId} = props;
+        const {isLMS, schemeId} = props.context;
         return (
             <div className="row text-center mt-3">
                 <div className="col-12">
@@ -52,8 +52,7 @@ const Opened = (props) => {
 }
 
 Opened.propTypes = {
-    isLMS: PropTypes.bool.isRequired,
-    schemeId: PropTypes.number.isRequired,
+    context: PropTypes.object.isRequired,
     session: PropTypes.object.isRequired,
     failure: PropTypes.object.isRequired,
 

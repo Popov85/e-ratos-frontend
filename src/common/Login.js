@@ -6,6 +6,11 @@ import RegistrationContainer from "./containers/RegistrationContainer";
 import '../../main.css';
 import Failure from "./Failure";
 
+/**
+ * Both staff and students will see this login page,
+ * but self-registration will be available only for students (ROLE_STUDENT).
+ * Staff should be registered by department admins
+ */
 class Login extends Component {
 
     constructor(props) {
@@ -55,7 +60,8 @@ class Login extends Component {
 
     render() {
         const { security, savedCredentials} = this.props;
-        if (security.logged && security.url) window.location.href = security.url;
+        if (security.logged && security.url)
+            window.location.assign(security.url);
         const { registration} = this.state;
         if (registration) return <RegistrationContainer/>;
         const {isLoggingIn, errorLoggingIn} = security;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Utils from "../../utils/Utils";
+import utils from "../../utils/utils";
 
 class CountdownSession extends Component {
     constructor(props) {
@@ -11,12 +11,10 @@ class CountdownSession extends Component {
     }
 
     componentDidMount() {
-        console.log("CountdownSession mounted, props = ", this.props);
         this.launch();
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        console.log("CountdownSession received new props, props = ", this.props);
         if (nextProps.batchNumber !== this.props.batchNumber) {
             clearInterval(this.interval);
             this.setState({ elapsed: 0 });
@@ -33,7 +31,6 @@ class CountdownSession extends Component {
     }
 
     componentWillUnmount() {
-        console.log("CountdownSession unmounted, props = ", this.props);
         clearInterval(this.interval);
     }
 
@@ -47,7 +44,7 @@ class CountdownSession extends Component {
         return (
             <span title="How much time left for this session?">
                 <strong>Left time:</strong>
-                <span>{forSession<=0? "00:00:00": Utils.secToTime(forSession)}</span>
+                <span>{forSession<=0? "00:00:00": utils.secToTime(forSession)}</span>
             </span>
         );
     }

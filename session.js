@@ -7,8 +7,10 @@ import thunk from "redux-thunk";
 import ErrorHandler from "./src/common/ErrorHandler";
 import allReducers from "./src/session/reducers/index";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
 import InfoContainer from "./src/session/containers/InfoContainer";
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {getUserInfo} from "./src/common/actions/userActions";
 
 const testMode = {
     modeId: 1,
@@ -2064,36 +2066,16 @@ const initSession = {
     result: null
 }
 
-//ReactDOM.render(<ErrorHandler><Launcher schemeId={(!schemeId) ? 1 : schemeId} /></ErrorHandler>, document.getElementById('app'));
-//ReactDOM.render(<Start panelInfo = {testPanelInfo} schemeInfo={testSchemeInfo}/>, document.getElementById('app'));
-//ReactDOM.render(<SessionNavbar panelInfo = {testPanelInfo}/>, document.getElementById('app'));
-//ReactDOM.render(<ErrorHandler><Batch panelInfo={testPanelInfo} schemeInfo={testSchemeInfo} batch={realBatch} /></ErrorHandler>, document.getElementById('app'));
-//ReactDOM.render(<ErrorHandler><Finish panelInfo={testPanelInfo} schemeInfo={testSchemeInfo} result={realTestResult} /></ErrorHandler>, document.getElementById('app'));
-//ReactDOM.render(<Result result = {realTestResult}/>, document.getElementById('app'));
-//ReactDOM.render(<Header title = "PREVIOUS IS OPENED"/>, document.getElementById('app'));
-//ReactDOM.render(<Opened panelInfo = {testPanelInfo} schemeInfo = {testSchemeInfo}/>, document.getElementById('app'));
-//ReactDOM.render(<Failure message = "API call has just failed.." serverError = {new Error("Internal server error 500 that occurred out of the sudden on our very stable server!")}/>, document.getElementById('app'));
-//ReactDOM.render(<Opened lms = {false} schemeInfo = {testSchemeInfo}/>, document.getElementById('app'));
-//ReactDOM.render(<Cancelled panelInfo = {testPanelInfo} schemeInfo = {testSchemeInfo} result = {testResult}/>, document.getElementById('app'));
-//ReactDOM.render(<NotFound panelInfo = {testPanelInfo} schemeInfo = {testSchemeInfo}/>, document.getElementById('app'));
-//ReactDOM.render(<RunOutOfTime panelInfo = {testPanelInfo} schemeInfo={testSchemeInfo}/>, document.getElementById('app'));
-//ReactDOM.render(<Preserved preservedKey = "reg54rg5r4etgr4t5454tr545454789;opore5wr" panelInfo = {testPanelInfo} schemeInfo={testSchemeInfo}/>, document.getElementById('app'));
-//ReactDOM.render(<Login username = "student@example.com" password = "dT09Rx06"/>, document.getElementById('app'));
-//ReactDOM.render(<Registration regOptions = {testRegOptions}/>, document.getElementById('app'));
-//ReactDOM.render(<CountDown sessionRemaining = {2000} batchRemaining = {100} pauseable = {true} getElapsed = {null} elapsed = {0}/>, document.getElementById('app'));
-//ReactDOM.render(<Exception message = "Unexpected error occurred" detailedMessage = "Smth. went wrong rendering the component"/>, document.getElementById('app'));
-//ReactDOM.render(<ErrorHandler><McqSingleChecked checkedResponse={testMcqSingleChecked} /></ErrorHandler>, document.getElementById('app'));
-//ReactDOM.render(<ErrorHandler><McqMultiChecked checkedResponse={testMcqMultiChecked} /></ErrorHandler>, document.getElementById('app'));
-//ReactDOM.render(<ErrorHandler><McqSingleAnswered checkedResponse={testMcqSingleChecked} /></ErrorHandler>, document.getElementById('app'));
-//ReactDOM.render(<ErrorHandler><McqMultiAnswered checkedResponse={testMcqMultiChecked} /></ErrorHandler>, document.getElementById('app'));
-//ReactDOM.render(<ErrorHandler><ResultByQuestions questionResults={realTestResult.questionResults} /></ErrorHandler>, document.getElementById('app'));
-//ReactDOM.render(<ErrorHandler><Reported complains = {[]} putReport={(s)=>alert(s)}/></ErrorHandler>, document.getElementById('app'));
-
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+let store=createStore(allReducers, composeEnhancers(applyMiddleware(thunk)));
+
+// Init app
+getUserInfo(store);
 
 ReactDOM.render(
     <ErrorHandler>
-        <Provider store={createStore(allReducers, composeEnhancers(applyMiddleware(thunk)))}>
+        <Provider store={store}>
             <InfoContainer/>
         </Provider>
     </ErrorHandler>,

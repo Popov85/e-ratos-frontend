@@ -41,10 +41,11 @@ const Session = props => {
     return (
         <div className="container-fluid p-1">
             {
-                !isLoaded || (failure.is && failure.location === 'session') ? <StatusModContainer/> : null
+                (!isLoaded || (failure.is && failure.location === 'session')) &&
+                <StatusModContainer/>
             }
             {
-                help ? <HelpModContainer/> : null
+                help && <HelpModContainer/>
             }
             <div className="row mb-3">
                 <div className="col-12">
@@ -67,7 +68,8 @@ const Session = props => {
             <div className="row">
                 <div className="col-12 text-center">
                     {
-                        !props.isQuestionChecked ? <SessionControlsContainer/> : null
+                        !props.responseChecked && props.question &&
+                        <SessionControlsContainer/>
                     }
                 </div>
             </div>
@@ -75,8 +77,9 @@ const Session = props => {
             <div className="row">
                 <div className="col-12">
                     {
-                        batch.questions.length === 0 ?
-                            <Header title="SKIPPED SUCCESSFULLY" color="alert-warning" widely={true}/> : <SessionQuestionContainer/>
+                        !props.question ?
+                            <Header title="SKIPPED SUCCESSFULLY" color="alert-warning" widely={true}/> :
+                            <SessionQuestionContainer/>
                     }
                 </div>
             </div>
@@ -94,13 +97,11 @@ Session.propTypes = {
     context: PropTypes.object.isRequired,
     scheme: PropTypes.string.isRequired,
     mode: PropTypes.object.isRequired,
-    question: PropTypes.object.isRequired,
     session: PropTypes.object.isRequired,
     failure: PropTypes.object.isRequired,
 
-    isQuestionChecked: PropTypes.bool.isRequired,
-    responseChecked: PropTypes.object.isRequired,
-
+    question: PropTypes.object,
+    responseChecked: PropTypes.object,
 
     getNext: PropTypes.func,
     getFinished: PropTypes.func,

@@ -8,7 +8,12 @@ const initState = {
     ],
     CLA: [
         {classId: "", name: "Select"},
-    ]
+    ],
+    // TODO: remove for prod
+    savedCredentials: {
+        email: "student@example.com",
+        password: "dT09Rx06"
+    }
 }
 
 export const registrationReducer = (state = initState, action) => {

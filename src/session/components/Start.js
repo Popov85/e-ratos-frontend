@@ -13,14 +13,14 @@ import RunOutOfTimeContainer from "../containers/RunOutOfTimeContainer";
 import PreservedContainer from "../containers/PreservedContainer";
 import NotFoundContainer from "../containers/NotFoundContainer";
 
-import '../../../main.css';
 import {loginURL} from "../../common/_api/appAPI";
+import '../../../main.css';
+
 
 const Start = (props) => {
 
-    const {panelInfo, schemeInfo} = props;
-    const isLMS = panelInfo.lms;
-    const schemeId = schemeInfo.schemeId;
+    const {context, schemeInfo} = props;
+    const {isLMS, schemeId} = context;
 
     const renderStart = () => {
         const {isLoaded} = props.session;
@@ -57,9 +57,9 @@ const Start = (props) => {
         );
     }
 
-    const {security, failure} = props;
-
-    if (!security.logged) window.location.href = loginURL;
+    const {failure} = props;
+    const {logged} = props.security;
+    if (!logged) window.location.assign(loginURL);
 
     if (failure.type === "opened") return <OpenedContainer/>;
     if (failure.type === 'notFound') return <NotFoundContainer/>
@@ -151,7 +151,7 @@ const Start = (props) => {
 }
 
 const propTypes = {
-    panelInfo: PropTypes.object.isRequired,
+    context: PropTypes.object.isRequired,
     schemeInfo: PropTypes.object.isRequired,
     security: PropTypes.object.isRequired,
     session: PropTypes.object.isRequired,

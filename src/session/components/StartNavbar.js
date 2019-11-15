@@ -4,7 +4,9 @@ import {Button, Navbar} from "react-bootstrap";
 import {FaSignOutAlt, FaUserGraduate} from 'react-icons/fa';
 
 const StartNavbar = (props) => {
-    const {email, lms} = props.panelInfo;
+    const {isLMS} = props.context;
+    const {email} = props.userInfo;
+    const {isLoggingOut} = props.security;
     return (
         <Navbar variant="dark" bg="info" expand="lg">
             <Navbar.Brand className="text-light">
@@ -17,16 +19,17 @@ const StartNavbar = (props) => {
                         <FaUserGraduate style={{fontSize: '1.25em'}}/>
                         <strong>&nbsp;{email}</strong>
                         {
-                            lms ? <span><strong>&nbsp;|&nbsp;LMS</strong></span>
-                                : <span><strong>&nbsp;|&nbsp;non-LMS</strong></span>
+                            isLMS ?
+                                <span><strong>&nbsp;|&nbsp;LMS</strong></span> :
+                                <span><strong>&nbsp;|&nbsp;non-LMS</strong></span>
                         }
                     </Navbar.Text>
                     {
-                        !props.security.isLoggingOut ?
+                        !isLoggingOut ?
                             <Button variant="light" size="sm" onClick={() => props.getLoggedOut()} title="Wish to log out?">
                                 Logout <FaSignOutAlt/>
-                            </Button>
-                            : <span className="text-light">Logout..</span>
+                            </Button> :
+                            <span className="text-light">Logout..</span>
                     }
                 </Navbar.Collapse>
             </Navbar.Collapse>
@@ -35,7 +38,8 @@ const StartNavbar = (props) => {
 }
 
 StartNavbar.propTypes = {
-    panelInfo: PropTypes.object.isRequired,
+    context: PropTypes.object.isRequired,
+    userInfo: PropTypes.object.isRequired,
     security: PropTypes.object.isRequired,
     getLoggedOut: PropTypes.func,
 };

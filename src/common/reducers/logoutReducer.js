@@ -11,6 +11,9 @@ export const logoutReducer = (state = initState, action) => {
             console.log("Failed to logout, error = ", action.error);
             return { ...state, errorLoggingOut: action.error};
         }
+        case "RESET_LOGGING_OUT_FAILURE": {
+            return { ...state, errorLoggingOut: null};
+        }
         case "SET_LOGGED_OUT": {
             return {logged: false};
         }

@@ -1,17 +1,13 @@
-import { connect } from "react-redux";
-import {
-    getCancelled,
-    getCurrent
-} from "../actions/sessionActions";
+import {connect} from "react-redux";
+import {getCancelled, getCurrent} from "../actions/sessionActions";
 import Opened from "../components/Opened";
+import {getContext} from "../selectors/contextSelector";
 
 const mapStateToProps = state => {
     return {
-        isLMS: state.panelInfo.lms,
-        schemeId: state.schemeInfo.schemeId,
+        context: getContext(state),
         session: state.session,
-        failure: state.failure,
-        result: state.session.result
+        failure: state.failure
     }
 }
 

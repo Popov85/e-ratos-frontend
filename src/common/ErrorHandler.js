@@ -3,6 +3,9 @@ import LogoError from "./LogoError";
 import Header from "./Header";
 import Failure from './Failure';
 
+/**
+ * Global error handler!
+ */
 class ErrorHandler extends Component {
 
     constructor(props) {

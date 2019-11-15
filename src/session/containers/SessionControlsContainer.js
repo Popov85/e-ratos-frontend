@@ -4,14 +4,14 @@ import SessionControls from "../components/SessionControls";
 import {getContext, getMode} from "../selectors/contextSelector";
 import {getHelp, getQuestion, getResponse} from "../selectors/sessionSelector";
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
     return {
         context: getContext(state),
         question: getQuestion(state),
         mode: getMode(state),
         help: getHelp(state),
         reportModeOn: state.session.report,
-        response: getResponse(state) // ownProps.response
+        response: getResponse(state)
     }
 }
 

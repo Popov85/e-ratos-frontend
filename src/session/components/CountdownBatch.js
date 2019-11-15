@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Utils from "../../utils/Utils";
+import utils from "../../utils/utils";
 
 class CountdownBatch extends Component {
     constructor(props) {
@@ -41,7 +41,7 @@ class CountdownBatch extends Component {
         return (
             <span title="How much time left for this batch?">
                 <strong>&nbsp;|&nbsp; for batch:</strong>
-                <span>{forBatch <= 0 ? "00:00:00" : Utils.secToTime(forBatch)}</span>
+                <span>{forBatch <= 0 ? "00:00:00" : utils.secToTime(forBatch)}</span>
             </span>
         );
     }

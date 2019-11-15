@@ -20,8 +20,7 @@ const RunOutOfTime = (props) => {
 
     if (props.failure.status==='notFound') return <NotFound/>
     if (props.session.status === "finished") return <FinishContainer/>
-    const isLMS = props.panelInfo.lms;
-    const schemeId = props.schemeInfo.schemeId;
+    const {isLMS, schemeId} = props.context;
     return (
         <div>
             <LogoMini/>
@@ -39,8 +38,7 @@ const RunOutOfTime = (props) => {
 }
 
 RunOutOfTime.propTypes = {
-    panelInfo: PropTypes.object.isRequired,
-    schemeInfo: PropTypes.object.isRequired,
+    context: PropTypes.object.isRequired,
     session: PropTypes.object.isRequired,
     failure: PropTypes.object.isRequired,
     result: PropTypes.object,

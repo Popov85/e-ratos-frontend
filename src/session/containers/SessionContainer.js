@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import {getFinished, getFinishedBatch, getNext} from "../actions/sessionActions";
-import {getQuestion, getResponseChecked, isQuestionChecked} from "../selectors/sessionSelector";
+import {getQuestion, getResponseChecked} from "../selectors/sessionSelector";
 import {getContext, getMode} from "../selectors/contextSelector";
 import Session from "../components/Session";
 
@@ -9,11 +9,10 @@ const mapStateToProps = state => {
         context: getContext(state),
         scheme: state.schemeInfo.name,
         mode: getMode(state),
-        question: getQuestion(state),
         session: state.session,
         failure: state.failure,
 
-        isQuestionChecked: isQuestionChecked(state),
+        question: getQuestion(state),
         responseChecked: getResponseChecked(state),
     }
 }

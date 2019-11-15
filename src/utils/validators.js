@@ -1,5 +1,4 @@
 export const requiredField = value => {
-    //console.log("Validator requiredField is in action...", value);
     if (value) return undefined;
     return "Field is required";
 }
@@ -41,7 +40,6 @@ const phoneNumber = value =>
 
 
 export const allSelected = value => {
-    //console.log("Validator allSelected is in action...", value);
     if (!value) return {fields: ["orgId", "facId", "classId"]}
     if (value && !value.orgId || value && !value.facId || value && !value.classId) {
         let arr = [];

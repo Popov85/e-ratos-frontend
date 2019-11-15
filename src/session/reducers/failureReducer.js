@@ -11,7 +11,7 @@ export const failureReducer = (state = initState, action) => {
     switch (action.type) {
         case "RESET_FAILURE": {
             // DO it before each API call during session
-            console.log("RESET_FAILURE");
+            //console.log("RESET_FAILURE");
             return initState;
         }
         case "CLOSE_FAILURE": {

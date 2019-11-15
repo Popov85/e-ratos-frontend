@@ -1,4 +1,4 @@
-const Utils = {
+const utils = {
 
     baseUrl: function () {
         const baseUrl = location.protocol + '//'
@@ -9,17 +9,13 @@ const Utils = {
     },
 
     secToTime: function (sec) {
-        var date = new Date(null);
+        let date = new Date(null);
         date.setSeconds(sec);
-        var timeString = date.toISOString().substr(11, 8);
+        let timeString = date.toISOString().substr(11, 8);
         return timeString;
-    },
-
-    isEmptyArray: function (array) {
-        return (!Array.isArray(!array) || !array.length);
     }
 }
 
-export default Utils;
+export default utils;
 
 

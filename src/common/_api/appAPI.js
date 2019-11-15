@@ -1,22 +1,24 @@
 import {instance} from "../../common/_api/axios";
-import Utils from "../../utils/Utils";
+import utils from "../../utils/utils";
 
-export const loginURL = `${Utils.baseUrl()}/login`;
+export const loginURL = `${utils.baseUrl()}/login`;
 
 export const appAPI = {
 
-    //Login
     doLogin(credentials) {
         return fetch(loginURL, {method: 'POST', headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' }), body: credentials});
     },
 
-    //Logout
     doLogout() {
         return instance.post("/logout");
     },
 
     fetchRegOptions() {
         return instance.get("/self-registration/options");
+    },
+
+    fetchUserInfo() {
+        return instance.get("/info/user");
     },
 
     // Derived from LMS current organization info

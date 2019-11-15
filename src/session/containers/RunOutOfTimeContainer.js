@@ -1,11 +1,11 @@
 import { connect } from "react-redux";
 import {getFinished} from "../actions/sessionActions";
 import RunOutOfTime from "../components/RunOutOfTime";
+import {getContext} from "../selectors/contextSelector";
 
 const mapStateToProps = state => {
     return {
-        panelInfo: state.panelInfo,
-        schemeInfo: state.schemeInfo,
+        context: getContext(state),
         session: state.session,
         failure: state.failure,
         result: state.session.result
