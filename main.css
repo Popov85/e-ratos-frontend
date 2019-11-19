@@ -25,7 +25,7 @@
   opacity: 0.5;
 }
 
-#bModal > div {
+#bModal, #sModal > div {
   background-color: transparent !important;
   border-color: transparent !important;
 }

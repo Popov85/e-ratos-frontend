@@ -34,12 +34,7 @@ let UserEditForm = props => {
                 }
 
                 <Field name="role" component={FieldSelectBadge} placeholder="role" badge="Role"
-                       items={[
-                           {key: "", value: "Select"},
-                           {key: "ROLE_DEP-ADMIN", value: "ROLE_DEP-ADMIN"},
-                           {key: "ROLE_LAB-ASSISTANT", value: "ROLE_LAB-ASSISTANT"},
-                           {key: "ROLE_INSTRUCTOR", value: "ROLE_INSTRUCTOR"}
-                       ]}
+                       items={props.roles}
                        validate={[required]}/>
 
                 <Field name="positionId" component={FieldSelectBadge} placeholder="position" badge="Position"

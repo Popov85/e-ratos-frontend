@@ -10,6 +10,8 @@ const UPDATING_DEP_STAFF = "UPDATING_DEP_STAFF";
 const UPDATING_DEP_STAFF_FAILURE = "UPDATING_DEP_STAFF_FAILURE";
 const CLEAR_UPDATING_DEP_STAFF_FAILURE = "CLEAR_UPDATING_DEP_STAFF_FAILURE";
 
+const CLEAR_DEP_STAFF_FAILURE = "CLEAR_DEP_STAFF_FAILURE";
+
 const UPDATE_STAFF_NAME = "UPDATE_STAFF_NAME";
 const UPDATE_STAFF_SURNAME = "UPDATE_STAFF_SURNAME";
 const UPDATE_STAFF_EMAIL = "UPDATE_STAFF_EMAIL";
@@ -33,6 +35,8 @@ export const clearDepStaff = () => ({type: CLEAR_DEP_STAFF});
 export const updating = isUpdating => ({type: UPDATING_DEP_STAFF, isUpdating});
 export const updatingFailure = error => ({type: UPDATING_DEP_STAFF_FAILURE, error});
 export const clearUpdatingFailure = () => ({type: CLEAR_UPDATING_DEP_STAFF_FAILURE});
+
+export const clearAllFailures = () => ({type: CLEAR_DEP_STAFF_FAILURE});
 
 export const updateStaffNameInStore = (staffId, name) => ({type: UPDATE_STAFF_NAME, staffId, name});
 export const updateStaffSurnameInStore = (staffId, surname) => ({type: UPDATE_STAFF_SURNAME, staffId, surname});
@@ -96,6 +100,7 @@ export const updateStaffPosition = (staffId, positionId, positions) => {
     return (dispatch) => {
         dispatch(clearUpdatingFailure());
         dispatch(updating(true));
+        //dispatch(updateStaffPositionInStore(staffId, positionId, positions));
         usersAPI.updateStaffPosition(staffId, positionId).then(result => {
             dispatch(updateStaffPositionInStore(staffId, positionId, positions));
         }).catch(e => {

@@ -6,11 +6,13 @@ import {resetStaffState, saveStaff, updateStaff} from "../actions/userEditAction
 import {getUser} from "../selectors/usersSelector";
 import {getPositions} from "../actions/positionsActions";
 
+
 const mapStateToProps = (state, ownProps) => {
     let staffId = ownProps.staffId;
     return {
         userEdit: state.userEdit,
-        positions: state.positions,
+        positions: staffId ? state.positions.forEdit: state.positions.forNew,
+        roles: staffId ? state.roles.forEdit: state.roles.forNew,
         user: getUser(state, staffId)
     }
 }

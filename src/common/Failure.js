@@ -26,7 +26,7 @@ const Failure = (props) => {
 
 const propTypes = {
     message: PropTypes.string,
-    detailes: PropTypes.string,
+    details: PropTypes.string,
     serverError: PropTypes.object
 };
 

@@ -1,17 +1,15 @@
 import React from 'react';
-
-const initItems = [
-    {
-        "key":"",
-        "value": "Select"
-    }
-];
-
+const initItems = {
+    "value":"",
+    "label": "Select"
+};
 const FieldSelectBadge = props => {
     const {touched, error} = props.meta;
     const hasError = touched && error;
     let items = props.items;
+
     if (!items || items.length===0) items = initItems;
+
     return (
         <div className={`input-group form-group w-${props.width ? props.width : 100}`} title = {props.title}>
             <div className="input-group-prepend">
@@ -22,7 +20,7 @@ const FieldSelectBadge = props => {
                     onChange={e => props.input.onChange(e)}
                     value={props.input.value}>
                 {
-                    items.map(item => <option key={item.key} value={item.key}>{item.value}</option>)
+                    items.map(item => <option key={item.value} value={item.value}>{item.label}</option>)
                 }
             </select>
             {hasError && <div className="invalid-feedback">Please, provide a valid value..</div>}

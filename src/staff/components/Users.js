@@ -2,10 +2,11 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import UsersTable from "./UsersTable";
 import ProtectedResource from "../../common/ProtectedResource";
-import Spinner from "../../common/Spinner";
-import Header from "../../common/Header";
 import {FaPlus, FaSync} from "react-icons/fa";
 import {LinkContainer} from "react-router-bootstrap";
+import LoadingOverlay from 'react-loading-overlay';
+import Error from "../../common/Error";
+import Overlay from "../../common/Overlay";
 
 class Users extends Component {
 
@@ -15,13 +16,14 @@ class Users extends Component {
     }
 
     componentDidMount() {
-        // TODO: check and re-think!
         if (!this.props.users.content)
             this.props.getAllStaffByDepartment();
+        if (!this.props.positions.actual)
+            this.props.getPositions();
     }
 
     handleUpdate(staffId, dataField, newValue) {
-        console.log("staffId = , dataField = , newValue =", staffId, dataField, newValue);
+        //console.log(dataField, newValue);
         switch (dataField) {
             case "user.surname": {
                 this.props.updateStaffSurname(staffId, newValue);
@@ -45,59 +47,37 @@ class Users extends Component {
                     this.props.disableStaff(staffId);
                 return;
             }
+            case "position.posId": {
+                const {positions} = this.props;
+                this.props.updateStaffPosition(staffId, newValue, positions.actual);
+                return;
+            }
             default: return;
         }
     }
 
-    handleTableChange (type, {page, sizePerPage, filters, sortField, sortOrder, cellEdit}) {
+    handleTableChange (type, {cellEdit}) {
         if (cellEdit) {
             const {rowId, dataField, newValue} = cellEdit;
             this.handleUpdate(rowId, dataField, newValue);
-        } /*else {
-            let params = `page=${page}&size=${sizePerPage}${sortField ? '&sort='+sortField+','+sortOrder: ''}`;
-            console.log("params = ", params);
-            let filter = filters["user.surname"];
-            if (!filter) {
-                this.props.getStaffByDepartment(params);
-            } else {
-                let letters = filter.filterVal;
-                console.log("filter = ", letters);
-                this.props.getStaffByDepartmentAndSurnameLettersContains(letters, params);
-            }
-        }*/
+        }
     }
 
     render() {
-
-        const {isDepAdmin, users} = this.props;
-
+        const {isDepAdmin, users, positions, roles} = this.props;
         if (!isDepAdmin) return <ProtectedResource/>;
-
-        const {isLoading, isUpdating, error} = users;
+        const {isLoading, isUpdating, error, errorUpdate} = users;
 
         return (
-            <div className="p-3">
+            <div className="p-1">
                 <div className="alert alert-secondary text-center">
                     <h5 className="alert-heading">
                         <strong>Staff management</strong>
                     </h5>
                 </div>
                 {
-                    isLoading &&
-                    <Spinner
-                        color = "secondary"
-                        message = "Wait... API call is in progress!"
-                    />
-                }
-                {
-                    error &&
-                    <div className="text-center">
-                        <Header
-                            widely
-                            color = "alert-danger"
-                            title = "Failed to perform API call..."
-                        />
-                    </div>
+                    (error || errorUpdate) &&
+                    <Error message = "Operation failed!" close = {()=>this.props.clearAllFailures()}/>
                 }
                 {
                     !isLoading &&
@@ -114,15 +94,24 @@ class Users extends Component {
                     </div>
                 }
                 {
-                    !isLoading && !error && users.content ?
+                    positions.actual && users.content &&
                     <div>
-                        <UsersTable
-                            users={users.content}
-                            isUpdating = {isUpdating ? true : false}
-                            onTableChange={this.handleTableChange}
-                        />
-                    </div> : null
+                        <LoadingOverlay
+                            active={isUpdating ? true : false}
+                            spinner
+                            text='Performing API call...'>
+                            <UsersTable
+                                roles={roles}
+                                users={users.content}
+                                positions={positions}
+                                onTableChange={this.handleTableChange}
+                            />
+                        </LoadingOverlay>
+                    </div>
                 }
+
+                <Overlay show = {isLoading ? true : false}/>
+
             </div>
         );
     }
@@ -131,6 +120,7 @@ class Users extends Component {
 Users.propTypes = {
     isDepAdmin: PropTypes.bool.isRequired,
     users: PropTypes.object.isRequired,
+    positions: PropTypes.object.isRequired,
 
     updateStaffName: PropTypes.func.isRequired,
     updateStaffSurname: PropTypes.func.isRequired,
@@ -141,6 +131,8 @@ Users.propTypes = {
     enableStaff: PropTypes.func.isRequired,
     disableStaff: PropTypes.func.isRequired,
 
+    clearAllFailures: PropTypes.func.isRequired,
+    getPositions:PropTypes.func.isRequired,
     getAllStaffByDepartment:PropTypes.func.isRequired
 };
 

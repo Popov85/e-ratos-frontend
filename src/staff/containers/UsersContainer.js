@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from "react-redux";
 import {isDepAdmin} from "../../common/selectors/userSelector";
 import {
+    clearAllFailures,
     disableStaff,
     enableStaff,
     getAllStaffByDepartment,
@@ -12,11 +13,14 @@ import {
     updateStaffSurname
 } from "../actions/usersActions";
 import Users from "../components/Users";
+import {getPositions} from "../actions/positionsActions";
 
 const mapStateToProps = state => {
     return {
         isDepAdmin: isDepAdmin(state),
-        users: state.users
+        users: state.users,
+        roles: state.roles,
+        positions: state.positions,
     }
 }
 
@@ -26,12 +30,13 @@ const mapDispatchToProps = dispatch => {
         updateStaffSurname: (staffId, surname)=>dispatch(updateStaffSurname(staffId, surname)),
         updateStaffEmail: (staffId, email)=>dispatch(updateStaffEmail(staffId, email)),
         updateStaffRole: (staffId, role)=>dispatch(updateStaffRole(staffId, role)),
-        // TODO?
         updateStaffPosition: (staffId, positionId, positions)=>dispatch(updateStaffPosition(staffId, positionId, positions)),
 
         enableStaff: (staffId)=>dispatch(enableStaff(staffId)),
         disableStaff: (staffId)=>dispatch(disableStaff(staffId)),
 
+        clearAllFailures: () => dispatch(clearAllFailures()),
+        getPositions: () => dispatch(getPositions()),
         getAllStaffByDepartment: () => dispatch(getAllStaffByDepartment())
     }
 }

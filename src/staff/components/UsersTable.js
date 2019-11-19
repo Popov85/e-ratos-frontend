@@ -4,15 +4,13 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import cellEditFactory, {Type} from 'react-bootstrap-table2-editor';
 import filterFactory, {selectFilter, textFilter} from 'react-bootstrap-table2-filter';
-import overlayFactory from 'react-bootstrap-table2-overlay';
 import {FaPencilAlt} from "react-icons/fa";
 import {LinkContainer} from "react-router-bootstrap";
 import {email, minLength2} from "../../utils/validators";
-import {getPositions} from "../selectors/positionsSelector";
 
 const UsersTable = props => {
 
-    const {users} = props;
+    const {users, positions, roles} = props;
 
     const columns = [
         {
@@ -75,11 +73,7 @@ const UsersTable = props => {
             text: 'Role',
             sort: true,
             filter: selectFilter({
-                options: {
-                    'ROLE_DEP-ADMIN': 'ROLE_DEP-ADMIN',
-                    'ROLE_INSTRUCTOR': 'ROLE_INSTRUCTOR',
-                    'ROLE_LAB-ASSISTANT': 'ROLE_LAB-ASSISTANT'
-                }
+                options: roles.forFilter
             }),
             style: {
                 whiteSpace: 'nowrap',
@@ -89,26 +83,22 @@ const UsersTable = props => {
             },
             editor: {
                 type: Type.SELECT,
-                options: [{
-                    value: 'ROLE_LAB-ASSISTANT',
-                    label: 'ROLE_LAB-ASSISTANT'
-                }, {
-                    value: 'ROLE_INSTRUCTOR',
-                    label: 'ROLE_INSTRUCTOR'
-                }, {
-                    value: 'ROLE_DEP-ADMIN',
-                    label: 'ROLE_DEP-ADMIN'
-                }]
+                options: roles.forEdit
             }
         },
         {
-            dataField: 'position.name',
+            dataField: 'position.posId',
             text: 'Position',
             sort: true,
             filter: selectFilter({
-                options: getPositions(users)
+                options: positions.forFilter
             }),
-            editable: false
+            formatter: cell => positions.forFilter[cell],
+            editor: {
+                type: Type.SELECT,
+                options: positions.forEdit
+            },
+            editable: true
         },
         {
             dataField: 'user.active',
@@ -156,7 +146,6 @@ const UsersTable = props => {
             remote={{ filter: false, pagination: false, sort: false, cellEdit: true}}
             keyField='staffId'
             data={users}
-            loading={ props.isUpdating }
             columns={columns}
             filter={filterFactory()}
             pagination={paginationFactory({
@@ -170,7 +159,7 @@ const UsersTable = props => {
             })
             }
             cellEdit={cellEditFactory({mode: 'dbclick'})}
-            overlay={ overlayFactory({ spinner: true, background: 'rgba(192,192,192,0.3)' }) }
+
             onTableChange={props.onTableChange}
         />
     );
@@ -178,8 +167,9 @@ const UsersTable = props => {
 
 UsersTable.propTypes = {
     users: PropTypes.array.isRequired,
-    onTableChange: PropTypes.func.isRequired,
-    isUpdating: PropTypes.bool.isRequired
+    roles: PropTypes.object.isRequired,
+    positions: PropTypes.object.isRequired,
+    onTableChange: PropTypes.func.isRequired
 };
 
 export default UsersTable;

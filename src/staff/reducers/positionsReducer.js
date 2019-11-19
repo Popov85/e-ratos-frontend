@@ -1,43 +1,92 @@
-const testAdapted = [
+const actual = [
     {
-        "key": "",
-        "value": "Select"
+        "posId": 1,
+        "name": "System admin"
     },
     {
-        "key": 1,
-        "value": "System admin"
+        "posId": 2,
+        "name": "Dean"
     },
     {
-        "key": 2,
-        "value": "Dean"
+        "posId": 3,
+        "name": "Head"
     },
     {
-        "key": 3,
-        "value": "Head"
+        "posId": 4,
+        "name": "Professor"
     },
     {
-        "key": 4,
-        "value": "Professor"
+        "posId": 5,
+        "name": "Instructor"
     },
     {
-        "key": 5,
-        "value": "Instructor"
+        "posId": 6,
+        "name": "Researcher"
     },
     {
-        "key": 6,
-        "value": "Researcher"
+        "posId": 7,
+        "name": "Postgraduate"
     },
     {
-        "key": 7,
-        "value": "Postgraduate"
+        "posId": 8,
+        "name": "Lab. assistant"
     },
-    {
-        "key": 8,
-        "value": "Lab. assistant"
-    },
-]
+];
 
-const initState = testAdapted;
+const forEdit = [
+    {
+        value: 1,
+        label: 'System. admin'
+    },
+    {
+        value: 2,
+        label: 'Dean'
+    },
+    {
+        value: 3,
+        label: 'Head'
+    },
+    {
+        value: 4,
+        label: 'Professor'
+    },
+    {
+        value: 5,
+        label: 'Instructor'
+    },
+    {
+        value: 6,
+        label: 'Researcher'
+    },
+    {
+        value: 7,
+        label: 'Postgraduate'
+    },
+    {
+        value: 8,
+        label: 'Lab. assistant'
+    }
+];
+
+const forNew = [...forEdit, {value: "", label: "Select"}];
+
+const forFilter = {
+    1: "System admin",
+    2: "Dean",
+    3: "Head",
+    4: "Professor",
+    5: "Instructor",
+    6: "Researcher",
+    7: "Postgraduate",
+    8: "Lab. assistant",
+}
+
+const initState = {
+    actual,
+    forEdit,
+    forNew,
+    forFilter
+}
 
 /**
  * Used to create a new user
@@ -45,18 +94,29 @@ const initState = testAdapted;
  * @param action
  * @returns {Array|*}
  */
-export const positionsReducer = (state = [], action) => {
+export const positionsReducer = (state = {}, action) => {
     switch (action.type) {
         case "SET_POSITIONS": {
-            let positions = action.payload.map(p => {
+            let positions = action.payload;
+            let forEdit = positions.map(p => {
                 let item = {};
-                item.key = p.posId;
-                item.value = p.name;
+                item.value = p.posId;
+                item.label = p.name;
                 return item;
             });
-            positions.unshift({key: "", value: "Select"});
-            console.log("Positions = ", positions);
-            return positions;
+            let forNew = [...forEdit, {value: "", label: "Select"}];
+            let forFilter = positions.reduce((map, position)=> {
+                map[position.posId] = position.name;
+                return map;
+            }, {});
+
+            let result = {};
+            result.actual = positions;
+            result.forEdit = forEdit;
+            result.forNew = forNew;
+            result.forFilter = forFilter;
+            console.log("Positions = ", result);
+            return result;
         }
         default:
             return state;

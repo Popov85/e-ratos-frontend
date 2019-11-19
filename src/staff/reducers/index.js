@@ -7,6 +7,9 @@ import {positionsReducer} from "./positionsReducer";
 
 import {reducer as formReducer} from 'redux-form';
 import {userEditReducer} from "./userEditReducer";
+import {resultsReducer} from "./resultsReducer";
+import {coursesReducer} from "./coursesReducer";
+import {rolesReducer} from "./rolesReducer";
 
 const staffReducers = combineReducers({
     form: formReducer,
@@ -14,7 +17,10 @@ const staffReducers = combineReducers({
     security: logoutReducer,
     users: usersReducer,
     positions: positionsReducer,
-    userEdit: userEditReducer
+    userEdit: userEditReducer,
+    results: resultsReducer,
+    courses: coursesReducer,
+    roles: rolesReducer
 });
 
 export default staffReducers;

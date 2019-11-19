@@ -162,6 +162,9 @@ export const usersReducer = (state = {}, action) => {
         case "CLEAR_UPDATING_DEP_STAFF_FAILURE": {
             return {...state, errorUpdate: null};
         }
+        case "CLEAR_DEP_STAFF_FAILURE": {
+            return {...state, error: null, errorUpdate: null};
+        }
         case "SET_DEP_STAFF": {
             return {...state, content: action.payload};
         }
@@ -183,6 +186,7 @@ export const usersReducer = (state = {}, action) => {
         case "UPDATE_STAFF_POSITION": {
             let positions = action.positions;
             let position = positions.find(p=>p.posId===Number(action.positionId));
+            console.log("Found position to replace = ", position);
             return {...state, content: state.content.map(s => s.staffId === action.staffId ? { ...s, position: position } : s)}
         }
         case "ENABLE_STAFF": {

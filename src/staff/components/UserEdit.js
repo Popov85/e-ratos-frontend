@@ -10,8 +10,8 @@ class UserEdit extends React.Component {
     componentDidMount() {
         this.props.resetStaffState();
         let positions = this.props.positions;
-        // Only fetch positions when story array is empty!
-        if (positions.length === 0) this.props.getPositions();
+        // Only fetch positions when store array is empty!
+        if (!positions) this.props.getPositions();
     }
 
     handleSubmit(data) {
@@ -34,7 +34,7 @@ class UserEdit extends React.Component {
     }
 
     render() {
-        const {user, positions} = this.props;
+        const {user, positions, roles} = this.props;
         const {isLoading, error, message} = this.props.userEdit;
         return (
             <div className="mt-2 mb-2">
@@ -85,6 +85,7 @@ class UserEdit extends React.Component {
                                         : null
                                     }
                                     positions={positions}
+                                    roles={roles}
                                     disabled={isLoading}
                                     isNew={user ? false : true}
                                 />
@@ -105,6 +106,8 @@ class UserEdit extends React.Component {
 
 UserEdit.propTypes = {
     positions: PropTypes.array.isRequired,
+    roles: PropTypes.array.isRequired,
+
     userEdit: PropTypes.object.isRequired,
     user: PropTypes.object,
 
