@@ -16,10 +16,9 @@ class Users extends Component {
     }
 
     componentDidMount() {
-        if (!this.props.users.content)
-            this.props.getAllStaffByDepartment();
-        if (!this.props.positions.actual)
-            this.props.getPositions();
+        const {users, positions} = this.props;
+        if (!positions.actual) this.props.getPositions();
+        if (!users.content) this.props.getAllStaffByDepartment();
     }
 
     handleUpdate(staffId, dataField, newValue) {

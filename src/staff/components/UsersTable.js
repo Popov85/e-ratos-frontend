@@ -159,7 +159,7 @@ const UsersTable = props => {
             })
             }
             cellEdit={cellEditFactory({mode: 'dbclick'})}
-
+            noDataIndication={ ()=> "No data!"}
             onTableChange={props.onTableChange}
         />
     );
