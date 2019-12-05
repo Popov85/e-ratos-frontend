@@ -1,190 +1,391 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import BootstrapTable from "react-bootstrap-table-next";
-import filterFactory, {textFilter, selectFilter, dateFilter} from "react-bootstrap-table2-filter";
+import filterFactory, {
+    textFilter,
+    selectFilter,
+    Comparator,
+    dateFilter,
+    numberFilter
+} from "react-bootstrap-table2-filter";
 import paginationFactory from "react-bootstrap-table2-paginator";
-import {FaCheck, FaMinus, FaInfo} from "react-icons/fa";
+import {FaCheck, FaMinus, FaInfo, FaFileCsv, FaSync} from "react-icons/fa";
 import {LinkContainer} from "react-router-bootstrap";
+import ResultsColumnsToggler from "./ResultsColumnsToggler";
+import {CSVLink} from "react-csv";
+
+const CSVHeaders = [
+    {label: 'Course', key: 'scheme.course.name'},
+    {label: 'Scheme', key: 'scheme.name'},
+    {label: 'Name', key: 'student.user.name'},
+    {label: 'Surname', key: 'student.user.surname'},
+    {label: 'Email', key: 'student.user.email'},
+    {label: 'Faculty', key: 'student.faculty.name'},
+    {label: 'Class', key: 'student.studentClass.name'},
+    {label: 'Year', key: 'student.entranceYear'},
+    {label: 'Session ended', key: 'sessionEnded'},
+    {label: 'Session lasted', key: 'sessionLasted'},
+    {label: 'Percent', key: 'percent'},
+    {label: 'Grade', key: 'grade'},
+    {label: 'Passed', key: 'passed'},
+    {label: 'Session lasted', key: 'sessionLasted'},
+    {label: 'Timeouted', key: 'timeOuted'},
+    {label: 'Cancelled', key: 'cancelled'},
+    {label: 'LMS', key: 'lms'}
+];
+
+const filterStyle = {
+    fontSize: '13px'
+};
+
+const headerStyle = (width, align) => {
+    return {
+        width: `${width}`,
+        textAlign: `${align}`,
+        fontSize: '13px'
+    }
+};
 
 const cellStyle = {
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     fontSize: '13px'
-}
+};
 
-const
-    ResultsTable = props => {
+class ResultsTable extends Component {
 
-        const {results, courses} = props;
+    constructor(props) {
+        super(props);
+        this.state = {
+            hiddenColumns: ["Name", "Email", "Faculty", "Class", "Year", "Lasted", "Timeouted", "Cancelled", "Points"]
+        }
+        this.handleToggle = this.handleToggle.bind(this);
+        this.handleRefresh = this.handleRefresh.bind(this);
+    }
+
+    handleToggle(hiddenColumns) {
+        this.setState({hiddenColumns})
+    }
+
+    handleRefresh() {
+        this.refresh(false);
+    }
+
+    renderCaption() {
+        return (
+            <div className = "d-flex">
+                <div className="flex-grow-1">
+                    <ResultsColumnsToggler
+                        hiddenColumns={this.state.hiddenColumns}
+                        handleToggle={this.handleToggle}/>
+                </div>
+                <div className="ml-1">
+                    <CSVLink
+                        data={this.props.results}
+                        headers={CSVHeaders}
+                        filename={"results.csv"}
+                        className="btn btn-sm btn-success"
+                        target="_blank" title="Export to CSV format?">
+                        <FaFileCsv/>&nbsp;Exports
+                    </CSVLink>
+                    <button className="btn btn-sm btn-info ml-1"
+                            title="Refresh results?"
+                            onClick={() => this.handleRefresh()}>
+                        <FaSync/>&nbsp;Refresh
+                    </button>
+                </div>
+
+            </div>);
+    }
+
+    render() {
+
+        const {hiddenColumns} = this.state;
+        const {results, courses, schemes, faculties} = this.props;
 
         const columns = [
+            {
+                dataField: 'update',
+                isDummyField: true,
+                text: '',
+                headerStyle: {display: 'none'},
+                style: {display: 'none'},
+                filter: textFilter({
+                    getFilter: filter => this.refresh = filter
+                })
+            },
             {
                 dataField: 'resultId',
                 text: 'ID',
                 hidden: true
             },
             {
-                dataField: 'course',
+                dataField: 'scheme.course',
                 text: 'Course',
                 sort: true,
                 filter: selectFilter({
-                    options: courses
+                    options: courses,
+                    style: filterStyle
                 }),
                 formatter: cell => courses[cell.courseId],
-                headerStyle: () => {
-                    return {width: '200px', textAlign: 'left', fontSize: '13px'};
-                },
+                headerStyle: () => headerStyle('200px', 'left'),
+                title: cell => cell.name,
                 style: cellStyle,
             },
             {
-                dataField: 'scheme.name',
+                dataField: 'scheme',
                 text: 'Scheme',
                 sort: true,
-                filter: textFilter(),
-                headerStyle: () => {
-                    return {width: '200px', textAlign: 'left', fontSize: '13px'};
-                },
-                style: cellStyle,
-            },
-            {
-                dataField: 'student.user.name',
-                text: 'Name',
-                sort: true,
-                filter: textFilter(),
-                headerStyle: () => {
-                    return {width: '120px', textAlign: 'center', fontSize: '13px'};
-                },
+                filter: selectFilter({
+                    options: schemes,
+                    style: filterStyle
+                }),
+                formatter: cell => schemes[cell.schemeId],
+                headerStyle: () => headerStyle('200px', 'left'),
+                title: cell => cell.name,
                 style: cellStyle,
             },
             {
                 dataField: 'student.user.surname',
                 text: 'Surname',
                 sort: true,
-                filter: textFilter(),
-                headerStyle: () => {
-                    return {width: '120px', textAlign: 'center', fontSize: '13px'};
-                },
+                hidden: hiddenColumns.includes("Surname"),
+                filter: textFilter({
+                    style: filterStyle
+                }),
+                headerStyle: () => headerStyle('120px', 'left'),
+                title: cell => cell,
+                style: cellStyle,
+            },
+            {
+                dataField: 'student.user.name',
+                text: 'Name',
+                sort: true,
+                hidden: hiddenColumns.includes("Name"),
+                filter: textFilter({
+                    style: filterStyle
+                }),
+                headerStyle: () => headerStyle('120px', 'left'),
+                title: cell => cell,
                 style: cellStyle,
             },
             {
                 dataField: 'student.user.email',
                 text: 'Email',
                 sort: true,
-                filter: textFilter(),
-                headerStyle: () => {
-                    return {width: '150px', textAlign: 'left', fontSize: '13px'};
-                },
+                hidden: hiddenColumns.includes("Email"),
+                filter: textFilter({
+                    style: filterStyle
+                }),
+                headerStyle: () => headerStyle('150px', 'left'),
+                title: cell => cell,
                 style: cellStyle,
             },
             {
-                dataField: 'student.faculty.name',
+                dataField: 'student.faculty',
                 text: 'Faculty',
                 sort: true,
-                filter: textFilter(),
-                headerStyle: () => {
-                    return {width: '200px', textAlign: 'left', fontSize: '13px'};
-                },
+                hidden: hiddenColumns.includes("Faculty"),
+                filter: selectFilter({
+                    options: faculties,
+                    style: filterStyle
+                }),
+                formatter: cell => faculties[cell.facId],
+                headerStyle: () => headerStyle('200px', 'left'),
+                title: cell => cell,
                 style: cellStyle,
             },
             {
                 dataField: 'student.studentClass.name',
                 text: 'Class',
                 sort: true,
-                filter: textFilter(),
-                headerStyle: () => {
-                    return {textAlign: 'center', fontSize: '13px'};
-                },
+                align: 'center',
+                hidden: hiddenColumns.includes("Class"),
+                filter: textFilter({
+                    placeholder: 'Class',
+                    style: filterStyle
+                }),
+                headerStyle: () => headerStyle('70px', 'left'),
+                title: cell => cell,
                 style: cellStyle,
             },
             {
                 dataField: 'student.entranceYear',
                 text: 'Year',
                 sort: true,
-                filter: textFilter(),
-                headerStyle: () => {
-                    return {textAlign: 'center', fontSize: '13px'};
-                },
+                align: 'center',
+                hidden: hiddenColumns.includes("Year"),
+                filter: textFilter({
+                    placeholder: 'Year',
+                    style: filterStyle
+                }),
+                headerStyle: () => headerStyle('70px', 'left'),
+                title: cell => cell,
                 style: cellStyle,
             },
             {
                 dataField: 'sessionEnded',
-                text: 'When',
+                text: 'Session ended',
                 sort: true,
-                filter: dateFilter(),
-                headerStyle: () => {
-                    return {width: '150px', textAlign: 'left', fontSize: '13px'};
-                },
+                align: 'center',
+                filter: dateFilter({
+                    placeholder: 'Ended',
+                    comparatorStyle: filterStyle,
+                    comparatorClassName: 'w-auto p-1',
+                    dateStyle: {fontSize: '13px'},
+                    dateClassName: 'w-auto',
+                    withoutEmptyComparatorOption: true,
+                    comparators: [Comparator.EQ, Comparator.GT, Comparator.LT],
+                }),
+                headerStyle: () => headerStyle('220px', 'left'),
+                title: cell => cell,
                 style: cellStyle,
             },
             {
                 dataField: 'sessionLasted',
-                text: 'LA',
+                text: 'Lasted, sec',
                 sort: true,
                 align: 'center',
-                filter: textFilter(),
-                headerStyle: () => {
-                    return {textAlign: 'center', fontSize: '13px'};
+                hidden: hiddenColumns.includes("Lasted"),
+                filter: numberFilter({
+                    style: null,
+                    className: '',
+                    placeholder: 'in sec',
+                    comparatorStyle: filterStyle,
+                    comparatorClassName: 'w-auto p-1',
+                    withoutEmptyComparatorOption: true,
+                    comparators: [Comparator.EQ, Comparator.GT, Comparator.LT],
+                    numberStyle: filterStyle,
+                    numberClassName: 'w-75 p-1'
+                }),
+                headerStyle: () => headerStyle('100px', 'center'),
+                title: cell => `${cell}, sec`,
+                formatter: (cell) => {
+                    return cell >= 60 ?
+                        <span className="badge badge-success pt-1 pb-1 pr-2 pl-2">{cell}</span> :
+                        <span className="badge badge-danger pt-1 pb-1 pr-2 pl-2">{cell}</span>;
                 },
                 style: cellStyle,
             },
             {
                 dataField: 'grade',
-                text: 'GR',
+                text: 'Grade',
                 sort: true,
                 align: 'center',
-                filter: textFilter(),
-                headerStyle: () => {
-                    return {textAlign: 'center', fontSize: '13px'};
+                filter: numberFilter({
+                    style: null,
+                    className: '',
+                    placeholder: 'Grade',
+                    comparatorStyle: filterStyle,
+                    comparatorClassName: 'w-auto p-1',
+                    withoutEmptyComparatorOption: true,
+                    comparators: [Comparator.EQ, Comparator.GT, Comparator.LT],
+                    numberStyle: filterStyle,
+                    numberClassName: 'w-75 p-1'
+                }),
+                headerStyle: () => headerStyle('100px', 'center'),
+                title: cell => cell,
+                formatter: (cell) => {
+                    let grade = Number(cell);
+                    return [1, 5, 200].includes(grade) ?
+                        <span className="badge badge-success pt-1 pb-1 pr-2 pl-2">{cell}</span> :
+                        <span className="badge badge-warning pt-1 pb-1 pr-2 pl-2">{cell}</span>;
                 },
                 style: cellStyle,
             },
             {
                 dataField: 'percent',
-                text: 'PR',
+                text: 'Percent',
                 sort: true,
                 align: 'center',
-                filter: textFilter(),
-                headerStyle: () => {
-                    return {textAlign: 'center', fontSize: '13px'};
-                },
+                filter: numberFilter({
+                    style: null,
+                    className: '',
+                    placeholder: 'in %',
+                    comparatorStyle: filterStyle,
+                    comparatorClassName: 'w-auto p-1',
+                    withoutEmptyComparatorOption: true,
+                    comparators: [Comparator.EQ, Comparator.GT, Comparator.LT],
+                    numberStyle: filterStyle,
+                    numberClassName: 'w-75 p-1'
+                }),
+                headerStyle: () => headerStyle('100px', 'center'),
+                title: cell => cell,
                 style: cellStyle,
                 formatter: (cell) => {
-                    if (cell===100) {
-                        return <span className="badge badge-success">{cell}</span>;
-                    } else if (cell < 100 && cell > 50) {
-                        return <span className="badge badge-warning">{cell}</span>;
+                    let percent = Number(cell);
+                    if (percent === 100) {
+                        return <span className="badge badge-success pt-1 pb-1 pr-2 pl-2">{cell}</span>;
+                    } else if (percent < 100 && percent > 50) {
+                        return <span className="badge badge-warning pt-1 pb-1 pr-2 pl-2">{cell}</span>;
                     } else {
-                        return <span className="badge badge-danger">{cell}</span>;
+                        return <span className="badge badge-danger pt-1 pb-1 pr-2 pl-2">{cell}</span>;
                     }
                 }
             },
             {
                 dataField: 'passed',
-                text: 'PA',
+                text: 'Passed',
                 sort: true,
                 align: 'center',
-                filter: textFilter(),
-                headerStyle: () => {
-                    return {textAlign: 'center', fontSize: '13px'};
-                },
+                filter: selectFilter({
+                    placeholder: 'Passed',
+                    options: {
+                        true: "true",
+                        false: "false"
+                    },
+                    style: filterStyle,
+                    className: 'p-0',
+                }),
+                headerStyle: () => headerStyle('60px', 'center'),
+                title: cell => cell ? 'Passed' : 'Failed',
                 style: cellStyle,
                 formatter: (cell) => {
                     return cell ?
-                        <span className="badge badge-success">Passed</span> :
-                        <span className="badge badge-danger">Failed</span>;
+                        <span className="badge badge-success pt-1 pb-1 pr-2 pl-2">Passed</span> :
+                        <span className="badge badge-danger pt-1 pb-1 pr-2 pl-2">Failed</span>;
                 }
             },
             {
-                dataField: 'timeOuted',
-                text: 'TO',
+                dataField: 'lms',
+                text: 'LMS',
                 sort: true,
                 align: 'center',
-                filter: textFilter(),
+                filter: selectFilter({
+                    placeholder: 'LMS',
+                    options: {
+                        true: "true",
+                        false: "false"
+                    },
+                    style: filterStyle,
+                    className: 'p-0'
+                }),
+                title: cell => `This session was ${cell ? 'from LMS' : 'not from LMS'}`,
+                headerStyle: () => headerStyle('60px', 'center'),
+                style: cellStyle,
+                formatter: (cell) => {
+                    return cell === true ?
+                        <span className="badge badge-warning pt-1 pb-1 pr-2 pl-2">LMS</span> :
+                        <span className="badge badge-secondary"><FaMinus style={{fontSize: '0.75em'}}/></span>;
+                }
+            },
+            {
+                dataField: 'timeouted',
+                text: 'Timeout',
+                align: 'center',
+                hidden: hiddenColumns.includes("Timeouted"),
+                filter: selectFilter({
+                    placeholder: 'Timeout?',
+                    options: {
+                        true: "true",
+                        false: "false"
+                    },
+                    style: filterStyle,
+                    className: 'p-0'
+                }),
                 title: cell => `This session was ${cell ? 'timeouted' : 'not timeouted'}`,
-                headerStyle: () => {
-                    return {textAlign: 'center', fontSize: '13px'};
-                },
+                headerStyle: () => headerStyle('60px', 'center'),
                 style: cellStyle,
                 formatter: (cell) => {
                     return cell !== true ?
@@ -194,14 +395,20 @@ const
             },
             {
                 dataField: 'cancelled',
-                text: 'CD',
-                sort: true,
+                text: 'Cancel',
                 align: 'center',
-                filter: textFilter(),
+                hidden: hiddenColumns.includes("Cancelled"),
+                filter: selectFilter({
+                    placeholder: 'Cancelled?',
+                    options: {
+                        true: "true",
+                        false: "false"
+                    },
+                    style: filterStyle,
+                    className: 'p-0'
+                }),
                 title: cell => `This session was ${cell ? 'cancelled' : 'not cancelled'}`,
-                headerStyle: () => {
-                    return {textAlign: 'center', fontSize: '13px'};
-                },
+                headerStyle: () => headerStyle('60px', 'center'),
                 style: cellStyle,
                 formatter: (cell) => {
                     return cell !== true ?
@@ -209,37 +416,38 @@ const
                         <span className="badge badge-danger"><FaCheck style={{fontSize: '0.75em'}}/></span>;
                 }
             },
+
             {
-                dataField: 'lms',
-                text: 'LMS',
-                sort: true,
+                dataField: 'points',
+                text: 'Points',
                 align: 'center',
+                sort: true,
+                hidden: hiddenColumns.includes("Points"),
                 filter: selectFilter({
+                    placeholder: 'Points',
                     options: {
                         true: "true",
                         false: "false"
-                    }
+                    },
+                    style: filterStyle,
+                    className: 'p-0'
                 }),
-                title: cell => `This session was ${cell ? 'from LMS' : 'not from LMS'}`,
-                headerStyle: () => {
-                    return {textAlign: 'center', fontSize: '13px'};
-                },
+                title: cell => `For this result the student was ${cell ? 'granted' : 'not granted'} game points`,
+                headerStyle: () => headerStyle('60px', 'center'),
                 style: cellStyle,
                 formatter: (cell) => {
-                    return cell === true ?
-                        <span className="badge badge-warning">LMS</span> :
+                    return cell ?
+                        <span className="badge badge-success pt-1 pb-1 pr-2 pl-2">{cell}</span> :
                         <span className="badge badge-secondary"><FaMinus style={{fontSize: '0.75em'}}/></span>;
                 }
             },
             {
                 dataField: 'details',
                 isDummyField: true,
-                text: '',
+                text: 'Info',
                 align: 'center',
-                title: ()=>'Details',
-                headerStyle: () => {
-                    return {width: '40px', textAlign: 'center'};
-                },
+                title: (cell, row) => `Details id=${row.resultId}`,
+                headerStyle: () => headerStyle('40px', 'center'),
                 formatter: (cell, row) => {
                     return (
                         <LinkContainer to={`/results/details/${row.resultId}`}>
@@ -248,42 +456,47 @@ const
                             </a>
                         </LinkContainer>);
                 }
-            },
-        ]
+            }
+        ];
 
-        const {page, sizePerPage, totalSize} = props;
-
+        const {page, sizePerPage, totalSize} = this.props;
         return (
-            <BootstrapTable bootstrap4 striped hover condensed
-                            remote
-                            keyField='resultId'
-                            data={results}
-                            loading={props.isLoading}
-                            columns={columns}
-                            filter={filterFactory()}
-                            pagination={paginationFactory({
-                                page, sizePerPage, totalSize,
-                                showTotal: true,
-                                pageStartIndex: 0,
-                                sizePerPageList: [
-                                    {text: '20', value: 20},
-                                    {text: '50', value: 50},
-                                    {text: '100', value: 100}
-                                ]
-                            })
-                            }
-                            onTableChange={props.onTableChange}
+            <BootstrapTable
+                remote
+                bootstrap4
+                striped hover condensed
+                caption={this.renderCaption()}
+                wrapperClasses="table-responsive"
+                headerClasses="thead-light"
+                keyField="resultId"
+                data={results}
+                columns={columns}
+                filter={filterFactory()}
+                pagination={paginationFactory({
+                    page, sizePerPage, totalSize,
+                    showTotal: true,
+                    pageStartIndex: 0,
+                    sizePerPageList: [
+                        {text: '20', value: 20},
+                        {text: '50', value: 50},
+                        {text: '100', value: 100}
+                    ]
+                })}
+                onTableChange={this.props.onTableChange}
             />
         );
-    };
+    }
+}
 
 ResultsTable.propTypes = {
-    courses: PropTypes.object.isRequired,
     results: PropTypes.array.isRequired,
+    courses: PropTypes.object.isRequired,
+    schemes: PropTypes.object.isRequired,
+    faculties: PropTypes.object.isRequired,
+
     page: PropTypes.number.isRequired,
     sizePerPage: PropTypes.number.isRequired,
     totalSize: PropTypes.number.isRequired,
-    isLoading: PropTypes.bool.isRequired,
 
     onTableChange: PropTypes.func.isRequired
 };

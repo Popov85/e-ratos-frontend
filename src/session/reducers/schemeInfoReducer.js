@@ -1,3 +1,4 @@
+
 export const schemeInfoReducer = (state = {isLoading: true}, action) => {
     switch (action.type) {
         case "LOADING_SCHEME_INFO": {

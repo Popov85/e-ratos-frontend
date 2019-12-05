@@ -115,7 +115,7 @@ export const positionsReducer = (state = {}, action) => {
             result.forEdit = forEdit;
             result.forNew = forNew;
             result.forFilter = forFilter;
-            console.log("Positions = ", result);
+            //console.log("Positions = ", result);
             return result;
         }
         default:

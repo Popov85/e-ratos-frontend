@@ -5,33 +5,29 @@ import Info from "../components/Info";
 import {loadSchemeInfo} from "../actions/schemeInfoActions";
 import utilsURL from "../../utils/utilsURL";
 import {loadUserInfo} from "../../common/actions/userActions";
+import {getUserInfo} from "../../common/selectors/userSelector";
+import {getSchemeInfo} from "../selectors/contextSelector";
 
 class InfoContainer extends Component {
 
     componentDidMount() {
+        // Load userInfo only if it is absent!
+        const {authenticated} = this.props.userInfo;
+        if (!authenticated) this.props.loadUserInfo();
         const schemeId = utilsURL.getSchemeId();
         // Load schemeInfo (fallback to schemeId = 1)
         this.props.loadSchemeInfo(schemeId ? schemeId : 1);
     }
 
     render() {
-        return <Info
-            isUserLoading={this.props.isUserLoading}
-            errorUser={this.props.errorUser}
-            isSchemeLoading={this.props.isSchemeLoading}
-            errorScheme={this.props.errorScheme}
-            loadUserInfo={this.props.loadUserInfo}
-            loadSchemeInfo={this.props.loadSchemeInfo}
-        />
+        return <Info userInfo={this.props.userInfo} schemeInfo={this.props.schemeInfo}/>
     }
 }
 
 const mapStateToProps = state => {
     return {
-        isUserLoading: state.userInfo.isLoading,
-        errorUser: state.userInfo.error,
-        isSchemeLoading: state.schemeInfo.isLoading,
-        errorScheme: state.schemeInfo.error,
+        userInfo: getUserInfo(state),
+        schemeInfo: getSchemeInfo(state)
     }
 }
 

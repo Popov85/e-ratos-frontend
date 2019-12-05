@@ -1,196 +1,210 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {FaSync} from "react-icons/fa";
+import Overlay from "../../common/Overlay";
+import LoadingOverlay from "react-loading-overlay";
+import Error from "../../common/Error";
 import ResultsTable from "./ResultsTable";
-import {ResultSpecs} from "../objects/specs/ResultSpecs";
-import Spinner from "../../common/Spinner";
-import Header from "../../common/Header";
-
-// TODO: CSV export
-/*const columns = [
-    {
-        dataField: 'resultId',
-        text: 'ID',
-        hidden: true
-    },
-    {
-        dataField: 'course.name',
-        text: 'Course'
-    },
-    {
-        dataField: 'scheme.name',
-        text: 'Scheme'
-    },
-    {
-        dataField: 'student.user.name',
-        text: 'Name'
-    },
-    {
-        dataField: 'student.user.surname',
-        text: 'Surname'
-    },
-    {
-        dataField: 'student.user.email',
-        text: 'Email'
-    },
-    {
-        dataField: 'student.studentClass.name',
-        text: 'Class'
-    },
-    {
-        dataField: 'student.faculty.name',
-        text: 'Faculty'
-    },
-    {
-        dataField: 'sessionEnded',
-        text: 'When'
-    },
-    {
-        dataField: 'sessionLasted',
-        text: 'LA'
-    },
-    {
-        dataField: 'grade',
-        text: 'GR'
-    },
-    {
-        dataField: 'percent',
-        text: 'PR',
-    },
-    {
-        dataField: 'passed',
-        text: 'PA',
-    },
-    {
-        dataField: 'timeOuted',
-        text: 'TO',
-    },
-    {
-        dataField: 'cancelled',
-        text: 'CD',
-    },
-    {
-        dataField: 'lms',
-        text: 'LMS',
-    },
-]*/
+import Admin from "./Admin";
+import Switcher from "./Switcher";
 
 class Results extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            changeDepartmentMode: false,
+        }
+        this.activateModal = this.activateModal.bind(this);
+        this.deactivateModal = this.deactivateModal.bind(this);
+        this.afterAffiliationSelected = this.afterAffiliationSelected.bind(this);
+        this.afterOwnDepartmentSelected = this.afterOwnDepartmentSelected.bind(this);
         this.handleTableChange = this.handleTableChange.bind(this);
     }
 
     componentDidMount() {
-        if (!this.props.results.content) {
-            this.props.getDepResults();
+        const {affiliation, results} = this.props;
+        // Do anything only if there is nothing to display!
+        // Otherwise you could always update the needed results!
+        if (!results.data || results.data.content.length === 0) {
+            if (!affiliation) {
+                this.props.getAllDepResultsDataForTable();
+            } else {
+                if (!affiliation.org) {
+                    this.props.getAllDepResultsDataForTableAdmin(affiliation);
+                } else {
+                    this.props.getAllDepResultsDataForTableGlobalAdmin(affiliation);
+                }
+            }
         }
-        // TODO: If empty -> load all Dep. courses and all org. faculties
     }
 
-    getFilterSpecs(filtersMap) {
-        console.log("map = ", filtersMap);
-        let courseId = filtersMap.get("course");
-        let schemeId = filtersMap.get("scheme.name");
-        let surname = filtersMap.get("student.user.surname");
-        let from = filtersMap.get("sessionEnded");
-        let lms = filtersMap.get("lms");
-        let specs = new ResultSpecs(
-            courseId ? courseId.filterVal : null,
-            schemeId ? schemeId.filterVal : null,
-            surname ? surname.filterVal : null,
-            from ? from.filterVal : null,
-            null,
-            lms ? lms.filterVal : null,
-            false);
-        console.log("specs = ", specs);
-        return specs;
+    activateModal() {
+        this.setState({changeDepartmentMode: true});
     }
+
+    deactivateModal() {
+        this.setState({changeDepartmentMode: false});
+    }
+
+    /**
+     * Describe what to do after an admin switched departments
+     * @param affiliation
+     */
+    afterAffiliationSelected(affiliation) {
+        if (!affiliation.org) {
+            this.props.getAllDepResultsDataForTableAdmin(affiliation);
+        } else {
+            this.props.getAllDepResultsDataForTableGlobalAdmin(affiliation);
+        }
+        this.deactivateModal();
+    }
+
+    /**
+     * Describe what to do when an admin switched back to own department
+     */
+    afterOwnDepartmentSelected() {
+        this.props.getAllDepResultsDataForTable();
+        this.deactivateModal();
+    }
+
+    /**
+     * Some columns must be sorted not by Id, but by a name, tweaking is needed!
+     * @param sortFiled
+     * @returns {string|*}
+     */
+    adjustSort(sortFiled) {
+        const adjustableFields = ["scheme", "scheme.course", "student.faculty"];
+        if (adjustableFields.includes(sortFiled)) return `${sortFiled}.name`;
+        return sortFiled;
+    }
+
+    /**
+     * Special case: when course filter changes, schemes filter must be changed as well!
+     * ALWAYS, when course filter is emptied - set default all schemes from store!
+     * @param filterMap map of filter values
+     */
+    courseFilter(filterMap) {
+        let courseFilter = filterMap.get("scheme.course");
+        if (!courseFilter) {
+            this.props.setExistingDepResultsFilterSchemes('All');
+            return;
+        }
+        const {schemesMap} = this.props.results;
+        let courseId = Number(courseFilter.filterVal);
+        if (schemesMap.has(courseId)) {
+            this.props.setExistingDepResultsFilterSchemes(courseId);
+        } else {
+            this.props.getAllSchemesForDepResultsTableFilterByCourseId(courseId);
+        }
+    }
+
+    handleTableChangeDefault(filters, filterMap, params) {
+        if (filterMap.size === 0) {
+            this.props.getDepResults(params);
+            // Activate all the original schemes
+            this.props.setExistingDepResultsFilterSchemes('All');
+        } else {
+            this.courseFilter(filterMap);
+            this.props.getDepResultsWithSpecs(params, filters);
+        }
+    }
+
+    handleTableChangeAdmin(filters, filterMap, params) {
+        const {affiliation} = this.props;
+        const {dep} = affiliation;
+        if (filterMap.size === 0) {
+            this.props.getDepResultsAdmin(dep.value, params);
+            // Activate all the original schemes
+            this.props.setExistingDepResultsFilterSchemes('All');
+        } else {
+            this.courseFilter(filterMap);
+            this.props.getDepResultsWithSpecAdmin(dep.value, params, filters);
+        }
+    }
+
 
     handleTableChange(type, {page, sizePerPage, filters, sortField, sortOrder}) {
-        let params = `page=${page}&size=${sizePerPage}${sortField ?
-            '&sort=' + sortField + ',' + sortOrder : ''}`;
-        console.log("params = ", params);
-        let map = new Map(Object.entries(filters));
-        if (map.size === 0) {
-            console.log("Filter is empty");
-            this.props.getDepResults(params);
-        } else {
-            console.log("Filter size = ", map.size);
-            let specs = this.getFilterSpecs(map);
-            this.props.getDepResultsWithSpecs(params, specs);
+        const {affiliation} = this.props;
+        let params = `page=${page}&size=${sizePerPage}${sortField ? '&sort=' +
+            this.adjustSort(sortField) + ',' + sortOrder : ''}`;
+        let filterMap = new Map(Object.entries(filters));
+        // N.B. We keep this dummy filter exceptionally to trigger table update!
+        if (filterMap.has("update")) filterMap.delete("update");
+        if (affiliation) {
+            this.handleTableChangeAdmin(filters, filterMap, params);
+            return;
         }
+        this.handleTableChangeDefault(filters, filterMap, params);
     }
 
     render() {
-        const {results} = this.props;
+        const {userInfo, results, affiliation} = this.props;
+        const {data, courses, schemes, faculties, isLoading, error} = results;
 
-        const {courses} = this.props;
-        const {totalElements, size, number, isLoading, error} = this.props.results;
+        const {changeDepartmentMode} = this.state;
+
+        const {authenticated} = userInfo;
 
         return (
-            <div className="p-3">
-                <div className="alert alert-secondary text-center">
-                    <h5 className="alert-heading">
-                        <strong>Department results</strong>
-                    </h5>
+            <div className="p-1">
+                <div className="alert alert-secondary text-center mb-1">
+                    <h5><strong>Department results</strong></h5>
                 </div>
+                <Overlay show={(isLoading && !data) ? true : false}/>
                 {
-                    isLoading && !results.content &&
-                    <Spinner
-                        color = "secondary"
-                        message = "Wait... API call is in progress!"
-                    />
+                    authenticated
+                    && authenticated.isAtLeastFacAdmin
+                    && <Admin affiliation={affiliation} activateModal={this.activateModal}/>
                 }
                 {
-                    error &&
-                    <div className="text-center">
-                        <Header
-                            widely
-                            color = "alert-danger"
-                            title = "Failed to perform API call..."
+                    error && <Error message="Operation failed!" close={() => this.props.clearLoadingFailure()}/>
+                }
+                {
+                    data && courses && schemes && faculties &&
+                    <LoadingOverlay
+                        active={isLoading ? true : false}
+                        spinner
+                        text='Performing API call...'>
+                        <ResultsTable
+                            results={data.content}
+                            courses={courses}
+                            schemes={schemes}
+                            faculties={faculties}
+                            page={data.number}
+                            sizePerPage={data.size}
+                            totalSize={data.totalElements}
+                            onTableChange={this.handleTableChange}
                         />
-                    </div>
+                    </LoadingOverlay>
                 }
-                {
-                    !isLoading &&
-                    <div className="text-right mt-3 mb-3">
-                        <span>
-                           <button className="btn btn-sm btn-info ml-2"
-                                   onClick={() => this.props.getDepResults()}>
-                               <FaSync/>&nbsp;Refresh
-                            </button>
-                        </span>
-
-                    </div>
-                }
-                {
-                    results.content ?
-                        <div>
-                            <ResultsTable
-                                courses = {courses}
-                                results={results.content}
-                                page={number}
-                                sizePerPage={size}
-                                totalSize={totalElements}
-                                isLoading={isLoading ? true : false}
-                                onTableChange={this.handleTableChange}
-                            />
-                        </div> : null
-                }
+                <Switcher show={changeDepartmentMode}
+                          deactivateModal={this.deactivateModal}
+                          afterAffiliationSelected = {this.afterAffiliationSelected}
+                          afterOwnDepartmentSelected = {this.afterOwnDepartmentSelected}/>
             </div>
         );
     }
 }
 
 Results.propTypes = {
-    courses: PropTypes.object.isRequired,
+    userInfo: PropTypes.object.isRequired,
     results: PropTypes.object.isRequired,
+    affiliation: PropTypes.object,
+
+    clearLoadingFailure: PropTypes.func.isRequired,
+
+    setExistingDepResultsFilterSchemes: PropTypes.func.isRequired,
+
+    getAllSchemesForDepResultsTableFilterByCourseId: PropTypes.func.isRequired,
 
     getDepResults: PropTypes.func.isRequired,
-    getDepResultsWithSpecs: PropTypes.func.isRequired
+    getDepResultsWithSpecs: PropTypes.func.isRequired,
+    getDepResultsAdmin: PropTypes.func.isRequired,
+    getDepResultsWithSpecAdmin: PropTypes.func.isRequired,
 
+    getAllDepResultsDataForTable: PropTypes.func.isRequired,
+    getAllDepResultsDataForTableAdmin: PropTypes.func.isRequired,
+    getAllDepResultsDataForTableGlobalAdmin: PropTypes.func.isRequired
 };
 
 export default Results;

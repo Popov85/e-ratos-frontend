@@ -10,6 +10,8 @@ import {userEditReducer} from "./userEditReducer";
 import {resultsReducer} from "./resultsReducer";
 import {coursesReducer} from "./coursesReducer";
 import {rolesReducer} from "./rolesReducer";
+import {schemesReducer} from "./schemesReducer";
+import {affiliationSelectorReducer} from "./affiliationSelectorReducer";
 
 const staffReducers = combineReducers({
     form: formReducer,
@@ -20,7 +22,9 @@ const staffReducers = combineReducers({
     userEdit: userEditReducer,
     results: resultsReducer,
     courses: coursesReducer,
-    roles: rolesReducer
+    roles: rolesReducer,
+    schemes: schemesReducer,
+    affiliationSelector: affiliationSelectorReducer
 });
 
 export default staffReducers;

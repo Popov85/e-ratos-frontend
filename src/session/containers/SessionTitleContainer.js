@@ -2,11 +2,12 @@ import {connect} from "react-redux";
 import {getCancelled, getPaused, getPreserved, getProceeded} from "../actions/sessionActions";
 import SessionTitle from "../components/SessionTitle";
 import {getContext} from "../selectors/contextSelector";
+import {getUserInfo} from "../../common/selectors/userSelector";
 
 const mapStateToProps = state => {
     return {
         context: getContext(state),
-        userInfo: state.userInfo,
+        userInfo: getUserInfo(state),
         schemeInfo: state.schemeInfo,
         isTimeLimited: state.session.batch.sessionExpiresInSec,
         isPaused: state.session.paused

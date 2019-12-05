@@ -1,5 +1,6 @@
 import React from 'react';
 import {Route} from "react-router-dom";
+import PropTypes from "prop-types";
 import Courses from "./Courses";
 import Schemes from "./Schemes";
 import Themes from "./Themes";
@@ -8,47 +9,59 @@ import Resources from "./Resources";
 import Groups from "./Groups";
 import Complaints from "./Complaints";
 import Lms from "./Lms";
-import {loginURL} from "../../common/_api/appAPI";
-import PropTypes from "prop-types";
 import StaffNavbarContainer from "../containers/StaffNavbarContainer";
-import StaffHome from "./StaffHome";
 import UsersContainer from "../containers/UsersContainer";
 import UserEditManager from "./UserEditManager";
 import UserEditContainer from "../containers/UserEditContainer";
-import ResultsContainer from "../containers/ResultsContainer";
 import ResultsViewerManager from "./ResultsViewerManager";
+import ResultsContainer from "../containers/ResultsContainer";
 
-const StaffPortal = props => {
+import {loginURL} from "../../common/_api/appAPI";
+import StaffHomeContainer from "../containers/StaffHomeContainer";
 
-    const {logged} = props.security;
 
-    if (!logged) window.location.assign(loginURL);
+class StaffPortal extends React.Component {
 
-    return (
-        <React.Fragment>
-            <StaffNavbarContainer/>
-            <main>
-                <Route path="/" exact component={StaffHome}/>
-                <Route path="/users" exact component={UsersContainer}/>
-                <Route path="/users/new/" exact component={UserEditContainer}/>
-                <Route path="/users/edit/:staffId" exact component={UserEditManager}/>
-                <Route path="/courses" exact component={Courses}/>
-                <Route path="/schemes" exact component={Schemes}/>
-                <Route path="/themes" exact component={Themes}/>
-                <Route path="/questions" exact component={Questions}/>
-                <Route path="/resources" exact component={Resources}/>
-                <Route path="/results" exact component={ResultsContainer}/>
-                <Route path="/results/details/:resultId" exact component={ResultsViewerManager}/>
-                <Route path="/groups" exact component={Groups}/>
-                <Route path="/complaints" exact component={Complaints}/>
-                <Route path="/lms" exact component={Lms}/>
-            </main>
-        </React.Fragment>
-    );
+    componentDidMount() {
+        // Only if there is no UserInfo in store!
+        const {authenticated} = this.props.userInfo;
+        if (!authenticated) this.props.loadUserInfo();
+    }
+
+    render() {
+        const {logged} = this.props.security;
+        if (!logged) window.location.assign(loginURL);
+        const {authenticated} = this.props.userInfo;
+        if (!authenticated) return null;
+        return (
+            <React.Fragment>
+                <StaffNavbarContainer/>
+                <main>
+                    <Route path="/" exact component={StaffHomeContainer}/>
+                    <Route path="/users" exact component={UsersContainer}/>
+                    <Route path="/users/new/" exact component={UserEditContainer}/>
+                    <Route path="/users/edit/:staffId" exact component={UserEditManager}/>
+                    <Route path="/courses" exact component={Courses}/>
+                    <Route path="/schemes" exact component={Schemes}/>
+                    <Route path="/themes" exact component={Themes}/>
+                    <Route path="/questions" exact component={Questions}/>
+                    <Route path="/resources" exact component={Resources}/>
+                    <Route path="/results" exact component={ResultsContainer}/>
+                    <Route path="/results/details/:resultId" exact component={ResultsViewerManager}/>
+                    <Route path="/groups" exact component={Groups}/>
+                    <Route path="/complaints" exact component={Complaints}/>
+                    <Route path="/lms" exact component={Lms}/>
+                </main>
+            </React.Fragment>
+        );
+    }
 }
 
 StaffPortal.propTypes = {
-    security: PropTypes.object.isRequired
+    userInfo: PropTypes.object.isRequired,
+    security: PropTypes.object.isRequired,
+
+    loadUserInfo: PropTypes.func.isRequired
 };
 
 export default StaffPortal;

@@ -12,8 +12,8 @@ const minLength = min => value =>
     value && value.length < min ? `Must be ${min} characters or more` : undefined
 export const minLength2 = minLength(2)
 export const minLength8 = minLength(8)
-const number = value =>
-    value && isNaN(Number(value)) ? 'Must be a number' : undefined
+export const number = value =>
+    !value || isNaN(Number(value)) ? 'Must be a number' : undefined
 const minValue = min => value =>
     value && value < min ? `Must be at least ${min}` : undefined
 const minValue13 = minValue(13)
@@ -38,6 +38,8 @@ const phoneNumber = value =>
         ? 'Invalid phone number, must be 10 digits'
         : undefined
 
+export const passwordsMustMatch = (value, allValues) =>
+    value !== allValues.password ? 'Passwords do not match' : undefined
 
 export const allSelected = value => {
     if (!value) return {fields: ["orgId", "facId", "classId"]}
@@ -50,6 +52,3 @@ export const allSelected = value => {
     }
     return undefined;
 }
-
-export const passwordsMustMatch = (value, allValues) =>
-    value !== allValues.password ? 'Passwords do not match' : undefined

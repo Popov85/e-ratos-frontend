@@ -1,13 +1,21 @@
 import React from 'react';
 import {Button, Nav, Navbar, NavDropdown} from "react-bootstrap";
+import PropTypes from 'prop-types';
 import {LinkContainer} from "react-router-bootstrap";
 import {FaSignOutAlt, FaUserTie} from 'react-icons/fa';
 import "../../../main.css";
 
-import PropTypes from 'prop-types';
-// TODO: disable Admin for non-admin staff
+
 const StaffNavbar = (props) => {
-    const {name, surname} = props.userInfo;
+
+    const {authenticated, isLoading, error} = props.userInfo;
+
+    const displayUserInfo =() => {
+        if (error) return <span className="text-danger">Error</span>;
+        if (isLoading) return <span className="text-warning">Loading...</span>;
+        if (authenticated) return authenticated.name+" "+authenticated.surname;
+        return "Init...";
+    }
 
     return (
         <Navbar variant="dark" bg="secondary" expand="lg">
@@ -19,7 +27,7 @@ const StaffNavbar = (props) => {
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <NavDropdown title="Admin" id="admin-nav-dropdown" hidden={!props.isDepAdmin}>
+                    <NavDropdown title="Admin" id="admin-nav-dropdown" hidden={!authenticated.isAtLeastDepAdmin}>
                         <LinkContainer to="/users">
                             <NavDropdown.Item>Staff</NavDropdown.Item>
                         </LinkContainer>
@@ -68,7 +76,7 @@ const StaffNavbar = (props) => {
                 </Nav>
                 <Navbar.Collapse className="justify-content-end">
                     <Navbar.Text className="mr-2">
-                        <FaUserTie style={{fontSize: '1.25em'}}/> {name+" "+surname}
+                        <FaUserTie style={{fontSize: '1.25em'}}/> {displayUserInfo()}
                     </Navbar.Text>
                     {
                         !props.security.isLoggingOut ?
@@ -85,7 +93,6 @@ const StaffNavbar = (props) => {
 
 StaffNavbar.propTypes = {
     userInfo: PropTypes.object.isRequired,
-    isDepAdmin: PropTypes.bool.isRequired,
     security: PropTypes.object.isRequired,
     getLoggedOut: PropTypes.func
 };

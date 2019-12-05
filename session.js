@@ -10,7 +10,7 @@ import allReducers from "./src/session/reducers/index";
 import InfoContainer from "./src/session/containers/InfoContainer";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {getUserInfo} from "./src/common/actions/userActions";
+import './main.css';
 
 const testMode = {
     modeId: 1,
@@ -2069,9 +2069,6 @@ const initSession = {
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 let store=createStore(allReducers, composeEnhancers(applyMiddleware(thunk)));
-
-// Init app
-getUserInfo(store);
 
 ReactDOM.render(
     <ErrorHandler>

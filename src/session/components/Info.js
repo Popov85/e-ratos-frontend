@@ -9,6 +9,9 @@ import StartContainer from "../containers/StartContainer";
 
 const Info = props => {
 
+    const {isUserLoading, errorUser, authenticated} = props.userInfo;
+    const {isSchemeLoading, errorScheme, name} = props.schemeInfo;
+
     const renderLoading = () => {
         return (
             <div>
@@ -25,8 +28,8 @@ const Info = props => {
                 <div className="row mt-3">
                     <div className="col-12 text-center">
                         <button className="btn btn-secondary"
-                                onClick={() => props.errorUser ? props.loadUserInfo() : props.loadSchemeInfo()}
-                                title="Re-try to load info">
+                                onClick={() => errorUser ? props.loadUserInfo() : props.loadSchemeInfo()}
+                                title="Re-try to load init data">
                             Re-try&nbsp;<FaRedo color="white"/>
                         </button>
                     </div>
@@ -35,17 +38,16 @@ const Info = props => {
         );
     }
 
-    const {isUserLoading, isSchemeLoading, errorUser, errorScheme} = props;
     if (isUserLoading || isSchemeLoading) return renderLoading();
     if (errorUser || errorScheme) return renderFailure();
-    return <StartContainer/>
+    if (authenticated && name) return <StartContainer/>;
+    return null;
 };
 
 Info.propTypes = {
-    isUserLoading: PropTypes.bool,
-    errorUser: PropTypes.object,
-    isSchemeLoading: PropTypes.bool,
-    errorScheme: PropTypes.object,
+    userInfo: PropTypes.object.isRequired,
+    schemeInfo: PropTypes.object.isRequired,
+
     loadUserInfo: PropTypes.func,
     loadSchemeInfo: PropTypes.func
 };

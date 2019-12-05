@@ -22,7 +22,6 @@ class Users extends Component {
     }
 
     handleUpdate(staffId, dataField, newValue) {
-        //console.log(dataField, newValue);
         switch (dataField) {
             case "user.surname": {
                 this.props.updateStaffSurname(staffId, newValue);
@@ -63,8 +62,8 @@ class Users extends Component {
     }
 
     render() {
-        const {isDepAdmin, users, positions, roles} = this.props;
-        if (!isDepAdmin) return <ProtectedResource/>;
+        const {userInfo, users, positions, roles} = this.props;
+        if (userInfo.authenticated && !userInfo.authenticated.isAtLeastDepAdmin) return <ProtectedResource/>;
         const {isLoading, isUpdating, error, errorUpdate} = users;
 
         return (
@@ -117,7 +116,7 @@ class Users extends Component {
 }
 
 Users.propTypes = {
-    isDepAdmin: PropTypes.bool.isRequired,
+    userInfo: PropTypes.object.isRequired,
     users: PropTypes.object.isRequired,
     positions: PropTypes.object.isRequired,
 

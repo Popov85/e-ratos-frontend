@@ -1,20 +1,48 @@
-const initState = {
-    "userId": 1,
-    "name": "Staff",
-    "surname": "Staff",
-    "email": "staff.staff@example.com",
-    "role": "ROLE_GLOBAL-ADMIN",
-    "lms": false,
-    "staff": {
-        "position": {
-            "posId": 1,
-            "name": "System admin"
+// TODO: add faculty and organisation info
+
+const allowedRolesGlobalAdmin = ["ROLE_GLOBAL-ADMIN"];
+const allowedRolesAtLeastOrgAdmin = [...allowedRolesGlobalAdmin, "ROLE_ORG-ADMIN"];
+const allowedRolesAtLeastFacAdmin = [...allowedRolesAtLeastOrgAdmin, "ROLE_FAC-ADMIN"];
+const allowedRolesAtLeastDepAdmin = [...allowedRolesAtLeastFacAdmin, "ROLE_DEP-ADMIN"];
+const allowedRolesAtLeastInstructor = [...allowedRolesAtLeastDepAdmin, "ROLE_INSTRUCTOR"];
+
+
+const testInitState = {
+    "authenticated": {
+        "userId": 1,
+        "name": "Staff",
+        "surname": "Staff",
+        "email": "staff.staff@example.com",
+        "role": "ROLE_GLOBAL-ADMIN",
+        "lms": false,
+        "staff": {
+            "position": {
+                "posId": 1,
+                "name": "System admin"
+            },
+            "department": {
+                "depId": 1,
+                "name": "Department",
+                "faculty": {
+                    "facId": 1,
+                    "name": "Faculty",
+                    "organisation" : {
+                        "orgId": 1,
+                        "name": "Organisation",
+                    }
+                }
+            }
         },
-        "department": {
-            "depId": 1,
-            "name": "Department"
-        }
+        isGlobalAdmin: true,
+        isAtLeastOrgAdmin: true,
+        isAtLeastFacAdmin: true,
+        isAtLeastDepAdmin: true,
+        isAtLeastInstructor: true
     }
+}
+
+const initState = {
+    authenticated: null
 }
 
 export const userReducer = (state = initState, action) => {
@@ -26,10 +54,17 @@ export const userReducer = (state = initState, action) => {
             return {...state, error: action.error};
         }
         case "SET_USER_INFO": {
-            return action.payload;
+            let authenticated = action.payload;
+            let actual_role = authenticated.role;
+            authenticated.isGlobalAdmin = allowedRolesGlobalAdmin.includes(actual_role);
+            authenticated.isAtLeastOrgAdmin = allowedRolesAtLeastOrgAdmin.includes(actual_role);
+            authenticated.isAtLeastFacAdmin = allowedRolesAtLeastFacAdmin.includes(actual_role);
+            authenticated.isAtLeastDepAdmin = allowedRolesAtLeastDepAdmin.includes(actual_role);
+            authenticated.isAtLeastInstructor = allowedRolesAtLeastInstructor.includes(actual_role);
+            return {authenticated};
         }
         case "CLEAR_USER_INFO": {
-            return {};
+            return {...state, authenticated: null};
         }
         default:
             return state;

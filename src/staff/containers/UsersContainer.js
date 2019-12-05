@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {isDepAdmin} from "../../common/selectors/userSelector";
 import {
     clearAllFailures,
     disableStaff,
@@ -17,7 +16,7 @@ import {getPositions} from "../actions/positionsActions";
 
 const mapStateToProps = state => {
     return {
-        isDepAdmin: isDepAdmin(state),
+        userInfo: state.userInfo,
         users: state.users,
         roles: state.roles,
         positions: state.positions,

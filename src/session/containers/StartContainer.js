@@ -2,12 +2,12 @@ import React from 'react';
 import Start from "../components/Start";
 import {connect} from "react-redux";
 import {getStarted} from "../actions/sessionActions";
-import {getContext} from "../selectors/contextSelector";
+import {getContext, getSchemeInfo} from "../selectors/contextSelector";
 
 const mapStateToProps = (state) => {
     return {
         context: getContext(state),
-        schemeInfo: state.schemeInfo,
+        schemeInfo: getSchemeInfo(state),
         session: state.session,
         security: state.security,
         failure: state.failure

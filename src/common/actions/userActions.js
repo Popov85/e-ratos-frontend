@@ -10,7 +10,11 @@ export const loadingFailure = error => ({type: LOADING_USER_INFO_FAILURE, error}
 export const setUserInfo = userInfo => ({type: SET_USER_INFO, payload: userInfo});
 export const clearUserInfo = () => ({type: CLEAR_USER_INFO});
 
-// Use at the app start
+/**
+ * Used to init an app module for the first time the app is up!
+ * The reason for that is not to re-load this info each time the redux store
+ * @param store
+ */
 export const getUserInfo = (store) => {
     store.dispatch(loading(true));
     appAPI.fetchUserInfo().then(result => {

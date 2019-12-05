@@ -16,14 +16,14 @@ const FieldSelectBadge = props => {
                 <label className="input-group-text" htmlFor={props.badge}>{props.badge}</label>
             </div>
             <select id={props.badge}
-                    className={`custom-select ${!touched ? '' : error ? 'is-invalid' : 'is-valid'}`}
+                    className={`custom-select ${!touched ? '' : (error || !props.input.value) ? 'is-invalid' : 'is-valid'}`}
                     onChange={e => props.input.onChange(e)}
                     value={props.input.value}>
                 {
                     items.map(item => <option key={item.value} value={item.value}>{item.label}</option>)
                 }
             </select>
-            {hasError && <div className="invalid-feedback">Please, provide a valid value..</div>}
+            {(hasError || !props.input.value) && <div className="invalid-feedback">Please, provide a valid value..</div>}
         </div>
     );
 };

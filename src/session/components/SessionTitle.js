@@ -36,10 +36,11 @@ const SessionTitle = props => {
     }
 
     const renderSessionRightTitle = () => {
+        const {email} = props.userInfo.authenticated;
         return (
             <span
                 className="text-secondary text-small border d-inline-flex border align-items-center justify-content-start float-right">
-                <span className="mr-1" title="Current user">{props.userInfo.email}</span>
+                <span className="mr-1" title="Current user">{email}</span>
                 <span className="mr-1" title="Current context">{isLMS ? "|LMS" : "|non-LMS"}</span>
                 {
                     preservable ?
@@ -65,8 +66,8 @@ const SessionTitle = props => {
 };
 
 SessionTitle.propTypes = {
-    context: PropTypes.object.isRequired,
     userInfo: PropTypes.object.isRequired,
+    context: PropTypes.object.isRequired,
     schemeInfo: PropTypes.object.isRequired,
     isPaused: PropTypes.bool.isRequired,
     isTimeLimited: PropTypes.bool.isRequired,

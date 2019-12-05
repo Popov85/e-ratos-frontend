@@ -1,8 +1,8 @@
 import React from 'react';
-import Logo from "./Logo";
 import {FaUserTie} from "react-icons/fa";
 import utils from "../utils/utils";
 import {OverlayTrigger, Tooltip} from "react-bootstrap";
+import LogoWhite from "./LogoWhite";
 
 const Welcome = props => {
 
@@ -10,7 +10,7 @@ const Welcome = props => {
         <div className="container-fluid d-flex h-100 flex-column">
             <div className="row">
                 <div className="col-12 bg-info">
-                    <Logo/>
+                    <LogoWhite/>
                     <div className="text-center p-5">
                         <OverlayTrigger
                             placement="bottom"

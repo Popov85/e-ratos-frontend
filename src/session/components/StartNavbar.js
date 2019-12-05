@@ -5,7 +5,7 @@ import {FaSignOutAlt, FaUserGraduate} from 'react-icons/fa';
 
 const StartNavbar = (props) => {
     const {isLMS} = props.context;
-    const {email} = props.userInfo;
+    const {email} = props.userInfo.authenticated;
     const {isLoggingOut} = props.security;
     return (
         <Navbar variant="dark" bg="info" expand="lg">
@@ -38,8 +38,8 @@ const StartNavbar = (props) => {
 }
 
 StartNavbar.propTypes = {
-    context: PropTypes.object.isRequired,
     userInfo: PropTypes.object.isRequired,
+    context: PropTypes.object.isRequired,
     security: PropTypes.object.isRequired,
     getLoggedOut: PropTypes.func,
 };

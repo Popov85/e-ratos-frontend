@@ -13,14 +13,10 @@ import {Provider} from "react-redux";
 import thunk from "redux-thunk";
 import StaffPortalContainer from "./src/staff/containers/StaffPortalContainer";
 import staffReducers from "./src/staff/reducers/index";
-import {getUserInfo} from "./src/common/actions/userActions";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 let store=createStore(staffReducers, composeEnhancers(applyMiddleware(thunk)));
-
-// Init app
-getUserInfo(store);
 
 ReactDOM.render(
     <ErrorHandler>
