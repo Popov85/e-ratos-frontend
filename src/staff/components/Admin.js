@@ -2,10 +2,21 @@ import React from 'react';
 import {FaExchangeAlt} from "react-icons/fa";
 import PropTypes from 'prop-types';
 
-
 const Admin = props => {
 
-    const {affiliation} = props;
+    const {userInfo, affiliation} = props;
+
+    let ownDepTitle='';
+    if (!affiliation) {
+        const {department} = userInfo.authenticated.staff;
+        const dep = department.name;
+        const fac = department.faculty.name;
+        const org = department.faculty.organisation.name;
+        ownDepTitle= `Org: ${org}`;
+        ownDepTitle= ownDepTitle + `Fac: ${fac}`;
+        ownDepTitle= ownDepTitle + `Dep: ${dep}`;
+    }
+
     let affiliationTitle='';
     if (affiliation) {
         if (affiliation.org) {
@@ -28,8 +39,8 @@ const Admin = props => {
                     &nbsp;
                     {
                         !affiliation ?
-                            <span>
-                                <strong>You are querying your own department!</strong>
+                            <span title = {ownDepTitle}>
+                                <strong>Own department.</strong>
                             </span> :
                             <span title={affiliationTitle}>
                                 <strong>
@@ -45,6 +56,7 @@ const Admin = props => {
 };
 
 Admin.propTypes = {
+    userInfo: PropTypes.object.isRequired,
     affiliation: PropTypes.object.isRequired,
     activateModal: PropTypes.func.isRequired
 };

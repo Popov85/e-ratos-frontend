@@ -18,7 +18,7 @@ const mapStateToProps = state => {
     return {
         userInfo: state.userInfo,
         results: state.results,
-        affiliation: state.affiliationSelector.selected,
+        affiliation: state.affiliationSelectorCacheable.selected,
     }
 }
 

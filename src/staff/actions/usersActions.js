@@ -133,6 +133,8 @@ export const disableStaff = (staffId) => {
     }
 }
 
+//--------------------------------------------------SETs----------------------------------------------------------------
+
 export const getAllStaffByDepartment = () => {
     return (dispatch) => {
         dispatch(clearLoadingFailure());
@@ -146,30 +148,41 @@ export const getAllStaffByDepartment = () => {
     }
 }
 
-export const getStaffByDepartment = (params) => {
+export const getAllStaffByFaculty = () => {
     return (dispatch) => {
         dispatch(clearLoadingFailure());
         dispatch(loading(true));
-        usersAPI.fetchStaffByDepartment(params).then(result => {
+        usersAPI.fetchAllStaffByFaculty().then(result => {
             dispatch(setDepStaff(result.data));
         }).catch(e => {
-            console.log("Error fetching dep. staff!", e);
-            dispatch(loadingFailure(new Error("Failed to fetch dep. staff")));
+            console.log("Error fetching all fac. staff!", e);
+            dispatch(loadingFailure(new Error("Failed to fetch all fac. staff")));
         }).finally(() => dispatch(loading(false)));
     }
 }
 
-export const getStaffByDepartmentAndSurnameLettersContains = (letters, params) => {
+export const getAllStaffByOrganisation = () => {
     return (dispatch) => {
         dispatch(clearLoadingFailure());
         dispatch(loading(true));
-        usersAPI.fetchStaffByDepartmentAndSurnameLettersContains(letters, params).then(result => {
+        usersAPI.fetchAllStaffByOrganisation().then(result => {
             dispatch(setDepStaff(result.data));
-            //Set filter to feed back to table
-            dispatch(setStaffFilter(letters));
         }).catch(e => {
-            console.log("Error fetching dep. staff!", e);
-            dispatch(loadingFailure(new Error("Failed to fetch dep. staff")));
+            console.log("Error fetching all org. staff!", e);
+            dispatch(loadingFailure(new Error("Failed to fetch all org. staff")));
+        }).finally(() => dispatch(loading(false)));
+    }
+}
+
+export const getAllStaffByRatos = () => {
+    return (dispatch) => {
+        dispatch(clearLoadingFailure());
+        dispatch(loading(true));
+        usersAPI.fetchAllStaffByRatos().then(result => {
+            dispatch(setDepStaff(result.data));
+        }).catch(e => {
+            console.log("Error fetching all ratos. staff!", e);
+            dispatch(loadingFailure(new Error("Failed to fetch all ratos. staff")));
         }).finally(() => dispatch(loading(false)));
     }
 }

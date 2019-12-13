@@ -2,7 +2,7 @@ import {resultsAPI} from "../_api/resultsAPI";
 import {coursesAPI} from "../_api/coursesAPI";
 import {schemesAPI} from "../_api/schemesAPI";
 import {facultiesAPI} from "../_api/facultiesAPI";
-import {clearSelected, setSelected} from "./affiliationSelectorActions";
+import {clearSelected, setSelected} from "./affiliationSelectorCacheableActions";
 
 
 const LOADING_DEP_RESULTS = "LOADING_DEP_RESULTS";

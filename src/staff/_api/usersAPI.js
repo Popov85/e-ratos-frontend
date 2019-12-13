@@ -44,16 +44,20 @@ export const usersAPI = {
         return instance.put(`/dep-admin/staff/${staffId}/update-role?role=${role}`);
     },
 
+    //------------------------------------------------SET-s-------------------------------------------------------------
     fetchAllStaffByDepartment() {
-        return instance.get(`/dep-admin/staff/all-by-department`);
+        return instance.get(`/dep-admin/staff-table/all-staff-by-department`);
     },
 
-    fetchStaffByDepartment(params) {
-        return instance.get(`/dep-admin/staff/by-department?${params}`);
+    fetchAllStaffByFaculty() {
+        return instance.get(`/fac-admin/staff-table/all-staff-by-faculty`);
     },
 
-    fetchStaffByDepartmentAndSurnameLettersContains(letters, params) {
-        return instance.get(`/dep-admin/staff/by-department?letters=${letters}&${params}`);
-    }
+    fetchAllStaffByOrganisation() {
+        return instance.get(`/org-admin/staff-table/all-staff-by-organisation`);
+    },
 
+    fetchAllStaffByRatos() {
+        return instance.get(`/global-admin/staff-table/all-staff-by-ratos`);
+    },
 }

@@ -13,12 +13,29 @@ class Users extends Component {
     constructor(props) {
         super(props);
         this.handleTableChange = this.handleTableChange.bind(this);
+        this.loadStaffBasedOnRole = this.loadStaffBasedOnRole.bind(this);
     }
 
     componentDidMount() {
         const {users, positions} = this.props;
         if (!positions.actual) this.props.getPositions();
-        if (!users.content) this.props.getAllStaffByDepartment();
+        // Choose what data to load based on current  role
+        if (!users.content) this.loadStaffBasedOnRole();
+    }
+
+    loadStaffBasedOnRole() {
+        const {isGlobalAdmin,
+            isAtLeastOrgAdmin,
+            isAtLeastFacAdmin} = this.props.userInfo.authenticated;
+        if (isGlobalAdmin) {
+            this.props.getAllStaffByRatos();
+        } else if (isAtLeastOrgAdmin) {
+            this.props.getAllStaffByOrganisation();
+        } else if (isAtLeastFacAdmin) {
+            this.props.getAllStaffByFaculty();
+        } else {
+            this.props.getAllStaffByDepartment()
+        }
     }
 
     handleUpdate(staffId, dataField, newValue) {
@@ -68,7 +85,7 @@ class Users extends Component {
 
         return (
             <div className="p-1">
-                <div className="alert alert-secondary text-center">
+                <div className="alert alert-secondary text-center mb-1">
                     <h5 className="alert-heading">
                         <strong>Staff management</strong>
                     </h5>
@@ -79,14 +96,14 @@ class Users extends Component {
                 }
                 {
                     !isLoading &&
-                    <div className="text-right mt-3 mb-3">
+                    <div className="text-right mb-1">
                         <LinkContainer to="/users/new/">
                             <button className = "btn btn-sm btn-success">
                                 <FaPlus/>&nbsp;New
                             </button>
                         </LinkContainer>
                         <button className = "btn btn-sm btn-info ml-2"
-                                onClick = {()=>this.props.getAllStaffByDepartment()}>
+                                onClick = {()=>this.loadStaffBasedOnRole()}>
                             <FaSync/>&nbsp;Refresh
                         </button>
                     </div>
@@ -100,7 +117,8 @@ class Users extends Component {
                             text='Performing API call...'>
                             <UsersTable
                                 roles={roles}
-                                users={users.content}
+                                users={users}
+                                userInfo = {userInfo}
                                 positions={positions}
                                 onTableChange={this.handleTableChange}
                             />
@@ -131,7 +149,10 @@ Users.propTypes = {
 
     clearAllFailures: PropTypes.func.isRequired,
     getPositions:PropTypes.func.isRequired,
-    getAllStaffByDepartment:PropTypes.func.isRequired
+    getAllStaffByDepartment:PropTypes.func.isRequired,
+    getAllStaffByFaculty:PropTypes.func.isRequired,
+    getAllStaffByOrganisation:PropTypes.func.isRequired,
+    getAllStaffByRatos:PropTypes.func.isRequired
 };
 
 export default Users;

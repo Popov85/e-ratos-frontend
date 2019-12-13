@@ -63,6 +63,10 @@ export const userReducer = (state = initState, action) => {
             authenticated.isAtLeastInstructor = allowedRolesAtLeastInstructor.includes(actual_role);
             return {authenticated};
         }
+        case "UPDATE_USER_PROFILE": {
+            const {name, surname, email} = action.payload;
+            return {...state, authenticated: {...state.authenticated, name, surname, email}};
+        }
         case "CLEAR_USER_INFO": {
             return {...state, authenticated: null};
         }

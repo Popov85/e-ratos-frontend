@@ -4,7 +4,7 @@ import {
     clearAllFailures,
     disableStaff,
     enableStaff,
-    getAllStaffByDepartment,
+    getAllStaffByDepartment, getAllStaffByFaculty, getAllStaffByOrganisation, getAllStaffByRatos,
     updateStaffEmail,
     updateStaffName,
     updateStaffPosition,
@@ -13,12 +13,13 @@ import {
 } from "../actions/usersActions";
 import Users from "../components/Users";
 import {getPositions} from "../actions/positionsActions";
+import {getRoles} from "../selectors/rolesSelector";
 
 const mapStateToProps = state => {
     return {
         userInfo: state.userInfo,
         users: state.users,
-        roles: state.roles,
+        roles: getRoles(state),
         positions: state.positions,
     }
 }
@@ -30,13 +31,15 @@ const mapDispatchToProps = dispatch => {
         updateStaffEmail: (staffId, email)=>dispatch(updateStaffEmail(staffId, email)),
         updateStaffRole: (staffId, role)=>dispatch(updateStaffRole(staffId, role)),
         updateStaffPosition: (staffId, positionId, positions)=>dispatch(updateStaffPosition(staffId, positionId, positions)),
-
         enableStaff: (staffId)=>dispatch(enableStaff(staffId)),
         disableStaff: (staffId)=>dispatch(disableStaff(staffId)),
 
         clearAllFailures: () => dispatch(clearAllFailures()),
         getPositions: () => dispatch(getPositions()),
-        getAllStaffByDepartment: () => dispatch(getAllStaffByDepartment())
+        getAllStaffByDepartment: () => dispatch(getAllStaffByDepartment()),
+        getAllStaffByFaculty: () => dispatch(getAllStaffByFaculty()),
+        getAllStaffByOrganisation: () => dispatch(getAllStaffByOrganisation()),
+        getAllStaffByRatos: () => dispatch(getAllStaffByRatos())
     }
 }
 

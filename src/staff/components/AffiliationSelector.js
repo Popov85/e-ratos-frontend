@@ -49,12 +49,13 @@ class AffiliationSelector extends Component {
     }
 
     handleSubmit(formData) {
-        let affiliation = new Affiliation(
-            formData.orgId,
-            formData.facId,
-            formData.depId);
+        const {affiliation} = formData;
+        let aff = new Affiliation(
+            affiliation.orgId,
+            affiliation.facId,
+            affiliation.depId);
         // Invoke a function to have job done!
-        this.props.afterAffiliationSelected(affiliation);
+        this.props.afterAffiliationSelected(aff);
     }
 
     handleOwnDepartment() {
@@ -70,9 +71,8 @@ class AffiliationSelector extends Component {
         const {isLoading, error, selected} = affiliationSelector;
         return (
             <div>
-                <div className="row mt-1">
-                    <div className="col-1"></div>
-                    <div className="col-10">
+                <div className="row">
+                    <div className="col-12">
                         <div className="card bg-transparent">
                             {
                                 isLoading &&
@@ -84,13 +84,15 @@ class AffiliationSelector extends Component {
                                     <Error message="Operation failed!" close={() => this.props.clearLoadingFailure()}/>
                                 </div>
                             }
-                            <div className="card-body">
+                            <div className="ratos-form-card card-body">
                                 <AffiliationSelectorForm
                                     initialValues={selected ?
                                         {
-                                            orgId: selected.org ? selected.org.value : null,
-                                            facId: selected.fac ? selected.fac.value : null,
-                                            depId: selected.dep ? selected.dep.value : null,
+                                            affiliation: {
+                                                orgId: selected.org ? selected.org.value : null,
+                                                facId: selected.fac ? selected.fac.value : null,
+                                                depId: selected.dep ? selected.dep.value : null,
+                                            }
                                         }
                                         : null
                                     }
@@ -110,7 +112,6 @@ class AffiliationSelector extends Component {
                         </div>
 
                     </div>
-                    <div className="col-1"></div>
                 </div>
             </div>
         );

@@ -7,16 +7,57 @@ import filterFactory, {selectFilter, textFilter} from 'react-bootstrap-table2-fi
 import {FaPencilAlt} from "react-icons/fa";
 import {LinkContainer} from "react-router-bootstrap";
 import {email, minLength2} from "../../utils/validators";
+import {isRoleManageable} from "../../utils/security";
 
 const UsersTable = props => {
 
-    const {users, positions, roles} = props;
+    const {userInfo, users, positions, roles} = props;
+
+    const {content, organisations, faculties, departments} = users;
+    
+    const {authenticated} = userInfo
 
     const columns = [
         {
             dataField: 'staffId',
             text: 'ID',
             hidden: true
+        },
+        {
+            dataField: 'department.faculty.organisation.orgId',
+            text: 'Organisation',
+            sort: true,
+            filter: selectFilter({
+                options: organisations
+            }),
+            formatter: cell => organisations[cell],
+            title: cell => organisations[cell],
+            hidden: authenticated.isGlobalAdmin ? false : true,
+            editable: false
+        },
+        {
+            dataField: 'department.faculty.facId',
+            text: 'Faculty',
+            sort: true,
+            filter: selectFilter({
+                options: faculties
+            }),
+            formatter: cell => faculties[cell],
+            title: cell => faculties[cell],
+            hidden: authenticated.isAtLeastOrgAdmin ? false : true,
+            editable: false
+        },
+        {
+            dataField: 'department.depId',
+            text: 'Department',
+            sort: true,
+            filter: selectFilter({
+                options: departments
+            }),
+            formatter: cell => departments[cell],
+            title: cell => departments[cell],
+            hidden: authenticated.isAtLeastFacAdmin ? false : true,
+            editable: false
         },
         {
             dataField: 'user.surname',
@@ -31,7 +72,8 @@ const UsersTable = props => {
                     };
                 }
                 return true;
-            }
+            },
+            title: cell => cell,
         },
         {
             dataField: 'user.name',
@@ -46,7 +88,8 @@ const UsersTable = props => {
                     };
                 }
                 return true;
-            }
+            },
+            title: cell => cell,
         },
         {
             dataField: 'user.email',
@@ -66,7 +109,8 @@ const UsersTable = props => {
                     };
                 }
                 return true;
-            }
+            },
+            title: cell => cell,
         },
         {
             dataField: 'user.role',
@@ -84,6 +128,10 @@ const UsersTable = props => {
             editor: {
                 type: Type.SELECT,
                 options: roles.forEdit
+            },
+            title: cell => cell,
+            editable: (cell, row) => {
+                return isRoleManageable(cell, props.userInfo.authenticated);
             }
         },
         {
@@ -94,6 +142,7 @@ const UsersTable = props => {
                 options: positions.forFilter
             }),
             formatter: cell => positions.forFilter[cell],
+            title: cell => positions.forFilter[cell],
             editor: {
                 type: Type.SELECT,
                 options: positions.forEdit
@@ -131,9 +180,12 @@ const UsersTable = props => {
                 return {width: '40px', textAlign: 'center'};
             },
             formatter: (cell, row) => {
+                const {role} = row.user;
+                const {authenticated} = props.userInfo;
+                const isEditable = isRoleManageable(role, authenticated);
                 return (
                     <LinkContainer to={`/users/edit/${row.staffId}`}>
-                        <a href="#" className="badge badge-info">
+                        <a href="#" className={`badge badge-${isEditable ? 'info':'danger'}`}>
                             <FaPencilAlt/>
                         </a>
                     </LinkContainer>);
@@ -145,7 +197,7 @@ const UsersTable = props => {
         <BootstrapTable bootstrap4 striped hover condensed
             remote={{ filter: false, pagination: false, sort: false, cellEdit: true}}
             keyField='staffId'
-            data={users}
+            data={content}
             columns={columns}
             filter={filterFactory()}
             pagination={paginationFactory({
@@ -154,10 +206,10 @@ const UsersTable = props => {
                 sizePerPageList: [
                     {text: '20', value: 20},
                     {text: '50', value: 50},
-                    {text: 'All', value: users.length}
+                    {text: 'All', value: content.length}
                 ]
-            })
-            }
+            })}
+            headerClasses="thead-light"
             cellEdit={cellEditFactory({mode: 'dbclick'})}
             noDataIndication={ ()=> "No data!"}
             onTableChange={props.onTableChange}
@@ -166,8 +218,9 @@ const UsersTable = props => {
 };
 
 UsersTable.propTypes = {
-    users: PropTypes.array.isRequired,
+    users: PropTypes.object.isRequired,
     roles: PropTypes.object.isRequired,
+    userInfo: PropTypes.object.isRequired,
     positions: PropTypes.object.isRequired,
     onTableChange: PropTypes.func.isRequired
 };

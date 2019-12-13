@@ -1,7 +1,5 @@
 import React from 'react';
 import {connect} from "react-redux";
-
-import {getRole} from "../../common/selectors/userSelector";
 import {
     clearAllOnFacultyReset,
     clearAllOnOrganisationReset,
@@ -12,13 +10,13 @@ import {
     setExistingDepartmentsForSelector,
     setExistingFacultiesForSelector,
     setExistingOrganisationsForSelector
-} from "../actions/affiliationSelectorActions";
+} from "../actions/affiliationSelectorCacheableActions";
 import AffiliationSelector from "../components/AffiliationSelector";
 
 const mapStateToProps = state => {
     return {
         userInfo: state.userInfo,
-        affiliationSelector: state.affiliationSelector
+        affiliationSelector: state.affiliationSelectorCacheable
     }
 }
 

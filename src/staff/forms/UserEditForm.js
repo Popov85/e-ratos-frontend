@@ -1,5 +1,6 @@
 import React from 'react'
-import {Field, reduxForm} from 'redux-form';
+import PropTypes from "prop-types";
+import {Field, FormSection, reduxForm} from 'redux-form';
 import FieldString from "../../common/forms/controls/FieldString";
 import {email, minLength2, minLength8, required} from "../../utils/validators";
 import FieldEmail from "../../common/forms/controls/FieldEmail";
@@ -7,14 +8,16 @@ import FieldPassword from "../../common/forms/controls/FieldPassword";
 import {FaArrowLeft, FaSignInAlt} from "react-icons/fa";
 import FieldSelectBadge from "../../common/forms/controls/FieldSelectBadge";
 import {LinkContainer} from "react-router-bootstrap";
+import AffiliationSelectorFields from "./AffiliationSelectorFields";
+import AffiliationSelectorForm from "./AffiliationSelectorForm";
 
 let UserEditForm = props => {
 
-    const {isNew} = props;
+    const {userInfo, isNew, disabled, roles, positions} = props;
 
     return (
         <form onSubmit={props.handleSubmit}>
-            <fieldset disabled={props.disabled}>
+            <fieldset disabled={disabled}>
 
                 <Field name="userId" component="input" type={"text"} hidden/>
 
@@ -34,16 +37,31 @@ let UserEditForm = props => {
                 }
 
                 <Field name="role" component={FieldSelectBadge} placeholder="role" badge="Role"
-                       items={props.roles}
+                       items={roles}
                        validate={[required]}/>
 
                 <Field name="positionId" component={FieldSelectBadge} placeholder="position" badge="Position"
-                       items={props.positions} validate={[required]}/>
+                       items={positions} validate={[required]}/>
 
                 <div>
                     <Field type="checkbox" name="active" component="input"/>
                     <label className=" text-secondary" htmlFor="enabled">Active</label>
                 </div>
+
+                {
+                    userInfo.authenticated.isAtLeastFacAdmin &&
+                    <FormSection name="affiliation">
+                        <AffiliationSelectorFields
+                            userInfo = {userInfo}
+                            affiliationSelector = {props.affiliationSelector}
+                            getAllFacultiesForSelectorByOrganisationId={props.getAllFacultiesForSelectorByOrganisationId}
+                            getAllDepartmentsForSelectorByFacultyId={props.getAllDepartmentsForSelectorByFacultyId}
+                            clearAllOnOrganisationReset={props.clearAllOnOrganisationReset}
+                            clearAllOnFacultyReset={props.clearAllOnFacultyReset}
+                            change = {props.change}
+                        />
+                    </FormSection>
+                }
 
                 <hr/>
 
@@ -63,6 +81,21 @@ let UserEditForm = props => {
             </fieldset>
         </form>);
 }
+
+AffiliationSelectorForm.propTypes = {
+    userInfo: PropTypes.string.isRequired,
+    positions: PropTypes.array.isRequired,
+    roles: PropTypes.array.isRequired,
+
+    affiliationSelector: PropTypes.object.isRequired,
+
+    getAllFacultiesForSelectorByOrganisationId: PropTypes.func.isRequired,
+    getAllDepartmentsForSelectorByFacultyId: PropTypes.func.isRequired,
+    clearAllOnOrganisationReset: PropTypes.func.isRequired,
+    clearAllOnFacultyReset:PropTypes.func.isRequired,
+
+    handleSubmit: PropTypes.func.isRequired
+};
 
 UserEditForm = reduxForm({form: 'staff-edit', enableReinitialize: true})(UserEditForm)
 

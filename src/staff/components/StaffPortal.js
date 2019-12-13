@@ -18,6 +18,8 @@ import ResultsContainer from "../containers/ResultsContainer";
 
 import {loginURL} from "../../common/_api/appAPI";
 import StaffHomeContainer from "../containers/StaffHomeContainer";
+import ProfileContainer from "../../common/containers/ProfileContainer";
+import PasswordContainer from "../../common/containers/PasswordContainer";
 
 
 class StaffPortal extends React.Component {
@@ -51,6 +53,8 @@ class StaffPortal extends React.Component {
                     <Route path="/groups" exact component={Groups}/>
                     <Route path="/complaints" exact component={Complaints}/>
                     <Route path="/lms" exact component={Lms}/>
+                    <Route path="/profile" exact component={ProfileContainer}/>
+                    <Route path="/profile/password" exact component={PasswordContainer}/>
                 </main>
             </React.Fragment>
         );

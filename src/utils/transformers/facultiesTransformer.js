@@ -26,4 +26,16 @@ export const facultiesTransformer = {
         });
     },
 
+    /**
+     * Transform array of users from server form into an array required by table filter
+     * @param users
+     * @returns {*}
+     */
+    toFilter (users) {
+        return users.reduce((map, user)=> {
+            map[user.department.faculty.facId] = user.department.faculty.name;
+            return map;
+        }, {});
+    }
+
 }

@@ -6,13 +6,7 @@ import RegistrationForm from "./forms/RegistrationForm";
 import LoginContainer from "./containers/LoginContainer";
 import '../../main.css';
 
-const initialValues = null; /*  {
-    name: "Name",
-    surname: "Surname",
-    password: "dT09Rx06",
-    passwordConfirmed: "dT09Rx06",
-    email: "student@example.com"
-};*/
+const initialValues = null;
 
 class Registration extends Component {
 

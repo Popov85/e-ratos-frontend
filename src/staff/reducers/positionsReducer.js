@@ -81,7 +81,7 @@ const forFilter = {
     8: "Lab. assistant",
 }
 
-const initState = {
+const testInitState = {
     actual,
     forEdit,
     forNew,

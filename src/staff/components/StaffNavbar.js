@@ -75,9 +75,15 @@ const StaffNavbar = (props) => {
 
                 </Nav>
                 <Navbar.Collapse className="justify-content-end">
-                    <Navbar.Text className="mr-2">
-                        <FaUserTie style={{fontSize: '1.25em'}}/> {displayUserInfo()}
+
+                    <Navbar.Text className="mr-0">
+                        Logged as:
                     </Navbar.Text>
+                    <NavDropdown title={displayUserInfo()} id="user-nav-dropdown" className="mr-2">
+                        <LinkContainer to="/profile">
+                            <NavDropdown.Item>Profile</NavDropdown.Item>
+                        </LinkContainer>
+                    </NavDropdown>
                     {
                         !props.security.isLoggingOut ?
                             <Button variant="light" size="sm" onClick={() => props.getLoggedOut()}>

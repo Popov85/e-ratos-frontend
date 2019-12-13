@@ -1,146 +1,234 @@
-const initState = {
+import {facultiesTransformer} from "../../utils/transformers/facultiesTransformer";
+import {departmentsTransformer} from "../../utils/transformers/departmentsTransformer";
+import {organisationsTransformer as organisationTransformer} from "../../utils/transformers/organisationsTransformer";
+
+const testInitState = {
     content: [
         {
-            "staffId" : 20,
-            "user" : {
-                "name" : "Anita",
-                "surname" : "Efremova",
-                "email" : "anita.efremova@example.com",
-                "active" : true,
-                "role" : "ROLE_INSTRUCTOR"
+            "staffId": 20,
+            "user": {
+                "name": "Anita",
+                "surname": "Efremova",
+                "email": "anita.efremova@example.com",
+                "active": true,
+                "role": "ROLE_INSTRUCTOR"
             },
-            "position" : {
-                "posId" : 6,
-                "name" : "Researcher"
+            "position": {
+                "posId": 6,
+                "name": "Researcher"
             },
-            "department" : {
-                "depId" : 1,
-                "name" : "Department"
+            "department": {
+                "depId": 2,
+                "name": "Department #2",
+                "faculty": {
+                    "facId": 2,
+                    "name": "Faculty #2",
+                    "organisation": {
+                        "orgId": 2,
+                        "name": "Organisation #2",
+                    }
+                }
             }
         }, {
-            "staffId" : 16,
-            "user" : {
-                "name" : "Alex",
-                "surname" : "Romanov",
-                "email" : "alex.romanov@gmail.com",
-                "active" : true,
-                "role" : "ROLE_INSTRUCTOR"
+            "staffId": 16,
+            "user": {
+                "name": "Alex",
+                "surname": "Romanov",
+                "email": "alex.romanov@gmail.com",
+                "active": true,
+                "role": "ROLE_INSTRUCTOR"
             },
-            "position" : {
-                "posId" : 2,
-                "name" : "Dean"
+            "position": {
+                "posId": 2,
+                "name": "Dean"
             },
-            "department" : {
-                "depId" : 1,
-                "name" : "Department"
+            "department": {
+                "depId": 1,
+                "name": "Department",
+                "faculty": {
+                    "facId": 1,
+                    "name": "Faculty",
+                    "organisation": {
+                        "orgId": 1,
+                        "name": "Organisation",
+                    }
+                }
             }
         }, {
-            "staffId" : 17,
-            "user" : {
-                "name" : "Adam",
-                "surname" : "Smakovskiy",
-                "email" : "adam.smakovsky@gmail.com",
-                "active" : true,
-                "role" : "ROLE_LAB-ASSISTANT"
+            "staffId": 17,
+            "user": {
+                "name": "Adam",
+                "surname": "Smakovskiy",
+                "email": "adam.smakovsky@gmail.com",
+                "active": true,
+                "role": "ROLE_LAB-ASSISTANT"
             },
-            "position" : {
-                "posId" : 3,
-                "name" : "Head"
+            "position": {
+                "posId": 3,
+                "name": "Head"
             },
-            "department" : {
-                "depId" : 1,
-                "name" : "Department"
+            "department": {
+                "depId": 1,
+                "name": "Department",
+                "faculty": {
+                    "facId": 1,
+                    "name": "Faculty",
+                    "organisation": {
+                        "orgId": 1,
+                        "name": "Organisation",
+                    }
+                }
             }
         }, {
-            "staffId" : 18,
-            "user" : {
-                "name" : "Angelina",
-                "surname" : "Krasovskaya",
-                "email" : "angelina.krasowskaya@gmail.com",
-                "active" : true,
-                "role" : "ROLE_DEP-ADMIN"
+            "staffId": 18,
+            "user": {
+                "name": "Angelina",
+                "surname": "Krasovskaya",
+                "email": "angelina.krasowskaya@gmail.com",
+                "active": true,
+                "role": "ROLE_DEP-ADMIN"
             },
-            "position" : {
-                "posId" : 6,
-                "name" : "Researcher"
+            "position": {
+                "posId": 6,
+                "name": "Researcher"
             },
-            "department" : {
-                "depId" : 1,
-                "name" : "Department"
+            "department": {
+                "depId": 1,
+                "name": "Department",
+                "faculty": {
+                    "facId": 1,
+                    "name": "Faculty",
+                    "organisation": {
+                        "orgId": 1,
+                        "name": "Organisation",
+                    }
+                }
             }
         }, {
-            "staffId" : 23,
-            "user" : {
-                "name" : "Garry",
-                "surname" : "Efremov",
-                "email" : "garry.efremov@example.com",
-                "active" : true,
-                "role" : "ROLE_LAB-ASSISTANT"
+            "staffId": 23,
+            "user": {
+                "name": "Garry",
+                "surname": "Efremov",
+                "email": "garry.efremov@example.com",
+                "active": true,
+                "role": "ROLE_LAB-ASSISTANT"
             },
-            "position" : {
-                "posId" : 8,
-                "name" : "Lab. assistant"
+            "position": {
+                "posId": 8,
+                "name": "Lab. assistant"
             },
-            "department" : {
-                "depId" : 1,
-                "name" : "Department"
+            "department": {
+                "depId": 1,
+                "name": "Department",
+                "faculty": {
+                    "facId": 1,
+                    "name": "Faculty",
+                    "organisation": {
+                        "orgId": 1,
+                        "name": "Organisation",
+                    }
+                }
             }
         }, {
-            "staffId" : 1,
-            "user" : {
-                "name" : "Staff",
-                "surname" : "Staff",
-                "email" : "staff.staff@example.com",
-                "active" : true,
-                "role" : "ROLE_DEP-ADMIN"
+            "staffId": 1,
+            "user": {
+                "name": "Staff",
+                "surname": "Staff",
+                "email": "staff.staff@example.com",
+                "active": true,
+                "role": "ROLE_DEP-ADMIN"
             },
-            "position" : {
-                "posId" : 1,
-                "name" : "System admin"
+            "position": {
+                "posId": 1,
+                "name": "System admin"
             },
-            "department" : {
-                "depId" : 1,
-                "name" : "Department"
+            "department": {
+                "depId": 1,
+                "name": "Department",
+                "faculty": {
+                    "facId": 1,
+                    "name": "Faculty",
+                    "organisation": {
+                        "orgId": 1,
+                        "name": "Organisation",
+                    }
+                }
             }
         }, {
-            "staffId" : 19,
-            "user" : {
-                "name" : "Andrey",
-                "surname" : "Popov",
-                "email" : "andrey.popov@example.com",
-                "active" : true,
-                "role" : "ROLE_INSTRUCTOR"
+            "staffId": 19,
+            "user": {
+                "name": "Andrey",
+                "surname": "Popov",
+                "email": "andrey.popov@example.com",
+                "active": true,
+                "role": "ROLE_INSTRUCTOR"
             },
-            "position" : {
-                "posId" : 5,
-                "name" : "Instructor"
+            "position": {
+                "posId": 5,
+                "name": "Instructor"
             },
-            "department" : {
-                "depId" : 1,
-                "name" : "Department"
+            "department": {
+                "depId": 1,
+                "name": "Department",
+                "faculty": {
+                    "facId": 1,
+                    "name": "Faculty",
+                    "organisation": {
+                        "orgId": 1,
+                        "name": "Organisation",
+                    }
+                }
             }
         }, {
-            "staffId" : 21,
-            "user" : {
-                "name" : "Boris",
-                "surname" : "Levin",
-                "email" : "boris.levin@example.com",
-                "active" : false,
-                "role" : "ROLE_INSTRUCTOR"
+            "staffId": 21,
+            "user": {
+                "name": "Boris",
+                "surname": "Levin",
+                "email": "boris.levin@example.com",
+                "active": false,
+                "role": "ROLE_INSTRUCTOR"
             },
-            "position" : {
-                "posId" : 1,
-                "name" : "System admin"
+            "position": {
+                "posId": 1,
+                "name": "System admin"
             },
-            "department" : {
-                "depId" : 1,
-                "name" : "Department"
+            "department": {
+                "depId": 1,
+                "name": "Department",
+                "faculty": {
+                    "facId": 1,
+                    "name": "Faculty",
+                    "organisation": {
+                        "orgId": 1,
+                        "name": "Organisation",
+                    }
+                }
             }
         }
-    ]
+    ],
+    departments: {
+        1: "Department",
+        2: "Department #1"
+    },
+    faculties: {
+        1: "Faculty",
+        2: "Faculty #1"
+    },
+    organisations: {
+        1: "Organisation",
+        2: "Organisation #1"
+    }
 }
 
-export const usersReducer = (state = {}, action) => {
+
+const initState = {
+    content: null,
+    organisations: null,
+    faculties: null,
+    departments: null
+}
+
+export const usersReducer = (state = initState, action) => {
     switch (action.type) {
         case "LOADING_DEP_STAFF": {
             return {...state, isLoading: action.isLoading};
@@ -166,34 +254,77 @@ export const usersReducer = (state = {}, action) => {
             return {...state, error: null, errorUpdate: null};
         }
         case "SET_DEP_STAFF": {
-            return {...state, content: action.payload};
+            const content = action.payload;
+            const organisations = organisationTransformer.toFilter(content);
+            const faculties = facultiesTransformer.toFilter(content);
+            const departments = departmentsTransformer.toFilter(content);
+            return {...state, content, organisations, faculties, departments};
         }
         case "CLEAR_DEP_STAFF": {
             return {};
         }
         case "UPDATE_STAFF_NAME": {
-            return {...state, content: state.content.map(s => s.staffId === action.staffId ? { ...s, user: {...s.user, name: action.name} } : s)}
+            return {
+                ...state,
+                content: state.content.map(s => s.staffId === action.staffId ? {
+                    ...s,
+                    user: {...s.user, name: action.name}
+                } : s)
+            }
         }
         case "UPDATE_STAFF_SURNAME": {
-            return {...state, content: state.content.map(s => s.staffId === action.staffId ? { ...s, user: {...s.user, surname: action.surname} } : s)}
+            return {
+                ...state,
+                content: state.content.map(s => s.staffId === action.staffId ? {
+                    ...s,
+                    user: {...s.user, surname: action.surname}
+                } : s)
+            }
         }
         case "UPDATE_STAFF_EMAIL": {
-            return {...state, content: state.content.map(s => s.staffId === action.staffId ? { ...s, user: {...s.user, email: action.email} } : s)}
+            return {
+                ...state,
+                content: state.content.map(s => s.staffId === action.staffId ? {
+                    ...s,
+                    user: {...s.user, email: action.email}
+                } : s)
+            }
         }
         case "UPDATE_STAFF_ROLE": {
-            return {...state, content: state.content.map(s => s.staffId === action.staffId ? { ...s, user: {...s.user, role: action.role} } : s)}
+            return {
+                ...state,
+                content: state.content.map(s => s.staffId === action.staffId ? {
+                    ...s,
+                    user: {...s.user, role: action.role}
+                } : s)
+            }
         }
         case "UPDATE_STAFF_POSITION": {
             let positions = action.positions;
-            let position = positions.find(p=>p.posId===Number(action.positionId));
+            let position = positions.find(p => p.posId === Number(action.positionId));
             console.log("Found position to replace = ", position);
-            return {...state, content: state.content.map(s => s.staffId === action.staffId ? { ...s, position: position } : s)}
+            return {
+                ...state,
+                content: state.content.map(s => s.staffId === action.staffId ? {...s, position: position} : s)
+            }
         }
         case "ENABLE_STAFF": {
-            return {...state, content: state.content.map(s => s.staffId === action.staffId ? { ...s, user: {...s.user, active: true} } : s)}
+            return {
+                ...state,
+                content: state.content.map(s => s.staffId === action.staffId ? {
+                    ...s,
+                    user: {...s.user, active: true}
+                } : s)
+            }
         }
         case "DISABLE_STAFF": {
-            return {...state, content: state.content.map(s => s.staffId === action.staffId ? { ...s, user: {...s.user, active: false} } : s)}
+            return {
+                ...state,
+                content: state.content.map(s => s.staffId === action.staffId ? {
+                    ...s,
+                    user: {...s.user, active: false}
+                } : s)
+            }
         }
         case "SET_STAFF_FILTER": {
             return {...state, filter: action.payload};

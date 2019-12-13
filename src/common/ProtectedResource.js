@@ -2,7 +2,7 @@ import React from 'react';
 
 const ProtectedResource = props => {
     return (
-        <div className="alert alert-danger text-center mt-3">
+        <div className="alert alert-danger text-center">
             <h4 className="alert-heading">
                 <strong>Security warning!</strong>
             </h4>

@@ -4,17 +4,31 @@ import Failure from "../../common/Failure";
 import UserEditForm from "../forms/UserEditForm";
 import {Staff} from "../objects/Staff";
 import {User} from "../objects/User";
+import {isRoleManageable} from "../../utils/security";
+import ProtectedResource from "../../common/ProtectedResource";
 
 class UserEdit extends React.Component {
 
     componentDidMount() {
+        // Reset possible previous errors
         this.props.resetStaffState();
         let positions = this.props.positions;
         // Only fetch positions when store array is empty!
         if (!positions) this.props.getPositions();
+        const {userInfo, user} = this.props;
+        const {authenticated} = userInfo;
+        // For higher admins (to edit affiliation)
+        if (authenticated.isAtLeastFacAdmin) {
+            if (!user) {// New user
+                this.props.initAffiliationSelector(authenticated);
+            } else {// Edit mode
+                this.props.initAffiliationSelectorForStaffEditForm(authenticated, user);
+            }
+        }
     }
 
     handleSubmit(data) {
+        //console.log("Data submitted = ", data);
         let staffId = data.userId;
         let staffDTO = new Staff(
             staffId,
@@ -25,19 +39,23 @@ class UserEdit extends React.Component {
                 data.email),
             data.role,
             data.active,
-            data.positionId
+            data.positionId,
+            data.affiliation ? data.affiliation.depId : null
         );
-        console.log("staffDTO = staffId = ", staffDTO, staffId);
+        console.log("staffDTO = ", staffDTO);
         !staffId ?
             this.props.saveStaff(staffDTO) :
             this.props.updateStaff(staffDTO);
     }
 
     render() {
-        const {user, positions, roles} = this.props;
+        const {userInfo, user, positions, roles} = this.props;
         const {isLoading, error, message} = this.props.userEdit;
+        const {authenticated} = userInfo;
+        if (user && !isRoleManageable(user.user.role, authenticated)) return <ProtectedResource/>
+
         return (
-            <div className="mt-2 mb-2">
+            <div className="p-1">
                 <div className="alert alert-secondary text-center">
                     <h5 className="alert-heading">
                         <strong>Staff edit</strong>
@@ -81,13 +99,24 @@ class UserEdit extends React.Component {
                                             active: user.user.active,
                                             role: user.user.role,
                                             positionId: user.position.posId,
+                                            affiliation: {
+                                                depId: user.department.depId,
+                                                facId: user.department.faculty.facId,
+                                                orgId:user.department.faculty.organisation.orgId
+                                            }
                                         }
                                         : null
                                     }
                                     positions={positions}
                                     roles={roles}
+                                    userInfo={userInfo}
                                     disabled={isLoading}
                                     isNew={user ? false : true}
+                                    affiliationSelector = {this.props.affiliationSelector}
+                                    getAllFacultiesForSelectorByOrganisationId={this.props.getAllFacultiesForSelectorByOrganisationId}
+                                    getAllDepartmentsForSelectorByFacultyId={this.props.getAllDepartmentsForSelectorByFacultyId}
+                                    clearAllOnOrganisationReset={this.props.clearAllOnOrganisationReset}
+                                    clearAllOnFacultyReset={this.props.clearAllOnFacultyReset}
                                 />
                             </div>
                             <div className="form-group text-center mt-n2 mb-2">
@@ -105,17 +134,26 @@ class UserEdit extends React.Component {
 }
 
 UserEdit.propTypes = {
+    userInfo: PropTypes.object.isRequired,
+    userEdit: PropTypes.object.isRequired,
+    user: PropTypes.object,
     positions: PropTypes.array.isRequired,
     roles: PropTypes.array.isRequired,
 
-    userEdit: PropTypes.object.isRequired,
-    user: PropTypes.object,
+    affiliationSelector: PropTypes.object.isRequired,
 
     resetStaffState: PropTypes.func.isRequired,
     getPositions: PropTypes.func.isRequired,
     saveStaff: PropTypes.func.isRequired,
-    updateStaff: PropTypes.func.isRequired
+    updateStaff: PropTypes.func.isRequired,
 
+    initAffiliationSelector: PropTypes.func.isRequired,
+    initAffiliationSelectorForStaffEditForm: PropTypes.func.isRequired,
+
+    getAllFacultiesForSelectorByOrganisationId: PropTypes.func.isRequired,
+    getAllDepartmentsForSelectorByFacultyId: PropTypes.func.isRequired,
+    clearAllOnOrganisationReset: PropTypes.func.isRequired,
+    clearAllOnFacultyReset: PropTypes.func.isRequired,
 };
 
 export default UserEdit;

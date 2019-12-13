@@ -18,7 +18,7 @@ const Switcher = props => {
             show={props.show}
             backdrop='static'
             keyboard={false}
-            size="lg"
+            size="sm"
             scrollable={true}
             centered>
             <Alert variant="primary" onClose={() => props.deactivateModal()} className="text-center m-0" dismissible >

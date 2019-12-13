@@ -72,7 +72,25 @@ table caption {
     background-color: white;
 }
 
+.ratos-form-fieldset legend {
+    display: block;
+    width: auto;
+    padding: 0 5px;
+    margin-bottom: 0;
+    font-size: inherit;
+    line-height: inherit;
+    border: auto;
+    border-bottom: none;
+}
 
+.ratos-form-fieldset fieldset {
+    border: 2px groove threedface;
+    padding: 5px;
+}
+
+.ratos-form-card.card-body {
+    padding: 0.5rem;
+}
 
 
 

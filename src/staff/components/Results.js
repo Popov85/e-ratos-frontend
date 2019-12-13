@@ -154,7 +154,7 @@ class Results extends Component {
                 {
                     authenticated
                     && authenticated.isAtLeastFacAdmin
-                    && <Admin affiliation={affiliation} activateModal={this.activateModal}/>
+                    && <Admin affiliation={affiliation} activateModal={this.activateModal} userInfo = {userInfo}/>
                 }
                 {
                     error && <Error message="Operation failed!" close={() => this.props.clearLoadingFailure()}/>
