@@ -106,7 +106,6 @@ Profile.propTypes = {
     profile: PropTypes.object.isRequired,
 
     getProfileUpdated: PropTypes.func.isRequired,
-    getPasswordUpdated: PropTypes.func.isRequired,
     clearUserProfileFailure: PropTypes.func.isRequired
 };
 

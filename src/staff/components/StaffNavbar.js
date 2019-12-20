@@ -1,10 +1,9 @@
 import React from 'react';
-import {Button, Nav, Navbar, NavDropdown} from "react-bootstrap";
+import {Nav, Navbar, NavDropdown, OverlayTrigger, Tooltip} from "react-bootstrap";
 import PropTypes from 'prop-types';
 import {LinkContainer} from "react-router-bootstrap";
-import {FaSignOutAlt, FaUserTie} from 'react-icons/fa';
+import {FaSignOutAlt} from 'react-icons/fa';
 import "../../../main.css";
-
 
 const StaffNavbar = (props) => {
 
@@ -18,7 +17,7 @@ const StaffNavbar = (props) => {
     }
 
     return (
-        <Navbar variant="dark" bg="secondary" expand="lg">
+        <Navbar variant="dark" bg="secondary" expand="xl">
             <LinkContainer to="/">
                 <Navbar.Brand className="text-light">
                     <strong>e-Ratos</strong>&nbsp;<small>staff</small>
@@ -49,15 +48,18 @@ const StaffNavbar = (props) => {
                             <NavDropdown.Item>Resources</NavDropdown.Item>
                         </LinkContainer>
                     </NavDropdown>
-                    <NavDropdown title="Results" id="results-nav-dropdown">
-                        <LinkContainer to="/results">
-                            <NavDropdown.Item>Results</NavDropdown.Item>
+                    <NavDropdown title="Reports" id="results-nav-dropdown">
+                        <LinkContainer to="/report/on-content">
+                            <NavDropdown.Item>On content</NavDropdown.Item>
                         </LinkContainer>
                         <NavDropdown.Divider/>
-                        <LinkContainer to="/reports">
-                            <NavDropdown.Item>Reports</NavDropdown.Item>
+                        <LinkContainer to="/report/on-results">
+                            <NavDropdown.Item>On results</NavDropdown.Item>
                         </LinkContainer>
                     </NavDropdown>
+                    <LinkContainer to="/results">
+                        <Nav.Link>Results</Nav.Link>
+                    </LinkContainer>
                     <LinkContainer to="/complaints">
                         <Nav.Link>Complaints</Nav.Link>
                     </LinkContainer>
@@ -74,24 +76,31 @@ const StaffNavbar = (props) => {
                     </NavDropdown>
 
                 </Nav>
-                <Navbar.Collapse className="justify-content-end">
 
-                    <Navbar.Text className="mr-0">
-                        Logged as:
-                    </Navbar.Text>
+
+                <Nav>
+                    <div className = "d-flex align-items-center">
                     <NavDropdown title={displayUserInfo()} id="user-nav-dropdown" className="mr-2">
                         <LinkContainer to="/profile">
                             <NavDropdown.Item>Profile</NavDropdown.Item>
                         </LinkContainer>
                     </NavDropdown>
+
                     {
                         !props.security.isLoggingOut ?
-                            <Button variant="light" size="sm" onClick={() => props.getLoggedOut()}>
-                                Logout <FaSignOutAlt/>
-                            </Button> :
+                            <OverlayTrigger
+                                placement="bottom"
+                                overlay={<Tooltip id="LogoutTooltip">Logout?</Tooltip>}>
+                                <div className = "p-0 m-0">
+                                <button type="button" className = "btn btn-light btn-sm" onClick={() => props.getLoggedOut()}>
+                                    Logout <FaSignOutAlt/>
+                                </button>
+                                </div>
+                            </OverlayTrigger> :
                             <span className="text-light">Logout..</span>
                     }
-                </Navbar.Collapse>
+                    </div>
+                </Nav>
             </Navbar.Collapse>
         </Navbar>
     );

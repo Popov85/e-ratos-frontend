@@ -1,17 +1,14 @@
-// TODO: add faculty and organisation info
-
 const allowedRolesGlobalAdmin = ["ROLE_GLOBAL-ADMIN"];
 const allowedRolesAtLeastOrgAdmin = [...allowedRolesGlobalAdmin, "ROLE_ORG-ADMIN"];
 const allowedRolesAtLeastFacAdmin = [...allowedRolesAtLeastOrgAdmin, "ROLE_FAC-ADMIN"];
 const allowedRolesAtLeastDepAdmin = [...allowedRolesAtLeastFacAdmin, "ROLE_DEP-ADMIN"];
 const allowedRolesAtLeastInstructor = [...allowedRolesAtLeastDepAdmin, "ROLE_INSTRUCTOR"];
 
-
 const testInitState = {
     "authenticated": {
         "userId": 1,
-        "name": "Staff",
-        "surname": "Staff",
+        "name": "Daniel",
+        "surname": "Naraditsky",
         "email": "staff.staff@example.com",
         "role": "ROLE_GLOBAL-ADMIN",
         "lms": false,

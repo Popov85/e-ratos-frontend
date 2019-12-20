@@ -13,8 +13,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         getProfileUpdated: (profile)=>dispatch(getProfileUpdated(profile)),
-        getPasswordUpdated: (profile)=>dispatch(getPasswordUpdated(profile)),
-
         clearUserProfileFailure: ()=>dispatch(clearUserProfileFailure())
     }
 }

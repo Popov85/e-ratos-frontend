@@ -13,6 +13,7 @@ import {schemesReducer} from "./schemesReducer";
 import {affiliationSelectorCacheableReducer} from "./affiliationSelectorCacheableReducer";
 import {affiliationSelectorReducer} from "./affiliationSelectorReducer";
 import {profileReducer} from "../../common/reducers/profileReducer";
+import {reportOnContentReducer} from "./reportOnContentReducer";
 
 const staffReducers = combineReducers({
     form: formReducer,
@@ -26,7 +27,8 @@ const staffReducers = combineReducers({
     courses: coursesReducer,
     schemes: schemesReducer,
     affiliationSelector: affiliationSelectorReducer,
-    affiliationSelectorCacheable: affiliationSelectorCacheableReducer
+    affiliationSelectorCacheable: affiliationSelectorCacheableReducer,
+    reportOnContent: reportOnContentReducer
 });
 
 export default staffReducers;

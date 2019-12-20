@@ -20,7 +20,7 @@ import {loginURL} from "../../common/_api/appAPI";
 import StaffHomeContainer from "../containers/StaffHomeContainer";
 import ProfileContainer from "../../common/containers/ProfileContainer";
 import PasswordContainer from "../../common/containers/PasswordContainer";
-
+import ReportOnContentContainer from "../containers/ReportOnContentContainer";
 
 class StaffPortal extends React.Component {
 
@@ -48,6 +48,7 @@ class StaffPortal extends React.Component {
                     <Route path="/themes" exact component={Themes}/>
                     <Route path="/questions" exact component={Questions}/>
                     <Route path="/resources" exact component={Resources}/>
+                    <Route path="/report/on-content" exact component={ReportOnContentContainer}/>
                     <Route path="/results" exact component={ResultsContainer}/>
                     <Route path="/results/details/:resultId" exact component={ResultsViewerManager}/>
                     <Route path="/groups" exact component={Groups}/>
