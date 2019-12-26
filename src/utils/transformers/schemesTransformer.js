@@ -7,4 +7,13 @@ export const schemesTransformer = {
         }, {});
     },
 
+    toSelect(schemes) {
+        return schemes.map(s => {
+            let item = {};
+            item.value = s.schemeId;
+            item.label = s.name;
+            return item;
+        });
+    },
+
 }

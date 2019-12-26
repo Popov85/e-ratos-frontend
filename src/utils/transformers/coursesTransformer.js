@@ -7,4 +7,13 @@ export const coursesTransformer = {
         }, {});
     },
 
+    toSelect(courses) {
+        return courses.map(c => {
+            let item = {};
+            item.value = c.courseId;
+            item.label = c.name;
+            return item;
+        });
+    },
+
 }

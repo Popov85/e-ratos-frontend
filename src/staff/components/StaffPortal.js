@@ -21,6 +21,7 @@ import StaffHomeContainer from "../containers/StaffHomeContainer";
 import ProfileContainer from "../../common/containers/ProfileContainer";
 import PasswordContainer from "../../common/containers/PasswordContainer";
 import ReportOnContentContainer from "../containers/ReportOnContentContainer";
+import ReportOnResultsContainer from "../containers/ReportOnResultsContainer";
 
 class StaffPortal extends React.Component {
 
@@ -49,6 +50,7 @@ class StaffPortal extends React.Component {
                     <Route path="/questions" exact component={Questions}/>
                     <Route path="/resources" exact component={Resources}/>
                     <Route path="/report/on-content" exact component={ReportOnContentContainer}/>
+                    <Route path="/report/on-results" exact component={ReportOnResultsContainer}/>
                     <Route path="/results" exact component={ResultsContainer}/>
                     <Route path="/results/details/:resultId" exact component={ResultsViewerManager}/>
                     <Route path="/groups" exact component={Groups}/>
