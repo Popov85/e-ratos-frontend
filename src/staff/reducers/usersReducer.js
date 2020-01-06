@@ -220,7 +220,6 @@ const testInitState = {
     }
 }
 
-
 const initState = {
     content: null,
     organisations: null,
@@ -255,7 +254,7 @@ export const usersReducer = (state = initState, action) => {
         }
         case "SET_DEP_STAFF": {
             const content = action.payload;
-            const organisations = organisationTransformer.toFilter(content);
+            const organisations = organisationTransformer.fromUsersToFilter(content);
             const faculties = facultiesTransformer.toFilter(content);
             const departments = departmentsTransformer.toFilter(content);
             return {...state, content, organisations, faculties, departments};

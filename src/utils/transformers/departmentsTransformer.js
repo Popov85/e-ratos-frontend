@@ -23,6 +23,27 @@ export const departmentsTransformer = {
             map[user.department.depId] = user.department.name;
             return map;
         }, {});
-    }
+    },
+
+    /**
+     * Creates DTO object from form data to be passed to server create/update
+     * @param data - data obj from redux form, nullable
+     * @param faculties - all fac from store
+     * @returns {{}}
+     */
+    depFormToDTO (data, faculties) {
+        let fac = null;
+        // If not null, search for full organisation object
+        if (faculties) {
+            fac = faculties
+                .find(f=>f.facId===Number(data.facId));
+        }
+        let dep = {};
+        dep.depId = data.depId;
+        dep.name = data.name;
+        let depDTO = {...dep, facId: data.facId};
+        let depObj = {...dep, faculty:fac};
+        return [depDTO, depObj];
+    },
 
 }

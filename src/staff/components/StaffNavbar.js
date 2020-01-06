@@ -17,7 +17,7 @@ const StaffNavbar = (props) => {
     }
 
     return (
-        <Navbar variant="dark" bg="secondary" expand="xl">
+        <Navbar variant="dark" bg="secondary" expand="lg" className = "p-1">
             <LinkContainer to="/">
                 <Navbar.Brand className="text-light">
                     <strong>e-Ratos</strong>&nbsp;<small>staff</small>
@@ -25,12 +25,16 @@ const StaffNavbar = (props) => {
             </LinkContainer>
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="mr-auto">
+                <Nav className="mr-auto navbar-nav">
                     <NavDropdown title="Admin" id="admin-nav-dropdown" hidden={!authenticated.isAtLeastDepAdmin}>
                         <LinkContainer to="/users">
                             <NavDropdown.Item>Staff</NavDropdown.Item>
                         </LinkContainer>
+                        <LinkContainer to="/structure" hidden={!authenticated.isAtLeastFacAdmin}>
+                            <NavDropdown.Item>Structure</NavDropdown.Item>
+                        </LinkContainer>
                     </NavDropdown>
+
                     <NavDropdown title="Content" id="content-nav-dropdown">
                         <LinkContainer to="/courses">
                             <NavDropdown.Item>Courses</NavDropdown.Item>
@@ -77,8 +81,7 @@ const StaffNavbar = (props) => {
 
                 </Nav>
 
-
-                <Nav>
+                <Nav className="navbar-nav">
                     <div className = "d-flex align-items-center">
                     <NavDropdown title={displayUserInfo()} id="user-nav-dropdown" className="mr-2">
                         <LinkContainer to="/profile">

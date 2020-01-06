@@ -19,11 +19,23 @@ export const organisationsTransformer = {
      * @param users
      * @returns {*}
      */
-    toFilter (users) {
+    fromUsersToFilter (users) {
         return users.reduce((map, user)=> {
             map[user.department.faculty.organisation.orgId] = user.department.faculty.organisation.name;
             return map;
         }, {});
-    }
+    },
+
+    /**
+     * Creates DTO object from form data to be passed to server create/update
+     * @param data - data obj from redux form, nullable
+     * @returns {{}}
+     */
+    orgFormToDTO (data) {
+        let orgDTO = {};
+        orgDTO.orgId = data.orgId;
+        orgDTO.name = data.name;
+        return orgDTO;
+    },
 
 }

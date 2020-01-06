@@ -1,0 +1,95 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import Failure from "../../common/Failure";
+import ProtectedResource from "../../common/ProtectedResource";
+import OrgEditForm from "../forms/OrgEditForm";
+import {organisationsTransformer} from "../../utils/transformers/organisationsTransformer";
+
+class OrgEdit extends React.Component {
+
+    componentDidMount() {
+        //Clear all previous messages
+        this.props.clearOrgState();
+    }
+
+    handleSubmit(data) {
+        let orgDTO = organisationsTransformer
+            .orgFormToDTO(data);
+        console.log("orgDTO = ", orgDTO);
+        !data.orgId ?
+            this.props.saveOrg(orgDTO) :
+            this.props.updateOrg(orgDTO);
+    }
+
+    render() {
+
+        const {authenticated} = this.props.userInfo;
+        if (!authenticated.isGlobalAdmin) return <ProtectedResource/>
+
+        const {isLoading, error, message} = this.props.orgEdit;
+
+        return (
+            <div>
+                <div className="row mt-1">
+                    <div className="col-12">
+                        {
+                            isLoading &&
+                            <div className="text-center text-secondary m-2">
+                                <span>Saving...</span>
+                            </div>
+                        }
+                        {
+                            error &&
+                            <div className="alert alert-danger text-center p-1" role="alert">
+                                <span className="text-danger">
+                                    <strong>
+                                    <Failure message={error.message}/>
+                                </strong>
+                                </span>
+                            </div>
+                        }
+                        {
+                            message &&
+                            <div className="alert alert-success text-center p-1" role="success">
+                                <span className="text-success"><strong>{message}</strong></span>
+                            </div>
+                        }
+                        <div className="card bg-transparent">
+                            <div className="card-body">
+                                <OrgEditForm
+                                    initialValues={ this.props.org ?
+                                        {
+                                            orgId: this.props.org.orgId,
+                                            name: this.props.org.name
+                                        }
+                                        : null
+                                    }
+                                    onSubmit={data => this.handleSubmit(data)}
+                                    finished={message ? true : false}
+                                    disabled={isLoading}
+                                />
+                            </div>
+                            <div className="form-group text-center mt-n2 mb-2" hidden={message ? true : false}>
+                                <a href="#" className="badge badge-secondary" onClick={() => this.props.resetForm()}>
+                                    Reset
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
+
+OrgEdit.propTypes = {
+    userInfo: PropTypes.object.isRequired,
+    orgEdit: PropTypes.object.isRequired,
+    org: PropTypes.object, // Nullable for new objects
+    clearOrgState: PropTypes.func.isRequired,
+    saveOrg: PropTypes.func.isRequired,
+    updateOrg: PropTypes.func.isRequired,
+
+};
+
+export default OrgEdit;

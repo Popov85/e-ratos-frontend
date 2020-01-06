@@ -23,6 +23,7 @@ class ReportOnResults extends Component {
             return;
         }
         if (!organisation && !faculty && !department && !course && !scheme && !sessionEndedFrom && !sessionEndedTo) {
+            // Solely to send any value! Otherwise no payload is sent and server breaks!
             restrictingParams = {all: true};
         }
         // Create a valid DTO object

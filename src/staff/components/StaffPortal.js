@@ -22,6 +22,15 @@ import ProfileContainer from "../../common/containers/ProfileContainer";
 import PasswordContainer from "../../common/containers/PasswordContainer";
 import ReportOnContentContainer from "../containers/ReportOnContentContainer";
 import ReportOnResultsContainer from "../containers/ReportOnResultsContainer";
+import Welcome from "../../common/Welcome";
+import StructureContainer from "../containers/StructureContainer";
+import Organisations from "./Organisations";
+import Faculties from "./Faculties";
+import Departments from "./Departments";
+import OrganisationsContainer from "../containers/OrganisationsContainer";
+import FacultiesContainer from "../containers/FacultiesContainer";
+import DepartmentsContainer from "../containers/DepartmentsContainer";
+import ProtectedResource from "../../common/ProtectedResource";
 
 class StaffPortal extends React.Component {
 
@@ -44,12 +53,16 @@ class StaffPortal extends React.Component {
                     <Route path="/users" exact component={UsersContainer}/>
                     <Route path="/users/new/" exact component={UserEditContainer}/>
                     <Route path="/users/edit/:staffId" exact component={UserEditManager}/>
+                    <Route path="/structure" component={StructureContainer}/>
+                    <Route path="/structure/organisations" exact component={OrganisationsContainer}/>
+                    <Route path="/structure/faculties" exact component={FacultiesContainer}/>
+                    <Route path="/structure/departments" exact component={DepartmentsContainer}/>
                     <Route path="/courses" exact component={Courses}/>
                     <Route path="/schemes" exact component={Schemes}/>
                     <Route path="/themes" exact component={Themes}/>
                     <Route path="/questions" exact component={Questions}/>
                     <Route path="/resources" exact component={Resources}/>
-                    <Route path="/report/on-content" exact component={ReportOnContentContainer}/>
+                    <Route path="/report/on-content" exact component={ReportOnContentContainer} />
                     <Route path="/report/on-results" exact component={ReportOnResultsContainer}/>
                     <Route path="/results" exact component={ResultsContainer}/>
                     <Route path="/results/details/:resultId" exact component={ResultsViewerManager}/>
@@ -58,6 +71,8 @@ class StaffPortal extends React.Component {
                     <Route path="/lms" exact component={Lms}/>
                     <Route path="/profile" exact component={ProfileContainer}/>
                     <Route path="/profile/password" exact component={PasswordContainer}/>
+                    <Route path="/protected" exact component={ProtectedResource}/>
+
                 </main>
             </React.Fragment>
         );

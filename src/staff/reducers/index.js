@@ -15,6 +15,12 @@ import {affiliationSelectorReducer} from "./affiliationSelectorReducer";
 import {profileReducer} from "../../common/reducers/profileReducer";
 import {reportOnContentReducer} from "./reportOnContentReducer";
 import {reportOnResultsReducer} from "./reportOnResultsReducer";
+import {organisationsReducer} from "./organisationsReducer";
+import {orgEditReducer} from "./orgEditReducer";
+import {facultiesReducer} from "./facultiesReducer";
+import {departmentsReducer} from "./departmentsReducer";
+import {facEditReducer} from "./facEditReducer";
+import {depEditReducer} from "./depEditReducer";
 
 const staffReducers = combineReducers({
     form: formReducer,
@@ -22,6 +28,9 @@ const staffReducers = combineReducers({
     profile: profileReducer,
     security: logoutReducer,
     users: usersReducer,
+    organisations: organisationsReducer,
+    faculties: facultiesReducer,
+    departments: departmentsReducer,
     positions: positionsReducer,
     userEdit: userEditReducer,
     results: resultsReducer,
@@ -30,7 +39,10 @@ const staffReducers = combineReducers({
     affiliationSelector: affiliationSelectorReducer,
     affiliationSelectorCacheable: affiliationSelectorCacheableReducer,
     reportOnContent: reportOnContentReducer,
-    reportOnResults: reportOnResultsReducer
+    reportOnResults: reportOnResultsReducer,
+    orgEdit: orgEditReducer,
+    facEdit: facEditReducer,
+    depEdit: depEditReducer
 });
 
 export default staffReducers;

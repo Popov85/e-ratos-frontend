@@ -9,7 +9,6 @@ import {FaArrowLeft, FaSignInAlt} from "react-icons/fa";
 import FieldSelectBadge from "../../common/forms/controls/FieldSelectBadge";
 import {LinkContainer} from "react-router-bootstrap";
 import AffiliationSelectorFields from "./AffiliationSelectorFields";
-import AffiliationSelectorForm from "./AffiliationSelectorForm";
 
 let UserEditForm = props => {
 
@@ -82,7 +81,7 @@ let UserEditForm = props => {
         </form>);
 }
 
-AffiliationSelectorForm.propTypes = {
+UserEditForm.propTypes = {
     userInfo: PropTypes.string.isRequired,
     positions: PropTypes.array.isRequired,
     roles: PropTypes.array.isRequired,

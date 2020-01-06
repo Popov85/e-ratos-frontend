@@ -30,7 +30,7 @@ const testInitState = {
                 }
             }
         },
-        isGlobalAdmin: true,
+        isGlobalAdmin:true,
         isAtLeastOrgAdmin: true,
         isAtLeastFacAdmin: true,
         isAtLeastDepAdmin: true,
