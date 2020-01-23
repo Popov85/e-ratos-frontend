@@ -29,8 +29,8 @@ export const clearUpdatingFailure = () => ({type: CLEAR_UPDATING_FAC_FAILURE});
 
 export const clearAllFacFailures = () => ({type: CLEAR_ALL_FAC_FAILURES});
 
-export const addFacInStore = (genId, facObj) => ({type: ADD_FAC_IN_STORE, genId, facObj});
-export const updateFacInStore = (facObj) => ({type: UPDATE_FAC_IN_STORE, facObj});
+export const addFacInStore = fac => ({type: ADD_FAC_IN_STORE, payload: fac});
+export const updateFacInStore = fac => ({type: UPDATE_FAC_IN_STORE, payload: fac});
 export const updateFacNameInStore = (facId, name) => ({type: UPDATE_FAC_NAME_IN_STORE, facId, name});
 export const deleteFacFromStore = (facId) => ({type: DELETE_FAC_FROM_STORE, facId});
 
@@ -46,7 +46,7 @@ export const updateFacName = (facId, name) => {
     }
 }
 
-export const deleteFac = (facId) => {
+export const deleteFac = facId => {
     return (dispatch) => {
         dispatch(clearUpdatingFailure());
         dispatch(updating(true));
@@ -71,7 +71,7 @@ export const getAllFacultiesByOrganisation = () => {
     }
 }
 
-export const getAllFacultiesByRatos = () => {
+export const getAllFacultiesBunchByRatos = () => {
     return (dispatch) => {
         dispatch(clearLoadingFailure());
         dispatch(loading(true));

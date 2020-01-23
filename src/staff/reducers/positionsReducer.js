@@ -88,13 +88,20 @@ const testInitState = {
     forFilter
 }
 
+const initState = {
+    actual: null,
+    forEdit: null,
+    forNew: null,
+    forFilter: null
+}
+
 /**
  * Used to create a new user
  * @param state
  * @param action
  * @returns {Array|*}
  */
-export const positionsReducer = (state = {}, action) => {
+export const positionsReducer = (state = initState, action) => {
     switch (action.type) {
         case "SET_POSITIONS": {
             let positions = action.payload;
@@ -115,7 +122,6 @@ export const positionsReducer = (state = {}, action) => {
             result.forEdit = forEdit;
             result.forNew = forNew;
             result.forFilter = forFilter;
-            //console.log("Positions = ", result);
             return result;
         }
         default:

@@ -36,7 +36,7 @@ const testInitState = {
                 "surname": "Romanov",
                 "email": "alex.romanov@gmail.com",
                 "active": true,
-                "role": "ROLE_INSTRUCTOR"
+                "role": "ROLE_GLOBAL_ADMIN"
             },
             "position": {
                 "posId": 2,
@@ -262,7 +262,15 @@ export const usersReducer = (state = initState, action) => {
         case "CLEAR_DEP_STAFF": {
             return {};
         }
-        case "UPDATE_STAFF_NAME": {
+        case "ADD_STAFF_IN_STORE": {
+            const staff = action.payload;
+            return {...state, content: [...state.content, staff]};
+        }
+        case "UPDATE_STAFF_IN_STORE": {
+            const staff = action.payload;
+            return {...state, content: state.content.map(s => s.staffId === staff.staffId ? staff: s)};
+        }
+        case "UPDATE_STAFF_NAME_IN_STORE": {
             return {
                 ...state,
                 content: state.content.map(s => s.staffId === action.staffId ? {
@@ -271,7 +279,7 @@ export const usersReducer = (state = initState, action) => {
                 } : s)
             }
         }
-        case "UPDATE_STAFF_SURNAME": {
+        case "UPDATE_STAFF_SURNAME_IN_STORE": {
             return {
                 ...state,
                 content: state.content.map(s => s.staffId === action.staffId ? {
@@ -280,7 +288,7 @@ export const usersReducer = (state = initState, action) => {
                 } : s)
             }
         }
-        case "UPDATE_STAFF_EMAIL": {
+        case "UPDATE_STAFF_EMAIL_IN_STORE": {
             return {
                 ...state,
                 content: state.content.map(s => s.staffId === action.staffId ? {
@@ -289,41 +297,9 @@ export const usersReducer = (state = initState, action) => {
                 } : s)
             }
         }
-        case "UPDATE_STAFF_ROLE": {
-            return {
-                ...state,
-                content: state.content.map(s => s.staffId === action.staffId ? {
-                    ...s,
-                    user: {...s.user, role: action.role}
-                } : s)
-            }
-        }
-        case "UPDATE_STAFF_POSITION": {
-            let positions = action.positions;
-            let position = positions.find(p => p.posId === Number(action.positionId));
-            console.log("Found position to replace = ", position);
-            return {
-                ...state,
-                content: state.content.map(s => s.staffId === action.staffId ? {...s, position: position} : s)
-            }
-        }
-        case "ENABLE_STAFF": {
-            return {
-                ...state,
-                content: state.content.map(s => s.staffId === action.staffId ? {
-                    ...s,
-                    user: {...s.user, active: true}
-                } : s)
-            }
-        }
-        case "DISABLE_STAFF": {
-            return {
-                ...state,
-                content: state.content.map(s => s.staffId === action.staffId ? {
-                    ...s,
-                    user: {...s.user, active: false}
-                } : s)
-            }
+        case "DELETE_STAFF_FROM_STORE": {
+            const {staffId} = action;
+            return {...state, content: state.content.filter(s => s.staffId !== staffId)}
         }
         case "SET_STAFF_FILTER": {
             return {...state, filter: action.payload};

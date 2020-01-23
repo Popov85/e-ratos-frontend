@@ -14,7 +14,6 @@ const OrgEditModal = props => {
             show={props.show}
             backdrop='static'
             keyboard={false}
-            size="sm"
             scrollable={true}
             centered>
             <Alert variant="info" onClose={() => props.deactivateModal()} className="text-center m-0" dismissible>
@@ -24,7 +23,7 @@ const OrgEditModal = props => {
                 }
             </Alert>
             <Modal.Body>
-                <OrgEditContainer editableOrgId = {editableOrgId}/>
+                <OrgEditContainer orgId = {editableOrgId}/>
             </Modal.Body>
         </Modal>
     );

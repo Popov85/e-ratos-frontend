@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Failure from "../../common/Failure";
 import ProtectedResource from "../../common/ProtectedResource";
 import DepEditForm from "../forms/DepEditForm";
-import {departmentsTransformer} from "../../utils/transformers/departmentsTransformer";
 
 class DepEdit extends React.Component {
 
@@ -16,13 +15,12 @@ class DepEdit extends React.Component {
     }
 
     handleSubmit(data) {
-        let {facContent} = this.props;
-        let depDTO = departmentsTransformer
-            .depFormToDTO(data, facContent);
-        console.log("depDTO = ", depDTO);
+        //console.log("depDTO = ", data);
+        if (!data.facId) data.facId =
+            this.props.userInfo.authenticated.staff.department.faculty.facId;
         !data.depId ?
-            this.props.saveDep(depDTO) :
-            this.props.updateDep(depDTO);
+            this.props.saveDep(data) :
+            this.props.updateDep(data);
     }
 
     render() {
@@ -74,10 +72,10 @@ class DepEdit extends React.Component {
                                     userInfo = {userInfo}
                                     organisations = {organisations}
                                     faculties={faculties}
+                                    disabled={isLoading}
+                                    finished = {message ? true : false}
                                     setOrgIdSelected = {this.props.setOrgIdSelected}
                                     onSubmit={data => this.handleSubmit(data)}
-                                    finished = {message ? true : false}
-                                    disabled={isLoading}
                                 />
                             </div>
                             <div className="form-group text-center mt-n2 mb-2" hidden = {message ? true : false}>
@@ -97,9 +95,8 @@ DepEdit.propTypes = {
     userInfo: PropTypes.object.isRequired,
     depEdit: PropTypes.object.isRequired,
     dep: PropTypes.object, // Nullable for new objects
-    facContent: PropTypes.array,
-    organisations: PropTypes.array,
-    faculties: PropTypes.array,
+    organisations: PropTypes.array, // Empty for lower admins
+    faculties: PropTypes.array, // // Empty for lower admins
 
     clearDepState: PropTypes.func.isRequired,
     saveDep: PropTypes.func.isRequired,

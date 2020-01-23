@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Failure from "../../common/Failure";
 import ProtectedResource from "../../common/ProtectedResource";
 import OrgEditForm from "../forms/OrgEditForm";
-import {organisationsTransformer} from "../../utils/transformers/organisationsTransformer";
 
 class OrgEdit extends React.Component {
 
@@ -13,16 +12,13 @@ class OrgEdit extends React.Component {
     }
 
     handleSubmit(data) {
-        let orgDTO = organisationsTransformer
-            .orgFormToDTO(data);
-        console.log("orgDTO = ", orgDTO);
+        //console.log("orgDTO = ", data);
         !data.orgId ?
-            this.props.saveOrg(orgDTO) :
-            this.props.updateOrg(orgDTO);
+            this.props.saveOrg(data) :
+            this.props.updateOrg(data);
     }
 
     render() {
-
         const {authenticated} = this.props.userInfo;
         if (!authenticated.isGlobalAdmin) return <ProtectedResource/>
 

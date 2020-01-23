@@ -21,6 +21,9 @@ import {facultiesReducer} from "./facultiesReducer";
 import {departmentsReducer} from "./departmentsReducer";
 import {facEditReducer} from "./facEditReducer";
 import {depEditReducer} from "./depEditReducer";
+import {courseEditReducer} from "./courseEditReducer";
+import {lmsReducer} from "./lmsReducer";
+import {accessReducer} from "./accessReducer";
 
 const staffReducers = combineReducers({
     form: formReducer,
@@ -36,13 +39,16 @@ const staffReducers = combineReducers({
     results: resultsReducer,
     courses: coursesReducer,
     schemes: schemesReducer,
+    lms: lmsReducer,
+    access: accessReducer,
     affiliationSelector: affiliationSelectorReducer,
     affiliationSelectorCacheable: affiliationSelectorCacheableReducer,
     reportOnContent: reportOnContentReducer,
     reportOnResults: reportOnResultsReducer,
     orgEdit: orgEditReducer,
     facEdit: facEditReducer,
-    depEdit: depEditReducer
+    depEdit: depEditReducer,
+    courseEdit: courseEditReducer
 });
 
 export default staffReducers;

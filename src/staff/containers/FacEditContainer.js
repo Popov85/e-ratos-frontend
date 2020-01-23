@@ -8,13 +8,12 @@ import {getAllOrgForNew} from "../selectors/organisationsSelector";
 import {getFacById} from "../selectors/facultiesSelector";
 
 const mapStateToProps = (state, ownProps) => {
-    const {editableFacId} = ownProps;
+    const {facId} = ownProps;
     return {
         userInfo: getUserInfo(state),
         facEdit: state.facEdit,
-        orgContent: state.organisations.content, // Nullable
         organisations: getAllOrgForNew(state), // Nullable
-        fac: editableFacId ? getFacById(state, editableFacId) : null
+        fac: facId ? getFacById(state, ownProps) : null
     }
 }
 

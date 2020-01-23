@@ -9,10 +9,12 @@ import filterFactory, {
     numberFilter
 } from "react-bootstrap-table2-filter";
 import paginationFactory from "react-bootstrap-table2-paginator";
-import {FaCheck, FaMinus, FaInfo, FaFileCsv, FaSync} from "react-icons/fa";
+import {FaCheck, FaMinus, FaInfo, FaFileCsv, FaSync, FaExpand, FaCompress} from "react-icons/fa";
 import {LinkContainer} from "react-router-bootstrap";
 import ResultsColumnsToggler from "./ResultsColumnsToggler";
 import {CSVLink} from "react-csv";
+
+import "../../../main.css";
 
 const CSVHeaders = [
     {label: 'Course', key: 'scheme.course.name'},
@@ -53,11 +55,16 @@ const cellStyle = {
     fontSize: '13px'
 };
 
+const defaultCellStyle = {
+    fontSize: '13px'
+};
+
 class ResultsTable extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            expanded: false,
             hiddenColumns: ["Name", "Email", "Faculty", "Class", "Year", "Lasted", "Timeouted", "Cancelled", "Points"]
         }
         this.handleToggle = this.handleToggle.bind(this);
@@ -73,8 +80,15 @@ class ResultsTable extends Component {
     }
 
     renderCaption() {
+        const {expanded} = this.state;
         return (
             <div className = "d-flex">
+                <div className="mr-1">
+                    <button type="button" className="btn btn-sm btn-secondary" title="Expand/compress"
+                            onClick={() => this.setState({expanded: !this.state.expanded})}>
+                        {expanded ? <FaCompress/> : <FaExpand/>}
+                    </button>
+                </div>
                 <div className="flex-grow-1">
                     <ResultsColumnsToggler
                         hiddenColumns={this.state.hiddenColumns}
@@ -101,7 +115,7 @@ class ResultsTable extends Component {
 
     render() {
 
-        const {hiddenColumns} = this.state;
+        const {expanded, hiddenColumns} = this.state;
         const {results, courses, schemes, faculties} = this.props;
 
         const columns = [
@@ -131,7 +145,7 @@ class ResultsTable extends Component {
                 formatter: cell => courses[cell.courseId],
                 headerStyle: () => headerStyle('200px', 'left'),
                 title: cell => cell.name,
-                style: cellStyle,
+                style: !expanded ? cellStyle : defaultCellStyle,
             },
             {
                 dataField: 'scheme',
@@ -144,7 +158,7 @@ class ResultsTable extends Component {
                 formatter: cell => schemes[cell.schemeId],
                 headerStyle: () => headerStyle('200px', 'left'),
                 title: cell => cell.name,
-                style: cellStyle,
+                style: !expanded ? cellStyle : defaultCellStyle,
             },
             {
                 dataField: 'student.user.surname',
@@ -232,13 +246,13 @@ class ResultsTable extends Component {
                 filter: dateFilter({
                     placeholder: 'Ended',
                     comparatorStyle: filterStyle,
-                    comparatorClassName: 'w-auto p-1',
+                    comparatorClassName: 'w-auto p-0',
                     dateStyle: {fontSize: '13px'},
-                    dateClassName: 'w-auto',
+                    dateClassName: 'w-auto ml-0 pl-0 pr-0',
                     withoutEmptyComparatorOption: true,
                     comparators: [Comparator.EQ, Comparator.GT, Comparator.LT],
                 }),
-                headerStyle: () => headerStyle('220px', 'left'),
+                headerStyle: () => headerStyle('185px', 'center'),
                 title: cell => cell,
                 style: cellStyle,
             },
@@ -251,13 +265,13 @@ class ResultsTable extends Component {
                 filter: numberFilter({
                     style: null,
                     className: '',
-                    placeholder: 'in sec',
+                    placeholder: 'Lasted',
                     comparatorStyle: filterStyle,
-                    comparatorClassName: 'w-auto p-1',
+                    comparatorClassName: 'w-auto p-0',
                     withoutEmptyComparatorOption: true,
                     comparators: [Comparator.EQ, Comparator.GT, Comparator.LT],
                     numberStyle: filterStyle,
-                    numberClassName: 'w-75 p-1'
+                    numberClassName: 'w-100 m-0 p-0'
                 }),
                 headerStyle: () => headerStyle('100px', 'center'),
                 title: cell => `${cell}, sec`,
@@ -278,11 +292,11 @@ class ResultsTable extends Component {
                     className: '',
                     placeholder: 'Grade',
                     comparatorStyle: filterStyle,
-                    comparatorClassName: 'w-auto p-1',
+                    comparatorClassName: 'w-auto p-0',
                     withoutEmptyComparatorOption: true,
                     comparators: [Comparator.EQ, Comparator.GT, Comparator.LT],
                     numberStyle: filterStyle,
-                    numberClassName: 'w-75 p-1'
+                    numberClassName: 'w-100 m-0 p-0'
                 }),
                 headerStyle: () => headerStyle('100px', 'center'),
                 title: cell => cell,
@@ -302,13 +316,13 @@ class ResultsTable extends Component {
                 filter: numberFilter({
                     style: null,
                     className: '',
-                    placeholder: 'in %',
+                    placeholder: 'Percent',
                     comparatorStyle: filterStyle,
-                    comparatorClassName: 'w-auto p-1',
+                    comparatorClassName: 'w-auto p-0',
                     withoutEmptyComparatorOption: true,
                     comparators: [Comparator.EQ, Comparator.GT, Comparator.LT],
                     numberStyle: filterStyle,
-                    numberClassName: 'w-75 p-1'
+                    numberClassName: 'w-100 m-0 p-0'
                 }),
                 headerStyle: () => headerStyle('100px', 'center'),
                 title: cell => cell,

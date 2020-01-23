@@ -11,18 +11,13 @@ export const loadingFailure = error => ({type: SAVING_DEP_FAILURE, error});
 export const loadingSuccess = message => ({type: SAVING_DEP_SUCCESS, message});
 export const clearDepState = () => ({type: CLEAR_SAVING_DEP});
 
-/**
- * 0-st - DTO, 1-st - Object
- * @param depArr
- * @returns {Function}
- */
-export const saveDep = (depArr) => {
+
+export const saveDep = depDTO => {
     return (dispatch) => {
         dispatch(clearDepState());
         dispatch(loading(true));
-        departmentsAPI.saveDep(depArr[0]).then(result => {
-            let genId = result.data;
-            dispatch(addDepInStore(genId, depArr[1]));
+        departmentsAPI.saveDep(depDTO).then(result => {
+            dispatch(addDepInStore(result.data));
             dispatch(loadingSuccess("Successfully added a department!"));
         }).catch(e => {
             dispatch(loadingFailure(new Error("Failed to save a department!")));
@@ -30,17 +25,12 @@ export const saveDep = (depArr) => {
     }
 }
 
-/**
- * 0-st - DTO, 1-st - Object
- * @param depArr
- * @returns {Function}
- */
-export const updateDep = (depArr) => {
+export const updateDep = depDTO => {
     return (dispatch) => {
         dispatch(clearDepState());
         dispatch(loading(true));
-        departmentsAPI.updateDep(depArr[0]).then(() => {
-            dispatch(updateDepInStore(depArr[1]));
+        departmentsAPI.updateDep(depDTO).then(result => {
+            dispatch(updateDepInStore(result.data));
             dispatch(loadingSuccess("Successfully updated the department!"));
         }).catch(e => {
             dispatch(loadingFailure(new Error("Failed to update the department!")));

@@ -1,5 +1,3 @@
-import {facultiesTransformer} from "../../utils/transformers/facultiesTransformer";
-
 const testInitState = {
     content: [
         {
@@ -27,26 +25,12 @@ const testInitState = {
             }
         },
     ],
-    map: new Map([
-        [0, [],],
-        [1, [{
-            facId: 1,
-            name: "Fac #1"
-        }],],
-        [2, [{
-            facId: 2,
-            name: "Fac #2"
-        }]], [3, [{
-            facId: 3,
-            name: "Fac #3"
-        }]]]),
     isLoading: false,
     error: null
 }
 
 const initState = {
     content: null,
-    map: new Map(), // Key - orgId, value - array of org.'s faculties; it is set on faculties set
     isLoading: false,
     error: null
 }
@@ -78,21 +62,19 @@ export const facultiesReducer = (state = initState, action) => {
         }
         case "SET_ALL_FAC": {
             const content = action.payload;
-            let map = facultiesTransformer
-                .extractMapFromOriginalArray(content);
-            return {...state, content, map};
+            return {...state, content};
+        }
+        case "ADD_FAC_IN_STORE": {
+            const fac = action.payload;
+            return {...state, content: [...state.content, fac]};
         }
         case "UPDATE_FAC_IN_STORE": {
-            const {facObj} = action;
-            return {...state, content: state.content.map(f => f.facId === facObj.facId ? facObj : f)}
+            const fac = action.payload;
+            return {...state, content: state.content.map(f => f.facId === fac.facId ? fac : f)}
         }
         case "UPDATE_FAC_NAME_IN_STORE": {
             const {facId, name} = action;
             return {...state, content: state.content.map(f => f.facId === facId ? {...f, name} : f)}
-        }
-        case "ADD_FAC_IN_STORE": {
-            const {genId, facObj} = action;
-            return {...state, content: [...state.content, {...facObj, facId: genId}]};
         }
         case "DELETE_FAC_FROM_STORE": {
             const {facId} = action;

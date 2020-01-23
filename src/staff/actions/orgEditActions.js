@@ -11,13 +11,12 @@ export const loadingFailure = error => ({type: SAVING_ORG_FAILURE, error});
 export const loadingSuccess = message => ({type: SAVING_ORG_SUCCESS, message});
 export const clearOrgState = () => ({type: CLEAR_SAVING_ORG});
 
-export const saveOrg = (org) => {
+export const saveOrg = (orgDTO) => {
     return (dispatch) => {
         dispatch(clearOrgState());
         dispatch(loading(true));
-        organisationsAPI.saveOrg(org).then(result => {
-            let genId = result.data;
-            dispatch(addOrgInStore(genId, org));
+        organisationsAPI.saveOrg(orgDTO).then(result => {
+            dispatch(addOrgInStore(result.data));
             dispatch(loadingSuccess("Successfully added an org!"));
         }).catch(e => {
             dispatch(loadingFailure(new Error("Failed to save an org!")));
@@ -25,12 +24,12 @@ export const saveOrg = (org) => {
     }
 }
 
-export const updateOrg = (org) => {
+export const updateOrg = (orgDTO) => {
     return (dispatch) => {
         dispatch(clearOrgState());
         dispatch(loading(true));
-        organisationsAPI.updateOrg(org).then(() => {
-            dispatch(updateOrgInStore(org));
+        organisationsAPI.updateOrg(orgDTO).then(result => {
+            dispatch(updateOrgInStore(result.data));
             dispatch(loadingSuccess("Successfully updated the org!"));
         }).catch(e => {
             dispatch(loadingFailure(new Error("Failed to update the org!")));

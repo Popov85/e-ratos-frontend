@@ -1,4 +1,5 @@
 import {usersAPI} from "../_api/usersAPI";
+import {addStaffInStore, updateStaffInStore} from "./usersActions";
 
 const SAVING_STAFF = "SAVING_STAFF";
 const SAVING_STAFF_FAILURE = "SAVING_STAFF_FAILURE";
@@ -15,6 +16,7 @@ export const saveStaff = (staffDTO) => {
         dispatch(resetStaffState());
         dispatch(loading(true));
         usersAPI.saveStaff(staffDTO).then(result => {
+            dispatch(addStaffInStore(result.data));
             dispatch(loadingSuccess("Successfully added!"));
         }).catch(e => {
             dispatch(loadingFailure(new Error("Failed to save a teaching staff")));
@@ -27,6 +29,7 @@ export const updateStaff = (staffDTO) => {
         dispatch(resetStaffState());
         dispatch(loading(true));
         usersAPI.updateStaff(staffDTO).then(result => {
+            dispatch(updateStaffInStore(result.data));
             dispatch(loadingSuccess("Successfully updated!"));
         }).catch(e => {
             dispatch(loadingFailure(new Error("Failed to update a teaching staff")));

@@ -22,17 +22,16 @@ class Departments extends Component {
     componentDidMount() {
         const {departments} = this.props;
         if (!departments.content) this.loadDepartmentsBasedOnRole();
-        this.props.clearOrgIdSelected();
     }
 
     loadDepartmentsBasedOnRole() {
         const {isGlobalAdmin, isAtLeastOrgAdmin} =
             this.props.userInfo.authenticated;
-        if (isGlobalAdmin) {
-            this.props.getAllDepartmentsByRatos();
-        } else if (isAtLeastOrgAdmin) {
-            this.props.getAllDepartmentsByOrganisation();
-        } else {
+        if (isGlobalAdmin) {// and organisation and faculties
+            this.props.getAllDepartmentsBunchByRatos();
+        } else if (isAtLeastOrgAdmin) {// and faculties
+            this.props.getAllDepartmentsBunchByOrganisation();
+        } else {//only departments
             this.props.getAllDepartmentsByFaculty();
         }
     }
@@ -100,7 +99,6 @@ class Departments extends Component {
                                     organisations={organisations}
                                     faculties={faculties}
                                     deleteDep={this.props.deleteDep}
-                                    setOrgIdSelected = {this.props.setOrgIdSelected}
                                     onTableChange={this.handleTableChange}
                                 />
                             </LoadingOverlay>
@@ -124,14 +122,12 @@ Departments.propTypes = {
     organisations: PropTypes.object, // Only needed for Global admin
     faculties: PropTypes.object, // Only needed for Global and Org admins
 
-    getAllDepartmentsByRatos: PropTypes.func.isRequired,
-    getAllDepartmentsByOrganisation: PropTypes.func.isRequired,
+    getAllDepartmentsBunchByRatos: PropTypes.func.isRequired,
+    getAllDepartmentsBunchByOrganisation: PropTypes.func.isRequired,
     getAllDepartmentsByFaculty: PropTypes.func.isRequired,
     clearAllDepFailures: PropTypes.func.isRequired,
     updateDepName: PropTypes.func.isRequired,
-    deleteDep: PropTypes.func.isRequired,
-    setOrgIdSelected: PropTypes.func.isRequired,
-    clearOrgIdSelected: PropTypes.func.isRequired
+    deleteDep: PropTypes.func.isRequired
 };
 
 export default Departments;

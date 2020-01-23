@@ -14,7 +14,6 @@ const DepEditModal = props => {
             show={props.show}
             backdrop='static'
             keyboard={false}
-            size="sm"
             scrollable={true}
             centered>
             <Alert variant="info" onClose={() => props.deactivateModal()} className="text-center m-0" dismissible >
@@ -24,7 +23,7 @@ const DepEditModal = props => {
                 }
             </Alert>
             <Modal.Body>
-                <DepEditContainer editableDepId = {editableDepId}/>
+                <DepEditContainer depId = {editableDepId}/>
             </Modal.Body>
         </Modal>
     );

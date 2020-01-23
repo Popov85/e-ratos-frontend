@@ -10,38 +10,22 @@ export const usersAPI = {
         return instance.put(`/dep-admin/staff`, staffDTO);
     },
 
+    deleteStaff(staffId) {
+        return instance.delete(`/dep-admin/staff/${staffId}`);
+    },
+
+    //---------------------------------------------Patches on user------------------------------------------------------
+
     updateUserName(userId, name) {
-        return instance.put(`/dep-admin/users/${userId}/update-name?name=${name}`);
+        return instance.patch(`/dep-admin/users/${userId}/name`, {value: name});
     },
 
     updateUserSurname(userId, surname) {
-        return instance.put(`/dep-admin/users/${userId}/update-surname?surname=${surname}`);
+        return instance.patch(`/dep-admin/users/${userId}/surname`, {value: surname});
     },
 
     updateUserEmail(userId, email) {
-        let obj = {};
-        obj.email = email;
-        return instance.put(`/dep-admin/users/${userId}/update-email`, obj);
-    },
-
-    updateUserPassword(userId, password) {
-        return instance.put(`/dep-admin/users/${userId}/update-password?password=${password}`);
-    },
-
-    enable(userId) {
-        return instance.put(`/dep-admin/users/${userId}/enable`);
-    },
-
-    disable(userId) {
-        return instance.put(`/dep-admin/users/${userId}/disable`);
-    },
-
-    updateStaffPosition(staffId, positionId) {
-        return instance.put(`/dep-admin/staff/${staffId}/update-position?positionId=${positionId}`);
-    },
-
-    updateStaffRole(staffId, role) {
-        return instance.put(`/dep-admin/staff/${staffId}/update-role?role=${role}`);
+        return instance.patch(`/dep-admin/users/${userId}/email`, {email: email});
     },
 
     //------------------------------------------------SET-s-------------------------------------------------------------
@@ -59,5 +43,5 @@ export const usersAPI = {
 
     fetchAllStaffByRatos() {
         return instance.get(`/global-admin/staff-table/all-staff-by-ratos`);
-    },
+    }
 }

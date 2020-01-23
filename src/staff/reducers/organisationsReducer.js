@@ -52,17 +52,17 @@ export const organisationsReducer = (state = initState, action) => {
             const content = action.payload;
             return {...state, content};
         }
+        case "ADD_ORG_IN_STORE": {
+            const org = action.payload;
+            return {...state, content: [...state.content, org]};
+        }
         case "UPDATE_ORG_IN_STORE": {
-            const {orgObj} = action;
-            return {...state, content: state.content.map(o => o.orgId === orgObj.orgId ? orgObj: o)}
+            const org = action.payload;
+            return {...state, content: state.content.map(o => o.orgId === org.orgId ? org : o)}
         }
         case "UPDATE_ORG_NAME_IN_STORE": {
             const {orgId, name} = action;
             return {...state, content: state.content.map(o => o.orgId === orgId ? {...o, name} : o)}
-        }
-        case "ADD_ORG_IN_STORE": {
-            const {genId, orgObj} = action;
-            return {...state, content: [...state.content, {...orgObj, orgId: genId}]};
         }
         case "DELETE_ORG_FROM_STORE": {
             const {orgId} = action;

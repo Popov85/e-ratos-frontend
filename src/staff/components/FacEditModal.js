@@ -14,7 +14,6 @@ const FacEditModal = props => {
             show={props.show}
             backdrop='static'
             keyboard={false}
-            size="sm"
             scrollable={true}
             centered>
             <Alert variant="info" onClose={() => props.deactivateModal()} className="text-center m-0" dismissible >
@@ -24,7 +23,7 @@ const FacEditModal = props => {
                 }
             </Alert>
             <Modal.Body>
-                <FacEditContainer editableFacId = {editableFacId}/>
+                <FacEditContainer facId = {editableFacId}/>
             </Modal.Body>
         </Modal>
     );

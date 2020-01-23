@@ -14,6 +14,6 @@ export const coursesTransformer = {
             item.label = c.name;
             return item;
         });
-    },
+    }
 
 }

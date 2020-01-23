@@ -40,7 +40,7 @@ const Admin = props => {
                     {
                         !affiliation ?
                             <span title = {ownDepTitle}>
-                                <strong>Own department.</strong>
+                                <strong>Own department</strong>
                             </span> :
                             <span title={affiliationTitle}>
                                 <strong>

@@ -5,18 +5,17 @@ import FieldString from "../../common/forms/controls/FieldString";
 import {email, minLength2, minLength8, required} from "../../utils/validators";
 import FieldEmail from "../../common/forms/controls/FieldEmail";
 import FieldPassword from "../../common/forms/controls/FieldPassword";
-import {FaArrowLeft, FaSignInAlt} from "react-icons/fa";
+import {FaSignInAlt} from "react-icons/fa";
 import FieldSelectBadge from "../../common/forms/controls/FieldSelectBadge";
-import {LinkContainer} from "react-router-bootstrap";
 import AffiliationSelectorFields from "./AffiliationSelectorFields";
 
 let UserEditForm = props => {
 
-    const {userInfo, isNew, disabled, roles, positions} = props;
+    const {userInfo, isNew, disabled, finished, roles, positions} = props;
 
     return (
         <form onSubmit={props.handleSubmit}>
-            <fieldset disabled={disabled}>
+            <fieldset disabled={disabled || finished}>
 
                 <Field name="userId" component="input" type={"text"} hidden/>
 
@@ -69,22 +68,17 @@ let UserEditForm = props => {
                        <button type="submit" value="Save" className="btn btn-sm btn-success mr-2">
                            <div className="align-middle">Save&nbsp; <FaSignInAlt color="white"/></div>
                        </button>
-                        <LinkContainer to="/users">
-                           <button type="button" value="Back" className="btn btn-sm btn-secondary">
-                                <div className="align-middle">Back&nbsp;<FaArrowLeft color="white"/></div>
-                            </button>
-                        </LinkContainer>
                     </span>
                 </div>
-
             </fieldset>
         </form>);
 }
 
 UserEditForm.propTypes = {
-    userInfo: PropTypes.string.isRequired,
+    userInfo: PropTypes.object.isRequired,
     positions: PropTypes.array.isRequired,
     roles: PropTypes.array.isRequired,
+    finished: PropTypes.bool.isRequired,
 
     affiliationSelector: PropTypes.object.isRequired,
 

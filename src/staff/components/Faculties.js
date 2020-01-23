@@ -27,9 +27,9 @@ class Faculties extends Component {
     loadFacultiesBasedOnRole() {
         const {isGlobalAdmin} =
             this.props.userInfo.authenticated;
-        if (isGlobalAdmin) {
-            this.props.getAllFacultiesByRatos();
-        } else {
+        if (isGlobalAdmin) {// and organisations
+            this.props.getAllFacultiesBunchByRatos();
+        } else {//only faculties
             this.props.getAllFacultiesByOrganisation();
         }
     }
@@ -119,7 +119,7 @@ Faculties.propTypes = {
     faculties: PropTypes.object.isRequired,
     organisations: PropTypes.object, // Only needed for Global admin!
 
-    getAllFacultiesByRatos: PropTypes.func.isRequired,
+    getAllFacultiesBunchByRatos: PropTypes.func.isRequired,
     getAllFacultiesByOrganisation: PropTypes.func.isRequired,
     clearAllFacFailures: PropTypes.func.isRequired,
     updateFacName: PropTypes.func.isRequired,

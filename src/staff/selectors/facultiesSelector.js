@@ -1,77 +1,71 @@
-const dummy = {
-    label: "Select",
-    value: ""
-}
-// For editing an existing fac.
-export const getFacById = (state, facId) => {
-    const {content} = state.faculties;
-    if (!content) return null;
-    return content.find(f=>f.facId===facId);
-}
+import {createSelector} from "reselect";
+import {facultiesTransformer} from "../../utils/transformers/facultiesTransformer";
+import {dummy, dummyArray} from "../../utils/constants";
+
+export const getFacIdFromProps = (state, props) => props.facId;
+
+export const getAllFaculties = (state) => state.faculties.content;
+
+//------------------------------------------Re-selectors----------------------------------------------------------------
+// For editing (from table)
+export const getFacById = createSelector(getAllFaculties, getFacIdFromProps, (faculties, facId) => {
+    if (!faculties) return null;
+    return faculties.find(f => f.facId === facId);
+});
 
 // For Table filter
-export const getAllFacForFilter = (state) => {
-    const {content} = state.faculties;
-    if (!content) return null;
-    return facultiesToObj(content);
-}
+export const getAllFacForFilter = createSelector(getAllFaculties, (faculties) => {
+    if (!faculties) return null;
+    return facultiesTransformer.toObject(faculties);
+});
 
 // For Select drop-down
-export const getAllFacForEdit = (state) => {
-    const {content} = state.faculties;
-    if (!content) return null;
-    return facultiesToSelect(content);
-}
+export const getAllFacForEdit = createSelector(getAllFaculties, (faculties) => {
+    if (!faculties) return null;
+    return facultiesTransformer.toSelect(faculties);
+});
 
 // For new form with empty default option
-export const getAllFacForNew = (state) => {
-    let all = getAllFacForEdit(state);
-    all.unshift(dummy);
-    return all;
-}
+export const getAllFacForNew = createSelector(getAllFacForEdit, (faculties) => {
+    if (!faculties) return null;
+    faculties.unshift(dummy);
+    return faculties;
+});
 
-export const getFacFromStoreForNewByOrgId = (state) => {
-    // Selected orgId, default 0
-    const {selectedId} = state.organisations;
-    // Map of key - orgId, value - array of corresponding faculties
-    const {map} = state.faculties;
-    let content = map.get(selectedId);
-    if (!content) return [dummy];
-    return facultiesToSelectWithDummy(content);
-}
-
-export const getFacFromStoreForFilterByOrgId = (state) => {
-    // Selected orgId, default 0
-    const {selectedId} = state.organisations;
-    // Return all existing faculties;
-    if (selectedId === 0)
-        return facultiesToObj(state.faculties.content);
-    // Map of key - orgId, value - array of corresponding faculties
-    const {map} = state.faculties;
-    let content = map.get(selectedId);
-    if (!content)
-        throw new Error("No faculties found in the store for this organisation!");
-    return facultiesToObj(content);
-}
-
-const facultiesToObj = (content) => {
-    return content.reduce((map, fac) => {
-        map[fac.facId] = fac.name;
-        return map;
-    }, {});
-}
-
-const facultiesToSelect = (content) => {
-    return content.map(f => {
-        let item = {};
-        item.value = f.facId;
-        item.label = f.name;
-        return item;
+// Get map with keys being orgId and values being an array of corresponding faculties
+export const getMap = createSelector(getAllFaculties, (faculties) => {
+    console.log("Getting map from smart selector!");
+    let result = new Map();
+    faculties.forEach(f => {
+        let orgId = f.organisation.orgId;
+        let item = {facId: f.facId, name: f.name};
+        if (result.has(orgId)) {
+            let array = result.get(orgId);
+            array.push(item);
+        } else {
+            result.set(orgId, [item]);
+        }
     });
-}
-
-const facultiesToSelectWithDummy = (content) => {
-    let result = facultiesToSelect(content);
-    result.unshift(dummy);
     return result;
+});
+
+// 1) GLOBAl_ADMIN - default is dummy, after selecting - get from map by orgId
+// 2) ORG_ADMIN - default is all from store+dummy, never change
+// 3) FAC_ADMIN - default is dummy, never change
+export const getAllFacForNewByOrgId = state => {
+    const {isGlobalAdmin, isAtLeastOrgAdmin}
+        = state.userInfo.authenticated;
+    if (isGlobalAdmin) {
+        const {selectedId} = state.organisations;
+        const map = getMap(state);
+        const result = map.get(selectedId);
+        if (!result) return dummyArray;
+        return facultiesTransformer.toSelectWithDummy(result);
+    }
+    if (isAtLeastOrgAdmin) {
+        const result = getAllFaculties(state);
+        if (!result) return dummyArray;
+        return facultiesTransformer.toSelectWithDummy(result);
+    }
+    return dummyArray;
 }

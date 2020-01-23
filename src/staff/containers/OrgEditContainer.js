@@ -7,11 +7,11 @@ import {clearOrgState, saveOrg, updateOrg} from "../actions/orgEditActions";
 import {getOrgById} from "../selectors/organisationsSelector";
 
 const mapStateToProps = (state, ownProps) => {
-    const {editableOrgId} = ownProps;
+    const {orgId} = ownProps;
     return {
         userInfo: getUserInfo(state),
         orgEdit: state.orgEdit,
-        org: editableOrgId ? getOrgById(state, editableOrgId) : null
+        org: orgId ? getOrgById(state, ownProps) : null
     }
 }
 

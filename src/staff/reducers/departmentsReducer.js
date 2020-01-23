@@ -76,17 +76,17 @@ export const departmentsReducer = (state = initState, action) => {
             const content = action.payload;
             return {...state, content};
         }
+        case "ADD_DEP_IN_STORE": {
+            const dep = action.payload;
+            return {...state, content: [...state.content, dep]};
+        }
         case "UPDATE_DEP_IN_STORE": {
-            const {depObj} = action;
-            return {...state, content: state.content.map(d => d.depId === depObj.depId ? depObj : d)}
+            const dep = action.payload;
+            return {...state, content: state.content.map(d => d.depId === dep.depId ? dep : d)}
         }
         case "UPDATE_DEP_NAME_IN_STORE": {
             const {depId, name} = action;
             return {...state, content: state.content.map(d => d.depId === depId ? {...d, name} : d)}
-        }
-        case "ADD_DEP_IN_STORE": {
-            const {genId, depObj} = action;
-            return {...state, content: [...state.content, {...depObj, depId: genId}]};
         }
         case "DELETE_DEP_FROM_STORE": {
             const {depId} = action;

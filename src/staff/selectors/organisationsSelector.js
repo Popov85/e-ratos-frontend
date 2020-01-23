@@ -1,42 +1,35 @@
-const dummy = {
-    label: "Select",
-    value: ""
-}
+import {createSelector} from "reselect";
+import {organisationsTransformer} from "../../utils/transformers/organisationsTransformer";
+import {dummy} from "../../utils/constants";
 
-// For editing an existing org.
-export const getOrgById = (state, orgId) => {
-    const {content} = state.organisations;
-    if (!content) return null;
-    return content.find(o=>o.orgId===orgId);
-}
+export const getOrgIdFromProps = (state, props) => props.orgId;
+
+export const getAllOrganisations = (state) => state.organisations.content;
+
+//--------------------------------------------------Re-selectors--------------------------------------------------------
+// For editing (from table)
+export const getOrgById = createSelector(getAllOrganisations, getOrgIdFromProps, (organisations, orgId) => {
+    if (!organisations) return null;
+    return organisations.find(o => o.orgId === orgId);
+});
 
 // For Table filter
-export const getAllOrgForFilter = (state) => {
-    const {content} = state.organisations;
-    if (!content) return null;
-    return content.reduce((map, org)=> {
-        map[org.orgId] = org.name;
-        return map;
-    }, {});
-}
+export const getAllOrgForFilter = createSelector(getAllOrganisations, (organisations) => {
+    if (!organisations) return null;
+    return organisationsTransformer.toObject(organisations);
+});
 
 // For Select drop-down
-export const getAllOrgForEdit = (state) => {
-    const {content} = state.organisations;
-    if (!content) return null;
-    return content.map(o => {
-        let item = {};
-        item.value = o.orgId;
-        item.label = o.name;
-        return item;
-    });
-}
+export const getAllOrgForEdit = createSelector(getAllOrganisations, (organisations) => {
+    if (!organisations) return null;
+    return organisationsTransformer.toSelect(organisations);
+});
 
 // For new form with empty default option
-export const getAllOrgForNew = (state) => {
-    let all = getAllOrgForEdit(state);
-    all.unshift(dummy);
-    return all;
-}
+export const getAllOrgForNew = createSelector(getAllOrgForEdit, (organisations) => {
+    if (!organisations) return null;
+    organisations.unshift(dummy);
+    return organisations;
+});
 
 

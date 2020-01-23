@@ -5,8 +5,9 @@ import Faculties from "../components/Faculties";
 import {
     clearAllFacFailures,
     deleteFac,
+    getAllFacultiesBunchByRatos,
     getAllFacultiesByOrganisation,
-    getAllFacultiesByRatos, updateFacName, updateFacOrg
+    updateFacName
 } from "../actions/facultiesActions";
 import {getAllOrgForFilter} from "../selectors/organisationsSelector";
 
@@ -20,7 +21,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getAllFacultiesByRatos: () => dispatch(getAllFacultiesByRatos()),
+        getAllFacultiesBunchByRatos: () => dispatch(getAllFacultiesBunchByRatos()),
         getAllFacultiesByOrganisation: () => dispatch(getAllFacultiesByOrganisation()),
         clearAllFacFailures: () => dispatch(clearAllFacFailures()),
         updateFacName: (facId, name) => dispatch(updateFacName(facId, name)),

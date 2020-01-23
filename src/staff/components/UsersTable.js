@@ -1,21 +1,43 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
-import cellEditFactory, {Type} from 'react-bootstrap-table2-editor';
+import cellEditFactory from 'react-bootstrap-table2-editor';
 import filterFactory, {selectFilter, textFilter} from 'react-bootstrap-table2-filter';
-import {FaPencilAlt} from "react-icons/fa";
-import {LinkContainer} from "react-router-bootstrap";
-import {email, minLength2} from "../../utils/validators";
+import {FaPencilAlt, FaTrashAlt} from "react-icons/fa";
+import {email, minLength2, required} from "../../utils/validators";
 import {isRoleManageable} from "../../utils/security";
+import StaffEditModal from "./StaffEditModal";
+
+const headerStyle = (width, align) => {
+    return {
+        width: `${width}`,
+        textAlign: `${align}`,
+        fontSize: '16px'
+    }
+};
+
+const cellStyle = {
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis'
+};
+
+const initEditState = {mode: false, editableStaffId: null};
 
 const UsersTable = props => {
 
-    const {userInfo, users, positions, roles} = props;
+    const [edit, setEditMode] = useState(initEditState);
+
+    const deactivateEditModal = () => {
+        setEditMode(initEditState);
+    }
+
+    const {userInfo, users, positions, roles, expanded} = props;
 
     const {content, organisations, faculties, departments} = users;
-    
-    const {authenticated} = userInfo
+
+    const {authenticated} = userInfo;
 
     const columns = [
         {
@@ -30,6 +52,8 @@ const UsersTable = props => {
             filter: selectFilter({
                 options: organisations
             }),
+            style: !expanded ? cellStyle : null,
+            headerStyle: () => headerStyle('250px', 'left'),
             formatter: cell => organisations[cell],
             title: cell => organisations[cell],
             hidden: authenticated.isGlobalAdmin ? false : true,
@@ -42,6 +66,8 @@ const UsersTable = props => {
             filter: selectFilter({
                 options: faculties
             }),
+            style: !expanded ? cellStyle : null,
+            headerStyle: () => headerStyle('250px', 'left'),
             formatter: cell => faculties[cell],
             title: cell => faculties[cell],
             hidden: authenticated.isAtLeastOrgAdmin ? false : true,
@@ -54,6 +80,8 @@ const UsersTable = props => {
             filter: selectFilter({
                 options: departments
             }),
+            style: !expanded ? cellStyle : null,
+            headerStyle: () => headerStyle('250px', 'left'),
             formatter: cell => departments[cell],
             title: cell => departments[cell],
             hidden: authenticated.isAtLeastFacAdmin ? false : true,
@@ -65,7 +93,7 @@ const UsersTable = props => {
             sort: true,
             filter: textFilter(),
             validator: (newValue) => {
-                if (minLength2(newValue)) {
+                if (required(newValue) || minLength2(newValue)) {
                     return {
                         valid: false,
                         message: 'Invalid surname'
@@ -74,6 +102,13 @@ const UsersTable = props => {
                 return true;
             },
             title: cell => cell,
+            style: cellStyle,
+            headerStyle: () => headerStyle('150px', 'left'),
+            editable:  (cell, row) => {
+                const {role} = row.user;
+                const {authenticated} = props.userInfo;
+                return isRoleManageable(role, authenticated);
+            }
         },
         {
             dataField: 'user.name',
@@ -81,7 +116,7 @@ const UsersTable = props => {
             sort: true,
             filter: textFilter(),
             validator: (newValue) => {
-                if (minLength2(newValue)) {
+                if (required(newValue) || minLength2(newValue)) {
                     return {
                         valid: false,
                         message: 'Invalid name'
@@ -90,19 +125,21 @@ const UsersTable = props => {
                 return true;
             },
             title: cell => cell,
+            style: cellStyle,
+            headerStyle: () => headerStyle('150px', 'left'),
+            editable:  (cell, row) => {
+                const {role} = row.user;
+                const {authenticated} = props.userInfo;
+                return isRoleManageable(role, authenticated);
+            }
         },
         {
             dataField: 'user.email',
             text: 'Email',
             sort: true,
             filter: textFilter(),
-            style: {
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis'
-            },
             validator: (newValue) => {
-                if (email(newValue)) {
+                if (required(newValue) || email(newValue)) {
                     return {
                         valid: false,
                         message: 'Invalid email'
@@ -111,6 +148,13 @@ const UsersTable = props => {
                 return true;
             },
             title: cell => cell,
+            style: cellStyle,
+            headerStyle: () => headerStyle('150px', 'left'),
+            editable:  (cell, row) => {
+                const {role} = row.user;
+                const {authenticated} = props.userInfo;
+                return isRoleManageable(role, authenticated);
+            }
         },
         {
             dataField: 'user.role',
@@ -119,20 +163,11 @@ const UsersTable = props => {
             filter: selectFilter({
                 options: roles.forFilter
             }),
-            style: {
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                fontSize: '13px'
-            },
-            editor: {
-                type: Type.SELECT,
-                options: roles.forEdit
-            },
             title: cell => cell,
-            editable: (cell, row) => {
-                return isRoleManageable(cell, props.userInfo.authenticated);
-            }
+            style: cellStyle,
+
+            headerStyle: () => headerStyle('150px', 'left'),
+            editable: false
         },
         {
             dataField: 'position.posId',
@@ -143,11 +178,9 @@ const UsersTable = props => {
             }),
             formatter: cell => positions.forFilter[cell],
             title: cell => positions.forFilter[cell],
-            editor: {
-                type: Type.SELECT,
-                options: positions.forEdit
-            },
-            editable: true
+            style: cellStyle,
+            headerStyle: () => headerStyle('150px', 'left'),
+            editable: false
         },
         {
             dataField: 'user.active',
@@ -160,14 +193,13 @@ const UsersTable = props => {
             }),
             align: 'center',
             title: (cell) => `This user is ${cell ? 'active' : 'disabled'}`,
-            headerStyle: () => {
-                return {width: '70px', textAlign: 'center'};
-            },
+            headerStyle: () => headerStyle('70px', 'center'),
             formatter: (cell, row) => {
                 return cell ?
                     <span className="badge badge-success">Active</span> :
                     <span className="badge badge-danger">Inactive</span>;
-            }
+            },
+            editable: false
         },
         {
             dataField: 'edit',
@@ -175,53 +207,89 @@ const UsersTable = props => {
             editable: false,
             text: 'Edit',
             align: 'center',
-            title: ()=>'Edit',
+            title: () => 'Edit',
             headerStyle: () => {
                 return {width: '40px', textAlign: 'center'};
             },
             formatter: (cell, row) => {
+                const {staffId} = row;
                 const {role} = row.user;
                 const {authenticated} = props.userInfo;
                 const isEditable = isRoleManageable(role, authenticated);
                 return (
-                    <LinkContainer to={`/users/edit/${row.staffId}`}>
-                        <a href="#" className={`badge badge-${isEditable ? 'info':'danger'}`}>
-                            <FaPencilAlt/>
-                        </a>
-                    </LinkContainer>);
+                    <a href="#" className={`badge badge-${isEditable ? 'info' : 'secondary'}`}
+                       onClick={() => isEditable ? setEditMode({
+                           mode: true,
+                           editableStaffId: staffId
+                       }) : null}>
+                        <FaPencilAlt/>
+                    </a>);
+            }
+        },
+        {
+            dataField: 'delete',
+            isDummyField: true,
+            editable: false,
+            text: 'Del',
+            align: 'center',
+            title: () => 'Delete',
+            headerStyle: () => {
+                return {width: '40px', textAlign: 'center'};
+            },
+            formatter: (cell, row) => {
+                const {staffId} = row;
+                const {role} = row.user;
+                const {authenticated} = props.userInfo;
+                const isEditable = isRoleManageable(role, authenticated);
+                return (
+                    <a href="#" className={`badge badge-${isEditable ? 'warning' : 'secondary'}`}
+                       onClick={() => isEditable ? props.deleteStaff(staffId) : null}>
+                        <FaTrashAlt/>
+                    </a>);
             }
         },
     ];
 
     return (
-        <BootstrapTable bootstrap4 striped hover condensed
-            remote={{ filter: false, pagination: false, sort: false, cellEdit: true}}
-            keyField='staffId'
-            data={content}
-            columns={columns}
-            filter={filterFactory()}
-            pagination={paginationFactory({
-                showTotal: true,
-                pageStartIndex: 0,
-                sizePerPageList: [
-                    {text: '20', value: 20},
-                    {text: '50', value: 50},
-                    {text: 'All', value: content.length}
-                ]
-            })}
-            headerClasses="thead-light"
-            cellEdit={cellEditFactory({mode: 'dbclick'})}
-            noDataIndication={ ()=> "No data!"}
-            onTableChange={props.onTableChange}
-        />
+        <div className="pb-5">
+            <BootstrapTable bootstrap4 striped hover condensed
+                            remote={{filter: false, pagination: false, sort: false, cellEdit: true}}
+                            keyField='staffId'
+                            data={content}
+                            columns={columns}
+                            filter={filterFactory()}
+                            pagination={paginationFactory({
+                                showTotal: true,
+                                pageStartIndex: 0,
+                                sizePerPageList: [
+                                    {text: '10', value: 10},
+                                    {text: '30', value: 30},
+                                    {text: 'All', value: content.length}
+                                ]
+                            })}
+                            headerClasses="thead-light"
+                            wrapperClasses="table-responsive"
+                            cellEdit={cellEditFactory({mode: 'dbclick'})}
+                            noDataIndication={() => "No data!"}
+                            onTableChange={props.onTableChange}
+            />
+            {
+                edit.mode &&
+                <StaffEditModal show={edit.mode} deactivateModal={deactivateEditModal}
+                                editableStaffId={edit.editableStaffId}/>
+            }
+        </div>
     );
 };
 
 UsersTable.propTypes = {
+    userInfo: PropTypes.object.isRequired,
     users: PropTypes.object.isRequired,
     roles: PropTypes.object.isRequired,
-    userInfo: PropTypes.object.isRequired,
+    expanded: PropTypes.bool.isRequired,
+
     positions: PropTypes.object.isRequired,
+    deleteStaff: PropTypes.func.isRequired,
     onTableChange: PropTypes.func.isRequired
 };
 

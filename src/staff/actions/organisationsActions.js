@@ -34,8 +34,8 @@ export const clearUpdatingFailure = () => ({type: CLEAR_UPDATING_ORG_FAILURE});
 
 export const clearAllOrgFailures = () => ({type: CLEAR_ALL_ORG_FAILURES});
 
-export const addOrgInStore = (genId, orgObj) => ({type: ADD_ORG_IN_STORE, genId, orgObj});
-export const updateOrgInStore = (orgObj) => ({type: UPDATE_ORG_IN_STORE, orgObj});
+export const addOrgInStore = org => ({type: ADD_ORG_IN_STORE, payload: org});
+export const updateOrgInStore = org => ({type: UPDATE_ORG_IN_STORE, payload: org});
 export const updateOrgNameInStore = (orgId, name) => ({type: UPDATE_ORG_NAME_IN_STORE, orgId, name});
 export const deleteOrgFromStore = orgId => ({type: DELETE_ORG_FROM_STORE, orgId});
 

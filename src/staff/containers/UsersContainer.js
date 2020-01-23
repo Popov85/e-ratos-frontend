@@ -1,14 +1,10 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {
-    clearAllFailures,
-    disableStaff,
-    enableStaff,
+    clearAllFailures, deleteStaff,
     getAllStaffByDepartment, getAllStaffByFaculty, getAllStaffByOrganisation, getAllStaffByRatos,
     updateStaffEmail,
     updateStaffName,
-    updateStaffPosition,
-    updateStaffRole,
     updateStaffSurname
 } from "../actions/usersActions";
 import Users from "../components/Users";
@@ -29,10 +25,7 @@ const mapDispatchToProps = dispatch => {
         updateStaffName: (staffId, name)=>dispatch(updateStaffName(staffId, name)),
         updateStaffSurname: (staffId, surname)=>dispatch(updateStaffSurname(staffId, surname)),
         updateStaffEmail: (staffId, email)=>dispatch(updateStaffEmail(staffId, email)),
-        updateStaffRole: (staffId, role)=>dispatch(updateStaffRole(staffId, role)),
-        updateStaffPosition: (staffId, positionId, positions)=>dispatch(updateStaffPosition(staffId, positionId, positions)),
-        enableStaff: (staffId)=>dispatch(enableStaff(staffId)),
-        disableStaff: (staffId)=>dispatch(disableStaff(staffId)),
+        deleteStaff: (staffId)=>dispatch(deleteStaff(staffId)),
 
         clearAllFailures: () => dispatch(clearAllFailures()),
         getPositions: () => dispatch(getPositions()),

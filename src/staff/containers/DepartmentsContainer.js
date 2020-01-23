@@ -8,11 +8,10 @@ import {
     clearAllDepFailures,
     deleteDep,
     getAllDepartmentsByFaculty,
-    getAllDepartmentsByOrganisation,
-    getAllDepartmentsByRatos,
+    getAllDepartmentsBunchByOrganisation,
+    getAllDepartmentsBunchByRatos,
     updateDepName
 } from "../actions/departmentsActions";
-import {clearOrgIdSelected, setOrgIdSelected} from "../actions/organisationsActions";
 
 const mapStateToProps = state => {
     return {
@@ -26,13 +25,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         getAllDepartmentsByFaculty: () => dispatch(getAllDepartmentsByFaculty()),
-        getAllDepartmentsByOrganisation: () => dispatch(getAllDepartmentsByOrganisation()),
-        getAllDepartmentsByRatos: () => dispatch(getAllDepartmentsByRatos()),
+        getAllDepartmentsBunchByOrganisation: () => dispatch(getAllDepartmentsBunchByOrganisation()),
+        getAllDepartmentsBunchByRatos: () => dispatch(getAllDepartmentsBunchByRatos()),
         clearAllDepFailures: () => dispatch(clearAllDepFailures()),
         updateDepName: (depId, name) => dispatch(updateDepName(depId, name)),
-        deleteDep: (depId) => dispatch(deleteDep(depId)),
-        setOrgIdSelected: (orgId) => dispatch(setOrgIdSelected(orgId)),
-        clearOrgIdSelected: () => dispatch(clearOrgIdSelected()),
+        deleteDep: (depId) => dispatch(deleteDep(depId))
     }
 }
 

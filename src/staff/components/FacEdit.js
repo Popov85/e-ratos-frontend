@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Failure from "../../common/Failure";
 import ProtectedResource from "../../common/ProtectedResource";
 import FacEditForm from "../forms/FacEditForm";
-import {facultiesTransformer} from "../../utils/transformers/facultiesTransformer";
 
 class FacEdit extends React.Component {
 
@@ -13,17 +12,15 @@ class FacEdit extends React.Component {
     }
 
     handleSubmit(data) {
-        let {orgContent} = this.props;
-        let facDTO = facultiesTransformer
-            .facFormToDTO(data, orgContent);
-        console.log("facDTO = ", facDTO);
+        //console.log("facDTO = ", data);
+        if (!data.orgId) data.orgId =
+            this.props.userInfo.authenticated.staff.department.faculty.organisation.orgId;
         !data.facId ?
-            this.props.saveFac(facDTO) :
-            this.props.updateFac(facDTO);
+            this.props.saveFac(data) :
+            this.props.updateFac(data);
     }
 
     render() {
-
         const {fac} = this.props;
         const {userInfo, organisations} = this.props;
         const {authenticated} = this.props.userInfo;
@@ -70,9 +67,9 @@ class FacEdit extends React.Component {
                                     }
                                     userInfo={userInfo}
                                     organisations = {organisations}
-                                    onSubmit={data => this.handleSubmit(data)}
-                                    finished = {message ? true : false}
                                     disabled={isLoading}
+                                    finished = {message ? true : false}
+                                    onSubmit={data => this.handleSubmit(data)}
                                 />
                             </div>
                             <div className="form-group text-center mt-n2 mb-2" hidden = {message ? true : false}>
@@ -92,8 +89,6 @@ FacEdit.propTypes = {
     userInfo: PropTypes.object.isRequired,
     facEdit: PropTypes.object.isRequired,
     fac: PropTypes.object, // Nullable for new objects
-
-    orgContent: PropTypes.array,
     organisations: PropTypes.array,
 
     clearFacState: PropTypes.func.isRequired,

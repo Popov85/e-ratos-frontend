@@ -31,8 +31,8 @@ export const clearUpdatingFailure = () => ({type: CLEAR_UPDATING_DEP_FAILURE});
 
 export const clearAllDepFailures = () => ({type: CLEAR_ALL_DEP_FAILURES});
 
-export const addDepInStore = (genId, depObj) => ({type: ADD_DEP_IN_STORE, genId, depObj});
-export const updateDepInStore = (depObj) => ({type: UPDATE_DEP_IN_STORE, depObj});
+export const addDepInStore = dep => ({type: ADD_DEP_IN_STORE, payload: dep});
+export const updateDepInStore = dep => ({type: UPDATE_DEP_IN_STORE, payload: dep});
 export const updateDepNameInStore = (depId, name) => ({type: UPDATE_DEP_NAME_IN_STORE, depId, name});
 export const deleteDepFromStore = depId => ({type: DELETE_DEP_FROM_STORE, depId});
 
@@ -49,7 +49,7 @@ export const updateDepName = (depId, name) => {
     }
 }
 
-export const deleteDep = (depId) => {
+export const deleteDep = depId => {
     return (dispatch) => {
         dispatch(clearUpdatingFailure());
         dispatch(updating(true));
@@ -75,7 +75,7 @@ export const getAllDepartmentsByFaculty = () => {
 }
 
 // Here we automatically load all faculties too
-export const getAllDepartmentsByOrganisation = () => {
+export const getAllDepartmentsBunchByOrganisation = () => {
     return (dispatch) => {
         dispatch(clearLoadingFailure());
         dispatch(loading(true));
@@ -93,7 +93,7 @@ export const getAllDepartmentsByOrganisation = () => {
 }
 
 // Here we automatically load all faculties and organisations too
-export const getAllDepartmentsByRatos = () => {
+export const getAllDepartmentsBunchByRatos = () => {
     return (dispatch) => {
         dispatch(clearLoadingFailure());
         dispatch(loading(true));

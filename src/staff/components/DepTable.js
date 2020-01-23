@@ -140,7 +140,6 @@ DepTable.propTypes = {
     organisations: PropTypes.object,
 
     deleteDep: PropTypes.func.isRequired,
-    setOrgIdSelected: PropTypes.func.isRequired, // Temp. not used, (to implement dependable columns)!
     onTableChange: PropTypes.func.isRequired
 };
 

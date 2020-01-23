@@ -11,7 +11,7 @@ export const departmentsAPI = {
     },
 
     updateDepName(depId, name) {
-        return instance.patch(`/fac-admin/departments/${depId}/name?name=${name}`);
+        return instance.patch(`/fac-admin/departments/${depId}/name`, {value: name});
     },
 
     deleteDep(depId) {

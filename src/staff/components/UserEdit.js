@@ -28,7 +28,6 @@ class UserEdit extends React.Component {
     }
 
     handleSubmit(data) {
-        //console.log("Data submitted = ", data);
         let staffId = data.userId;
         let staffDTO = new Staff(
             staffId,
@@ -56,77 +55,69 @@ class UserEdit extends React.Component {
 
         return (
             <div className="p-1">
-                <div className="alert alert-secondary text-center">
-                    <h5 className="alert-heading">
-                        <strong>Staff edit</strong>
-                    </h5>
-                </div>
-                <div className="row mt-1">
-                    <div className="col-1 col-sm-2 col-md-3 col-lg-4"></div>
-                    <div className="col-10 col-sm-8 col-md-6 col-lg-4">
-                        {
-                            isLoading &&
-                            <div className="text-center text-secondary m-2">
-                                <span>Saving...</span>
-                            </div>
-                        }
-                        {
-                            error &&
-                            <div className="alert alert-danger text-center p-1" role="alert">
+                <div className="mt-1">
+                    {
+                        isLoading &&
+                        <div className="text-center text-secondary m-2">
+                            <span>Saving...</span>
+                        </div>
+                    }
+                    {
+                        error &&
+                        <div className="alert alert-danger text-center p-1" role="alert">
                                 <span className="text-danger">
                                     <strong>
                                     <Failure message={error.message}/>
                                 </strong>
                                 </span>
-                            </div>
-                        }
-                        {
-                            message &&
-                            <div className="alert alert-success text-center p-1" role="success">
-                                <span className="text-success"><strong>{message}</strong></span>
-                            </div>
-                        }
-                        <div className="card bg-transparent">
-                            <div className="card-body">
-                                <UserEditForm
-                                    onSubmit={data => this.handleSubmit(data)}
-                                    initialValues={user ?
-                                        {
-                                            userId: user.staffId,
-                                            name: user.user.name,
-                                            surname: user.user.surname,
-                                            email: user.user.email,
-                                            active: user.user.active,
-                                            role: user.user.role,
-                                            positionId: user.position.posId,
-                                            affiliation: {
-                                                depId: user.department.depId,
-                                                facId: user.department.faculty.facId,
-                                                orgId:user.department.faculty.organisation.orgId
-                                            }
+                        </div>
+                    }
+                    {
+                        message &&
+                        <div className="alert alert-success text-center p-1" role="success">
+                            <span className="text-success"><strong>{message}</strong></span>
+                        </div>
+                    }
+                    <div className="card bg-transparent">
+                        <div className="card-body">
+                            <UserEditForm
+                                onSubmit={data => this.handleSubmit(data)}
+                                initialValues={user ?
+                                    {
+                                        userId: user.staffId,
+                                        name: user.user.name,
+                                        surname: user.user.surname,
+                                        email: user.user.email,
+                                        active: user.user.active,
+                                        role: user.user.role,
+                                        positionId: user.position.posId,
+                                        affiliation: {
+                                            depId: user.department.depId,
+                                            facId: user.department.faculty.facId,
+                                            orgId: user.department.faculty.organisation.orgId
                                         }
-                                        : null
                                     }
-                                    positions={positions}
-                                    roles={roles}
-                                    userInfo={userInfo}
-                                    disabled={isLoading}
-                                    isNew={user ? false : true}
-                                    affiliationSelector = {this.props.affiliationSelector}
-                                    getAllFacultiesForSelectorByOrganisationId={this.props.getAllFacultiesForSelectorByOrganisationId}
-                                    getAllDepartmentsForSelectorByFacultyId={this.props.getAllDepartmentsForSelectorByFacultyId}
-                                    clearAllOnOrganisationReset={this.props.clearAllOnOrganisationReset}
-                                    clearAllOnFacultyReset={this.props.clearAllOnFacultyReset}
-                                />
-                            </div>
-                            <div className="form-group text-center mt-n2 mb-2">
-                                <a href="#" className="badge badge-secondary" onClick={() => this.props.resetForm()}>
-                                    Reset
-                                </a>
-                            </div>
+                                    : null
+                                }
+                                positions={positions}
+                                roles={roles}
+                                userInfo={userInfo}
+                                disabled={isLoading}
+                                isNew={user ? false : true}
+                                finished={message ? true : false}
+                                affiliationSelector={this.props.affiliationSelector}
+                                getAllFacultiesForSelectorByOrganisationId={this.props.getAllFacultiesForSelectorByOrganisationId}
+                                getAllDepartmentsForSelectorByFacultyId={this.props.getAllDepartmentsForSelectorByFacultyId}
+                                clearAllOnOrganisationReset={this.props.clearAllOnOrganisationReset}
+                                clearAllOnFacultyReset={this.props.clearAllOnFacultyReset}
+                            />
+                        </div>
+                        <div className="form-group text-center mt-n2 mb-2">
+                            <a href="#" className="badge badge-secondary" onClick={() => this.props.resetForm()}>
+                                Reset
+                            </a>
                         </div>
                     </div>
-                    <div className="col-1 col-sm-2 col-md-3 col-lg-4"/>
                 </div>
             </div>
         );

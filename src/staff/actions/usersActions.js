@@ -12,14 +12,15 @@ const CLEAR_UPDATING_DEP_STAFF_FAILURE = "CLEAR_UPDATING_DEP_STAFF_FAILURE";
 
 const CLEAR_DEP_STAFF_FAILURE = "CLEAR_DEP_STAFF_FAILURE";
 
-const UPDATE_STAFF_NAME = "UPDATE_STAFF_NAME";
-const UPDATE_STAFF_SURNAME = "UPDATE_STAFF_SURNAME";
-const UPDATE_STAFF_EMAIL = "UPDATE_STAFF_EMAIL";
-const UPDATE_STAFF_POSITION = "UPDATE_STAFF_POSITION";
-const UPDATE_STAFF_ROLE = "UPDATE_STAFF_ROLE";
+const ADD_STAFF_IN_STORE = "ADD_STAFF_IN_STORE";
+const UPDATE_STAFF_IN_STORE = "UPDATE_STAFF_IN_STORE";
 
-const ENABLE_STAFF = "ENABLE_STAFF";
-const DISABLE_STAFF = "DISABLE_STAFF";
+const UPDATE_STAFF_NAME_IN_STORE = "UPDATE_STAFF_NAME_IN_STORE";
+const UPDATE_STAFF_SURNAME_IN_STORE = "UPDATE_STAFF_SURNAME_IN_STORE";
+const UPDATE_STAFF_EMAIL_IN_STORE = "UPDATE_STAFF_EMAIL_IN_STORE";
+
+const DELETE_STAFF_FROM_STORE = "DELETE_STAFF_FROM_STORE";
+
 
 const SET_STAFF_FILTER = "SET_STAFF_FILTER";
 
@@ -38,14 +39,12 @@ export const clearUpdatingFailure = () => ({type: CLEAR_UPDATING_DEP_STAFF_FAILU
 
 export const clearAllFailures = () => ({type: CLEAR_DEP_STAFF_FAILURE});
 
-export const updateStaffNameInStore = (staffId, name) => ({type: UPDATE_STAFF_NAME, staffId, name});
-export const updateStaffSurnameInStore = (staffId, surname) => ({type: UPDATE_STAFF_SURNAME, staffId, surname});
-export const updateStaffEmailInStore = (staffId, email) => ({type: UPDATE_STAFF_EMAIL, staffId, email});
-export const updateStaffPositionInStore = (staffId, positionId, positions) => ({type: UPDATE_STAFF_POSITION, staffId, positionId, positions});
-export const updateStaffRoleInStore = (staffId, role) => ({type: UPDATE_STAFF_ROLE, staffId, role});
-
-export const enableStaffInStore = (staffId) => ({type: ENABLE_STAFF, staffId});
-export const disableStaffInStore = (staffId) => ({type: DISABLE_STAFF, staffId});
+export const addStaffInStore = (staff) => ({type: ADD_STAFF_IN_STORE, payload: staff});
+export const updateStaffInStore = (staff) => ({type: UPDATE_STAFF_IN_STORE, payload: staff});
+export const updateStaffNameInStore = (staffId, name) => ({type: UPDATE_STAFF_NAME_IN_STORE, staffId, name});
+export const updateStaffSurnameInStore = (staffId, surname) => ({type: UPDATE_STAFF_SURNAME_IN_STORE, staffId, surname});
+export const updateStaffEmailInStore = (staffId, email) => ({type: UPDATE_STAFF_EMAIL_IN_STORE, staffId, email});
+export const deleteStaffFromStore = (staffId) => ({type: DELETE_STAFF_FROM_STORE, staffId});
 
 
 export const updateStaffName = (staffId, name) => {
@@ -84,51 +83,14 @@ export const updateStaffEmail = (staffId, email) => {
     }
 }
 
-export const updateStaffRole = (staffId, role) => {
+export const deleteStaff = (staffId) => {
     return (dispatch) => {
         dispatch(clearUpdatingFailure());
         dispatch(updating(true));
-        usersAPI.updateStaffRole(staffId, role).then(result => {
-            dispatch(updateStaffRoleInStore(staffId, role));
+        usersAPI.deleteStaff(staffId).then(() => {
+            dispatch(deleteStaffFromStore(staffId));
         }).catch(e => {
-            dispatch(updatingFailure(new Error("Failed to update user role")));
-        }).finally(() => dispatch(updating(false)));
-    }
-}
-
-export const updateStaffPosition = (staffId, positionId, positions) => {
-    return (dispatch) => {
-        dispatch(clearUpdatingFailure());
-        dispatch(updating(true));
-        //dispatch(updateStaffPositionInStore(staffId, positionId, positions));
-        usersAPI.updateStaffPosition(staffId, positionId).then(result => {
-            dispatch(updateStaffPositionInStore(staffId, positionId, positions));
-        }).catch(e => {
-            dispatch(updatingFailure(new Error("Failed to update staff position")));
-        }).finally(() => dispatch(updating(false)));
-    }
-}
-
-export const enableStaff = (staffId) => {
-    return (dispatch) => {
-        dispatch(clearUpdatingFailure());
-        dispatch(updating(true));
-        usersAPI.enable(staffId).then(result => {
-            dispatch(enableStaffInStore(staffId));
-        }).catch(e => {
-            dispatch(updatingFailure(new Error("Failed to enable a staff")));
-        }).finally(() => dispatch(updating(false)));
-    }
-}
-
-export const disableStaff = (staffId) => {
-    return (dispatch) => {
-        dispatch(clearUpdatingFailure());
-        dispatch(updating(true));
-        usersAPI.disable(staffId).then(result => {
-            dispatch(disableStaffInStore(staffId));
-        }).catch(e => {
-            dispatch(updatingFailure(new Error("Failed to disable a staff")));
+            dispatch(updatingFailure(new Error("Failed to delete a staff")));
         }).finally(() => dispatch(updating(false)));
     }
 }

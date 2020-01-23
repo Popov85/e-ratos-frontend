@@ -4,20 +4,19 @@ import {reset} from "redux-form";
 import {getUserInfo} from "../../common/selectors/userSelector";
 import DepEdit from "../components/DepEdit";
 import {getAllOrgForNew} from "../selectors/organisationsSelector";
-import {getFacFromStoreForNewByOrgId} from "../selectors/facultiesSelector";
+import {getAllFacForNewByOrgId} from "../selectors/facultiesSelector";
 import {clearDepState, saveDep, updateDep} from "../actions/depEditActions";
 import {clearOrgIdSelected, setOrgIdSelected} from "../actions/organisationsActions";
 import {getDepById} from "../selectors/departmentsSelector";
 
 const mapStateToProps = (state, ownProps) => {
-    const {editableDepId} = ownProps;
+    const {depId} = ownProps;
     return {
         userInfo: getUserInfo(state),
         depEdit: state.depEdit,
-        facContent: state.faculties.content, // Nullable
         organisations: getAllOrgForNew(state), // Nullable
-        faculties: getFacFromStoreForNewByOrgId(state), // Nullable
-        dep: editableDepId ? getDepById(state, editableDepId) : null
+        faculties: getAllFacForNewByOrgId(state), // Nullable
+        dep: depId ? getDepById(state, ownProps) : null
     }
 }
 

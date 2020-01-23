@@ -8,7 +8,7 @@ const testInitState = {
     "authenticated": {
         "userId": 1,
         "name": "Daniel",
-        "surname": "Naraditsky",
+        "surname": "Naroditsky",
         "email": "staff.staff@example.com",
         "role": "ROLE_GLOBAL-ADMIN",
         "lms": false,

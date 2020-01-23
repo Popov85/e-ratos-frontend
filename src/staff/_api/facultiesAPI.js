@@ -11,7 +11,7 @@ export const facultiesAPI = {
     },
 
     updateFacName(facId, name) {
-        return instance.patch(`/org-admin/faculties/${facId}/name?name=${name}`);
+        return instance.patch(`/org-admin/faculties/${facId}/name`, {value: name});
     },
 
     deleteFac(facId) {
