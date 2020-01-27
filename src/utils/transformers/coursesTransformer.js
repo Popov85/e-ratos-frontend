@@ -1,3 +1,5 @@
+import {dummy} from "../constants";
+
 export const coursesTransformer = {
 
     toObject(courses) {
@@ -14,6 +16,13 @@ export const coursesTransformer = {
             item.label = c.name;
             return item;
         });
-    }
+    },
+
+    toSelectWithDummy(courses) {
+        let result = coursesTransformer
+            .toSelect(courses);
+        result.unshift(dummy);
+        return result;
+    },
 
 }

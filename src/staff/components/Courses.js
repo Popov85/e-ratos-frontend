@@ -61,7 +61,7 @@ class Courses extends Component {
     render() {
         const {newMode, expanded} = this.state;
         const {userInfo} = this.props;
-        const {courses} = this.props;
+        const {courses, accesses} = this.props;
         const {isLoading, isUpdating, error, errorUpdate} = courses;
 
         return (
@@ -89,10 +89,13 @@ class Courses extends Component {
                         </div>
 
                         <div>
-                            <button type="button" className="btn btn-sm btn-success"
-                                    onClick={() => this.setState({newMode: true})}>
-                                <FaPlus/>&nbsp;New
-                            </button>
+                            {
+                                userInfo.authenticated.isAtLeastInstructor &&
+                                <button type="button" className="btn btn-sm btn-success"
+                                        onClick={() => this.setState({newMode: true})}>
+                                    <FaPlus/>&nbsp;New
+                                </button>
+                            }
                             <button type="button" className="btn btn-sm btn-info ml-2"
                                     onClick={() => this.loadCoursesBasedOnRole()}>
                                 <FaSync/>&nbsp;Refresh
@@ -110,6 +113,7 @@ class Courses extends Component {
                             <CoursesTable
                                 userInfo={userInfo}
                                 courses={courses.content}
+                                accesses = {accesses}
                                 deleteCourse={this.props.deleteCourse}
                                 associateCourseWithLMS={this.props.associateCourseWithLMS}
                                 disassociateCourseWithLMS={this.props.disassociateCourseWithLMS}
@@ -132,6 +136,7 @@ class Courses extends Component {
 Courses.propTypes = {
     userInfo: PropTypes.object.isRequired,
     courses: PropTypes.object.isRequired,
+    accesses: PropTypes.object.isRequired,
 
     getAllCoursesByDepartment: PropTypes.func.isRequired,
     getAllCoursesByDepartmentId: PropTypes.func.isRequired,

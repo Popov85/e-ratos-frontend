@@ -32,25 +32,16 @@ let CourseEditForm = props => {
                 }
                 <Field name="courseId" component="input" type={"text"} hidden/>
 
-                <Field name="created" component="input" type={"text"} hidden/>
-
                 <Field name="name" component={FieldText} placeholder="name"
                        validate={[required, minLength2]}/>
 
                 <Field name="accessId" component={FieldSelectBadge} badge="Access"
                        items={props.accesses} validate={[required, number]}/>
-
                 {
                     (lmsMode || isLMS()) &&
                     <Field name="lmsId" component={FieldSelectBadge} badge="LMS"
                            items={props.lmses} validate={[required, number]}/>
                 }
-
-                <div>
-                    <Field type="checkbox" name="active" component="input"/>
-                    <label className=" text-secondary" htmlFor="active">Active</label>
-                </div>
-
                 <div className="form-group text-center mb-n1">
                     <button type="submit" value="Save" className="btn btn-sm btn-success mr-2">
                         <div className="align-middle">Save&nbsp; <FaSignInAlt color="white"/></div>

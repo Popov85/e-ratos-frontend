@@ -1,35 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Failure from "../../common/Failure";
-import CourseEditForm from "../forms/CourseEditForm";
+import ThemeEditForm from "../forms/ThemeEditForm";
 
-class CourseEdit extends React.Component {
+class ThemeEdit extends React.Component {
 
     componentDidMount() {
         //Clear all previous messages
-        this.props.clearCourseState();
-        const {accessesForSelect, lmsesForSelect} = this.props;
+        this.props.clearThemeState();
+        const {accessesForSelect, coursesForSelect} = this.props;
         if (!accessesForSelect || accessesForSelect.length===1) this.props.getAccesses();
-        if (!lmsesForSelect || lmsesForSelect.length===1) this.props.getLMSes();
+        if (!coursesForSelect || coursesForSelect.length===1) this.props.getAllCoursesByDepartmentForDropDown();
     }
 
     handleSubmit(data) {
-        //console.log("courseDTO = ", data);
-        if (!data.courseId) {//new
-            !data.lmsId ?
-                this.props.saveCourse(data)
-                : this.props.saveLMSCourse(data)
-        } else {//update
-            !data.lmsId ?
-                this.props.updateCourse(data)
-                : this.props.updateLMSCourse(data)
-        }
+        console.log("themeDTO = ", data);
+        !data.themeId ?
+            this.props.saveTheme(data)
+            : this.props.updateTheme(data)
     }
 
     render() {
-        const {course} = this.props;
-        const {userInfo, accessesForSelect, lmsesForSelect} = this.props;
-        const {isLoading, error, message} = this.props.courseEdit;
+        const {theme} = this.props;
+        const {userInfo, accessesForSelect, coursesForSelect} = this.props;
+        const {isLoading, error, message} = this.props.themeEdit;
 
         return (
             <div>
@@ -59,18 +53,18 @@ class CourseEdit extends React.Component {
                         }
                         <div className="card bg-transparent">
                             <div className="card-body">
-                                <CourseEditForm
-                                    initialValues={course ?
+                                <ThemeEditForm
+                                    initialValues={theme ?
                                         {
-                                            courseId: course.courseId,
-                                            name: course.name,
-                                            accessId: course.access.accessId,
-                                            lmsId: course.lms ? course.lms.lmsId : null
+                                            themeId: theme.themeId,
+                                            name: theme.name,
+                                            accessId: theme.access.accessId,
+                                            courseId: theme.course.courseId
                                         }
                                         : null
                                     }
                                     userInfo={userInfo}
-                                    lmses={lmsesForSelect}
+                                    courses={coursesForSelect}
                                     accesses={accessesForSelect}
                                     finished={message ? true : false}
                                     disabled={isLoading}
@@ -90,21 +84,18 @@ class CourseEdit extends React.Component {
     }
 }
 
-CourseEdit.propTypes = {
+ThemeEdit.propTypes = {
     userInfo: PropTypes.object.isRequired,
-    courseEdit: PropTypes.object.isRequired,
-    course: PropTypes.object, // Nullable for new objects
+    themeEdit: PropTypes.object.isRequired,
+    theme: PropTypes.object, // Nullable for new objects
+    coursesForSelect: PropTypes.array, // Array adopted for select
     accessesForSelect: PropTypes.array, // Array adopted for select
-    lmsesForSelect: PropTypes.array, // Array adopted for select
 
-    clearCourseState: PropTypes.func.isRequired,
-    saveCourse: PropTypes.func.isRequired,
-    saveLMSCourse: PropTypes.func.isRequired,
-    updateCourse: PropTypes.func.isRequired,
-    updateLMSCourse: PropTypes.func.isRequired,
+    clearThemeState: PropTypes.func.isRequired,
+    saveTheme: PropTypes.func.isRequired,
+    updateTheme: PropTypes.func.isRequired,
     getAccesses:PropTypes.func.isRequired,
-    getLMSes:PropTypes.func.isRequired
-
+    getAllCoursesByDepartmentForDropDown:PropTypes.func.isRequired
 };
 
-export default CourseEdit;
+export default ThemeEdit;

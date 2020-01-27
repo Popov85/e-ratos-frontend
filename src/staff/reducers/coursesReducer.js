@@ -3,7 +3,7 @@ const testInitState = {
         {
             courseId: 1,
             name: "Test course #1 which is rather long interesting and actually a fantastic course for everybody who wants to study IT technologies fron very scratch!",
-            created: "2017-01-08 18:25",
+            created: "2017-01-08 18:25 (+0200)",
             access:{
                 accessId: 1,
                 name: "dep-private"
@@ -14,13 +14,12 @@ const testInitState = {
                 surname: "Naroditsky",
                 position: "System admin"
             },
-            active: true,
             lms: null
         },
         {
             courseId: 2,
             name: "Test course #2",
-            created: "2018-01-13 12:55",
+            created: "2018-01-13 12:55 (+0200)",
             access:{
                 accessId: 1,
                 name: "dep-private"
@@ -31,13 +30,12 @@ const testInitState = {
                 surname: "Zarubitsky",
                 position: "instructor"
             },
-            active: true,
             lms: null
         },
         {
             courseId: 3,
             name: "Test course #3",
-            created: "2019-01-05 13:30",
+            created: "2019-01-05 13:30 (+0200)",
             access:{
                 accessId: 2,
                 name: "private"
@@ -48,13 +46,12 @@ const testInitState = {
                 surname: "Naroditsky",
                 position: "System admin"
             },
-            active: true,
             lms: null
         },
         {
             courseId: 4,
             name: "Test course #4",
-            created: "2020-01-08 09:36",
+            created: "2020-01-08 09:36 (+0200)",
             access:{
                 accessId: 1,
                 name: "dep-private"
@@ -65,7 +62,6 @@ const testInitState = {
                 surname: "Naroditsky",
                 position: "System admin"
             },
-            active: true,
             lms: {
                 lmsId: 1,
                 name: "edX"
@@ -74,9 +70,9 @@ const testInitState = {
         {
             courseId: 5,
             name: "Test course #5",
-            created: "2020-01-15 10:21",
+            created: "2020-01-15 10:21 (+0200)",
             access:{
-                accessId: 1,
+                accessId: 2,
                 name: "private"
             },
             staff:{
@@ -85,17 +81,41 @@ const testInitState = {
                 surname: "Popov",
                 position: "Instructor"
             },
-            active: true,
             lms:{
                 lmsId: 1,
                 name: "edX"
             }
         }
-    ]
+    ],
+    contentMin: [
+        {
+            courseId: 1,
+            name: "Test course #1 which is rather long interesting and actually a fantastic course for everybody who wants to study IT technologies fron very scratch!",
+        },
+        {
+            courseId: 2,
+            name: "Test course #2"
+        },
+        {
+            courseId: 3,
+            name: "Test course #3"
+        },
+        {
+            courseId: 4,
+            name: "Test course #4"
+        },
+        {
+            courseId: 5,
+            name: "Test course #5"
+        }
+    ],
+    loading: false,
+    error: null
 }
 
 const initState = {
     content: null,
+    contentMin: null,
     isLoading: false,
     error: null
 }
@@ -129,6 +149,10 @@ export const coursesReducer = (state =  initState, action) => {
             const content = action.payload;
             return {...state, content};
         }
+        case "SET_ALL_COURSES_MIN": {
+            const contentMin = action.payload;
+            return {...state, contentMin};
+        }
         case "ADD_COURSE_IN_STORE": {
             const course = action.payload;
             return {...state, content: [...state.content, course]};
@@ -140,14 +164,6 @@ export const coursesReducer = (state =  initState, action) => {
         case "UPDATE_COURSE_NAME_IN_STORE": {
             const {courseId, name} = action;
             return {...state, content: state.content.map(c => c.courseId === courseId ? {...c, name} : c)}
-        }
-        case "UPDATE_COURSE_ACTIVE_IN_STORE": {
-            const {courseId, active} = action;
-            return {...state, content: state.content.map(c => c.courseId === courseId ? {...c, active} : c)}
-        }
-        case "UPDATE_COURSE_ACCESS_IN_STORE": {
-            const {courseId, access} = action;
-            return {...state, content: state.content.map(c => c.courseId === courseId ? {...c, access} : c)}
         }
         case "DELETE_COURSE_FROM_STORE": {
             const {courseId} = action;

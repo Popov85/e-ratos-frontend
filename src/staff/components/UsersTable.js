@@ -260,7 +260,7 @@ const UsersTable = props => {
                             filter={filterFactory()}
                             pagination={paginationFactory({
                                 showTotal: true,
-                                pageStartIndex: 0,
+                                pageStartIndex: 1,
                                 sizePerPageList: [
                                     {text: '10', value: 10},
                                     {text: '30', value: 30},

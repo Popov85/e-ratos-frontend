@@ -6,7 +6,7 @@ import CourseEdit from "../components/CourseEdit";
 import {getCourseById} from "../selectors/coursesSelector";
 import {clearCourseState, saveCourse, saveLMSCourse, updateCourse, updateLMSCourse} from "../actions/courseEditActions";
 import {getLMSesForSelect} from "../selectors/lmsSelector";
-import {getAccessesForSelect} from "../selectors/accessSelector";
+import {getAllAccessesForSelect} from "../selectors/accessSelector";
 import {getAccesses} from "../actions/accessActions";
 import {getLMSes} from "../actions/lmsActions";
 
@@ -15,7 +15,7 @@ const mapStateToProps = (state, ownProps) => {
     return {
         userInfo: getUserInfo(state),
         courseEdit: state.courseEdit,
-        accessesForSelect: getAccessesForSelect(state), //nullable
+        accessesForSelect: getAllAccessesForSelect(state), //nullable
         lmsesForSelect: getLMSesForSelect(state), //nullable
         course: courseId ? getCourseById(state, ownProps) : null //nullable
     }

@@ -21,23 +21,7 @@ export const coursesAPI = {
     //--------------------------------------------PATCH-es--------------------------------------------------------------
 
     updateCourseName(courseId, name) {
-        return instance.patch(`/instructor/courses/${courseId}/name?name=${name}`);
-    },
-
-    updateCourseNameBody(courseId, name) {
         return instance.patch(`/instructor/courses/${courseId}/name`, {value: name});
-    },
-
-    updateCourseAccess(courseId, accessId) {
-        return instance.patch(`/instructor/courses/${courseId}/access?accessId=${accessId}`);
-    },
-
-    activateCourse(courseId) {
-        return instance.patch(`/instructor/courses/${courseId}/activate`);
-    },
-
-    deactivateCourse(courseId) {
-        return instance.patch(`/instructor/courses/${courseId}/deactivate`);
     },
 
     associateCourseWithLMS(courseId, lmsId) {

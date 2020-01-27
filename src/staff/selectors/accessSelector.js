@@ -6,7 +6,7 @@ export const getAllAccessesMin = (state) => state.access ? state.access.contentM
 
 //------------------------------------------------Re-selectors----------------------------------------------------------
 
-export const getAccessesForSelect = createSelector(getAllAccessesMin, (accesses) => {
+export const getAllAccessesForSelect = createSelector(getAllAccessesMin, (accesses) => {
     if (!accesses) return [dummy];
     let result = accesses.map(a => {
         let item = {};
@@ -18,7 +18,7 @@ export const getAccessesForSelect = createSelector(getAllAccessesMin, (accesses)
     return result;
 });
 
-export const getAccessesForFilter = createSelector(getAllAccessesMin, (accesses) => {
+export const getAllAccessesForFilter = createSelector(getAllAccessesMin, (accesses) => {
     return accesses.reduce((map, a) => {
         map[a.accessId] = a.name;
         return map;

@@ -3,18 +3,21 @@ import {connect} from "react-redux";
 import {getUserInfo} from "../../common/selectors/userSelector";
 import Courses from "../components/Courses";
 import {
-    associateCourseWithLMS,
     clearAllCoursesFailures,
-    deleteCourse, disassociateCourseWithLMS,
+    deleteCourse,
+    disassociateCourseWithLMS,
     getAllCoursesByDepartment,
     getAllCoursesByDepartmentId,
     updateCourseName
 } from "../actions/coursesActions";
+import {extractAccessesFromCoursesForTableFilter} from "../selectors/coursesSelector";
+import {associateCourseWithLMS} from "../actions/courseEditActions";
 
 const mapStateToProps = state => {
     return {
         userInfo: getUserInfo(state),
-        courses: state.courses
+        courses: state.courses,
+        accesses: extractAccessesFromCoursesForTableFilter(state),
     }
 }
 

@@ -9,6 +9,7 @@ import {reducer as formReducer} from 'redux-form';
 import {userEditReducer} from "./userEditReducer";
 import {resultsReducer} from "./resultsReducer";
 import {coursesReducer} from "./coursesReducer";
+import {themesReducer} from "./themesReducer";
 import {schemesReducer} from "./schemesReducer";
 import {affiliationSelectorCacheableReducer} from "./affiliationSelectorCacheableReducer";
 import {affiliationSelectorReducer} from "./affiliationSelectorReducer";
@@ -24,6 +25,7 @@ import {depEditReducer} from "./depEditReducer";
 import {courseEditReducer} from "./courseEditReducer";
 import {lmsReducer} from "./lmsReducer";
 import {accessReducer} from "./accessReducer";
+import {themeEditReducer} from "./themeEditReducer";
 
 const staffReducers = combineReducers({
     form: formReducer,
@@ -38,6 +40,7 @@ const staffReducers = combineReducers({
     userEdit: userEditReducer,
     results: resultsReducer,
     courses: coursesReducer,
+    themes: themesReducer,
     schemes: schemesReducer,
     lms: lmsReducer,
     access: accessReducer,
@@ -48,7 +51,8 @@ const staffReducers = combineReducers({
     orgEdit: orgEditReducer,
     facEdit: facEditReducer,
     depEdit: depEditReducer,
-    courseEdit: courseEditReducer
+    courseEdit: courseEditReducer,
+    themeEdit: themeEditReducer
 });
 
 export default staffReducers;

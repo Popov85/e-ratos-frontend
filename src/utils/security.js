@@ -1,4 +1,4 @@
-const manageableByDepAdmin = ["ROLE_LAB-ASSISTANT","ROLE_INSTRUCTOR"];
+const manageableByDepAdmin = ["ROLE_LAB-ASSISTANT", "ROLE_INSTRUCTOR"];
 const manageableByFacAdmin = [...manageableByDepAdmin, "ROLE_DEP-ADMIN"];
 const manageableByOrgAdmin = [...manageableByFacAdmin, "ROLE_FAC-ADMIN"];
 const manageableByGlobalAdmin = [...manageableByOrgAdmin, "ROLE_ORG-ADMIN"];
@@ -23,4 +23,16 @@ export const isRoleManageable = (role, authenticated) => {
         default:
             throw new Error("Failed to determine roles set based on current user role");
     }
+}
+
+/**
+ * Is cell editable inside a table based on private/dep-private security settings
+ * @param authenticated
+ * @param staff
+ * @param access
+ * @returns {boolean}
+ */
+export const isEditable = (authenticated, staff, access) => {
+    if (access.name === 'dep-private') return true;
+    return (staff.staffId === authenticated.userId)
 }
