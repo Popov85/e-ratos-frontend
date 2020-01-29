@@ -36,3 +36,19 @@ export const isEditable = (authenticated, staff, access) => {
     if (access.name === 'dep-private') return true;
     return (staff.staffId === authenticated.userId)
 }
+
+/**
+ * Generates LTI client secret programmatically;
+ * For this we use, about 70 symbols
+ * @param length
+ * @returns {string} client secret for LTI tool consumer
+ */
+export const generateClientSecret = length => {
+    let result = '';
+    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}

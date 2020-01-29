@@ -26,6 +26,8 @@ import {courseEditReducer} from "./courseEditReducer";
 import {lmsReducer} from "./lmsReducer";
 import {accessReducer} from "./accessReducer";
 import {themeEditReducer} from "./themeEditReducer";
+import {lmsEditReducer} from "./lmsEditReducer";
+import {ltiVersionsReducer} from "./ltiVersionsReducer";
 
 const staffReducers = combineReducers({
     form: formReducer,
@@ -37,6 +39,7 @@ const staffReducers = combineReducers({
     faculties: facultiesReducer,
     departments: departmentsReducer,
     positions: positionsReducer,
+    ltiVersions: ltiVersionsReducer,
     userEdit: userEditReducer,
     results: resultsReducer,
     courses: coursesReducer,
@@ -52,7 +55,8 @@ const staffReducers = combineReducers({
     facEdit: facEditReducer,
     depEdit: depEditReducer,
     courseEdit: courseEditReducer,
-    themeEdit: themeEditReducer
+    themeEdit: themeEditReducer,
+    lmsEdit: lmsEditReducer
 });
 
 export default staffReducers;

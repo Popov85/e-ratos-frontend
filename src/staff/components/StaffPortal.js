@@ -26,6 +26,7 @@ import DepartmentsContainer from "../containers/DepartmentsContainer";
 import ProtectedResource from "../../common/ProtectedResource";
 import CoursesContainer from "../containers/CoursesContainer";
 import ThemesContainer from "../containers/ThemesContainer";
+import LmsContainer from "../containers/LmsContainer";
 
 class StaffPortal extends React.Component {
 
@@ -62,7 +63,7 @@ class StaffPortal extends React.Component {
                     <Route path="/results/details/:resultId" exact component={ResultsViewerManager}/>
                     <Route path="/groups" exact component={Groups}/>
                     <Route path="/complaints" exact component={Complaints}/>
-                    <Route path="/lms" exact component={Lms}/>
+                    <Route path="/lms" exact component={LmsContainer}/>
                     <Route path="/profile" exact component={ProfileContainer}/>
                     <Route path="/profile/password" exact component={PasswordContainer}/>
                     <Route path="/protected" exact component={ProtectedResource}/>

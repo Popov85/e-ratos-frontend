@@ -56,6 +56,8 @@ export const deleteTheme = themeId => {
     }
 }
 
+//-----------------------------------------------------Table------------------------------------------------------------
+
 export const getAllThemesByDepartment = () => {
     return (dispatch) => {
         dispatch(clearLoadingFailure());

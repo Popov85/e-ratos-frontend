@@ -28,7 +28,7 @@ class Themes extends Component {
 
     loadThemesBasedOnRole() {
         // If there is some depId selected by AffiliationSelector,
-        // the the current role is at least fac admin, load this different department courses
+        // the the current role is at least fac admin, load this different department themes
         this.props.getAllThemesByDepartment();
     }
 

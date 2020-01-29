@@ -8,7 +8,7 @@ import {clearCourseState, saveCourse, saveLMSCourse, updateCourse, updateLMSCour
 import {getLMSesForSelect} from "../selectors/lmsSelector";
 import {getAllAccessesForSelect} from "../selectors/accessSelector";
 import {getAccesses} from "../actions/accessActions";
-import {getLMSes} from "../actions/lmsActions";
+import {getLMSesByOrganisationForDropDown} from "../actions/lmsActions";
 
 const mapStateToProps = (state, ownProps) => {
     const {courseId} = ownProps;
@@ -29,7 +29,7 @@ const mapDispatchToProps = dispatch => {
         updateLMSCourse: (lmsCourseDTO) => dispatch(updateLMSCourse(lmsCourseDTO)),
         clearCourseState: ()=>dispatch(clearCourseState()),
         getAccesses: ()=>dispatch(getAccesses()),
-        getLMSes: ()=>dispatch(getLMSes()),
+        getLMSes: ()=>dispatch(getLMSesByOrganisationForDropDown()),
         resetForm: ()=>dispatch(reset('course-edit')),
     }
 }

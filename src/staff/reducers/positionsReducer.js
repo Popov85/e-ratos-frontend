@@ -101,7 +101,7 @@ const initState = {
  * @param action
  * @returns {Array|*}
  */
-export const positionsReducer = (state = initState, action) => {
+export const positionsReducer = (state =initState, action) => {
     switch (action.type) {
         case "SET_POSITIONS": {
             let positions = action.payload;

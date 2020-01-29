@@ -1,20 +1,33 @@
 export const cssUtils = {
 
-    getDefaultHeaderStyle(width, align) {
+    getDefaultHeaderStyle(width, align, size) {
         return {
             width: `${width}`,
             textAlign: `${align}`,
-            fontSize: '16px'
+            fontSize: `${size ? size : '16px'}`
         }
     },
 
-    getShortCellStyle() {
+    getDefaultFilterStyle(size) {
+        return {
+            fontSize: `${size ? size : '16px'}`
+        }
+    },
+
+    getDefaultCellStyle(size) {
+        return {
+            fontSize: `${size ? size : '16px'}`
+        }
+    },
+
+    getShortCellStyle(size) {
         return {
             whiteSpace: 'nowrap',
             overflow: 'hidden',
-            textOverflow: 'ellipsis'
+            textOverflow: 'ellipsis',
+            fontSize: `${size ? size : '16px'}`
         }
-    }
+    },
 }
 
 

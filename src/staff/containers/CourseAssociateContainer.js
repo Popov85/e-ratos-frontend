@@ -5,7 +5,7 @@ import {getUserInfo} from "../../common/selectors/userSelector";
 import {getCourseById} from "../selectors/coursesSelector";
 import {clearCourseState} from "../actions/courseEditActions";
 import {getAllLMSesMin, getLMSesForSelect} from "../selectors/lmsSelector";
-import {getLMSes} from "../actions/lmsActions";
+import {getLMSesByOrganisationForDropDown} from "../actions/lmsActions";
 import CourseAssociate from "../components/CourseAssociate";
 import {associateCourseWithLMS} from "../actions/courseEditActions";
 
@@ -24,7 +24,7 @@ const mapDispatchToProps = dispatch => {
     return {
         associateCourseWithLMS: (courseId, lms) => dispatch(associateCourseWithLMS(courseId, lms)),
         clearCourseState: ()=>dispatch(clearCourseState()),
-        getLMSes: ()=>dispatch(getLMSes()),
+        getLMSes: ()=>dispatch(getLMSesByOrganisationForDropDown()),
         resetForm: ()=>dispatch(reset('course-associate')),
     }
 }

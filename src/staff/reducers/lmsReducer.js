@@ -1,13 +1,12 @@
 const testInitState = {
-    // For table, prefer this array for selectors!
     content: [
         {
             lmsId: 1,
-            name: "Open edX",
+            name: "Open-edX",
             credentials: {
                 credId: 1,
-                key: "ratos-server",
-                secret: "we4f5re4fr5ef4re54fg5re4g5e6r4g5"
+                key: "ratos-client-key",
+                secret: "5NZR6e4ySgvjJO4ZvST54CSZLaUNGc8wbLqqRhj8tNchgnQBYcOgbg6e5bPUdgeqI7Y7Ux"
             },
             ltiVersion: {
                 versionId: 1,
@@ -19,8 +18,8 @@ const testInitState = {
             name: "Moodle",
             credentials: {
                 credId: 2,
-                key: "moodle-server",
-                secret: "rer4re45re4gr7g6r5g46459569rgr809g"
+                key: "moodle-client-key",
+                secret: "iOOMfLxGjuyeCLPlu2RqLOpqj5uKr4h5EEOZ0GLKo4i54fd88MkeWbiUGjAhpVaL60Li1h"
             },
             ltiVersion: {
                 versionId: 1,
@@ -46,7 +45,7 @@ const testInitState = {
 const initState = {
     content: null,
     contentMin: null,
-    isLoading: false,
+    isLoading: false
 }
 
 export const lmsReducer = (state = initState, action) => {
@@ -82,21 +81,22 @@ export const lmsReducer = (state = initState, action) => {
             const contentMin = action.payload;
             return {...state, contentMin};
         }
+        case "ADD_LMS_IN_STORE": {
+            const lms = action.payload;
+            return {...state, content: [...state.content, lms]};
+        }
         case "UPDATE_LMS_IN_STORE": {
-            const {orgObj} = action;
-            return {...state, content: state.content.map(o => o.orgId === orgObj.orgId ? orgObj: o)}
+            const lms = action.payload;
+            return {...state, content: state.content.map(l => l.lmsId === lms.lmsId ? lms : l)}
         }
         case "UPDATE_LMS_NAME_IN_STORE": {
-            const {orgId, name} = action;
-            return {...state, content: state.content.map(o => o.orgId === orgId ? {...o, name} : o)}
+            const {lmsId, name} = action;
+            return {...state, content: state.content.map(lms => lms.lmsId === lmsId ? {...lms, name} : lms)}
         }
-        case "ADD_LMS_IN_STORE": {
-            const {genId, orgObj} = action;
-            return {...state, content: [...state.content, {...orgObj, orgId: genId}]};
-        }
+
         case "DELETE_LMS_FROM_STORE": {
-            const {orgId} = action;
-            return {...state, content: state.content.filter(o => o.orgId !== orgId)}
+            const {lmsId} = action;
+            return {...state, content: state.content.filter(lms => lms.lmsId !== lmsId)}
         }
         default:
             return state;
