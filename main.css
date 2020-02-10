@@ -49,6 +49,11 @@
     border-top-color: #6c757d !important;
 }
 
+/*TODO: apply only for questions?*/
+.tooltip-inner {
+    max-width: 750px !important;
+}
+
 table caption {
     caption-side: top;
     padding: 0px 0px 0px 0px;

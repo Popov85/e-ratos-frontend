@@ -1,6 +1,4 @@
 import {createSelector} from "reselect";
-import {departmentsTransformer} from "../../utils/transformers/departmentsTransformer";
-import {dummy} from "../../utils/constants";
 
 export const getDepIdFromProps = (state, props) => props.depId;
 

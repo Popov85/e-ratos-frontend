@@ -15,10 +15,11 @@ import {cssUtils} from "../../utils/cssUtils";
 import '../../../main.css';
 import {isEditable} from "../../utils/security";
 import ThemeEditModal from "./ThemeEditModal";
+import QuestionsMcqContainer from "../containers/QuestionsMcqContainer";
 
 const ThemesTable = props => {
     const initEditState = {mode: false, editableThemeId: null};
-    const initDeleteState = {mode: false, deletableCourseId: null};
+    const initDeleteState = {mode: false, deletableThemeId: null};
 
     const [edit, setEditMode] = useState(initEditState);
     const [remove, setDeleteMode] = useState(initDeleteState);
@@ -66,7 +67,7 @@ const ThemesTable = props => {
             }),
             formatter: cell => courses[cell],
             headerStyle: () => cssUtils.getDefaultHeaderStyle('240px', 'left'),
-            title: cell => cell.name,
+            title: cell => courses[cell],
             style: !expanded ? cssUtils.getShortCellStyle : null,
             editable: false
         },
@@ -136,23 +137,23 @@ const ThemesTable = props => {
             editable: false
         },
         {
-            dataField: 'update',
+            dataField: 'edit',
             isDummyField: true,
             editable: false,
-            text: 'Upd',
+            text: 'Edt',
             align: 'center',
-            title: () => 'Update',
+            title: () => 'Edit',
             headerStyle: () => cssUtils.getDefaultHeaderStyle('40px', 'center'),
             formatter: (cell, row) => {
                 const {themeId, staff, access} = row;
-                return (
-                    <a href="#" className={`badge badge-${isEditable(authenticated, staff, access) ? 'success' : 'secondary'}`}
-                       onClick={() => isEditable(authenticated, staff, access) ? setEditMode({
-                           mode: true,
-                           editableThemeId: themeId
-                       }) : null}>
+                return isEditable(authenticated, staff, access) ?
+                    <a href="#" className="badge badge-success"
+                       onClick={() => setEditMode({mode: true, editableThemeId: themeId})}>
                         <FaPencilAlt/>
-                    </a>);
+                    </a> :
+                    <span className="badge badge-secondary">
+                        <FaPencilAlt/>
+                    </span>;
             }
         },
         {
@@ -165,20 +166,15 @@ const ThemesTable = props => {
             headerStyle: () => cssUtils.getDefaultHeaderStyle('40px', 'center'),
             formatter: (cell, row) => {
                 const {themeId, staff, access} = row;
-                if (isEditable(authenticated, staff, access)) {
-                    return (
-                        <LinkContainer to={`/themes/${themeId}/questions`}>
-                            <a href="#" className="badge badge-info">
-                                <FaNewspaper/>
-                            </a>
-                        </LinkContainer>
-                    );
-                }
-                return (
-                    <a href="#" className="badge badge-secondary">
+                return isEditable(authenticated, staff, access) ?
+                    <LinkContainer to={`/themes/${themeId}/questions-mcq`}>
+                        <a href="#" className="badge badge-info">
+                            <FaNewspaper/>
+                        </a>
+                    </LinkContainer> :
+                    <span className="badge badge-secondary">
                         <FaNewspaper/>
-                    </a>
-                );
+                    </span>
             }
         },
         {
@@ -191,14 +187,14 @@ const ThemesTable = props => {
             headerStyle: () => cssUtils.getDefaultHeaderStyle('40px', 'center'),
             formatter: (cell, row) => {
                 const {themeId, staff, access} = row;
-                return (
-                    <a href="#" className={`badge badge-${isEditable(authenticated, staff, access)? 'warning' : 'secondary'}`}
-                       onClick={() => isEditable(authenticated, staff, access) ? setDeleteMode({
-                           mode: true,
-                           deletableThemeId: themeId
-                       }) : null}>
+                return isEditable(authenticated, staff, access) ?
+                    <a href="#" className="badge badge-warning"
+                       onClick={() => setDeleteMode({mode: true, deletableThemeId: themeId})}>
                         <FaTrashAlt/>
-                    </a>);
+                    </a> :
+                    <span className="badge badge-secondary">
+                        <FaTrashAlt/>
+                    </span>;
             },
             hidden: !authenticated.isAtLeastInstructor ? true : false
         },

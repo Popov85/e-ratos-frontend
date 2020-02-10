@@ -1,5 +1,6 @@
 const testInitState = {
-    content: [ {
+    content: [
+        {
         "themeId" : 18,
         "name" : "Theme_#3319aad0-93c2-4718-9975-4ed7e0a88805",
         "access" : {

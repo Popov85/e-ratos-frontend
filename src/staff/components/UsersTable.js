@@ -178,7 +178,7 @@ const UsersTable = props => {
             align: 'center',
             title: (cell) => `This user is ${cell ? 'active' : 'disabled'}`,
             headerStyle: () => cssUtils.getDefaultHeaderStyle('70px', 'center'),
-            formatter: (cell, row) => {
+            formatter: cell => {
                 return cell ?
                     <span className="badge badge-success">Active</span> :
                     <span className="badge badge-danger">Inactive</span>;

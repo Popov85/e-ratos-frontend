@@ -45,8 +45,8 @@ const StaffNavbar = (props) => {
                         <LinkContainer to="/themes">
                             <NavDropdown.Item>Themes</NavDropdown.Item>
                         </LinkContainer>
-                        <LinkContainer to="/questions">
-                            <NavDropdown.Item>Questions</NavDropdown.Item>
+                        <LinkContainer to="/questions-mcq">
+                            <NavDropdown.Item>Questions MCQ</NavDropdown.Item>
                         </LinkContainer>
                         <LinkContainer to="/resources">
                             <NavDropdown.Item>Resources</NavDropdown.Item>

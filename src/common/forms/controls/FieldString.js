@@ -1,13 +1,14 @@
 import React from 'react';
 
 const FieldString = props => {
+    const {sizeClass, marginClass} = props;
     const {touched, error} = props.meta;
     const hasError = touched && error;
     return (
-            <div className="input-group form-group">
+            <div className={`input-group form-group ${marginClass ? marginClass : ''}`} title={props.input.value ? props.input.value : ''}>
                 <input type="text"
                        placeholder={props.placeholder}
-                       className={`form-control ${!touched ? '' : error ? 'is-invalid': 'is-valid'}`}
+                       className={`form-control ${sizeClass ? sizeClass : ''} ${!touched ? '' : error ? 'is-invalid': 'is-valid'}`}
                        onChange={e => props.input.onChange(e)}
                        value={props.input.value}
                 />

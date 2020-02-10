@@ -28,6 +28,12 @@ export const cssUtils = {
             fontSize: `${size ? size : '16px'}`
         }
     },
+    getShortEditorStyle(size) {
+        return {
+            backgroundColor: 'GhostWhite',
+            fontSize: `${size ? size : '16px'}`
+        }
+    },
 }
 
 

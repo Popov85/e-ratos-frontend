@@ -27,6 +27,7 @@ import ProtectedResource from "../../common/ProtectedResource";
 import CoursesContainer from "../containers/CoursesContainer";
 import ThemesContainer from "../containers/ThemesContainer";
 import LmsContainer from "../containers/LmsContainer";
+import QuestionsMcqContainer from "../containers/QuestionsMcqContainer";
 
 class StaffPortal extends React.Component {
 
@@ -54,7 +55,8 @@ class StaffPortal extends React.Component {
                     <Route path="/courses" exact component={CoursesContainer}/>
                     <Route path="/schemes" exact component={Schemes}/>
                     <Route path="/themes" exact component={ThemesContainer}/>
-                    <Route path="/themes/:themeId/questions" exact component={Themes}/>
+                    <Route path="/themes/:themeId/questions-mcq" exact component={QuestionsMcqContainer}/>
+                    <Route path="/questions-mcq" exact component={QuestionsMcqContainer}/>
                     <Route path="/questions" exact component={Questions}/>
                     <Route path="/resources" exact component={Resources}/>
                     <Route path="/report/on-content" exact component={ReportOnContentContainer} />

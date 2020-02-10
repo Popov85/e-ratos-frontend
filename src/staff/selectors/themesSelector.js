@@ -1,14 +1,24 @@
 import {createSelector} from "reselect";
 import {themesTransformer} from "../../utils/transformers/themesTransformer";
 
+export const getAllThemes = (state) => state.themes.content;
+
 export const getThemeIdFromProps = (state, props) => props.themeId;
 
-export const getAllThemes = (state) => state.themes.content;
+export const getSelectedThemeIdFromProps = (state, props) => props.match.params.themeId;
 
 //---------------------------------------------------Re-selectors-------------------------------------------------------
 export const getThemeById = createSelector(getAllThemes, getThemeIdFromProps, (themes, themeId) => {
     if (!themes) return null;
     return themes.find(t => t.themeId === themeId);
+});
+
+// This method throw Error if a valid result cannot be obtained!
+export const getThemeBySelectedId = createSelector(getAllThemes, getSelectedThemeIdFromProps, (themes, themeId) => {
+    if (!themes) throw new Error('No themes are present in the local store!');
+    let result = themes.find(t => t.themeId === Number(themeId));
+    if (!result) throw new Error('Theme is not found in the local store!');
+    return result;
 });
 
 // For Table filter
