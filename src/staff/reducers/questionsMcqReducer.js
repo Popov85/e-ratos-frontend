@@ -1904,6 +1904,10 @@ export const questionsMcqReducer = (state = initState, action) => {
             const {themeId, questionId, required} = action;
             return {...state, content: {...state.content, [themeId]: state.content[themeId].map(q => q.questionId === questionId ? {...q, required} : q)}};
         }
+        case "ADD_QUESTIONS_MCQ_FROM_FILE_IN_STORE": {
+            const {themeId, bunch} = action;
+            return {...state, content: {...state.content, [themeId]: [...state.content[themeId], ...bunch]}};
+        }
         case "DELETE_QUESTION_MCQ_FROM_STORE": {
             const {themeId, questionId} = action;
             return {...state, content: {...state.content, [themeId]: state.content[themeId].filter(q => q.questionId !== questionId)}};

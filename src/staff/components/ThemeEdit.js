@@ -14,7 +14,6 @@ class ThemeEdit extends React.Component {
     }
 
     handleSubmit(data) {
-        console.log("themeDTO = ", data);
         !data.themeId ?
             this.props.saveTheme(data)
             : this.props.updateTheme(data)

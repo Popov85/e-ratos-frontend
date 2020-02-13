@@ -9,6 +9,14 @@ export const appAPI = {
         return fetch(loginURL, {method: 'POST', headers: new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' }), body: credentials});
     },
 
+    // TODO: check
+    doLogin2(credentials) {
+        const formData = new FormData();
+        formData.append('body', credentials);
+        const config = {headers: new Headers( {'Content-Type': 'application/x-www-form-urlencoded'})};
+        return instance.post(loginURL, formData, config);
+    },
+
     doLogout() {
         return instance.post("/logout");
     },

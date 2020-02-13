@@ -1,12 +1,21 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Nav, Navbar, NavDropdown, OverlayTrigger, Tooltip} from "react-bootstrap";
 import PropTypes from 'prop-types';
 import {FaCompress, FaExpand, FaPlus, FaSync} from 'react-icons/fa';
 import "../../../main.css";
+import QuestionMcqUploadModal from "./QuestionMcqUploadModal";
 
 const QuestionsNavbar = props => {
 
-    const {view} = props;
+    const initUploadState = false;
+    const initSaveAsState = false;
+
+    const [upload, setUploadMode] = useState(initUploadState);
+    const [saveAs, setSaveAsMode] = useState(initSaveAsState);
+
+    const deactivateUploadModal = () => setUploadMode(initUploadState);
+
+    const {themeId, view} = props;
     const {authenticated} = props.userInfo;
 
     return (
@@ -15,8 +24,8 @@ const QuestionsNavbar = props => {
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto navbar-nav">
                     <NavDropdown title="File" id="file-nav-dropdown" hidden={!authenticated.isAtLeastInstructor}>
-                        <NavDropdown.Item href="#action/3.1">Action 1</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.1">Action 2</NavDropdown.Item>
+                        <NavDropdown.Item href="#" onClick={() => setUploadMode(true)}>Upload</NavDropdown.Item>
+                        <NavDropdown.Item href="#">Save to CSV</NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="View" id="view-nav-dropdown">
                         <NavDropdown.Item href="#" onClick={() => props.viewChange()}>
@@ -24,8 +33,7 @@ const QuestionsNavbar = props => {
                         </NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="Help" id="help-nav-dropdown">
-                        <NavDropdown.Item href="#">About</NavDropdown.Item>
-                        <NavDropdown.Item href="#1">Version</NavDropdown.Item>
+                        <NavDropdown.Item href="https://yt.com" target="_blank">Demo</NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
 
@@ -58,14 +66,19 @@ const QuestionsNavbar = props => {
                     </div>
                 </Nav>
             </Navbar.Collapse>
+            {
+                upload &&
+                <QuestionMcqUploadModal show={upload} deactivateModal={deactivateUploadModal} themeId = {themeId}/>
+            }
         </Navbar>
     );
 }
 
 QuestionsNavbar.propTypes = {
     userInfo: PropTypes.object.isRequired,
+    themeId: PropTypes.number.isRequired,
+    content: PropTypes.array,
     view: PropTypes.bool.isRequired,
-
     viewChange: PropTypes.func.isRequired,
     addQuestions: PropTypes.func.isRequired,
     refreshQuestions: PropTypes.func.isRequired

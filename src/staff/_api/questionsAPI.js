@@ -6,6 +6,13 @@ export const questionsAPI = {
         return instance.post(`/instructor/questions-mcq`, questionMcqDTO);
     },
 
+    saveQuestionsMcqFromFile(file, themeId, confirmed) {
+        const formData = new FormData();
+        formData.append('file', file);
+        const config = {headers: new Headers({'Content-Type': 'multipart/form-data'})};
+        return instance.post(`/instructor/questions-mcq-file?themeId=${themeId}&confirmed=${confirmed}`, formData, config);
+    },
+
     updateQuestionMcq(questionDTO) {
         return instance.put(`/instructor/questions-mcq`, questionDTO);
     },

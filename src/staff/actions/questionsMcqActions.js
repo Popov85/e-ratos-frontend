@@ -12,16 +12,13 @@ const CLEAR_UPDATING_QUESTION_MCQ_FAILURE = "CLEAR_UPDATING_QUESTION_MCQ_FAILURE
 const CLEAR_ALL_QUESTIONS_MCQ_FAILURES = "CLEAR_ALL_QUESTIONS_MCQ_FAILURES";
 
 const ADD_QUESTION_MCQ_IN_STORE = "ADD_QUESTION_MCQ_IN_STORE";
+const ADD_QUESTIONS_MCQ_FROM_FILE_IN_STORE = "ADD_QUESTIONS_MCQ_FROM_FILE_IN_STORE";
 const UPDATE_QUESTION_MCQ_IN_STORE = "UPDATE_QUESTION_MCQ_IN_STORE";
 const UPDATE_QUESTION_MCQ_NAME_IN_STORE = "UPDATE_QUESTION_MCQ_NAME_IN_STORE";
 const UPDATE_QUESTION_MCQ_LEVEL_IN_STORE = "UPDATE_QUESTION_MCQ_LEVEL_IN_STORE";
 const UPDATE_QUESTION_MCQ_REQUIRED_IN_STORE = "UPDATE_QUESTION_MCQ_REQUIRED_IN_STORE";
 
 const DELETE_QUESTION_MCQ_FROM_STORE = "DELETE_QUESTION_MCQ_FROM_STORE";
-
-const ADD_ANSWER_QUESTION_MCQ_IN_STORE = "ADD_ANSWER_QUESTION_MCQ_IN_STORE";
-const UPDATE_ANSWER_QUESTION_MCQ_IN_STORE = "UPDATE_ANSWER_QUESTION_MCQ_IN_STORE";
-const DELETE_ANSWER_QUESTION_MCQ_FROM_STORE = "DELETE_ANSWER_QUESTION_MCQ_FROM_STORE";
 
 export const loading = isLoading => ({type: LOADING_ALL_QUESTIONS_MCQ, isLoading});
 export const loadingFailure = error => ({type: LOADING_ALL_QUESTIONS_MCQ_FAILURE, error});
@@ -36,16 +33,12 @@ export const clearAllQuestionsMcqFailures = () => ({type: CLEAR_ALL_QUESTIONS_MC
 
 // TODO: here will be more such bunches for each question type
 export const addQuestionMcqInStore = (themeId, mcq) => ({type: ADD_QUESTION_MCQ_IN_STORE, themeId, mcq});
+export const addQuestionsMcqFromFileInStore = (themeId, bunch) => ({type: ADD_QUESTIONS_MCQ_FROM_FILE_IN_STORE, themeId, bunch});
 export const updateQuestionMcqInStore = (themeId, mcq) => ({type: UPDATE_QUESTION_MCQ_IN_STORE, themeId, mcq});
 export const updateQuestionMcqNameInStore = (themeId, questionId, name) => ({type: UPDATE_QUESTION_MCQ_NAME_IN_STORE, themeId, questionId, name});
 export const updateQuestionMcqLevelInStore = (themeId, questionId, level) => ({type: UPDATE_QUESTION_MCQ_LEVEL_IN_STORE, themeId, questionId, level});
 export const updateQuestionMcqRequiredInStore = (themeId, questionId, required) => ({type: UPDATE_QUESTION_MCQ_REQUIRED_IN_STORE, themeId, questionId, required});
-
 export const deleteQuestionMcqFromStore = (themeId, questionId) => ({type: DELETE_QUESTION_MCQ_FROM_STORE, themeId, questionId});
-
-export const addAnswerQuestionMcqInStore = (questionId, answerMcq) => ({type: ADD_ANSWER_QUESTION_MCQ_IN_STORE, questionId, answerMcq});
-export const updateAnswerQuestionMcqInStore = (questionId, answerMcq) => ({type: UPDATE_ANSWER_QUESTION_MCQ_IN_STORE, questionId, answerMcq});
-export const deleteAnswerQuestionMcqFromStore = (questionId, answerId) => ({type: DELETE_ANSWER_QUESTION_MCQ_FROM_STORE, questionId, answerId});
 
 export const updateQuestionMcqName = (themeId, questionId, name) => {
     return (dispatch) => {

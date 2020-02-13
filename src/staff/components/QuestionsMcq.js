@@ -100,6 +100,8 @@ class QuestionsMcq extends Component {
                     !isLoading && questionsMcqContent &&
                     <QuestionsNavbar
                         userInfo={userInfo}
+                        themeId = {theme.themeId}
+                        content = {questionsMcqContent}
                         view = {this.state.expanded}
                         viewChange={this.expandedSwitch}
                         addQuestions={this.activateModal}
