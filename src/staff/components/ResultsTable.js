@@ -13,7 +13,7 @@ import {FaCheck, FaMinus, FaInfo, FaFileCsv, FaSync, FaExpand, FaCompress} from 
 import {LinkContainer} from "react-router-bootstrap";
 import ResultsColumnsToggler from "./ResultsColumnsToggler";
 import {CSVLink} from "react-csv";
-import {cssUtils} from "../../utils/cssUtils";
+import {utilsCSS} from "../../utils/utilsCSS";
 import "../../../main.css";
 
 const CSVHeaders = [
@@ -116,12 +116,12 @@ class ResultsTable extends Component {
                 sort: true,
                 filter: selectFilter({
                     options: courses,
-                    style: cssUtils.getDefaultFilterStyle('13px')
+                    style: utilsCSS.getDefaultFilterStyle('13px')
                 }),
                 formatter: cell => courses[cell.courseId],
-                headerStyle: () => cssUtils.getDefaultHeaderStyle('200px', 'left', '13px'),
+                headerStyle: () => utilsCSS.getDefaultHeaderStyle('200px', 'left', '13px'),
                 title: cell => cell.name,
-                style: !expanded ? cssUtils.getShortCellStyle('13px')  : cssUtils.getDefaultCellStyle('13px') ,
+                style: !expanded ? utilsCSS.getShortCellStyle('13px')  : utilsCSS.getDefaultCellStyle('13px') ,
             },
             {
                 dataField: 'scheme',
@@ -129,12 +129,12 @@ class ResultsTable extends Component {
                 sort: true,
                 filter: selectFilter({
                     options: schemes,
-                    style: cssUtils.getDefaultFilterStyle('13px')
+                    style: utilsCSS.getDefaultFilterStyle('13px')
                 }),
                 formatter: cell => schemes[cell.schemeId],
-                headerStyle: () => cssUtils.getDefaultHeaderStyle('200px', 'left', '13px'),
+                headerStyle: () => utilsCSS.getDefaultHeaderStyle('200px', 'left', '13px'),
                 title: cell => cell.name,
-                style: !expanded ? cssUtils.getShortCellStyle('13px')  : cssUtils.getDefaultCellStyle('13px') ,
+                style: !expanded ? utilsCSS.getShortCellStyle('13px')  : utilsCSS.getDefaultCellStyle('13px') ,
             },
             {
                 dataField: 'student.user.surname',
@@ -142,11 +142,11 @@ class ResultsTable extends Component {
                 sort: true,
                 hidden: hiddenColumns.includes("Surname"),
                 filter: textFilter({
-                    style: cssUtils.getDefaultFilterStyle('13px')
+                    style: utilsCSS.getDefaultFilterStyle('13px')
                 }),
-                headerStyle: () => cssUtils.getDefaultHeaderStyle('120px', 'left', '13px'),
+                headerStyle: () => utilsCSS.getDefaultHeaderStyle('120px', 'left', '13px'),
                 title: cell => cell,
-                style: cssUtils.getShortCellStyle('13px'),
+                style: utilsCSS.getShortCellStyle('13px'),
             },
             {
                 dataField: 'student.user.name',
@@ -154,11 +154,11 @@ class ResultsTable extends Component {
                 sort: true,
                 hidden: hiddenColumns.includes("Name"),
                 filter: textFilter({
-                    style: cssUtils.getDefaultFilterStyle('13px')
+                    style: utilsCSS.getDefaultFilterStyle('13px')
                 }),
-                headerStyle: () => cssUtils.getDefaultHeaderStyle('120px', 'left', '13px'),
+                headerStyle: () => utilsCSS.getDefaultHeaderStyle('120px', 'left', '13px'),
                 title: cell => cell,
-                style: cssUtils.getShortCellStyle('13px'),
+                style: utilsCSS.getShortCellStyle('13px'),
             },
             {
                 dataField: 'student.user.email',
@@ -166,11 +166,11 @@ class ResultsTable extends Component {
                 sort: true,
                 hidden: hiddenColumns.includes("Email"),
                 filter: textFilter({
-                    style: cssUtils.getDefaultFilterStyle('13px')
+                    style: utilsCSS.getDefaultFilterStyle('13px')
                 }),
-                headerStyle: () => cssUtils.getDefaultHeaderStyle('150px', 'left', '13px'),
+                headerStyle: () => utilsCSS.getDefaultHeaderStyle('150px', 'left', '13px'),
                 title: cell => cell,
-                style: cssUtils.getShortCellStyle('13px'),
+                style: utilsCSS.getShortCellStyle('13px'),
             },
             {
                 dataField: 'student.faculty',
@@ -179,12 +179,12 @@ class ResultsTable extends Component {
                 hidden: hiddenColumns.includes("Faculty"),
                 filter: selectFilter({
                     options: faculties,
-                    style: cssUtils.getDefaultFilterStyle('13px')
+                    style: utilsCSS.getDefaultFilterStyle('13px')
                 }),
                 formatter: cell => faculties[cell.facId],
-                headerStyle: () => cssUtils.getDefaultHeaderStyle('200px', 'left', '13px'),
+                headerStyle: () => utilsCSS.getDefaultHeaderStyle('200px', 'left', '13px'),
                 title: cell => cell,
-                style: cssUtils.getShortCellStyle('13px'),
+                style: utilsCSS.getShortCellStyle('13px'),
             },
             {
                 dataField: 'student.studentClass.name',
@@ -194,11 +194,11 @@ class ResultsTable extends Component {
                 hidden: hiddenColumns.includes("Class"),
                 filter: textFilter({
                     placeholder: 'Class',
-                    style: cssUtils.getDefaultFilterStyle('13px')
+                    style: utilsCSS.getDefaultFilterStyle('13px')
                 }),
-                headerStyle: () => cssUtils.getDefaultHeaderStyle('70px', 'left', '13px'),
+                headerStyle: () => utilsCSS.getDefaultHeaderStyle('70px', 'left', '13px'),
                 title: cell => cell,
-                style: cssUtils.getShortCellStyle('13px'),
+                style: utilsCSS.getShortCellStyle('13px'),
             },
             {
                 dataField: 'student.entranceYear',
@@ -208,11 +208,11 @@ class ResultsTable extends Component {
                 hidden: hiddenColumns.includes("Year"),
                 filter: textFilter({
                     placeholder: 'Year',
-                    style: cssUtils.getDefaultFilterStyle('13px')
+                    style: utilsCSS.getDefaultFilterStyle('13px')
                 }),
-                headerStyle: () => cssUtils.getDefaultHeaderStyle('70px', 'left', '13px'),
+                headerStyle: () => utilsCSS.getDefaultHeaderStyle('70px', 'left', '13px'),
                 title: cell => cell,
-                style: cssUtils.getShortCellStyle('13px'),
+                style: utilsCSS.getShortCellStyle('13px'),
             },
             {
                 dataField: 'sessionEnded',
@@ -221,16 +221,16 @@ class ResultsTable extends Component {
                 align: 'center',
                 filter: dateFilter({
                     placeholder: 'Ended',
-                    comparatorStyle: cssUtils.getDefaultFilterStyle('13px'),
+                    comparatorStyle: utilsCSS.getDefaultFilterStyle('13px'),
                     comparatorClassName: 'w-auto p-0',
                     dateStyle: {fontSize: '13px'},
                     dateClassName: 'w-auto ml-0 pl-0 pr-0',
                     withoutEmptyComparatorOption: true,
                     comparators: [Comparator.EQ, Comparator.GT, Comparator.LT],
                 }),
-                headerStyle: () => cssUtils.getDefaultHeaderStyle('185px', 'center', '13px'),
+                headerStyle: () => utilsCSS.getDefaultHeaderStyle('185px', 'center', '13px'),
                 title: cell => cell,
-                style: cssUtils.getShortCellStyle('13px'),
+                style: utilsCSS.getShortCellStyle('13px'),
             },
             {
                 dataField: 'sessionLasted',
@@ -242,21 +242,21 @@ class ResultsTable extends Component {
                     style: null,
                     className: '',
                     placeholder: 'Lasted',
-                    comparatorStyle: cssUtils.getDefaultFilterStyle('13px'),
+                    comparatorStyle: utilsCSS.getDefaultFilterStyle('13px'),
                     comparatorClassName: 'w-auto p-0',
                     withoutEmptyComparatorOption: true,
                     comparators: [Comparator.EQ, Comparator.GT, Comparator.LT],
-                    numberStyle: cssUtils.getDefaultFilterStyle('13px'),
+                    numberStyle: utilsCSS.getDefaultFilterStyle('13px'),
                     numberClassName: 'w-100 m-0 p-0'
                 }),
-                headerStyle: () => cssUtils.getDefaultHeaderStyle('100px', 'center', '13px'),
+                headerStyle: () => utilsCSS.getDefaultHeaderStyle('100px', 'center', '13px'),
                 title: cell => `${cell}, sec`,
                 formatter: (cell) => {
                     return cell >= 60 ?
                         <span className="badge badge-success pt-1 pb-1 pr-2 pl-2">{cell}</span> :
                         <span className="badge badge-danger pt-1 pb-1 pr-2 pl-2">{cell}</span>;
                 },
-                style: cssUtils.getShortCellStyle('13px'),
+                style: utilsCSS.getShortCellStyle('13px'),
             },
             {
                 dataField: 'grade',
@@ -267,14 +267,14 @@ class ResultsTable extends Component {
                     style: null,
                     className: '',
                     placeholder: 'Grade',
-                    comparatorStyle: cssUtils.getDefaultFilterStyle('13px'),
+                    comparatorStyle: utilsCSS.getDefaultFilterStyle('13px'),
                     comparatorClassName: 'w-auto p-0',
                     withoutEmptyComparatorOption: true,
                     comparators: [Comparator.EQ, Comparator.GT, Comparator.LT],
-                    numberStyle: cssUtils.getDefaultFilterStyle('13px'),
+                    numberStyle: utilsCSS.getDefaultFilterStyle('13px'),
                     numberClassName: 'w-100 m-0 p-0'
                 }),
-                headerStyle: () => cssUtils.getDefaultHeaderStyle('100px', 'center', '13px'),
+                headerStyle: () => utilsCSS.getDefaultHeaderStyle('100px', 'center', '13px'),
                 title: cell => cell,
                 formatter: (cell) => {
                     let grade = Number(cell);
@@ -282,7 +282,7 @@ class ResultsTable extends Component {
                         <span className="badge badge-success pt-1 pb-1 pr-2 pl-2">{cell}</span> :
                         <span className="badge badge-warning pt-1 pb-1 pr-2 pl-2">{cell}</span>;
                 },
-                style: cssUtils.getShortCellStyle('13px'),
+                style: utilsCSS.getShortCellStyle('13px'),
             },
             {
                 dataField: 'percent',
@@ -293,16 +293,16 @@ class ResultsTable extends Component {
                     style: null,
                     className: '',
                     placeholder: 'Percent',
-                    comparatorStyle: cssUtils.getDefaultFilterStyle('13px'),
+                    comparatorStyle: utilsCSS.getDefaultFilterStyle('13px'),
                     comparatorClassName: 'w-auto p-0',
                     withoutEmptyComparatorOption: true,
                     comparators: [Comparator.EQ, Comparator.GT, Comparator.LT],
-                    numberStyle: cssUtils.getDefaultFilterStyle('13px'),
+                    numberStyle: utilsCSS.getDefaultFilterStyle('13px'),
                     numberClassName: 'w-100 m-0 p-0'
                 }),
-                headerStyle: () => cssUtils.getDefaultHeaderStyle('100px', 'center', '13px'),
+                headerStyle: () => utilsCSS.getDefaultHeaderStyle('100px', 'center', '13px'),
                 title: cell => cell,
-                style: cssUtils.getShortCellStyle('13px'),
+                style: utilsCSS.getShortCellStyle('13px'),
                 formatter: (cell) => {
                     let percent = Number(cell);
                     if (percent === 100) {
@@ -325,12 +325,12 @@ class ResultsTable extends Component {
                         true: "true",
                         false: "false"
                     },
-                    style: cssUtils.getDefaultFilterStyle('13px'),
+                    style: utilsCSS.getDefaultFilterStyle('13px'),
                     className: 'p-0',
                 }),
-                headerStyle: () => cssUtils.getDefaultHeaderStyle('60px', 'center', '13px'),
+                headerStyle: () => utilsCSS.getDefaultHeaderStyle('60px', 'center', '13px'),
                 title: cell => cell ? 'Passed' : 'Failed',
-                style: cssUtils.getShortCellStyle('13px'),
+                style: utilsCSS.getShortCellStyle('13px'),
                 formatter: (cell) => {
                     return cell ?
                         <span className="badge badge-success pt-1 pb-1 pr-2 pl-2">Passed</span> :
@@ -348,12 +348,12 @@ class ResultsTable extends Component {
                         true: "true",
                         false: "false"
                     },
-                    style: cssUtils.getDefaultFilterStyle('13px'),
+                    style: utilsCSS.getDefaultFilterStyle('13px'),
                     className: 'p-0'
                 }),
                 title: cell => `This session was ${cell ? 'from LMS' : 'not from LMS'}`,
-                headerStyle: () => cssUtils.getDefaultHeaderStyle('60px', 'center', '13px'),
-                style: cssUtils.getShortCellStyle('13px'),
+                headerStyle: () => utilsCSS.getDefaultHeaderStyle('60px', 'center', '13px'),
+                style: utilsCSS.getShortCellStyle('13px'),
                 formatter: (cell) => {
                     return cell === true ?
                         <span className="badge badge-warning pt-1 pb-1 pr-2 pl-2">LMS</span> :
@@ -371,12 +371,12 @@ class ResultsTable extends Component {
                         true: "true",
                         false: "false"
                     },
-                    style: cssUtils.getDefaultFilterStyle('13px'),
+                    style: utilsCSS.getDefaultFilterStyle('13px'),
                     className: 'p-0'
                 }),
                 title: cell => `This session was ${cell ? 'timeouted' : 'not timeouted'}`,
-                headerStyle: () => cssUtils.getDefaultHeaderStyle('60px', 'center', '13px'),
-                style: cssUtils.getShortCellStyle('13px'),
+                headerStyle: () => utilsCSS.getDefaultHeaderStyle('60px', 'center', '13px'),
+                style: utilsCSS.getShortCellStyle('13px'),
                 formatter: (cell) => {
                     return cell !== true ?
                         <span className="badge badge-secondary"><FaCheck style={{fontSize: '0.75em'}}/></span> :
@@ -394,12 +394,12 @@ class ResultsTable extends Component {
                         true: "true",
                         false: "false"
                     },
-                    style: cssUtils.getDefaultFilterStyle('13px'),
+                    style: utilsCSS.getDefaultFilterStyle('13px'),
                     className: 'p-0'
                 }),
                 title: cell => `This session was ${cell ? 'cancelled' : 'not cancelled'}`,
-                headerStyle: () => cssUtils.getDefaultHeaderStyle('60px', 'center', '13px'),
-                style: cssUtils.getShortCellStyle('13px'),
+                headerStyle: () => utilsCSS.getDefaultHeaderStyle('60px', 'center', '13px'),
+                style: utilsCSS.getShortCellStyle('13px'),
                 formatter: (cell) => {
                     return cell !== true ?
                         <span className="badge badge-secondary"><FaCheck style={{fontSize: '0.75em'}}/></span> :
@@ -419,12 +419,12 @@ class ResultsTable extends Component {
                         true: "true",
                         false: "false"
                     },
-                    style: cssUtils.getDefaultFilterStyle('13px'),
+                    style: utilsCSS.getDefaultFilterStyle('13px'),
                     className: 'p-0'
                 }),
                 title: cell => `For this result the student was ${cell ? 'granted' : 'not granted'} game points`,
-                headerStyle: () => cssUtils.getDefaultHeaderStyle('60px', 'center', '13px'),
-                style: cssUtils.getShortCellStyle('13px'),
+                headerStyle: () => utilsCSS.getDefaultHeaderStyle('60px', 'center', '13px'),
+                style: utilsCSS.getShortCellStyle('13px'),
                 formatter: (cell) => {
                     return cell ?
                         <span className="badge badge-success pt-1 pb-1 pr-2 pl-2">{cell}</span> :
@@ -437,7 +437,7 @@ class ResultsTable extends Component {
                 text: 'Info',
                 align: 'center',
                 title: (cell, row) => `Details id=${row.resultId}`,
-                headerStyle: () => cssUtils.getDefaultHeaderStyle('60px', 'center', '13px'),
+                headerStyle: () => utilsCSS.getDefaultHeaderStyle('60px', 'center', '13px'),
                 formatter: (cell, row) => {
                     return (
                         <LinkContainer to={`/results/details/${row.resultId}`}>

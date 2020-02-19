@@ -1,4 +1,4 @@
-export const cssUtils = {
+export const utilsCSS = {
 
     getDefaultHeaderStyle(width, align, size) {
         return {

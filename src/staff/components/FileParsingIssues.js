@@ -22,10 +22,10 @@ const FileParsingIssues = props => {
                         </div>
                     </div>
                     <div className="d-flex justify-content-between mb-1">
-                        <div className={`badge badge-${invalid > 0 ? 'danger' : 'light'}`}>
+                        <div className="badge badge-secondary mr-1">
                             Invalid:
                         </div>
-                        <div className="badge badge-light">
+                        <div className={`badge badge-${invalid > 0 ? 'danger' : 'light'}`}>
                             {invalid}
                         </div>
                     </div>

@@ -14,10 +14,11 @@ class QuestionMcqUploadDropBox extends Component {
         }
     }
 
-    convertToBytes(acceptedFiles) {
+    processOnDrop(acceptedFiles) {
         if (acceptedFiles.length === 0) return;
         let file = acceptedFiles[0];
         const {name, size} = file;
+        this.props.clearQuestionMcqState();
         this.setState({fileName: name, fileSize: size, fileBytes: file});
     }
 
@@ -33,7 +34,7 @@ class QuestionMcqUploadDropBox extends Component {
         return (
             <div>
                 <Dropzone
-                    onDrop={acceptedFiles => this.convertToBytes(acceptedFiles)}
+                    onDrop={acceptedFiles => this.processOnDrop(acceptedFiles)}
                     accept=".txt,.rtp,.xtt"
                     maxSize={1000000}
                     multiple={false}

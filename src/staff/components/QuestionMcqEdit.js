@@ -2,6 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Failure from "../../common/Failure";
 import QuestionMcqEditForm from "../forms/QuestionMcqEditForm";
+import {convertFromRaw} from 'draft-js';
+import {stateToHTML} from 'draft-js-export-html';
+
+let options = {
+    defaultBlockTag: null,
+};
 
 class QuestionMcqEdit extends React.Component {
 
@@ -15,12 +21,14 @@ class QuestionMcqEdit extends React.Component {
     }
 
     handleSubmit(data) {
+        const {questionId, question, level, required} = data;
         // Populate not touched fields
         const questionMcqDTO={};
-        questionMcqDTO.questionId = data.questionId;
-        questionMcqDTO.question = data.question;
-        questionMcqDTO.level = data.level ? data.level : 1;
-        questionMcqDTO.required = data.required ? data.required : false;
+        questionMcqDTO.questionId = questionId;
+        questionMcqDTO.question = (question instanceof Object)
+            ? stateToHTML(convertFromRaw(question), options) : question;
+        questionMcqDTO.level = level ? level : 1;
+        questionMcqDTO.required = required ? required : false;
         questionMcqDTO.themeId = this.props.themeId;
         const answers = data.answers.map(a=>{
             const answerMcqDTO = {};
@@ -31,6 +39,7 @@ class QuestionMcqEdit extends React.Component {
             return answerMcqDTO;
         });
         questionMcqDTO.answers = answers;
+        console.log("Question = ", questionMcqDTO);
         !data.questionId ?
             this.props.saveQuestionMcq(questionMcqDTO)
             : this.props.updateQuestionMcq(questionMcqDTO);

@@ -8,12 +8,13 @@ import {FaEye, FaPencilAlt, FaQuestionCircle, FaTrashAlt, FaImage, FaRegCheckSqu
 import ConfirmModal from "../../common/ConfirmModal";
 import {minLength8, required} from "../../utils/validators";
 import {helpOptions, levelOptions, questionSorted, resourceOptions, trueFalseOptions} from "../../utils/constants";
-import {cssUtils} from "../../utils/cssUtils";
+import {utilsCSS} from "../../utils/utilsCSS";
 import '../../../main.css';
 import {helpFilter} from "../../utils/filters/helpFilter";
 import {resourceFilter} from "../../utils/filters/resourceFilter";
 import {OverlayTrigger, Tooltip} from "react-bootstrap";
 import QuestionMcqEditModal from "./QuestionMcqEditModal";
+import {utilsHTML} from "../../utils/utilsHTML";
 
 const QuestionsMcqTable = props => {
 
@@ -37,7 +38,7 @@ const QuestionsMcqTable = props => {
         <OverlayTrigger
             placement="bottom-start"
             overlay={questionTooltip(question)}>
-            <span>{question}</span>
+            <span dangerouslySetInnerHTML={utilsHTML.createMarkup(question)}/>
         </OverlayTrigger>
     );
 
@@ -52,10 +53,10 @@ const QuestionsMcqTable = props => {
             text: 'Question',
             sort: true,
             filter: textFilter({
-                style: cssUtils.getDefaultFilterStyle('13px')
+                style: utilsCSS.getDefaultFilterStyle('13px')
             }),
-            style: !expanded ? cssUtils.getShortCellStyle('13px') : cssUtils.getDefaultCellStyle('13px'),
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('750px', 'left', '13px'),
+            style: !expanded ? utilsCSS.getShortCellStyle('13px') : utilsCSS.getDefaultCellStyle('13px'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('750px', 'left', '13px'),
             validator: (newValue) => {
                 if (required(newValue) || minLength8(newValue)) {
                     return {
@@ -69,7 +70,7 @@ const QuestionsMcqTable = props => {
             editor: {
                 type: Type.TEXTAREA // To finish editing press: SHIFT+ENTER
             },
-            editorStyle: () => cssUtils.getShortEditorStyle('13px'),
+            editorStyle: () => utilsCSS.getShortEditorStyle('13px'),
             editable: () => authenticated.isAtLeastInstructor
         },
 
@@ -80,7 +81,7 @@ const QuestionsMcqTable = props => {
             align: 'center',
             filter: selectFilter({
                 options: levelOptions,
-                style: cssUtils.getDefaultFilterStyle('13px')
+                style: utilsCSS.getDefaultFilterStyle('13px')
             }),
             title: cell => `Level: ${cell}`,
             formatter: cell => {
@@ -89,8 +90,8 @@ const QuestionsMcqTable = props => {
                 if (cell === 3) return <span className="badge badge-danger">{cell}</span>;
                 return cell;
             },
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('65px', 'center', '13px'),
-            style: cssUtils.getDefaultCellStyle('14px'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('65px', 'center', '13px'),
+            style: utilsCSS.getDefaultCellStyle('14px'),
             editor: {
                 type: Type.SELECT,
                 options: [{
@@ -104,7 +105,7 @@ const QuestionsMcqTable = props => {
                     label: '3'
                 }]
             },
-            editorStyle: () => cssUtils.getShortEditorStyle('13px'),
+            editorStyle: () => utilsCSS.getShortEditorStyle('13px'),
             editable: () => authenticated.isAtLeastInstructor
         },
         {
@@ -114,7 +115,7 @@ const QuestionsMcqTable = props => {
             align: 'center',
             filter: selectFilter({
                 options: trueFalseOptions,
-                style: cssUtils.getDefaultFilterStyle('13px')
+                style: utilsCSS.getDefaultFilterStyle('13px')
             }),
             formatter: cell => {
                 return cell ?
@@ -126,8 +127,8 @@ const QuestionsMcqTable = props => {
                     </span>;
             },
             title: cell => `This question is: ${cell ? 'required' : 'not required'}`,
-            style: cssUtils.getShortCellStyle('14px'),
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('85px', 'center', '13px'),
+            style: utilsCSS.getShortCellStyle('14px'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('85px', 'center', '13px'),
             editor: {
                 type: Type.SELECT,
                 options: [{
@@ -138,7 +139,7 @@ const QuestionsMcqTable = props => {
                     label: 'Required'
                 }]
             },
-            editorStyle: () => cssUtils.getShortEditorStyle('13px'),
+            editorStyle: () => utilsCSS.getShortEditorStyle('13px'),
             editable: () => authenticated.isAtLeastInstructor
         },
         {
@@ -149,10 +150,10 @@ const QuestionsMcqTable = props => {
             filter: selectFilter({
                 options: helpOptions,
                 onFilter: helpFilter.getHelpFiltered,
-                style: cssUtils.getDefaultFilterStyle('13px')
+                style: utilsCSS.getDefaultFilterStyle('13px')
             }),
-            style: cssUtils.getShortCellStyle('14px'),
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('80px', 'center', '13px'),
+            style: utilsCSS.getShortCellStyle('14px'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('80px', 'center', '13px'),
             formatter: (cell) => {
                 return cell ?
                     <span className="badge badge-success p-1">
@@ -173,10 +174,10 @@ const QuestionsMcqTable = props => {
             filter: selectFilter({
                 options: resourceOptions,
                 onFilter: resourceFilter.getResourceFiltered,
-                style: cssUtils.getDefaultFilterStyle('13px')
+                style: utilsCSS.getDefaultFilterStyle('13px')
             }),
-            style: cssUtils.getShortCellStyle('14px'),
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('85px', 'center', '13px'),
+            style: utilsCSS.getShortCellStyle('14px'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('85px', 'center', '13px'),
             formatter: (cell) => {
                 return cell ?
                     <span className="badge badge-success p-1">
@@ -196,7 +197,7 @@ const QuestionsMcqTable = props => {
             text: 'Prv',
             align: 'center',
             title: () => 'Preview question',
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('35px', 'center', '13px'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('35px', 'center', '13px'),
             formatter: (cell, row) => {
                 return (
                     <a href="#" className="badge badge-info">
@@ -212,7 +213,7 @@ const QuestionsMcqTable = props => {
             text: 'Edt',
             align: 'center',
             title: () => 'Edit',
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('35px', 'center', '13px'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('35px', 'center', '13px'),
             formatter: (cell, row) => {
                 const {questionId} = row;
                 return (
@@ -230,7 +231,7 @@ const QuestionsMcqTable = props => {
             text: 'Del',
             align: 'center',
             title: () => 'Delete',
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('35px', 'center', '13px'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('35px', 'center', '13px'),
             formatter: (cell, row) => {
                 const {questionId} = row;
                 return (

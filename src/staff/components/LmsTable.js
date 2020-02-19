@@ -8,7 +8,7 @@ import {FaPencilAlt, FaRegCopy, FaTrashAlt} from "react-icons/fa";
 import ConfirmModal from "../../common/ConfirmModal";
 import {minLength2, required} from "../../utils/validators";
 import {defaultSorted} from "../../utils/constants";
-import {cssUtils} from "../../utils/cssUtils";
+import {utilsCSS} from "../../utils/utilsCSS";
 import '../../../main.css';
 import {OverlayTrigger, Popover} from "react-bootstrap";
 import LmsEditModal from "./LmsEditModal";
@@ -56,8 +56,8 @@ const LmsTable = props => {
             sort: true,
             filter: textFilter(),
             title: cell => cell,
-            style: !expanded ? cssUtils.getShortCellStyle : null,
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('350px', 'left'),
+            style: !expanded ? utilsCSS.getShortCellStyle : null,
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('350px', 'left'),
             validator: (newValue) => {
                 if (required(newValue) || minLength2(newValue)) {
                     return {
@@ -75,8 +75,8 @@ const LmsTable = props => {
             editable: false,
             align: 'center',
             title: cell => `LTI version: ${cell}`,
-            style: cssUtils.getShortCellStyle,
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('100px', 'center'),
+            style: utilsCSS.getShortCellStyle,
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('100px', 'center'),
             headerFormatter: ltiHeader
         },
         {
@@ -86,8 +86,8 @@ const LmsTable = props => {
             editable: false,
             align: 'center',
             title: cell => cell,
-            style: cssUtils.getShortCellStyle,
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('100px', 'center'),
+            style: utilsCSS.getShortCellStyle,
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('100px', 'center'),
             formatter: () => '********'
         },
         {
@@ -97,8 +97,8 @@ const LmsTable = props => {
             editable: false,
             align: 'center',
             title: cell => cell,
-            style: cssUtils.getShortCellStyle,
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('150px', 'center'),
+            style: utilsCSS.getShortCellStyle,
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('150px', 'center'),
             formatter: () => '****************'
         },
         {
@@ -108,7 +108,7 @@ const LmsTable = props => {
             text: 'cLMS',
             align: 'center',
             title: () => 'Copy name',
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('40px', 'center'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('40px', 'center'),
             formatter: (cell, row) => {
                 const {name} = row;
                 return (
@@ -126,7 +126,7 @@ const LmsTable = props => {
             text: 'cKey',
             align: 'center',
             title: () => 'Copy key',
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('40px', 'center'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('40px', 'center'),
             formatter: (cell, row) => {
                 const {credentials} = row;
                 return (
@@ -144,7 +144,7 @@ const LmsTable = props => {
             text: 'cSec',
             align: 'center',
             title: () => 'Copy Secret',
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('40px', 'center'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('40px', 'center'),
             formatter: (cell, row) => {
                 const {credentials} = row;
                 return (
@@ -162,7 +162,7 @@ const LmsTable = props => {
             text: 'cPas',
             align: 'center',
             title: () => 'Copy Passport',
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('40px', 'center'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('40px', 'center'),
             formatter: (cell, row) => {
                 const {name, credentials} = row;
                 return (
@@ -180,7 +180,7 @@ const LmsTable = props => {
             text: 'Upd',
             align: 'center',
             title: () => 'Update',
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('40px', 'center'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('40px', 'center'),
             formatter: (cell, row) => {
                 const {lmsId} = row;
                 return (
@@ -198,7 +198,7 @@ const LmsTable = props => {
             text: 'Del',
             align: 'center',
             title: () => 'Delete',
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('40px', 'center'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('40px', 'center'),
             formatter: (cell, row) => {
                 const {lmsId} = row;
                 return (

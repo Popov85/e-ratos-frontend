@@ -11,7 +11,7 @@ import {minLength2, required} from "../../utils/validators";
 import {staffFilter} from "../../utils/filters/staffFilter";
 import {lmsFilter} from "../../utils/filters/lmsFilter";
 import {defaultSorted, lmsOptions} from "../../utils/constants";
-import {cssUtils} from "../../utils/cssUtils";
+import {utilsCSS} from "../../utils/utilsCSS";
 import '../../../main.css';
 import {isEditable} from "../../utils/security";
 import ThemeEditModal from "./ThemeEditModal";
@@ -42,8 +42,8 @@ const ThemesTable = props => {
             sort: true,
             filter: textFilter(),
             title: cell => cell,
-            style: !expanded ? cssUtils.getShortCellStyle : null,
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('350px', 'left'),
+            style: !expanded ? utilsCSS.getShortCellStyle : null,
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('350px', 'left'),
             validator: (newValue) => {
                 if (required(newValue) || minLength2(newValue)) {
                     return {
@@ -66,9 +66,9 @@ const ThemesTable = props => {
                 options: courses
             }),
             formatter: cell => courses[cell],
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('240px', 'left'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('240px', 'left'),
             title: cell => courses[cell],
-            style: !expanded ? cssUtils.getShortCellStyle : null,
+            style: !expanded ? utilsCSS.getShortCellStyle : null,
             editable: false
         },
         {
@@ -83,8 +83,8 @@ const ThemesTable = props => {
                 const {name, surname} = row.staff;
                 return `${surname} ${name}`;
             },
-            style: cssUtils.getShortCellStyle,
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('180px', 'left'),
+            style: utilsCSS.getShortCellStyle,
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('180px', 'left'),
             title: cell => `${cell.name} ${cell.surname} (${cell.position})`,
             editable: false
         },
@@ -100,8 +100,8 @@ const ThemesTable = props => {
                 comparators: [Comparator.EQ, Comparator.GT, Comparator.LT],
             }),
             title: cell => cell,
-            style: cssUtils.getShortCellStyle,
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('220px', 'center'),
+            style: utilsCSS.getShortCellStyle,
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('220px', 'center'),
             editable: false
         },
         {
@@ -113,8 +113,8 @@ const ThemesTable = props => {
             }),
             formatter: cell => accesses[cell],
             title: cell => cell,
-            style: cssUtils.getShortCellStyle,
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('100px', 'center'),
+            style: utilsCSS.getShortCellStyle,
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('100px', 'center'),
             editable: false
         },
         {
@@ -126,8 +126,8 @@ const ThemesTable = props => {
                 options: lmsOptions,
                 onFilter: lmsFilter.getLMSFromCourseFiltered
             }),
-            style: cssUtils.getShortCellStyle,
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('100px', 'center'),
+            style: utilsCSS.getShortCellStyle,
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('100px', 'center'),
             formatter: (cell) => {
                 return cell ?
                     <span className="badge badge-success pt-1 pb-1 pr-2 pl-2" title={cell.name}>LMS</span> :
@@ -143,7 +143,7 @@ const ThemesTable = props => {
             text: 'Edt',
             align: 'center',
             title: () => 'Edit',
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('40px', 'center'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('40px', 'center'),
             formatter: (cell, row) => {
                 const {themeId, staff, access} = row;
                 return isEditable(authenticated, staff, access) ?
@@ -163,7 +163,7 @@ const ThemesTable = props => {
             text: 'Shw',
             align: 'center',
             title: () => 'Show questions',
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('40px', 'center'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('40px', 'center'),
             formatter: (cell, row) => {
                 const {themeId, staff, access} = row;
                 return isEditable(authenticated, staff, access) ?
@@ -184,7 +184,7 @@ const ThemesTable = props => {
             text: 'Del',
             align: 'center',
             title: () => 'Delete',
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('40px', 'center'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('40px', 'center'),
             formatter: (cell, row) => {
                 const {themeId, staff, access} = row;
                 return isEditable(authenticated, staff, access) ?

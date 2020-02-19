@@ -12,7 +12,7 @@ import {minLength2, required} from "../../utils/validators";
 import {staffFilter} from "../../utils/filters/staffFilter";
 import {lmsFilter} from "../../utils/filters/lmsFilter";
 import {defaultSorted, lmsOptions} from "../../utils/constants";
-import {cssUtils} from "../../utils/cssUtils";
+import {utilsCSS} from "../../utils/utilsCSS";
 import '../../../main.css';
 import {isEditable} from "../../utils/security";
 
@@ -47,8 +47,8 @@ const CoursesTable = props => {
             sort: true,
             filter: textFilter(),
             title: cell => cell,
-            style: !expanded ? cssUtils.getShortCellStyle : null,
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('350px', 'left'),
+            style: !expanded ? utilsCSS.getShortCellStyle : null,
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('350px', 'left'),
             validator: (newValue) => {
                 if (required(newValue) || minLength2(newValue)) {
                     return {
@@ -75,8 +75,8 @@ const CoursesTable = props => {
                 const {name, surname} = row.staff;
                 return `${surname} ${name}`;
             },
-            style: cssUtils.getShortCellStyle,
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('180px', 'left'),
+            style: utilsCSS.getShortCellStyle,
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('180px', 'left'),
             title: cell => `${cell.name} ${cell.surname} (${cell.position})`,
             editable: false
         },
@@ -92,8 +92,8 @@ const CoursesTable = props => {
                 comparators: [Comparator.EQ, Comparator.GT, Comparator.LT],
             }),
             title: cell => cell,
-            style: cssUtils.getShortCellStyle,
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('220px', 'center'),
+            style: utilsCSS.getShortCellStyle,
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('220px', 'center'),
             editable: false
         },
         {
@@ -105,8 +105,8 @@ const CoursesTable = props => {
             }),
             formatter: cell => accesses[cell],
             title: cell => cell,
-            style: cssUtils.getShortCellStyle,
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('100px', 'center'),
+            style: utilsCSS.getShortCellStyle,
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('100px', 'center'),
             editable: false
         },
         {
@@ -118,8 +118,8 @@ const CoursesTable = props => {
                 options: lmsOptions,
                 onFilter: lmsFilter.getLMSFiltered
             }),
-            style: cssUtils.getShortCellStyle,
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('100px', 'center'),
+            style: utilsCSS.getShortCellStyle,
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('100px', 'center'),
             formatter: (cell) => {
                 return cell ?
                     <span className="badge badge-success pt-1 pb-1 pr-2 pl-2" title={cell.name}>LMS</span> :
@@ -136,7 +136,7 @@ const CoursesTable = props => {
             text: 'Do',
             align: 'center',
             title: (cell, row) => row.lms ? 'Disassociate?' : 'Associate with LMS?',
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('40px', 'center'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('40px', 'center'),
             formatter: (cell, row) => {
                 const {courseId, lms, staff, access} = row;
                 return (
@@ -157,7 +157,7 @@ const CoursesTable = props => {
             text: 'Upd',
             align: 'center',
             title: () => 'Update',
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('40px', 'center'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('40px', 'center'),
             formatter: (cell, row) => {
                 const {courseId, staff, access} = row;
                 return (
@@ -177,7 +177,7 @@ const CoursesTable = props => {
             text: 'Del',
             align: 'center',
             title: () => 'Delete',
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('40px', 'center'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('40px', 'center'),
             formatter: (cell, row) => {
                 const {courseId, staff, access} = row;
                 return (

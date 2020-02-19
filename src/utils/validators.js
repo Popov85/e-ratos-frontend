@@ -1,5 +1,19 @@
 export const requiredField = value => {
-    if (value) return undefined;
+    if (value && value.trim()!=='') return undefined;
+    return "Field is required";
+}
+
+// This validator is applied exceptionally for draftJS rich editor as a Filed of redux-form
+export const requiredDraft = value => {
+    if (value) {
+        let empty = true;
+        const {blocks} = value;
+        if (!blocks) return undefined;
+        blocks.forEach(b=> {
+            if (b.text && b.text.trim()!=='') empty = false;
+        });
+        if (!empty) return undefined;
+    }
     return "Field is required";
 }
 

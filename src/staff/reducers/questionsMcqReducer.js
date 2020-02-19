@@ -3,7 +3,7 @@ const testInitState = {
         {
             1: [{
                 "questionId": 98,
-                "question": "gbe_question MCQ #98 question: 2hcrnkzy0 xzc2jrknnd9 y5xwk4ndi7vl evx3n vb8r5i08k49hh 60kv63mqe qtp34voj tljof9 97956 saadcq mfho4yk8lo0r77q 3mdrxvx omvf6nj4e auhfbcj r9j3cy5 xbqrh85dodz93 3euooo1zs i9jmiia20i87 l4scnvrc 2m8akvxl6heiax j7964vjfnyp 3ldgb t1fi9h5x4m5uen os5ju u24ml3s23dc17gx fmumpu24k6wn 57x6wgi x7etx ppgup5u 4jurgculvwqpkys h3mar3wgifn tf66dl0ag i41frb8 6jj2q99echmk5 s7daaoc ky285tlqu prds7 l9a7fio bcy2xrv732hh xoku7g7 alitx57haw p2z648kqpdlpe nkcdqo7r7rqw2df i5ztdam1tjnc 4qdesw8 t9ctq7 gk43q4gclrlgga 6lq1f 80afpixgw91 clxl8fv3h vf10s 5tukx9ka9vv0ur3 0gcxfi oeuwluv6q 5lkwed iwsbt2 ya079ytng wmvfln06gjdf352 n8wpq7 ve69xkj6 ?",
+                "question": "gbe_question MCQ <strong>#98</strong> question: 2hcrnkzy0 xzc2jrknnd9 y5xwk4ndi7vl evx3n vb8r5i08k49hh 60kv63mqe qtp34voj tljof9 97956 saadcq mfho4yk8lo0r77q 3mdrxvx omvf6nj4e auhfbcj r9j3cy5 xbqrh85dodz93 3euooo1zs i9jmiia20i87 l4scnvrc 2m8akvxl6heiax j7964vjfnyp 3ldgb t1fi9h5x4m5uen os5ju u24ml3s23dc17gx fmumpu24k6wn 57x6wgi x7etx ppgup5u 4jurgculvwqpkys h3mar3wgifn tf66dl0ag i41frb8 6jj2q99echmk5 s7daaoc ky285tlqu prds7 l9a7fio bcy2xrv732hh xoku7g7 alitx57haw p2z648kqpdlpe nkcdqo7r7rqw2df i5ztdam1tjnc 4qdesw8 t9ctq7 gk43q4gclrlgga 6lq1f 80afpixgw91 clxl8fv3h vf10s 5tukx9ka9vv0ur3 0gcxfi oeuwluv6q 5lkwed iwsbt2 ya079ytng wmvfln06gjdf352 n8wpq7 ve69xkj6 ?",
                 "level": 1,
                 "required": true,
                 "type": {

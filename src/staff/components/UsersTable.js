@@ -8,7 +8,7 @@ import {FaPencilAlt, FaTrashAlt} from "react-icons/fa";
 import {email, minLength2, required} from "../../utils/validators";
 import {isRoleManageable} from "../../utils/security";
 import StaffEditModal from "./StaffEditModal";
-import {cssUtils} from "../../utils/cssUtils";
+import {utilsCSS} from "../../utils/utilsCSS";
 
 
 const UsersTable = props => {
@@ -37,8 +37,8 @@ const UsersTable = props => {
             filter: selectFilter({
                 options: organisations
             }),
-            style: !expanded ? cssUtils.getShortCellStyle : null,
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('250px', 'left'),
+            style: !expanded ? utilsCSS.getShortCellStyle : null,
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('250px', 'left'),
             formatter: cell => organisations[cell],
             title: cell => organisations[cell],
             hidden: authenticated.isGlobalAdmin ? false : true,
@@ -51,8 +51,8 @@ const UsersTable = props => {
             filter: selectFilter({
                 options: faculties
             }),
-            style: !expanded ? cssUtils.getShortCellStyle : null,
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('250px', 'left'),
+            style: !expanded ? utilsCSS.getShortCellStyle : null,
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('250px', 'left'),
             formatter: cell => faculties[cell],
             title: cell => faculties[cell],
             hidden: authenticated.isAtLeastOrgAdmin ? false : true,
@@ -65,8 +65,8 @@ const UsersTable = props => {
             filter: selectFilter({
                 options: departments
             }),
-            style: !expanded ? cssUtils.getShortCellStyle : null,
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('250px', 'left'),
+            style: !expanded ? utilsCSS.getShortCellStyle : null,
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('250px', 'left'),
             formatter: cell => departments[cell],
             title: cell => departments[cell],
             hidden: authenticated.isAtLeastFacAdmin ? false : true,
@@ -87,8 +87,8 @@ const UsersTable = props => {
                 return true;
             },
             title: cell => cell,
-            style: cssUtils.getShortCellStyle,
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('150px', 'left'),
+            style: utilsCSS.getShortCellStyle,
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('150px', 'left'),
             editable:  (cell, row) => {
                 const {role} = row.user;
                 const {authenticated} = props.userInfo;
@@ -110,8 +110,8 @@ const UsersTable = props => {
                 return true;
             },
             title: cell => cell,
-            style: cssUtils.getShortCellStyle,
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('150px', 'left'),
+            style: utilsCSS.getShortCellStyle,
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('150px', 'left'),
             editable:  (cell, row) => {
                 const {role} = row.user;
                 const {authenticated} = props.userInfo;
@@ -133,8 +133,8 @@ const UsersTable = props => {
                 return true;
             },
             title: cell => cell,
-            style: cssUtils.getShortCellStyle,
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('150px', 'left'),
+            style: utilsCSS.getShortCellStyle,
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('150px', 'left'),
             editable:  (cell, row) => {
                 const {role} = row.user;
                 const {authenticated} = props.userInfo;
@@ -149,8 +149,8 @@ const UsersTable = props => {
                 options: roles.forFilter
             }),
             title: cell => cell,
-            style: cssUtils.getShortCellStyle,
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('150px', 'left'),
+            style: utilsCSS.getShortCellStyle,
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('150px', 'left'),
             editable: false
         },
         {
@@ -162,8 +162,8 @@ const UsersTable = props => {
             }),
             formatter: cell => positions.forFilter[cell],
             title: cell => positions.forFilter[cell],
-            style: cssUtils.getShortCellStyle,
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('150px', 'left'),
+            style: utilsCSS.getShortCellStyle,
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('150px', 'left'),
             editable: false
         },
         {
@@ -177,7 +177,7 @@ const UsersTable = props => {
             }),
             align: 'center',
             title: (cell) => `This user is ${cell ? 'active' : 'disabled'}`,
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('70px', 'center'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('70px', 'center'),
             formatter: cell => {
                 return cell ?
                     <span className="badge badge-success">Active</span> :
@@ -192,7 +192,7 @@ const UsersTable = props => {
             text: 'Edit',
             align: 'center',
             title: () => 'Edit',
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('40px', 'center'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('40px', 'center'),
             formatter: (cell, row) => {
                 const {staffId} = row;
                 const {role} = row.user;
@@ -215,7 +215,7 @@ const UsersTable = props => {
             text: 'Del',
             align: 'center',
             title: () => 'Delete',
-            headerStyle: () => cssUtils.getDefaultHeaderStyle('40px', 'center'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('40px', 'center'),
             formatter: (cell, row) => {
                 const {staffId} = row;
                 const {role} = row.user;

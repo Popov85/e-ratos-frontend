@@ -218,7 +218,7 @@ const initState = {
     error: null
 }
 
-export const themesReducer = (state =  initState, action) => {
+export const themesReducer = (state = initState, action) => {
     switch (action.type) {
         case "LOADING_ALL_THEMES": {
             return {...state, isLoading: action.isLoading};
