@@ -11,6 +11,15 @@ import {percentSelectOptions} from "../../utils/constants";
 import FieldWysiwyg from "./controls/FieldWysiwyg";
 import FieldSwitcher from "../../common/forms/controls/FieldSwitcher";
 import FieldLevel from "./controls/FieldLevel";
+import Iframe from 'react-iframe';
+
+import {parse} from 'himalaya'
+
+/*const iframe = "<iframe src=\"https://images.app.goo.gl/sh3D1fJdoouS9Lch9\" width=\"350\" height=\"250\"></iframe>";
+const object = parse(iframe);
+console.log("object = ", object);*/
+
+//https://jew.ski/himalaya/
 
 const renderAnswer = (fields, answer, index) => {
     return (
@@ -63,14 +72,24 @@ let QuestionMcqEditForm = props => {
 
                 <Field name="questionId" component="input" type="text" hidden/>
 
-
                 <div className="d-flex justify-content-between align-items-center mb-1">
                     <Field name="level" component={FieldLevel}/>
                     <Field name="required" component={FieldSwitcher} textOn="Required" textOff="Optional"/>
                 </div>
+
                 <div className="mb-3">
                     <Field name="question" component={FieldWysiwyg} validate={[requiredDraft]}
                            disabled={disabled || finished}/>
+                </div>
+
+                <div className="text-center">
+                    <Iframe id="myId"
+                            url={object[0].attributes.find(a=>a.key==='src').value}
+                            width="450px"
+                            height="450px"
+                            className="myClassname"
+                            display="initial"
+                            position="relative"/>
                 </div>
 
                 <div className="d-flex justify-content-center align-items-end mb-1">

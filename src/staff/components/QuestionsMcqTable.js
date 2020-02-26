@@ -3,15 +3,13 @@ import PropTypes from 'prop-types';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import cellEditFactory, {Type} from 'react-bootstrap-table2-editor';
-import filterFactory, {selectFilter, textFilter} from 'react-bootstrap-table2-filter';
-import {FaEye, FaPencilAlt, FaQuestionCircle, FaTrashAlt, FaImage, FaRegCheckSquare, FaRegSquare} from "react-icons/fa";
+import filterFactory, {textFilter} from 'react-bootstrap-table2-filter';
+import {FaEye, FaImage, FaPencilAlt, FaQuestionCircle, FaRegCheckSquare, FaRegSquare, FaTrashAlt} from "react-icons/fa";
 import ConfirmModal from "../../common/ConfirmModal";
 import {minLength8, required} from "../../utils/validators";
-import {helpOptions, levelOptions, questionSorted, resourceOptions, trueFalseOptions} from "../../utils/constants";
+import {questionSorted} from "../../utils/constants";
 import {utilsCSS} from "../../utils/utilsCSS";
 import '../../../main.css';
-import {helpFilter} from "../../utils/filters/helpFilter";
-import {resourceFilter} from "../../utils/filters/resourceFilter";
 import {OverlayTrigger, Tooltip} from "react-bootstrap";
 import QuestionMcqEditModal from "./QuestionMcqEditModal";
 import {utilsHTML} from "../../utils/utilsHTML";
@@ -76,13 +74,9 @@ const QuestionsMcqTable = props => {
 
         {
             dataField: 'level',
-            text: 'Level',
+            text: 'Lev',
             sort: true,
             align: 'center',
-            filter: selectFilter({
-                options: levelOptions,
-                style: utilsCSS.getDefaultFilterStyle('13px')
-            }),
             title: cell => `Level: ${cell}`,
             formatter: cell => {
                 if (cell === 1) return <span className="badge badge-success">{cell}</span>;
@@ -90,7 +84,7 @@ const QuestionsMcqTable = props => {
                 if (cell === 3) return <span className="badge badge-danger">{cell}</span>;
                 return cell;
             },
-            headerStyle: () => utilsCSS.getDefaultHeaderStyle('65px', 'center', '13px'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('40px', 'center', '13px'),
             style: utilsCSS.getDefaultCellStyle('14px'),
             editor: {
                 type: Type.SELECT,
@@ -110,25 +104,21 @@ const QuestionsMcqTable = props => {
         },
         {
             dataField: 'required',
-            text: 'Required',
+            text: 'Req',
             sort: true,
             align: 'center',
-            filter: selectFilter({
-                options: trueFalseOptions,
-                style: utilsCSS.getDefaultFilterStyle('13px')
-            }),
             formatter: cell => {
                 return cell ?
                     <span className="badge badge-success p-1">
-                        <FaRegCheckSquare/>
+                        <FaRegCheckSquare size="1.25em"/>
                     </span> :
                     <span className="badge badge-light p-1">
-                        <FaRegSquare/>
+                        <FaRegSquare size="1.25em"/>
                     </span>;
             },
             title: cell => `This question is: ${cell ? 'required' : 'not required'}`,
             style: utilsCSS.getShortCellStyle('14px'),
-            headerStyle: () => utilsCSS.getDefaultHeaderStyle('85px', 'center', '13px'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('40px', 'center', '13px'),
             editor: {
                 type: Type.SELECT,
                 options: [{
@@ -144,16 +134,11 @@ const QuestionsMcqTable = props => {
         },
         {
             dataField: 'help',
-            text: 'Help',
+            text: 'Hlp',
             sort: true,
             align: 'center',
-            filter: selectFilter({
-                options: helpOptions,
-                onFilter: helpFilter.getHelpFiltered,
-                style: utilsCSS.getDefaultFilterStyle('13px')
-            }),
             style: utilsCSS.getShortCellStyle('14px'),
-            headerStyle: () => utilsCSS.getDefaultHeaderStyle('80px', 'center', '13px'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('40px', 'center', '13px'),
             formatter: (cell) => {
                 return cell ?
                     <span className="badge badge-success p-1">
@@ -168,16 +153,11 @@ const QuestionsMcqTable = props => {
         },
         {
             dataField: 'resource',
-            text: 'Resource',
+            text: 'Res',
             sort: true,
             align: 'center',
-            filter: selectFilter({
-                options: resourceOptions,
-                onFilter: resourceFilter.getResourceFiltered,
-                style: utilsCSS.getDefaultFilterStyle('13px')
-            }),
             style: utilsCSS.getShortCellStyle('14px'),
-            headerStyle: () => utilsCSS.getDefaultHeaderStyle('85px', 'center', '13px'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('40px', 'center', '13px'),
             formatter: (cell) => {
                 return cell ?
                     <span className="badge badge-success p-1">
@@ -191,57 +171,31 @@ const QuestionsMcqTable = props => {
             editable: false
         },
         {
-            dataField: 'preview',
+            dataField: 'actions',
             isDummyField: true,
             editable: false,
-            text: 'Prv',
+            text: 'Action',
             align: 'center',
-            title: () => 'Preview question',
-            headerStyle: () => utilsCSS.getDefaultHeaderStyle('35px', 'center', '13px'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('70px', 'center', '13px'),
             formatter: (cell, row) => {
+                const {questionId} = row;
                 return (
-                    <a href="#" className="badge badge-info">
-                        <FaEye/>
-                    </a>
+                    <div className="d-flex justify-content-between">
+                        <a href="#" className="badge badge-info" title = "Preview">
+                            <FaEye/>
+                        </a>
+                        <a href="#" className="badge badge-success" title = "Edit"
+                           onClick={() => setEditMode({mode: true, editableQuestionId: questionId})}>
+                            <FaPencilAlt/>
+                        </a>
+                        <a href="#" className="badge badge-warning" title = "Remove"
+                           onClick={() => setDeleteMode({mode: true, deletableQuestionId: questionId})}>
+                            <FaTrashAlt/>
+                        </a>
+                    </div>
                 );
             }
-        },
-        {
-            dataField: 'edit',
-            isDummyField: true,
-            editable: false,
-            text: 'Edt',
-            align: 'center',
-            title: () => 'Edit',
-            headerStyle: () => utilsCSS.getDefaultHeaderStyle('35px', 'center', '13px'),
-            formatter: (cell, row) => {
-                const {questionId} = row;
-                return (
-                    <a href="#" className="badge badge-success"
-                       onClick={() => setEditMode({mode: true, editableQuestionId: questionId})}>
-                        <FaPencilAlt/>
-                    </a>);
-            },
-            hidden: !authenticated.isAtLeastInstructor ? true : false
-        },
-        {
-            dataField: 'delete',
-            isDummyField: true,
-            editable: false,
-            text: 'Del',
-            align: 'center',
-            title: () => 'Delete',
-            headerStyle: () => utilsCSS.getDefaultHeaderStyle('35px', 'center', '13px'),
-            formatter: (cell, row) => {
-                const {questionId} = row;
-                return (
-                    <a href="#" className="badge badge-warning"
-                       onClick={() => setDeleteMode({mode: true, deletableQuestionId: questionId})}>
-                        <FaTrashAlt/>
-                    </a>);
-            },
-            hidden: !authenticated.isAtLeastInstructor ? true : false
-        },
+        }
     ];
 
     return (

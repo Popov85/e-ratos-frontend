@@ -20,12 +20,12 @@ const FieldWysiwyg = props => {
                 toolbarClassName="toolbar-class pb-0 mb-0"
                 wrapperClassName="wrapper-class"
                 editorClassName={`form-control ${!touched ? '' : error ? 'is-invalid' : 'is-valid'} pl-1 pr-2 pt-0 pb-0`}
-                editorStyle={{lineHeight: '1.0', height: '100px', overFlow: 'auto', fontSize: '14px'}}
+                editorStyle={{lineHeight: '1.2', height: '100px', overFlow: 'auto', fontSize: '14px'}}
                 onEditorStateChange={e => setEditorState(e)}
                 editorState={editorState}
                 readOnly={props.disabled}
                 toolbar={{
-                    options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'colorPicker', 'remove', 'history'],
+                    options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'colorPicker', 'history'],
                     inline: {
                         options: ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript']
                     },

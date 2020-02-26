@@ -2,12 +2,9 @@ import React from 'react';
 import {Route} from "react-router-dom";
 import PropTypes from "prop-types";
 import Schemes from "./Schemes";
-import Themes from "./Themes";
 import Questions from "./Questions";
-import Resources from "./Resources";
 import Groups from "./Groups";
 import Complaints from "./Complaints";
-import Lms from "./Lms";
 import StaffNavbarContainer from "../containers/StaffNavbarContainer";
 import UsersContainer from "../containers/UsersContainer";
 import ResultsViewerManager from "./ResultsViewerManager";
@@ -28,6 +25,7 @@ import CoursesContainer from "../containers/CoursesContainer";
 import ThemesContainer from "../containers/ThemesContainer";
 import LmsContainer from "../containers/LmsContainer";
 import QuestionsMcqContainer from "../containers/QuestionsMcqContainer";
+import ResourcesContainer from "../containers/ResourcesContainer";
 
 class StaffPortal extends React.Component {
 
@@ -58,7 +56,7 @@ class StaffPortal extends React.Component {
                     <Route path="/themes/:themeId/questions-mcq" exact component={QuestionsMcqContainer}/>
                     <Route path="/questions-mcq" exact component={QuestionsMcqContainer}/>
                     <Route path="/questions" exact component={Questions}/>
-                    <Route path="/resources" exact component={Resources}/>
+                    <Route path="/resources" exact component={ResourcesContainer}/>
                     <Route path="/report/on-content" exact component={ReportOnContentContainer} />
                     <Route path="/report/on-results" exact component={ReportOnResultsContainer}/>
                     <Route path="/results" exact component={ResultsContainer}/>
