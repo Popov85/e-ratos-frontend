@@ -104,6 +104,21 @@ const testInitState = {
                 "position": "Instructor"
             },
             "lastUsed": "2020-02-03 09:39 (+0300)"
+        },
+        {
+            "resourceId": 8,
+            "link": "https://docs.google.com/presentation/d/e/2PACX-1vSnjxEA3SOvbInEYWhELXyEsbpJH5B8Q6xORz-Lrwuaim892xxYKCMtUlzkmFgnK5ZNxXb2eCbewaxv/embed?start=false&loop=false&delayms=3000",
+            "description": "My first video document file #1",
+            "width":"360",
+            "height":"240",
+            "type":"misc.",
+            "staff": {
+                "staffId": 1,
+                "name": "Daniel",
+                "surname": "Naroditsky",
+                "position": "Instructor"
+            },
+            "lastUsed": "2020-03-03 11:04 (+0300)"
         }
         ]
 }
@@ -114,7 +129,7 @@ const initState = {
     error: null
 }
 
-export const resourcesReducer = (state = testInitState, action) => {
+export const resourcesReducer = (state = initState, action) => {
     switch (action.type) {
         case "LOADING_ALL_RESOURCES": {
             return {...state, isLoading: action.isLoading};

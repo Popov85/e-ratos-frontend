@@ -109,7 +109,7 @@ const ResourcesTable = props => {
             align: "center",
             title: cell => cell,
             style: !expanded ? utilsCSS.getShortCellStyle : null,
-            headerStyle: () => utilsCSS.getDefaultHeaderStyle('40px', 'center'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('35px', 'center'),
             formatter: (cell, row) => {
                 const {link, width, height} = row;
                 if (cell==='image') return (
@@ -117,7 +117,7 @@ const ResourcesTable = props => {
                         trigger="click"
                         placement="left"
                         overlay={resourceTooltip(link, width, height)}>
-                        <FaImage size="1.25em" color="gray"/>
+                        <a href ="#" className="badge badge-secondary p-1"><FaImage color="white"/></a>
                     </OverlayTrigger>
                 );
                 if (cell==='audio') return (
@@ -125,7 +125,7 @@ const ResourcesTable = props => {
                         trigger="click"
                         placement="left"
                         overlay={resourceTooltip(link, width, height)}>
-                        <FaItunesNote size="1.25em" color="gray"/>
+                        <a href ="#" className="badge badge-secondary p-1"><FaItunesNote color="white"/></a>
                     </OverlayTrigger>
                 );
                 if (cell==='video') return (
@@ -133,7 +133,7 @@ const ResourcesTable = props => {
                         trigger="click"
                         placement="left"
                         overlay={resourceTooltip(link, width, height)}>
-                        <FaFilm size="1.25em" color="gray"/>
+                        <a href ="#" className="badge badge-secondary p-1"><FaFilm color="white"/></a>
                     </OverlayTrigger>
                 );
                 return (
@@ -141,7 +141,7 @@ const ResourcesTable = props => {
                         trigger="click"
                         placement="left"
                         overlay={resourceTooltip(link, width, height)}>
-                        <FaWpforms size="1.25em" color="gray"/>
+                        <a href ="#" className="badge badge-secondary p-1"><FaWpforms color="white"/></a>
                     </OverlayTrigger>
                 );
             },
@@ -154,7 +154,7 @@ const ResourcesTable = props => {
             text: 'Edt',
             align: 'center',
             title: () => 'Edit',
-            headerStyle: () => utilsCSS.getDefaultHeaderStyle('40px', 'center'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('35px', 'center'),
             formatter: (cell, row) => {
                 const {resourceId} = row;
                 return (
@@ -173,7 +173,7 @@ const ResourcesTable = props => {
             text: 'Del',
             align: 'center',
             title: () => 'Delete',
-            headerStyle: () => utilsCSS.getDefaultHeaderStyle('40px', 'center'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('35px', 'center'),
             formatter: (cell, row) => {
                 const {resourceId} = row;
                 return (

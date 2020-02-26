@@ -1,10 +1,9 @@
 import React, {useState} from 'react'
 import PropTypes from "prop-types";
 import {Field, reduxForm} from 'redux-form';
-import {minLength2, minLength8, number, required} from "../../utils/validators";
+import {minLength2, minLength8, required} from "../../utils/validators";
 import {FaSignInAlt, FaTimes} from "react-icons/fa";
 import FieldText from "../../common/forms/controls/FieldText";
-import FieldString from "../../common/forms/controls/FieldString";
 import ResourcePreloader from "../components/ResourcePreloader";
 import {parse} from 'himalaya'
 import Failure from "../../common/Failure";
@@ -91,6 +90,7 @@ let ResourceEditForm = props => {
                         <div className="p-2"><FaTimes color="grey"/></div>
                         <Field name="type" component={FieldSelectBadge} badge="Type"
                                items={[
+                                   {label: 'Select', value: ''},
                                    {label: 'image', value: 'image'},
                                    {label: 'audio', value: 'audio'},
                                    {label: 'video', value: 'video'},

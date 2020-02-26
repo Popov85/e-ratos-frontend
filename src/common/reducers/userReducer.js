@@ -42,7 +42,7 @@ const initState = {
     authenticated: null
 }
 
-export const userReducer = (state = testInitState, action) => {
+export const userReducer = (state = initState, action) => {
     switch (action.type) {
         case "LOADING_USER_INFO": {
             return {...state, isLoading: action.isLoading};

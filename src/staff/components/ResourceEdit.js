@@ -11,10 +11,11 @@ class ResourceEdit extends React.Component {
     }
 
     handleSubmit(data) {
-        console.log("data = ", data);
-        /*!data.resourceId ?
+        const { iframe, ...resourceDTO } = data;
+        console.log("resourceDTO = ", resourceDTO);
+        !data.resourceId ?
             this.props.saveResource(data)
-            : this.props.updateResource(data)*/
+            : this.props.updateResource(data)
     }
 
     render() {
