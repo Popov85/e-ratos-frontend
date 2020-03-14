@@ -3,63 +3,47 @@ import PropTypes from 'prop-types';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import cellEditFactory from 'react-bootstrap-table2-editor';
-import filterFactory, {Comparator, dateFilter, textFilter} from 'react-bootstrap-table2-filter';
-import {FaFilm, FaImage, FaItunesNote, FaPencilAlt, FaTrashAlt, FaWpforms} from "react-icons/fa";
+import filterFactory, {textFilter} from 'react-bootstrap-table2-filter';
+import {FaEye, FaPencilAlt, FaTrashAlt} from "react-icons/fa";
 import ConfirmModal from "../../common/ConfirmModal";
 import {minLength2, required} from "../../utils/validators";
 import {staffFilter} from "../../utils/filters/staffFilter";
 import {utilsCSS} from "../../utils/utilsCSS";
 import '../../../main.css';
-import ResourcePreloader from "./ResourcePreloader";
-import {OverlayTrigger, Tooltip} from "react-bootstrap";
-import ResourceEditModal from "./ResourceEditModal";
-import {utilsTable} from "../../utils/utilsTable";
+import HelpMod from "../../session/components/HelpMod";
+import HelpEditModal from "./HelpEditModal";
 
-const ResourcesTable = props => {
-    const initEditState = {mode: false, editableResourceId: null};
-    const initDeleteState = {mode: false, deletableResourceId: null};
+const HelpsTable = props => {
+
+    const initEditState = {mode: false, editableHelpId: null};
+    const initDeleteState = {mode: false, deletableHelpId: null};
+    const initPreviewState = {mode: false, previewHelp: null};
 
     const [edit, setEditMode] = useState(initEditState);
     const [remove, setDeleteMode] = useState(initDeleteState);
+    const [preview, setPreviewMode] = useState(initPreviewState);
 
     const deactivateEditModal = () => setEditMode(initEditState);
     const deactivateDeleteModal = () => setDeleteMode(initDeleteState);
+    const deactivatePreviewModal = () => setPreviewMode(initPreviewState);
 
-    const {userInfo, resources, expanded} = props;
+    const {userInfo, helps, expanded} = props;
     const {authenticated} = userInfo;
-
-    const resourceTooltip = (link, width, height) => {
-        return (
-            <Tooltip placement = "left">
-                <ResourcePreloader url={link} width={width} height={height} message = "Loading.."/>
-            </Tooltip>
-        );
-    }
 
     const columns = [
         {
-            dataField: 'resourceId',
+            dataField: 'helpId',
             text: 'ID',
             hidden: true
         },
         {
-            dataField: 'width',
-            text: 'width',
-            hidden: true
-        },
-        {
-            dataField: 'height',
-            text: 'height',
-            hidden: true
-        },
-        {
-            dataField: 'description',
-            text: 'Description',
+            dataField: 'name',
+            text: 'Name',
             sort: true,
             filter: textFilter(),
             title: cell => cell,
             style: !expanded ? utilsCSS.getShortCellStyle : null,
-            headerStyle: () => utilsCSS.getDefaultHeaderStyle('450px', 'left'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('150px', 'left'),
             validator: (newValue) => {
                 if (required(newValue) || minLength2(newValue)) {
                     return {
@@ -69,7 +53,26 @@ const ResourcesTable = props => {
                 }
                 return true;
             },
-            editable: true
+            editable: authenticated.isAtLeastInstructor ? true : false
+        },
+        {
+            dataField: 'help',
+            text: 'Help',
+            sort: true,
+            filter: textFilter(),
+            title: cell => cell,
+            style: !expanded ? utilsCSS.getShortCellStyle : null,
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('350px', 'left'),
+            validator: (newValue) => {
+                if (required(newValue) || minLength2(newValue)) {
+                    return {
+                        valid: false,
+                        message: 'Invalid help!'
+                    };
+                }
+                return true;
+            },
+            editable: authenticated.isAtLeastInstructor ? true : false
         },
         {
             dataField: 'staff',
@@ -89,61 +92,19 @@ const ResourcesTable = props => {
             editable: false
         },
         {
-            dataField: 'lastUsed',
-            text: 'Last used',
-            sort: true,
-            align: 'center',
-            filter: dateFilter({
-                placeholder: 'Last used',
-                comparatorClassName: 'w-auto p-0',
-                dateClassName: 'w-auto ml-0 pl-0 pr-0',
-                comparators: [Comparator.EQ, Comparator.GT, Comparator.LT],
-            }),
-            title: cell => cell,
-            style: utilsCSS.getShortCellStyle,
-            headerStyle: () => utilsCSS.getDefaultHeaderStyle('220px', 'center'),
-            editable: false
-        },
-        {
-            dataField: 'type',
-            text: 'Res',
+            dataField: 'preview',
+            isDummyField: true,
+            text: 'Prw',
             align: "center",
-            title: cell => cell,
-            style: !expanded ? utilsCSS.getShortCellStyle : null,
+            title: () => 'Preview',
             headerStyle: () => utilsCSS.getDefaultHeaderStyle('35px', 'center'),
             formatter: (cell, row) => {
-                const {link, width, height} = row;
-                if (cell==='image') return (
-                    <OverlayTrigger
-                        trigger="click"
-                        placement="left"
-                        overlay={resourceTooltip(link, width, height)}>
-                        <a href ="#" className="badge badge-secondary p-1"><FaImage color="white"/></a>
-                    </OverlayTrigger>
-                );
-                if (cell==='audio') return (
-                    <OverlayTrigger
-                        trigger="click"
-                        placement="left"
-                        overlay={resourceTooltip(link, width, height)}>
-                        <a href ="#" className="badge badge-secondary p-1"><FaItunesNote color="white"/></a>
-                    </OverlayTrigger>
-                );
-                if (cell==='video') return (
-                    <OverlayTrigger
-                        trigger="click"
-                        placement="left"
-                        overlay={resourceTooltip(link, width, height)}>
-                        <a href ="#" className="badge badge-secondary p-1"><FaFilm color="white"/></a>
-                    </OverlayTrigger>
-                );
+                const {help} = row;
                 return (
-                    <OverlayTrigger
-                        trigger="click"
-                        placement="left"
-                        overlay={resourceTooltip(link, width, height)}>
-                        <a href ="#" className="badge badge-secondary p-1"><FaWpforms color="white"/></a>
-                    </OverlayTrigger>
+                    <a href="#" className="badge badge-info"
+                       onClick={() => setPreviewMode({mode: true, previewHelp: help})}>
+                        <FaEye/>
+                    </a>
                 );
             },
             editable: false
@@ -157,10 +118,10 @@ const ResourcesTable = props => {
             title: () => 'Edit',
             headerStyle: () => utilsCSS.getDefaultHeaderStyle('35px', 'center'),
             formatter: (cell, row) => {
-                const {resourceId} = row;
+                const {helpId} = row;
                 return (
                     <a href="#" className="badge badge-success"
-                       onClick={() => setEditMode({mode: true, editableResourceId: resourceId})}>
+                       onClick={() => setEditMode({mode: true, editableHelpId: helpId})}>
                         <FaPencilAlt/>
                     </a>
                 );
@@ -176,10 +137,10 @@ const ResourcesTable = props => {
             title: () => 'Delete',
             headerStyle: () => utilsCSS.getDefaultHeaderStyle('35px', 'center'),
             formatter: (cell, row) => {
-                const {resourceId} = row;
+                const {helpId} = row;
                 return (
                     <a href="#" className="badge badge-warning"
-                       onClick={() => setDeleteMode({mode: true, deletableResourceId: resourceId})}>
+                       onClick={() => setDeleteMode({mode: true, deletableHelpId: helpId})}>
                         <FaTrashAlt/>
                     </a>
                 );
@@ -192,8 +153,8 @@ const ResourcesTable = props => {
         <div className="pb-5">
             <BootstrapTable bootstrap4 striped hover condensed
                             remote={{filter: false, pagination: false, sort: false, cellEdit: true}}
-                            keyField='resourceId'
-                            data={resources}
+                            keyField='helpId'
+                            data={helps}
                             columns={columns}
                             filter={filterFactory()}
                             pagination={paginationFactory({
@@ -212,28 +173,33 @@ const ResourcesTable = props => {
                             onTableChange={props.onTableChange}
             />
             {
+                preview.mode &&
+                <HelpMod show={preview.mode} hideHelp={deactivatePreviewModal}
+                                   content={preview.previewHelp}/>
+            }
+            {
                 edit.mode &&
-                <ResourceEditModal show={edit.mode} deactivateModal={deactivateEditModal}
-                                editableResourceId={edit.editableResourceId}/>
+                <HelpEditModal show={edit.mode} deactivateModal={deactivateEditModal}
+                                editableHelpId={edit.editableHelpId}/>
             }
             {
                 remove.mode &&
                 <ConfirmModal show={remove.mode} deactivateModal={deactivateDeleteModal}
-                              action="Delete the selected resource?"
-                              params={[remove.deletableResourceId]}
-                              doActionIfOK={props.deleteResource}/>
+                              action="Delete the selected help?"
+                              params={[remove.deletableHelpId]}
+                              doActionIfOK={props.deleteHelp}/>
             }
         </div>
     );
 };
 
-ResourcesTable.propTypes = {
+HelpsTable.propTypes = {
     userInfo: PropTypes.object.isRequired,
-    resources: PropTypes.array.isRequired,
+    helps: PropTypes.array.isRequired,
     expanded: PropTypes.bool.isRequired,
 
-    deleteResource: PropTypes.func.isRequired,
+    deleteHelp: PropTypes.func.isRequired,
     onTableChange: PropTypes.func.isRequired
 };
 
-export default ResourcesTable;
+export default HelpsTable;

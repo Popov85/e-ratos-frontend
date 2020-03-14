@@ -119,6 +119,21 @@ const testInitState = {
                 "position": "Instructor"
             },
             "lastUsed": "2020-03-03 11:04 (+0300)"
+        },
+        {
+            "resourceId": 9,
+            "link": "https://docs.google.com/presentation/d/e/2PACX-1vSnjxEA3SO(wrong url)",
+            "description": "My first wrong assigned resource",
+            "width":"360",
+            "height":"240",
+            "type":"misc.",
+            "staff": {
+                "staffId": 1,
+                "name": "Daniel",
+                "surname": "Naroditsky",
+                "position": "Instructor"
+            },
+            "lastUsed": "2020-03-01 11:09 (+0300)"
         }
         ]
 }

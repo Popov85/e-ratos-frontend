@@ -1,26 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Failure from "../../common/Failure";
-import ResourceEditForm from "../forms/ResourceEditForm";
+import HelpEditForm from "../forms/HelpEditForm";
+import {convertFromRaw} from 'draft-js';
+import {stateToHTML} from 'draft-js-export-html';
 
-class ResourceEdit extends React.Component {
+let options = {
+    defaultBlockTag: null,
+};
+
+class HelpEdit extends React.Component {
 
     componentDidMount() {
         //Clear all previous messages
-        this.props.clearResourceState();
+        this.props.clearHelpState();
     }
 
     handleSubmit(data) {
-        const { iframe, ...resourceDTO } = data;
-        //console.log("resourceDTO = ", resourceDTO);
-        !data.resourceId ?
-            this.props.saveResource(data)
-            : this.props.updateResource(data)
+        const {help} = data;
+        data.help = (help instanceof Object)
+            ? stateToHTML(convertFromRaw(help), options) : help;
+        console.log("help = ", data);
+        !data.helpId ?
+            this.props.saveHelp(data)
+            : this.props.updateHelp(data)
     }
 
     render() {
-        const {userInfo, resource} = this.props;
-        const {isLoading, error, message} = this.props.resourceEdit;
+        const {userInfo, help} = this.props;
+        const {isLoading, error, message} = this.props.helpEdit;
 
         return (
             <div>
@@ -50,15 +58,12 @@ class ResourceEdit extends React.Component {
                         }
                         <div className="card bg-transparent">
                             <div className="card-body">
-                                <ResourceEditForm
-                                    initialValues={resource ?
+                                <HelpEditForm
+                                    initialValues={help ?
                                         {
-                                            resourceId: resource.resourceId,
-                                            link: resource.link,
-                                            description: resource.description,
-                                            type: resource.type,
-                                            width: resource.width,
-                                            height: resource.height
+                                            helpId: help.helpId,
+                                            name: help.name,
+                                            help: help.help
                                         }
                                         : null
                                     }
@@ -81,14 +86,14 @@ class ResourceEdit extends React.Component {
     }
 }
 
-ResourceEdit.propTypes = {
+HelpEdit.propTypes = {
     userInfo: PropTypes.object.isRequired,
-    resourceEdit: PropTypes.object.isRequired,
-    resource: PropTypes.object, // Nullable for new objects
+    helpEdit: PropTypes.object.isRequired,
+    help: PropTypes.object, // Nullable for new objects
 
-    clearResourceState: PropTypes.func.isRequired,
-    saveResource: PropTypes.func.isRequired,
-    updateResource: PropTypes.func.isRequired
+    clearHelpState: PropTypes.func.isRequired,
+    saveHelp: PropTypes.func.isRequired,
+    updateHelp: PropTypes.func.isRequired
 };
 
-export default ResourceEdit;
+export default HelpEdit;

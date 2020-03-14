@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 const ResourcePreloader = props => {
 
+    const [error, setError] = useState(null);
     const [loaded, setLoaded] = useState(false);
 
     const {url, message, width, height} = props;
@@ -13,8 +14,12 @@ const ResourcePreloader = props => {
                 !loaded &&
                 <div className="text-center text-secondary">{message}</div>
             }
-            <object data={url} width={width ? width : '100'} height={height ? height : '50'}
-                    onLoad={() => setLoaded(true)}/>
+            {
+                error &&
+                <div className="text-center text-secondary p-3">{error.message}</div>
+            }
+            <iframe src={url} width={width ? width : '352'} height={height ? height : '240'}
+                    onLoad={() => setLoaded(true)} onError={()=>setError(new Error("Failure"))}/>
         </div>
     );
 };

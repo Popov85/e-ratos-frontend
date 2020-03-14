@@ -11,6 +11,7 @@ import {percentSelectOptions} from "../../utils/constants";
 import FieldWysiwyg from "./controls/FieldWysiwyg";
 import FieldSwitcher from "../../common/forms/controls/FieldSwitcher";
 import FieldLevel from "./controls/FieldLevel";
+import FieldResource from "./controls/FieldResource";
 
 const renderAnswer = (fields, answer, index) => {
     return (
@@ -73,12 +74,14 @@ let QuestionMcqEditForm = props => {
                            disabled={disabled || finished}/>
                 </div>
 
+                <div className="mb-3">
+                    <Field name="resource" component={FieldResource}/>
+                </div>
+
                 <div className="d-flex justify-content-center align-items-end mb-1">
                     <div>
                         <a href="#" onClick={() => alert('Show look-up for helps')}
                            className="badge badge-dark mr-1">Add help</a>
-                        <a href="#" onClick={() => alert('Show look-up for resources')}
-                           className="badge badge-secondary">Add resource</a>
                     </div>
                 </div>
 

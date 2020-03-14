@@ -32,6 +32,8 @@ import {questionsMcqReducer} from "./questionsMcqReducer";
 import {questionMcqEditReducer} from "./questionMcqEditReducer";
 import {resourcesReducer} from "./resourcesReducer";
 import {resourceEditReducer} from "./resourceEditReducer";
+import {helpsReducer} from "./helpsReducer";
+import {helpEditReducer} from "./helpEditReducer";
 
 const staffReducers = combineReducers({
     form: formReducer,
@@ -50,6 +52,7 @@ const staffReducers = combineReducers({
     themes: themesReducer,
     schemes: schemesReducer,
     resources: resourcesReducer,
+    helps:helpsReducer,
     lms: lmsReducer,
     access: accessReducer,
     questionsMcq: questionsMcqReducer,
@@ -63,6 +66,7 @@ const staffReducers = combineReducers({
     courseEdit: courseEditReducer,
     themeEdit: themeEditReducer,
     resourceEdit: resourceEditReducer,
+    helpEdit: helpEditReducer,
     lmsEdit: lmsEditReducer,
     questionMcqEdit: questionMcqEditReducer
 });

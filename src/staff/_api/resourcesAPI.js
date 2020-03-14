@@ -7,7 +7,7 @@ export const resourcesAPI = {
     },
 
     updateResource(resourceDTO) {
-        return instance.put(`/instructor/themes`, resourceDTO);
+        return instance.put(`/instructor/resources`, resourceDTO);
     },
 
     //--------------------------------------------PATCH-es--------------------------------------------------------------

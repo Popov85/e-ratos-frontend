@@ -14,14 +14,10 @@ class QuestionMcqEdit extends React.Component {
     componentDidMount() {
         //Clear all previous messages
         this.props.clearQuestionMcqState();
-        // TODO: move this logic to the corresponding look-up components
-        /*const {helpsForSelect, resourcesForSelect} = this.props;
-        if (!accessesForSelect || accessesForSelect.length===1) this.props.getAccesses();
-        if (!coursesForSelect || coursesForSelect.length===1) this.props.getAllCoursesByDepartmentForDropDown();*/
     }
 
     handleSubmit(data) {
-        const {questionId, question, level, required} = data;
+        const {questionId, question, level, required, resource, help} = data;
         // Populate not touched fields
         const questionMcqDTO={};
         questionMcqDTO.questionId = questionId;
@@ -30,6 +26,8 @@ class QuestionMcqEdit extends React.Component {
         questionMcqDTO.level = level ? level : 1;
         questionMcqDTO.required = required ? required : false;
         questionMcqDTO.themeId = this.props.themeId;
+        questionMcqDTO.resourceId = resource ? resource.resourceId : null;
+        questionMcqDTO.helpId = help ? help.helpId : null;
         const answers = data.answers.map(a=>{
             const answerMcqDTO = {};
             answerMcqDTO.answerId=a.answerId;
@@ -85,7 +83,9 @@ class QuestionMcqEdit extends React.Component {
                                             question: questionMcq.question,
                                             level: questionMcq.level,
                                             required: questionMcq.required,
-                                            answers: questionMcq.answers
+                                            answers: questionMcq.answers,
+                                            resource: questionMcq.resource,
+                                            help: questionMcq.help
                                         }
                                         : null
                                     }
@@ -115,8 +115,6 @@ QuestionMcqEdit.propTypes = {
     themeId: PropTypes.number.isRequired, // The selected themeId whose questions will be edited
     questionMcqEdit: PropTypes.object.isRequired,
     questionMcq: PropTypes.object, // Nullable for new objects
-    helpsForSelect: PropTypes.array, // Array adopted for select
-    resourcesForSelect: PropTypes.array, // Array adopted for select
 
     clearQuestionMcqState: PropTypes.func.isRequired,
     saveQuestionMcq: PropTypes.func.isRequired,

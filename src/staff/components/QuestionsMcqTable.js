@@ -34,6 +34,7 @@ const QuestionsMcqTable = props => {
 
     const questionFormatter = question => (
         <OverlayTrigger
+            trigger = "click"
             placement="bottom-start"
             overlay={questionTooltip(question)}>
             <span dangerouslySetInnerHTML={utilsHTML.createMarkup(question)}/>
@@ -71,7 +72,6 @@ const QuestionsMcqTable = props => {
             editorStyle: () => utilsCSS.getShortEditorStyle('13px'),
             editable: () => authenticated.isAtLeastInstructor
         },
-
         {
             dataField: 'level',
             text: 'Lev',

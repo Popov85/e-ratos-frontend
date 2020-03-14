@@ -6,7 +6,7 @@ import {getHelp} from "../selectors/sessionSelector";
 const mapStateToProps = state => {
     return {
         show: state.session.help,
-        content: getHelp(state),
+        content: getHelp(state).help,
     }
 }
 
