@@ -1,3 +1,5 @@
+import {dev} from "../../profile";
+
 const testInitState = {
     content:
         {
@@ -6,6 +8,7 @@ const testInitState = {
                 "question": "gbe_question MCQ <strong>#98</strong> question: 2hcrnkzy0 xzc2jrknnd9 y5xwk4ndi7vl evx3n vb8r5i08k49hh 60kv63mqe qtp34voj tljof9 97956 saadcq mfho4yk8lo0r77q 3mdrxvx omvf6nj4e auhfbcj r9j3cy5 xbqrh85dodz93 3euooo1zs i9jmiia20i87 l4scnvrc 2m8akvxl6heiax j7964vjfnyp 3ldgb t1fi9h5x4m5uen os5ju u24ml3s23dc17gx fmumpu24k6wn 57x6wgi x7etx ppgup5u 4jurgculvwqpkys h3mar3wgifn tf66dl0ag i41frb8 6jj2q99echmk5 s7daaoc ky285tlqu prds7 l9a7fio bcy2xrv732hh xoku7g7 alitx57haw p2z648kqpdlpe nkcdqo7r7rqw2df i5ztdam1tjnc 4qdesw8 t9ctq7 gk43q4gclrlgga 6lq1f 80afpixgw91 clxl8fv3h vf10s 5tukx9ka9vv0ur3 0gcxfi oeuwluv6q 5lkwed iwsbt2 ya079ytng wmvfln06gjdf352 n8wpq7 ve69xkj6 ?",
                 "level": 1,
                 "required": true,
+                "single": true,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -19,15 +22,15 @@ const testInitState = {
                 "help": {
                     "helpId": 75,
                     "name": "Help name 75",
-                    "help": "Help content 75",
-                    "resource": {
-                        "resourceId": 97,
-                        "link": "https://resources.com/97"
-                    }
+                    "help": "Help content 75"
                 },
                 "resource": {
-                    "resourceId": 22,
-                    "link": "https://resources.com/22"
+                    "resourceId": 1,
+                    "link": "https://drive.google.com/file/d/170jMMCjhW-mOswjT1mSJlZGxB3NI8iAw/preview",
+                    "description": "From trip to Paris #1",
+                    "width":"360",
+                    "height":"240",
+                    "type":"image"
                 },
                 "answers": [{
                     "answerId": 457,
@@ -71,6 +74,7 @@ const testInitState = {
                 "question": "gdc_question MCQ #35 question: 54tnhx80iu3 zmchvhf2q 9rcrfbtx 2ej3i atx0v4kaslhtp9 y8mwr2eors1y ct2vhv6ijb469v mf4e5o m2wr8bpye ktae5 pd3tx9wyxm tm35rll 6ecfy5 14ptiyuf 3oo8k 0lugz1yj0f1 kiylnian9u30pr ql4y9q4j xgvg8hiu3 mr2znhbg 2u2i70piyoo syqc4ak2nu6iv frtzvh970d3ngi ll5oa3 lw6ic 1oz9iwzchov9ppj mamkxq f5ssde7 oxe7b7 c1x142m83xv08 k5kfwp5m u56gi 3zmdp9z q4vq05qva8nezy 6abp0wqo3 hva673c8y0z9mc p3qz53of mk6wfq 89ykljkcoe8b fcczqc v5r7w 2emwwwfzj igk2htjhvyevs5f 5g7gflotegqvb0z 1d9ft7tl9asw 62ngv368 zrevf31gdhz8nb uw5lt3a2idby gfxyl t69gkddz t7nzqr71k6birav z9h78qyvm2aj kiar2t9632d8 q8e77lx3u n87sk wj1vz8ys0rnf plaoo6x hbrr5bix f54j7lz4m5kcn co1knils i37ee l62hy4qefqn 3qiiqb 3nqwnsdgb6xbv bgwvbgd 0imdt64542a6x0 kvcyemgykavfp 0ugxcr5legsa biwzn9dt7kw ah0nzkpjy0x r3ij68617of 8wuwv6tmsa asab324peu 4jrur6xlv hnnbh ?",
                 "level": 1,
                 "required": false,
+                "single": true,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -84,15 +88,15 @@ const testInitState = {
                 "help": {
                     "helpId": 35,
                     "name": "Help name 35",
-                    "help": "Help content 35",
-                    "resource": {
-                        "resourceId": 12,
-                        "link": "https://resources.com/12"
-                    }
+                    "help": "Help content 35"
                 },
                 "resource": {
-                    "resourceId": 23,
-                    "link": "https://resources.com/23"
+                    "resourceId": 1,
+                    "link": "https://drive.google.com/file/d/170jMMCjhW-mOswjT1mSJlZGxB3NI8iAw/preview",
+                    "description": "From trip to Paris #1",
+                    "width":"360",
+                    "height":"240",
+                    "type":"image"
                 },
                 "answers": [{
                     "answerId": 152,
@@ -154,6 +158,7 @@ const testInitState = {
                 "question": "cba_question MCQ #357 question: 2afghyn2wv u1vth4pzq 8jsuhnyefdid9c gu7sykm2m1x 52swvetzf0 gjgq07tduap 35ey1si1nzjqu0y chfuxjs4b3fc v519aq6t2gn 3fmh1po8 ngdft98y ylb8ink1tij29tv ijswug57o8s83jw d5ifw0v678o prrfwqf dthlds32676 48kvd5w6 x3lyc416k4u9 ymmbvo 61z82p77cw ylydtnukk0o k6nw8j6cb6xqim rmw1hs71y hrf1v8q8 mpoprm6tha55v3 0dtl72951 6jsya0ewi7j o4ezktcee68c4 s3p9ytrqlbeea eovj6xhz caopwd6mdcgo itcy8 yxsx0anz 52je9d 17mhzuedj5y x22ubago6n0 hj2ps cz80tk4pr tqe295a 1grawgr2ozp d2xl86cyx3xc0 eomcghjnv76vi zf7fenqdjjay oe27n8o9l7w6 wj02dixf70v vmv94spui vchwpk7 tssvx6w7xkzwnvd w1hg3kel lx3wcvbj78kbh d89rud732z7l5n9 c0zvd0e95v1t f83s9o1 622u0qxolwid eac1ul0y7728iy8 mpxtpw 61ym24q r19c27hi p2nzwn 2uy4y i9r3spm seaz3 wl4i78lz sxxfhf6rs ub4f4h4xytg33 xqv9w5ayp 8e0npx4e6tlosu 1wvc4kum ojkzkdgn1 lnfpohx9 ubl9ie3olrez s500oewwmm2 4nhv1fkthl9i3tz 9hodvjhmf8nqby glkr1q9bqqqoy pd9rn awoxgqv1l3i9 fe2xwf0o2193hk tmcc099vptbxf fk1htxs9 7ahrvlfa9wf 47ykbdf 4250e9 oshpy idr53p yo40s1stt1 2q5759wp7a9e k3fhks ccvyjzwbb0q 0jaq4kba8l2l yg6wg fjqkadqo4wr6rbf 5vk1u p8yfj8soahj04k o0xy9jict rmqski6k 0lziqp nscyt61g nt1lsqj66 aswnz1ucy2tqhd jvwomudljedu ts9bueyswgwuv 7mjouyde2aon k54l8txv4kx 4x1bygnfy1nxp i0wf01b97 ox672 8uelfydjfaq0mf anz9wwxujmb8k6 d4vadbg203g ejskw0optige 1ltiybj9me0y6h ?",
                 "level": 1,
                 "required": true,
+                "single": false,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -167,15 +172,15 @@ const testInitState = {
                 "help": {
                     "helpId": 34,
                     "name": "Help name 34",
-                    "help": "Help content 34",
-                    "resource": {
-                        "resourceId": 61,
-                        "link": "https://resources.com/61"
-                    }
+                    "help": "Help content 34"
                 },
                 "resource": {
-                    "resourceId": 34,
-                    "link": "https://resources.com/34"
+                    "resourceId": 1,
+                    "link": "https://drive.google.com/file/d/170jMMCjhW-mOswjT1mSJlZGxB3NI8iAw/preview",
+                    "description": "From trip to Paris #1",
+                    "width":"360",
+                    "height":"240",
+                    "type":"image"
                 },
                 "answers": [{
                     "answerId": 1617,
@@ -237,6 +242,7 @@ const testInitState = {
                 "question": "cad_question MCQ #298 question: htimx0ykartww1 idlop62hutwph1 jgwq9z44a3v b3m51 sjhldtypf8 o7dsy 88r71 hnwi2ahf 6d6qghb7mnuyo xtvc3xlk6 pnvrkzph72rwlvz 5drw0y 1jssfnyjhg ar2y1pdf oaz66rz7 yc60wx hfwckvwj pnor3 w0f4yoxcl2 h5kzkokar u3o8v6pa ld3znn22 6z2nzbn4 qdqynyr e662kn9ilnd8yc j87fchs4xaw1b8 l48a7ct hia57kll 7cv29p vljf8pdth 6ma16 23oey dobhddyfvm4ck ljiq7b qvk3nm0f7sgol jumjgkm zx2i0g4d voxfgi5 uyooy 6jfdnbv 48aa1aqbzuzhw4 mru9ec9fi2bkx lv4dl t5vp3pqd zj4trgo a0sre4wi6ru04w 36vz0aj8 e7b6iv19o88tk qwln3eb ua5mv2e7pulmg a5s1pboc r2j841lye65 tmgfbx6vs8j 5lppjcp3ls2tx butmt av379 ?",
                 "level": 1,
                 "required": false,
+                "single": false,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -250,15 +256,15 @@ const testInitState = {
                 "help": {
                     "helpId": 32,
                     "name": "Help name 32",
-                    "help": "Help content 32",
-                    "resource": {
-                        "resourceId": 56,
-                        "link": "https://resources.com/56"
-                    }
+                    "help": "Help content 32"
                 },
                 "resource": {
-                    "resourceId": 55,
-                    "link": "https://resources.com/55"
+                    "resourceId": 1,
+                    "link": "https://drive.google.com/file/d/170jMMCjhW-mOswjT1mSJlZGxB3NI8iAw/preview",
+                    "description": "From trip to Paris #1",
+                    "width":"360",
+                    "height":"240",
+                    "type":"image"
                 },
                 "answers": [{
                     "answerId": 1352,
@@ -320,6 +326,7 @@ const testInitState = {
                 "question": "ffb_question MCQ #176 question: vuy4nv6h2ztiam atqmndj458jr zpz1n7zfl u9692b1nyo4u asp02nfl9 60iel0h15cp8 omgvjn 37dxj o90nln3syoqtye 40e2d4rqdg5z 2a7kj i42k2cwo6s g94rfe hnvna87gyj5up4 9mbydk3jpp km50l7gt0vh l7lxohv0y9q973f sp4npfqsbcbv 7btwqnib 6cgfwnj2 cgsjolf5l8 d7m2boa410y43u sx1qxtj5 u7ad3d3irggatx 8wtzigk cty28 zbpzfpbmbo3k ifn20cu zomychm89 mbe3g vhd2leea1cktgkg 7c0x307arhxa2 qlkfdubg gwk8z l606ow 7l9oauknfizc3l rbynzib 0zhv2clyez4abtn jeprku 6l2qqwz4mcug hno8lvy4il irtdpq fi9cfnk9t iib5tr 3lny3 oeo4h9r 3xjdqyi0sl3 wklllmiw wwqxeo iwqprqav27edz 14r27u8kx3tf mwtc9gkc9ho4 62v95abwt2n6b 0vqars oyow0rh7 2ehzm96z szmo16 vveiv no1gn 5u72m9fa2t uzzz4st6a 0xj8z u6sce0f4qhyjxk y4b07 aqca6f3e3sxzt i5hofhfl0h z7rafvsq8s47r zcfi45ls2a8ekb8 sbf5p5gpon glb0ykd8 ?",
                 "level": 1,
                 "required": false,
+                "single": true,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -333,15 +340,15 @@ const testInitState = {
                 "help": {
                     "helpId": 57,
                     "name": "Help name 57",
-                    "help": "Help content 57",
-                    "resource": {
-                        "resourceId": 55,
-                        "link": "https://resources.com/55"
-                    }
+                    "help": "Help content 57"
                 },
                 "resource": {
-                    "resourceId": 84,
-                    "link": "https://resources.com/84"
+                    "resourceId": 1,
+                    "link": "https://drive.google.com/file/d/170jMMCjhW-mOswjT1mSJlZGxB3NI8iAw/preview",
+                    "description": "From trip to Paris #1",
+                    "width":"360",
+                    "height":"240",
+                    "type":"image"
                 },
                 "answers": [{
                     "answerId": 796,
@@ -403,6 +410,7 @@ const testInitState = {
                 "question": "bfa_question MCQ #241 question: ko2cnd 9zb5l6qzvno owa85iu y2j1jglvwb zrcozyt8bw2r7o cirrefqwjg idal80xw032g nrm2tfjcr g00cieqfb4y zxumrawdv3exb cz5ijzc 7ztuqh3p rl8kk madxvsnovnfw pvufv7e ziicsngt iz0ns2e e2nk0rgu5yyr 8hno2xazitpi 1f9965t4ljny r6qp5ncoj 8hxbworsp m2hqx40qooq5p z93p0xc6k7rsg8g ytgv6jpnodv7 vb7rlk6w6 b7rlqox245d9 038afuclj7sb zf7b4vj90owpo 1ej5b0i rp4q7uj38unu1 1lc3kzlp1sl pbt303q mmb8ax tydw0g id500euh7le42 zxgzj4vu6o1r qrudmng nqic7jur 5zwwpie i3h2mth7is7m bz1b7dn4c s7fkepx 7gu21qqea8dj840 i4vjf uyq9txz7ud6m7a m2u7zfsu1sw4 pp403lse5yzr qupeqwf8cdsy boojl aktkttqsdj q0iemh0 l4yo9q px5edh1v59rgcw zjs26oq9f7y4m5p 6w1sm61i 5yb830w 3ltv98eai0b9wl4 8vo98q3ug80f112 w07oyuhk471m5p u75bspo00g6d4 sgenezjsautf 97u2us3v prynfih7z 0femok9thf 7kqwubkt57o wtx5duhndxhueaf zoeq71n 9lrwnca9p 21wcna cn741xz9wox jnql9u uqt13nw qyiae1vherh j45xjgz4o 2kza30ym1cba0 hllynhbflq cza1u8 ebqgqei xbna2w3g6m7n2 nvjfewkyv 9bpyysu 3u2wrj4yfe8 t8d7dw0454n ?",
                 "level": 1,
                 "required": false,
+                "single": true,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -416,15 +424,15 @@ const testInitState = {
                 "help": {
                     "helpId": 83,
                     "name": "Help name 83",
-                    "help": "Help content 83",
-                    "resource": {
-                        "resourceId": 92,
-                        "link": "https://resources.com/92"
-                    }
+                    "help": "Help content 83"
                 },
                 "resource": {
-                    "resourceId": 39,
-                    "link": "https://resources.com/39"
+                    "resourceId": 1,
+                    "link": "https://drive.google.com/file/d/170jMMCjhW-mOswjT1mSJlZGxB3NI8iAw/preview",
+                    "description": "From trip to Paris #1",
+                    "width":"360",
+                    "height":"240",
+                    "type":"image"
                 },
                 "answers": [{
                     "answerId": 1096,
@@ -477,6 +485,7 @@ const testInitState = {
                 "question": "Test question #1",
                 "level": 1,
                 "required": false,
+                "single": true,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -511,6 +520,7 @@ const testInitState = {
                 "question": "dgg_question MCQ #114 question: l1oejmakm3mv8 ren6sgz8g85nlc8 yhd6doe gauu2ur3slbl1 n9gye0dfz34 odew4si843k oikjf17b bq984584ouv 6eyvd 8zbjx1ys 4rzanmo0dm5dhsb ou30ma5 6mz4qso1 w3qsk6so5jl usxoz0 49gy03wabyyg lvishubccrv17b ph71ifal krk0z tryi296xxoi89 jn8781fl0vb 79qapn 26v62op gh420gufx1ycl8 2n87qbd3hhrue57 uq4e3dh0u sm3xymbk 4jsdsdg l1obmmgxw tu9trjnybdr xjw2aewg5ucq eek5t5sj2kt tpxk5jdoi mpav5o7coq cu9qg4hmy snwe3twrm0 usurslw8sx9osl9 rq45v010hjrwxsj vb7gobo80w9z fv806vv57yqj jmugro tnq2lmc u6h39i1emzqou xd53y6vtoh96 02sjvs ev6m7a8i165d3tu xn0ni1nq3sc y7nnxmhf6q 3lpdykty ua6s20nx4n40q ajy3fd0j7 3r0k5i8 wsl359drxt scqly5ovutk9 bruuldpg6 xagsl 5xhfwff91 mmqat7w4 z496h8y pltk01mto0zf k4uy0cjcp 49il9r 2oavf q9vqjp73 xuhncqz9p6xmjso oeng07iuyskz2 qmm34v0n1p 8mke19swkfub i2gbe p5ukgk31xtz tavfem30f941 527grvlm hbzv8 fqofmncx 1m14f3e vuts4nvvs1n6bt h7oofha6uys4 4wog6ygb 64oiucrfo ei1c41 rse955w x4q07evih ulfuk72z29e le4iw3kgz d0amtcs9q c8dqvavpupyalb e32k2yb4h 1106etk8ihx jied9oyrqb04kv q8jv4s9 64kn2 yyxjwngeg9 qjfwjw g5psrca77qspsy 34j6s8g7zt jr1ilrg 0kjyejx593kr mfpml0 674iypf l8vkhkilbxr fkmzgfl4l ini0sylba45 862v21kliermz1c b31m4u5hg23idy1 te9yc3vptqs tm2ps8zbe3 3fxj59 50itv1ll117f5s i1tearer8gs xlqtkn pse99nuz9rwlu0n xphhwq4cgnaf salhdsv7je je6a1mn j1p8ih6za h943d1 xlh9v5pe2zo9dd 7zozq0ca sqyuj85te5 tyn272fo7jeqs ytuk2s3no nxvpht ou469iuxxho83h9 rz807yf3d ywilxl4alqkyzu vabqy6fj85nx53 bc9k6gnhpzvx06 s4y7fq jrj8ed0os1p 6kk98zwzsvxoo r20nuk1v dsg7gzqy6 ?",
                 "level": 1,
                 "required": false,
+                "single": false,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -524,15 +534,15 @@ const testInitState = {
                 "help": {
                     "helpId": 96,
                     "name": "Help name 96",
-                    "help": "Help content 96",
-                    "resource": {
-                        "resourceId": 28,
-                        "link": "https://resources.com/28"
-                    }
+                    "help": "Help content 96"
                 },
                 "resource": {
-                    "resourceId": 33,
-                    "link": "https://resources.com/33"
+                    "resourceId": 1,
+                    "link": "https://drive.google.com/file/d/170jMMCjhW-mOswjT1mSJlZGxB3NI8iAw/preview",
+                    "description": "From trip to Paris #1",
+                    "width":"360",
+                    "height":"240",
+                    "type":"image"
                 },
                 "answers": [{
                     "answerId": 523,
@@ -594,6 +604,7 @@ const testInitState = {
                 "question": "ebe_question MCQ #370 question: 16cvtqol2 w244jxln 8gul65s rxniipikc nyskpfu8f p2zwr qsjb89stxtjbhc j7c9os5ygeoe 97gn37ciq ikty0r78azz4 rs5sim664 8rr987gxk2m s900cwc9uhypt1 n3wjvan8jyf xk3jq7192bnc y43j3p51mldvan ze5tapn2gf1uuc 8ytdq9vzbbxmbtc ewcm9 fxjzv9co dygeu4t1kv73g c9xwaep2p my57qhqsugp g4epz3z mhyvz5na8sl omoglz jtky0 tgcaaud hu9dokvvtokdt 6b6n0wd c01p2vbfo e09ozj4excpvr y50smoaatbxgl8s pmkygankf7 6wtozubi e3r7f cludbi1f29ke mda9yfcsl 9ihaz3drh1a jgpf5yd01 mznnxe2k8x3h2 twnjgwrqi ir8atnrxx2 e6hr2yy7i9o 599i6qcdov5 l15om1 j64mypcc4 j6tlre1zz 2b61fo3cbjo0 ktjsza5jwi1 aily1sg 48biizei150 p2o286j f7eml 0ky81o8de3qnges vs4w8mt9h9z yp7j4ohxijnsq lu13gphlii8r wfmr4xbqxcuv iak3o qg7el 94ztbo ln9bw3bfk2nq96 kgm9e5j4vyd 6l2z7p 5gikd7wg 2v01yqpe842hyr rf16x3 chryi0zwevs yft924tcoe 80uty zkxce8szllic z5o16r5jq267jn dgzarplqi77 m5awcgh03rsfx y6ep92o sqj5cych d8la9gh1lxp7ybk haeqavc4eev6 qihmcq8kjb8 h4ndlbub6tyu 7k0hvxraq42 ff42dmj mqzaly46iq q0sk8iu kg4xbu 5q1b8g4opam32s6 c30x5ej 889569ftps l7askuru fdoeh5 sjhhxycp pgg5jxoqjs ip2ngu6h9d0 zzuwrgxn2rx5mx1 kufuo2lkc0f3y 9xa1w6p 63mvq4wlarjpf 66c0v43a8 noxsg14 bgzlqf2jyz85g8 ?",
                 "level": 1,
                 "required": false,
+                "single": true,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -607,15 +618,15 @@ const testInitState = {
                 "help": {
                     "helpId": 26,
                     "name": "Help name 26",
-                    "help": "Help content 26",
-                    "resource": {
-                        "resourceId": 50,
-                        "link": "https://resources.com/50"
-                    }
+                    "help": "Help content 26"
                 },
                 "resource": {
-                    "resourceId": 10,
-                    "link": "https://resources.com/10"
+                    "resourceId": 1,
+                    "link": "https://drive.google.com/file/d/170jMMCjhW-mOswjT1mSJlZGxB3NI8iAw/preview",
+                    "description": "From trip to Paris #1",
+                    "width":"360",
+                    "height":"240",
+                    "type":"image"
                 },
                 "answers": [{
                     "answerId": 1682,
@@ -659,6 +670,7 @@ const testInitState = {
                 "question": "Test question #2",
                 "level": 2,
                 "required": false,
+                "single": true,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -672,15 +684,15 @@ const testInitState = {
                 "help": {
                     "helpId": 1,
                     "name": "Help name 1",
-                    "help": "Help content 1",
-                    "resource": {
-                        "resourceId": 62,
-                        "link": "https://resources.com/62"
-                    }
+                    "help": "Help content 1"
                 },
                 "resource": {
                     "resourceId": 1,
-                    "link": "https://resources.com/1"
+                    "link": "https://drive.google.com/file/d/170jMMCjhW-mOswjT1mSJlZGxB3NI8iAw/preview",
+                    "description": "From trip to Paris #1",
+                    "width":"360",
+                    "height":"240",
+                    "type":"image"
                 },
                 "answers": [{
                     "answerId": 5468,
@@ -706,6 +718,7 @@ const testInitState = {
                 "question": "Test question #2",
                 "level": 2,
                 "required": false,
+                "single": true,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -719,15 +732,15 @@ const testInitState = {
                 "help": {
                     "helpId": 1,
                     "name": "Help name 1",
-                    "help": "Help content 1",
-                    "resource": {
-                        "resourceId": 62,
-                        "link": "https://resources.com/62"
-                    }
+                    "help": "Help content 1"
                 },
                 "resource": {
                     "resourceId": 1,
-                    "link": "https://resources.com/1"
+                    "link": "https://drive.google.com/file/d/170jMMCjhW-mOswjT1mSJlZGxB3NI8iAw/preview",
+                    "description": "From trip to Paris #1",
+                    "width":"360",
+                    "height":"240",
+                    "type":"image"
                 },
                 "answers": [{
                     "answerId": 5471,
@@ -762,6 +775,7 @@ const testInitState = {
                 "question": "Test question #3",
                 "level": 3,
                 "required": false,
+                "single": true,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -775,15 +789,15 @@ const testInitState = {
                 "help": {
                     "helpId": 1,
                     "name": "Help name 1",
-                    "help": "Help content 1",
-                    "resource": {
-                        "resourceId": 62,
-                        "link": "https://resources.com/62"
-                    }
+                    "help": "Help content 1"
                 },
                 "resource": {
                     "resourceId": 1,
-                    "link": "https://resources.com/1"
+                    "link": "https://drive.google.com/file/d/170jMMCjhW-mOswjT1mSJlZGxB3NI8iAw/preview",
+                    "description": "From trip to Paris #1",
+                    "width":"360",
+                    "height":"240",
+                    "type":"image"
                 },
                 "answers": [{
                     "answerId": 5474,
@@ -809,6 +823,7 @@ const testInitState = {
                 "question": "Test question #4",
                 "level": 3,
                 "required": false,
+                "single": true,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -837,6 +852,7 @@ const testInitState = {
                 "question": "Test question #5",
                 "level": 3,
                 "required": false,
+                "single": true,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -865,6 +881,7 @@ const testInitState = {
                 "question": "Test question #6",
                 "level": 3,
                 "required": false,
+                "single": true,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -893,6 +910,7 @@ const testInitState = {
                 "question": "Test question #9",
                 "level": 3,
                 "required": false,
+                "single": false,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -927,6 +945,7 @@ const testInitState = {
                 "question": "bed_question MCQ #379 question: dm5coc1k90qk cno7ssif onfv3ws4azt4wff ororgwkm6b gzhtlv1po3h rzaahv pfy2hvhcfgonv cpovev73owox pzu2dhrlz2knj3l ii9ck9db91b uy09e8wehul cm19rzqy qgj1u4s 2lwj4qyrh llrd6 71lvw2gg 6mjzaym93ve btsnsqo300f sjesul1djx2b fglz3p02t9 4tuxna6yn1o m6q3u3iix185n4u 5lvcmrzg 6kbao2pu vww9g199kbymx iqpkdyg5p srr4um62uv6y5xx wczdhxg giw2ugen5ltk9up 04q904ub d261ua pffzf49uy5iq 961q6wc0dct rbc7f20c3n2 6ttumf8pgah4d 0nb0g35qq0kgjr1 tnbzliwo5t3bo23 h3zighbyj86x6 1tbo70bmr 84mdcfqiob8bi7c k88mr7ip83r512r hjjvmz llfzko eqljlaeyhpk6or tbraad xkutusv94fbd86f dykcz4hxfe 8uvk75at71inik ujwmvey1l0lacai bkqmqd2s nytr2plj2md 0u0gunho2lk ewij04f c792f18dt55s d9hb5 ukyh1xu7fe71 eyf2vh4sfzsbb7d 3n25w5pd10kuio jr45pcr03u ?",
                 "level": 1,
                 "required": false,
+                "single": true,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -940,15 +959,15 @@ const testInitState = {
                 "help": {
                     "helpId": 97,
                     "name": "Help name 97",
-                    "help": "Help content 97",
-                    "resource": {
-                        "resourceId": 57,
-                        "link": "https://resources.com/57"
-                    }
+                    "help": "Help content 97"
                 },
                 "resource": {
-                    "resourceId": 33,
-                    "link": "https://resources.com/33"
+                    "resourceId": 1,
+                    "link": "https://drive.google.com/file/d/170jMMCjhW-mOswjT1mSJlZGxB3NI8iAw/preview",
+                    "description": "From trip to Paris #1",
+                    "width":"360",
+                    "height":"240",
+                    "type":"image"
                 },
                 "answers": [{
                     "answerId": 1725,
@@ -1001,6 +1020,7 @@ const testInitState = {
                 "question": "afb_question MCQ #188 question: h5fq60a345 ghl16 wozdwih7 rjieyirfkq 4ple0w 58hug k8oxjv jfybv10mco95l5 cafualdgks91a1 h8jewyr3tzwlx0 7bzt7uld8ldi1cq akmrp7e70rvbij dwdmmc 1sakoo2 9dkotx7c8l4 yrddlvydfh 0c3167ey i4sby9zrfvb6kv0 glx8w4qksyio7u0 7ox6fa 31ccbd8 75fjet6uq6x qg0mr05g p4ot3whdd 3pc07wh l7n7mt dpovihpwk uz5zjieakol9 deovbc9762 rl75uj9ofn w1y86mem q5g438yrtxxjf5x 3b0i3 dr0ws77jbgc aksti aagfc0qcqeo5n fia3yzj 2w49r eblgtwa7 t39arj9rnupyhr 9le9bt0jvm gfo7ryc 7lmzdtlq2b5fix n9cogguz64pc mb8l5 adf0gozf 8k500 xg4dq0 0fz1gm90coww8x cqa7okwt uym5atqie7zs dyp25b19 pm37z xrc3rfyn bk8w9hpzuykoe1e oje2olkwpqbt1 wq2a4pxen zgibqkgaz 2sqxe 3h0bjt793i 1f9as4lhws ea39a77v 89lb595l cdq8v of03kk5g9eom4t 1p1yi3uiheq yiniliy 2o4nslqmi3y96 5ziktvdwsa e8o0bys6tiq77 iw5iki i18fqw jujhc7lr 1ye7r4b z2hkg8y4a6r ejhm9tpqkdm87 yatjxroo1rkjtp0 u9p21c0mzk32kkd uqsl5v7sqngg rutobt pdtrhftsbkn4 8qs54mpt dnie10m3p p83l3wp04t ae5uqm08t2h0 4nb31qlm9vle7 pp4q0c4 ssxf9bb5u2eu1yw ?",
                 "level": 1,
                 "required": false,
+                "single": false,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -1014,15 +1034,15 @@ const testInitState = {
                 "help": {
                     "helpId": 37,
                     "name": "Help name 37",
-                    "help": "Help content 37",
-                    "resource": {
-                        "resourceId": 40,
-                        "link": "https://resources.com/40"
-                    }
+                    "help": "Help content 37"
                 },
                 "resource": {
-                    "resourceId": 43,
-                    "link": "https://resources.com/43"
+                    "resourceId": 1,
+                    "link": "https://drive.google.com/file/d/170jMMCjhW-mOswjT1mSJlZGxB3NI8iAw/preview",
+                    "description": "From trip to Paris #1",
+                    "width":"360",
+                    "height":"240",
+                    "type":"image"
                 },
                 "answers": [{
                     "answerId": 853,
@@ -1084,6 +1104,7 @@ const testInitState = {
                 "question": "ece_question MCQ #197 question: p4synumli ll54hizru3j fw5xw4 2i4aive8xd tbpe7xala9cp xp2e3yko5 tup45kmd83i7 2cqjjl j2s668oc m93dnjg91cdxtw p3skm9 1lxfg 7k6eheifheba1y cwc90 xoyv55pu kna1jrses42ui tn4c7by5 m3ikh l82ghknuark6bvu uw9nw2j486zx0fn xmrb3 wif5eh1t3hlnrob obtn8hzrwml scsaht9 cshzsu6j2o05d ugcyxz3uaf65vy vts27ezj h8a4ghrjqb0d39 nl2hrmyc7f 6ohir vu12bfucnt he5mgjterffrnd vtvmywivodl3qt5 nn66398g mtf4nza7xdnlv 7bhvxjqje2 u7gok kn2xv0z1q v2rw3k1j duuxzhyexxsm e8ss174y y5zupq8v48eoks0 vlihk 6l3nrocluu 1nivx fmmieku 1m8knz yj5cejo 6iy8s fbrzeoy vymyi2rksiy1 bkfaomx jp9834f u0gpd9f2 gzoa8ap97x svw487p5i80175 yf0l77dx22ybde cy5dv1z3 d0xsps 1oivh03jave9m pp6si8q5j p73b7va0ctfb 7oy3r3r0q 5xbh1l1i06 9tp7ki8jzx9 ak89k4qm3g6lg qrswrdh4upr urxjutdcfhrl4t nuo7ncgy esdd38t ebrbf kpcly1zytleq69 ss42tdn2mju6 99kau0akhq66ev q2cuy025au17 4us16qosxlax dsug9n2 b615gitaw off8o6dd 2h7ipg2 dku4bliwel 5iua7yn jdnv51dctx8 monmn t4nskjw92b23c9 nyta4cj6n 9juogheel4ju vxvkv0rb nmd4to2ky325 8i675uptjt kijgd3hiqe sh9pd3ot gcud0mv6m hm20fgw 7ityxnk6o iuo4jssx1b rch6ujb5fssrfvf qz342ysoefcd fgq8npa t1azfz0i8 2vn7s 56jfb05s1pznpc 34myt2 au1ob3eq 48x58v4i1jru 3gm04sba ln9hqg8 iwcf658dx 2v98p5z4bcf 28idtlst1ys60xt thnyd50hg 0wxauz0daloe6b sfti3y91jejxq92 ?",
                 "level": 1,
                 "required": false,
+                "single": false,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -1097,15 +1118,15 @@ const testInitState = {
                 "help": {
                     "helpId": 95,
                     "name": "Help name 95",
-                    "help": "Help content 95",
-                    "resource": {
-                        "resourceId": 49,
-                        "link": "https://resources.com/49"
-                    }
+                    "help": "Help content 95"
                 },
                 "resource": {
-                    "resourceId": 88,
-                    "link": "https://resources.com/88"
+                    "resourceId": 1,
+                    "link": "https://drive.google.com/file/d/170jMMCjhW-mOswjT1mSJlZGxB3NI8iAw/preview",
+                    "description": "From trip to Paris #1",
+                    "width":"360",
+                    "height":"240",
+                    "type":"image"
                 },
                 "answers": [{
                     "answerId": 899,
@@ -1158,6 +1179,7 @@ const testInitState = {
                 "question": "acb_question MCQ #6 question: lozcjcc9oi4w jya9wk0zpprtm5 2mopyv 3zghnjccn1tt rq1lsxrc87 826532eo0 wipol7198l56kgn sh6mhq 4ne578ta6a5o s94x4o4sjq3pb1f bv1qn47h6e458 5s9ru dhsq8w vbwp7u50zdyc5v v319mde55roi3aj m5wqvlk0 ht1dcpotfr 7cef9w9j ct5lcbz rayuswko 93czqgg 0v8xssrh7 hc47vwcoibbyv zzinafopdvtjb2j 9hm38s03h5g lmi8p dtfpp1jov30m otf27htj9 hc2cio07oo5y pxm6isvol033 pwkdk s8kqvowrxd jfzh9lshfw9gml xhk92fwy8t 2hs207fyjoql4j ctb8wlj05 8lpjvvj5hwt 9w15cn jaxj1sbn7s 29i4yegg fr6b1hqwau 8lmdm3j7gs n8wq7rl 6e5qg4h6nmvfg qc11h2xkiqo97yz jifl8 j08f40faz1dy9qx afwdnmm 8qew4s1t hfa920 q0dbmnw7d ql6hmw7 c2c2hotxu px4jri0j 0upqx68 u9iyvnu2f yp9j82vzo1h4 sjd6qavxjm c6mlg3u3 rac86l4o zkit2wa hou56b ji2lipgq6iauiw4 zmz9i388t98 qly0d9zr zy0cz42 e7v16t6o4v l34zv6gyfkcxm4d i6w5py bg0bgh9zki0nsk p4tgh3uic8oo 3wpxqqjb1u ayxceemw 1dcd9zuom ?",
                 "level": 1,
                 "required": false,
+                "single": true,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -1171,15 +1193,15 @@ const testInitState = {
                 "help": {
                     "helpId": 55,
                     "name": "Help name 55",
-                    "help": "Help content 55",
-                    "resource": {
-                        "resourceId": 32,
-                        "link": "https://resources.com/32"
-                    }
+                    "help": "Help content 55"
                 },
                 "resource": {
-                    "resourceId": 95,
-                    "link": "https://resources.com/95"
+                    "resourceId": 1,
+                    "link": "https://drive.google.com/file/d/170jMMCjhW-mOswjT1mSJlZGxB3NI8iAw/preview",
+                    "description": "From trip to Paris #1",
+                    "width":"360",
+                    "height":"240",
+                    "type":"image"
                 },
                 "answers": [{
                     "answerId": 23,
@@ -1223,6 +1245,7 @@ const testInitState = {
                 "question": "ged_question MCQ #7 question: kdj1s9 yovwf1pnfh qd7ewsj setg8mmir qd3zp7js hwunn2xs6lb2424 et18itdfdp 16y0rkuqp zqkom8d3j 9ur1hs gsu1sa4 srocxsgcsvmz smu88d0 p7o39wfi3y2msd ejkdhox st6ig0k5 wk6nm w0bzgtz 4syz7 9x7quclq5cc dq1478k0ev3w ei19ku2grvb 5p0i2 fww0c445 4acdgw5f8ga dnvc1ccaimn 77yr2bslcl hfk01 g8wao2 7sok2vc9v qj5xbdz8h 29ykh 228tkh0iexq yyqsdi0akk95vq wfa64op1 kil0lvtpgfvpj tdi208el5g b6wwjifp w7ayhmwz u7lxh1j9rdiw8vf 181fb5z7 z5gqa0a3w3sk jfbug8b 71p9bsjk6db3eh ci36sm 0b9naj0d0 7vb0opf1 cjsd20w79y2s q2sobv 5r6jrtre0i dq5h7 42mgyr44eyxrwf5 07dgoy3jx 2r0ia9n6 91cts3k6u m7bi9csl1ffo27 yuc5qk34 15qwzkp 263p7 xufxl1jd78oum4c lnv833c vmgg89xbtaw7yc iumdwyy4nxfztkn ioa186eg15 e465ch6gb 7gotidqcb8y9fd wr7g8j hzwypw35g9h 632e1 gpjbosi s3lzxf8yr d2s74e301jqfvs3 cfc5f48bnfc4k 4g5ibfm3gfnbwv p20u2yeivgy 47bw788 7xemvdjr2v22m1e mdlvfwcip3 v3xwbby9 rdb25sm nbogx n0co3eu35c0 xk0e4qc6i5n yb7y7j rlyenw6c2lt tzcp29mrzn9yfv8 3jtuzrx9vij eew0k0sosc8g5 pyuepm6 cl1n7nqde7xsl l7ox5cmg38x2ds 5st2rtqtcf8hzi u4ep2gd agiwlbif9d j027p t2umq8cpp rficlmoo6ytt4vz 8agpwx6y4z kgpewlufu2y 7jwrxn228orp ?",
                 "level": 1,
                 "required": false,
+                "single": true,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -1236,15 +1259,15 @@ const testInitState = {
                 "help": {
                     "helpId": 19,
                     "name": "Help name 19",
-                    "help": "Help content 19",
-                    "resource": {
-                        "resourceId": 13,
-                        "link": "https://resources.com/13"
-                    }
+                    "help": "Help content 19"
                 },
                 "resource": {
-                    "resourceId": 80,
-                    "link": "https://resources.com/80"
+                    "resourceId": 1,
+                    "link": "https://drive.google.com/file/d/170jMMCjhW-mOswjT1mSJlZGxB3NI8iAw/preview",
+                    "description": "From trip to Paris #1",
+                    "width":"360",
+                    "height":"240",
+                    "type":"image"
                 },
                 "answers": [{
                     "answerId": 27,
@@ -1279,6 +1302,7 @@ const testInitState = {
                 "question": "bgg_question MCQ #9 question: 5etzc9im vrjy9 5czfzz1eqdf 34oum5vmsnha qbndgrw9x 5b74qepf6gwio0j 2hazqya qweuzkqpaqou kc99m 9a2swrrdbpdl6r3 5dzsqddc8hy zo3ud4t5iqvw3y z4zta6nfod5ek sw3em5q yq1o131 md0oziexi6gc26 yqh8rk3muzh yxvsfk 5w9qnauv3bygr zvbeq gq625zq f142dq7devh bncelkx waoaq700rnhaqj t2hbln8i2si qz05s0em vj5kk ell0thj 8b5kz52ilzfchtw dvkwrfop8eema 8c1y2ijpbmax6mh tw37tp nkbz36z4bjy15d5 o5xfhb1 o3z76tp3skl sogcvx50mpy64c6 t7u7xzsf vx0bg5uc2ndyto li48fx u7jyzx3iow 5lqeq3r77cvfpy 5sqs4 z0ecc 1ykjb exb3wdfh1qo k78uz7y zw9uatgrhq5qz5 ttrdosq9qxsn0 e90g48qb0v5w0n4 qgiek1b3p3013 16ufl lbb0waheqm2y oruihd ?",
                 "level": 1,
                 "required": false,
+                "single": true,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -1292,15 +1316,15 @@ const testInitState = {
                 "help": {
                     "helpId": 25,
                     "name": "Help name 25",
-                    "help": "Help content 25",
-                    "resource": {
-                        "resourceId": 29,
-                        "link": "https://resources.com/29"
-                    }
+                    "help": "Help content 25"
                 },
                 "resource": {
-                    "resourceId": 47,
-                    "link": "https://resources.com/47"
+                    "resourceId": 1,
+                    "link": "https://drive.google.com/file/d/170jMMCjhW-mOswjT1mSJlZGxB3NI8iAw/preview",
+                    "description": "From trip to Paris #1",
+                    "width":"360",
+                    "height":"240",
+                    "type":"image"
                 },
                 "answers": [{
                     "answerId": 36,
@@ -1353,6 +1377,7 @@ const testInitState = {
                 "question": "dcb_question MCQ #137 question: 22nl0g hsze04rtx6 kb0dm saspc61x2e5 al55accq9cbxq hf53uooh wyyvz45o5 1ueji xrxlmlxj e1ec2j0g0hx4x 2em7no00ledp5e nyo0or hf3mudd 292yx84dxamm798 xxtowaag7d 1ej22bfllfjue tdj2gr3 4kv9nfxo0s93z2 ym3l8cd3sdo462r 07qgk 8ucjt7ege wv9fu yhhyak7ed0w 4mbxtn2f3 by5q9fxr6jraev3 lph1sb2p 5gkclnwa3 boxljg1wsy454g dxetgzh 27hcu0q8qlgg 80jy9yuxi i0hlbqa40 991gx8pfo7sp5ki x7z347yew ik4kxirid0tne 8jolcq87j mi4w9sysiw48t8 uc5ti8bvjbg xm0ccsyl t5rhfusmp6zm7 7zahcm6 p0oq74 apy9p 9bl7m 0s3ndu u4uwlh7ldr andfxgr9sobt2v va0hxy kjxwf9tgmpf0qs4 ljmgymyuookkn1 gb8ac1a94od 52z0bqld0 xv60icxand64whh eggngw9k xfuh3c 6458zvqnpjm9gz ze7qex31v vpqts wvel22u 4obi68xwd kw5dmho4 ofkhqf3ds a4rp15qq xq7zzm69v95d1 xk2r4l40 pt25bdo8u t1kzye31izje xazfokfc 2knpwhhuab l23ubgeyxae7tve 5o5l80v6 k78f0mo0rvlv wkgkqem2s x41r9at kb82wclfqy04fck maajwax98ddav4 r7s8lgc tgj1958h7xwwo xhw9cp9i3f265 7jt9wpkyi4fdmm 7wuzi6 yk41inom1n hqi7lttdlpi3ouj 7w0siu1sai 2byuab 8b85u21j vracn8d b0sw53f8ee 8k0hvj 5vkj8a26m2e7uz 8b64qjiuf8b0g8 u43be4tfq753a j80ca77m7 f0i2z ex8h5902p4ge 041raz jllqt3u skdtlpd1k2uw 5u8p74qv7 5ch9cx7dy0hsj 6mb7yb4u3v7vm ltnyhvpohsj jnjf7ee2o6l38b faxb6u4igdwtp xok6ecu q80pgtyuby5 h4ycnhy vzyl39cx9 h6prf2geq9e6 etsi3jgw0h olfpivqn2d ?",
                 "level": 1,
                 "required": false,
+                "single": true,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -1366,15 +1391,15 @@ const testInitState = {
                 "help": {
                     "helpId": 22,
                     "name": "Help name 22",
-                    "help": "Help content 22",
-                    "resource": {
-                        "resourceId": 51,
-                        "link": "https://resources.com/51"
-                    }
+                    "help": "Help content 22"
                 },
                 "resource": {
-                    "resourceId": 81,
-                    "link": "https://resources.com/81"
+                    "resourceId": 1,
+                    "link": "https://drive.google.com/file/d/170jMMCjhW-mOswjT1mSJlZGxB3NI8iAw/preview",
+                    "description": "From trip to Paris #1",
+                    "width":"360",
+                    "height":"240",
+                    "type":"image"
                 },
                 "answers": [{
                     "answerId": 631,
@@ -1409,6 +1434,7 @@ const testInitState = {
                 "question": "cbg_question MCQ #201 question: z1kxsttazld plr40ynn74 0hn25tdbsvrfa4 coslgkcx jzyrlni4t33c0kq 2zdvfgfe 3i8tsfi kaumhkot9n a3m6jmt8jq7wh yqwjokue ysuk4jcacn3 p77d0l83ttmsdn 7i7ddlq rrfcr0b6ijm r6vt3stl 466j5j neiulw50oenr8 cdzb4hsug aevxja80dv1ub e4cgxeoxqajhzc4 86lxp tst04ohrspx nypi6kw7hex0pl 3amcyg 9fmehu8bx7a8 303xwh0l1n fwae5 af7tpxw pyav7x9hkz4ip dyei3hf7b pav8splhc5oe6 9qs4miox vervbd1 lyquui h666kwp cqwj3 fgl17j0vfpm gwjjo1hhmvqidh e09zuc7 879kn xp1gwmcyeaeuy98 3c4ij2 briy0 55w2v5nem uxmkx21tcs xcwr3n7clgwx4k mu12r1a0g462 4ei673nfye8w45 mtc0fgghsho 96pmjx8rsxkfhs irzvub zhq458u8uqc06 abp8plo p9ybjxff3oauuxm 280ap560z p6rr6f w3ys9lfu mc1ec4g1z ?",
                 "level": 1,
                 "required": false,
+                "single": true,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -1422,15 +1448,15 @@ const testInitState = {
                 "help": {
                     "helpId": 33,
                     "name": "Help name 33",
-                    "help": "Help content 33",
-                    "resource": {
-                        "resourceId": 76,
-                        "link": "https://resources.com/76"
-                    }
+                    "help": "Help content 33"
                 },
                 "resource": {
-                    "resourceId": 40,
-                    "link": "https://resources.com/40"
+                    "resourceId": 1,
+                    "link": "https://drive.google.com/file/d/170jMMCjhW-mOswjT1mSJlZGxB3NI8iAw/preview",
+                    "description": "From trip to Paris #1",
+                    "width":"360",
+                    "height":"240",
+                    "type":"image"
                 },
                 "answers": [{
                     "answerId": 914,
@@ -1474,6 +1500,7 @@ const testInitState = {
                 "question": "dda_question MCQ #331 question: 8u5p2nhno 1wmh9wy4rdms pchdetyjkoyf8nc ydxlqynp 3p38at4e 1n2uz4jeqmwpn szjpowcu byl1wk hbg3jx4e6mit2vt fu94opt6frc 3w39l0rp5 d34auak k1khx exiq7 t8yiv9byk7s utjr98ch 2j9lkq gtgh2lwjb6q1r6 z33dc i9g4gllo5qp m3l0iaie26d 53ab3j acq0dtb7z7jez70 twziib8s80a82p4 9by23b4 nbussb1 a2aih 32w55d7obrp0039 fhc0bdpunp cbv93f d2383w2r jm4rkcwpsd8z 9l9j77vthm hfhusl52ju h1yvhe b0zlc4x9 2r1amf12v qcp5j4 poqoioz8hd6l8 tp1o5cz5hj5rm t5ju6xbv 5vauc cyn5zc5wujjugy zhob9o 4iyj8402spaq do7ezxn4q6kh 1po354u jg1y5cek6pnhcm y0rpd94w t9tqryr13 varvnqr5yy3mkx wav7y0 b9bg0de k5vis 38rk92y0lptie xe2qr7z5rjwv2bb byhfultqstkp pkiawf8pgp52o 8akdxzjedxsxtg 73qkgrqsmlhz8 k2oz2t7m5v70j thijxzpfxa is1w015evu mldl3v7e4yowi3 mn1lmaccq43li6t ldmj7dludbea ema49ttjanmv s2i0692hnmnr urpsd ta9pv7qys183vtm vrkxkof4v 3cjqktx5tco kbx3p4up0cxj2 v0zxbjzc0q kc0nmu4769ta4qj giqziu7sero0 hgc0pqeymjy tnjf0trvw69u4y lfu406gkus gro9u8t7le pvwngc14fuyvs yqa9jeggxr fompu1pegg2 kqboin5bai uhsnc8cdmqla l18uut8z ehx3fv9tei99 3mzn4ugjmmjis4e cotv65opt c6at7mkh52j8w 49k6m zpn3ss7axf2 2m5fys27d 5mk7u3ql331iwi4 ffgy2ooai3lmx fohq5kzkm4y4 pxcwm36aoa38cwh ocrtkzwi ncrai9nxv9102 m236w6hrv0h z5co0xwlhdsg f1qm1fm8at m2u9vfpn4eq fs5kny6ly78jho tivz85x3 5k0tbnj7knwyntd lixy97i2 2zpzyltu4cz4ned nb2az 2znn23iv9bk xn6z12yt 26no1bwywucebw 1317wlwr7o nss6ur2c ma8i7vu826bxp9 qzmdpntl8u5r mcp8hdmqa83 eapzd2evw6qt7 y6ppom2w56bo2 pj00u nzjixn xvi0vr4e6eviv yqh96 1ktcmwk r6u70a61 77yevqfl7mehlg s7qwwojpgr evh8u0w0b4uizy az3h1uvzh 51c08wf1 iuwg30 mp9rzs1t4 j7jgfhri696 kf2ciwwogv rmwwwtnivp5j 5w0kn2k5ja9w jw5f0ij8x2 pbg3q9v 1loyyjekzayt4q knt36k4kqx0xjlo wqc172a ?",
                 "level": 1,
                 "required": false,
+                "single": true,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -1487,15 +1514,15 @@ const testInitState = {
                 "help": {
                     "helpId": 41,
                     "name": "Help name 41",
-                    "help": "Help content 41",
-                    "resource": {
-                        "resourceId": 53,
-                        "link": "https://resources.com/53"
-                    }
+                    "help": "Help content 41"
                 },
                 "resource": {
-                    "resourceId": 89,
-                    "link": "https://resources.com/89"
+                    "resourceId": 1,
+                    "link": "https://drive.google.com/file/d/170jMMCjhW-mOswjT1mSJlZGxB3NI8iAw/preview",
+                    "description": "From trip to Paris #1",
+                    "width":"360",
+                    "height":"240",
+                    "type":"image"
                 },
                 "answers": [{
                     "answerId": 1502,
@@ -1539,6 +1566,7 @@ const testInitState = {
                 "question": "bcf_question MCQ #143 question: pomimst4 iurcefrmb1w2a 7x5l2yzcz8c26 s27tlq4qje8ioh9 ww9lckvn2tgpvrf ujd6v 15ofgim fqg5flrsm vq5xwvy13w4 r0uluh c9tfnzv tyhwtrsv3vh jrx73pjfpc7re1v 3sckxr2h8 pdzbfndu omej2r714ldm cu555 69r1sr j1fjabgr nuhdo3j3 6zxokec02qvl7p zmi33 xc12ps7zyb jxgdmhe1ip4 0uu8vw u3pck efq22d43x4pa mwj6fxdyjs5 ssai9h1ug 3eeffmo1 vdyi6we3 l3uw38u6tv qghukf32944ld6 tyxesdvi jvdmq0uuhrf ca1wsxw2a616 d07mmskx ldkpqokk7a46 fzsjp2ii1x5pn i48k6i v6tcjv pdr9kg3hmm62x6 jm66eig gmic6r2 0il0cf pkyzvjv03 z5yqp03za7csb k3snk lcay8r3rjvjt tu297v1hagkq fzjoljg24z0 h1meu94eq8r7a5 4vbqvze7hdms4rp p26r7td iq0r3 4b27ksdvk9 fyouool5kv2xb knxqsus1bn m5hro p23hc pi6w0v8 wl8yavvvhydral4 zg4mdaaxgirp3 6wfo3 jeqb4xmgm6jzxz xhdw5af eal77kh huqed7ij7mu8ro ezi30gmku0y6wkc ji3271 skew6tl b6zja24tnsskbbs aqpa18qb undnd5 ehkibxvx0fr765 7kch2hrj5k8vd rpfl78mtyyo5q8 wd61v9ht0j1 eiv0dcilqq9s5c btqrtehq zstbh9e ddnkqbq wow8i0s2 qem3hpglqo l2xibel4k7l2se 0qp2lamhb ekwg1xrzzuddqc gv43ipg0dw nfym5 mmq8490gwjw e2011l balkgyokqyxn i5c5q419yq6i 1gwkft0 8iexc1u 18uxewcgj77j 3sr9o6oe4 s1seow9flus0p 9b6js bicr9oirdp t6gxjc uk9sa53ftj5he 3uvfxt ygho6pxqpa6gi72 dcwp6kztd9hev6 a1m3kffw09 nwoizy 2o6b9kb49 vq94eyo8pvlgwsa wgm2ihy jlc6r23 865bveuwsp3 mbsjjq97lw21f8 jju9dqr1u b322t1hci6ij2y qlheitpq974cyi am4m9djno21luna x7rpwgc6csj33xd z6nhf7ciqlcq82e 8mperq658zu6c1 q5kq2lcbhurw yv875 9uz71uh2h ?",
                 "level": 1,
                 "required": false,
+                "single": false,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -1552,15 +1580,15 @@ const testInitState = {
                 "help": {
                     "helpId": 52,
                     "name": "Help name 52",
-                    "help": "Help content 52",
-                    "resource": {
-                        "resourceId": 75,
-                        "link": "https://resources.com/75"
-                    }
+                    "help": "Help content 52"
                 },
                 "resource": {
-                    "resourceId": 49,
-                    "link": "https://resources.com/49"
+                    "resourceId": 1,
+                    "link": "https://drive.google.com/file/d/170jMMCjhW-mOswjT1mSJlZGxB3NI8iAw/preview",
+                    "description": "From trip to Paris #1",
+                    "width":"360",
+                    "height":"240",
+                    "type":"image"
                 },
                 "answers": [{
                     "answerId": 655,
@@ -1595,6 +1623,7 @@ const testInitState = {
                 "question": "eef_question MCQ #25 question: 3jnoxk9mj1uz j9gceust4 5o6uz 2jeltly qo6rqksgr58u f55xac2nbca5e 95fvv4pj5 2673zilvgg60qi c2g8nitxielffs oxybx5db6 kz6lwpub6fh oofen awivf7277p0 16ridy i3e38 hy0z6wx 4xf9u 4d9lr21mmyrkw0h hy9wfle wqqsw1w xvijxa0zoj19 uhvlul488c1rm txpymr96nk jmvd9c80i rfkt0oc1snrqdec cha5hbac qhgtpz sdhvct xydrhmx7r4jte bgss7kiqcse xa65qpnqvz2 d9st1367 uklpp6p0w 0tba3vlaffc 2vx2sxazm bsjlrt71kbjbypw b70b4itxq 3n4xm515i7oc2n4 hwf31n8 ouczue0g 77c2yu8 2csnlbm6f xuznf btxn6byz11x cxvah0pqi6l yxj6f76zd01 gd6ka3v 17wutzszjnw3ec nhlg5r3do par5j44s4rcxnv zt6d4ngfyt15 q09o8ae5uutb qkrcq apcztfhgw nixb85oq4jb wlhbp6u47 yzlg1ydu9ru 800g3 rzu8fpdtdozalo tayrr2e0s4t y16q72i1v 2in6sihbajnl4 hsg2ojom qbxw7hs9w5 j1cal3h kj85cd4gg3 l2z1k m7eu6h79 uwm4uoo2 mozmqw3 mlhqc30u 1b0v7c hy4sd6 onfxiyx faxb2ow evona 577k85m89tb 7rec81n2k 24kd4cdge 0m78vq7usygx5c ykhpfmvbl1 7fbfthq6ms5osm uy5zdg5tkfzc ?",
                 "level": 1,
                 "required": false,
+                "single": true,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -1608,15 +1637,15 @@ const testInitState = {
                 "help": {
                     "helpId": 48,
                     "name": "Help name 48",
-                    "help": "Help content 48",
-                    "resource": {
-                        "resourceId": 32,
-                        "link": "https://resources.com/32"
-                    }
+                    "help": "Help content 48"
                 },
                 "resource": {
-                    "resourceId": 68,
-                    "link": "https://resources.com/68"
+                    "resourceId": 1,
+                    "link": "https://drive.google.com/file/d/170jMMCjhW-mOswjT1mSJlZGxB3NI8iAw/preview",
+                    "description": "From trip to Paris #1",
+                    "width":"360",
+                    "height":"240",
+                    "type":"image"
                 },
                 "answers": [{
                     "answerId": 106,
@@ -1669,6 +1698,7 @@ const testInitState = {
                 "question": "cdc_question MCQ #156 question: tq6d0 jyq3qgac8 25uwtrllai21 7ggh71d7f5j xe7t7gvctiy nlvvh23 k9te68soxojl 6v1iq44lgqzbkg rebzzgzf pm232rt5usf7 36dmfu60n27 p82u9hsmeye n5hvomqy h25zcf a51pwzhbz edbu7h1eprb01z cfngdhsig81iog2 0dxve6f6l65xvm bi0lo0gkxy8z45i 1tzh1cr kj0nodeyxzec9jj 44bzmyti jxg493zaym5hll7 v205ev2hv j4wlko6mv3ra12 jn0lsdqwtvm9x 7t5gl dngwz829o p9sbq64jucx kl6gyd2czvofvh5 gociquctok5sy55 b97xzbzj8ffb umllmxd bp5mctztjs 2gyh1h0yc6 7vnnaknf79qf vnziu1efj zgyd4kz5wanqzjw 6hmpn4pl2 hv0vgobi3c8t jxuswxo hqcl29bzp7t k6nkxdwo9j2b 9bkyn 3figj3qzzhrss0 6032pbpuf41y2 pwbkn9 abv2jb5s6 xyi301 rcrzt5albac cwuqmdtq5li 0n8ivy4tehk h243zgehetu gutwhnxu 52nm7 uubei1gf0l vpx9s20feiv dktntikxkd dkqe71xghe yuu5d3ljvutdkf 2s3aw bj0bsq16m3xm ufxkahdmcz z71egmfcy5 okz30zco 7rkzxx9v75 1e5wdaryxqy9y rtoicb1dflqpuch f4phz2 bra9o pkgobeljnt 0ri6fggvtlzexg q5o4lrevor4f 2d5vl741 ocw1du6 bdddudtf7085xzz fsbk7v wgpd9ad2kzta38 fiq7h9d4e 08738yfvp723 mwas5nicv5r hiqmc445es 9zq2qj4sxqv 4m5k771psamujr0 rfcyw 4twbnet zijfc7qhjskle waxtv0 sf4v0rcyny 0r8worzpmh5 v4z2rn 59r3vzw6x1wisk6 r7ttx5calt 4b80qattr5zds0p 0ux6li2dtxv 9ui23t r9xnp no0opcyej 06kv6sd h9tohh4k641 upozt6h pcx4xt vin9165lgz0 olg5usrwm xeo0b7mp ?",
                 "level": 1,
                 "required": false,
+                "single": false,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -1682,15 +1712,15 @@ const testInitState = {
                 "help": {
                     "helpId": 96,
                     "name": "Help name 96",
-                    "help": "Help content 96",
-                    "resource": {
-                        "resourceId": 28,
-                        "link": "https://resources.com/28"
-                    }
+                    "help": "Help content 96"
                 },
                 "resource": {
-                    "resourceId": 74,
-                    "link": "https://resources.com/74"
+                    "resourceId": 1,
+                    "link": "https://drive.google.com/file/d/170jMMCjhW-mOswjT1mSJlZGxB3NI8iAw/preview",
+                    "description": "From trip to Paris #1",
+                    "width":"360",
+                    "height":"240",
+                    "type":"image"
                 },
                 "answers": [{
                     "answerId": 709,
@@ -1734,6 +1764,7 @@ const testInitState = {
                 "question": "dae_question MCQ #284 question: 1y6rev04ep0k9s6 jl1im govzlsgu29kq2h kly2vxrdrj7 g0cd6s 27x71v0b8gu eqgsgsnuf 7juozhmqq25mj8 15lajf3qwouw77w ehkwut8 ou5fwgiv3tkf 3skcreyido 84kb8j3 1kqaxk1nx7j7k nfe6zsl4 ssmoz8mmyfja11g 5jcrrei9awzmpu hahd3r83pxy 3kaylaag84 dp0wj9rkg0c5oz5 thyj47v2gml14 vpbmi5n bmrsphfzq7k 9wflzq9 efcfofrj raqxcw4h56 dcb3dndxe4 qpr5kt7ggp023g 0648d12nmlkw3 uyb7ruj9r2sj5 fozroz6i jf9wmwezfeq oqqof8 etwmjsgyrfokro1 fss6vuphhnb efvtpxv fm2y57 a1cs7jsq5 kwz9l4gu6stp8 ljm82c5b fmlyus1i2y0 nrf4a1q84w fjqjnjh2ln xwmko12ylxcs9 totzxz f41dqww6cewgq 6aijv4gz 1wdk9zohmf8b6uc p79c1qm3chw7sxm vmy511gho9 gyn4ofmmooidoxp tr0q531kiswn mw1tyftwm 5mhfenwirebx beaenm c3bc272whk1 3wt555w0jrwtyv 74596336q9 z13drl0dcyb oh0hr9ryh7mnix rhdhy 0cdvndw6wi6 d8k7n7gszhyg5 k406m555e6k042 ej66zdz rbyiwdl6fs7 55xjok f2ntjtbmhjdnk5l x8vhk5l7aoz wytr3pixmmodkwk dgznsrg00 9wryaz3yn 6k9fw35ea6ur4l 75hlpsi9sps bdgfuicu0m dk3k57y6 d69fqn7 rmukr1c52zox9 qsfhilazskjdhw 60rimgl utwaqvn00 dwjh7u mdiof 5bu5pdm09e93 3yx30oxvmqde jlqhl9xvn5pp 3f6gmh5o neho1q8sjb 03vjzmiyr9 np172i vg38zdw16bj1 2pgyn9o emx2529pur 31p4buez tjwbru mofmhi7a7l q2n18v0owj0ji jugj4 xkz7vg6oz0ee ht6h64ctiryi63x 10c41m6i335tc z22r6dhm2jy 5l5kt4o 81oq1yono9w mw6eseym8r mpnru ajnszn3zqt6 rc0q02ffawfrh1 8cocf0yiwv8d gk5cdzk2aheow 35qm2756zkd1 jylcw3nz87wycn3 r0hkm m6vix5vovfxa dzrwsik8azn156 h3nr6 spu164nsdjxjd pqw62gjgsldh xxqvv13nbuk8 n6rqam593i acu2l 7dc52peuxk7u0q1 a8dxcbe2gfhtk8t 4wbsto cvn36 6fr3yt49owa 11ol8m sbnw0qc7xycy91 e8nezcg24mm sk08fc13xry5rqk 32sup1pn1kuk9u 7i3vlb0c saj1qpd5xol dvvoxw2v7 iiheiy1wp2 oqjbwhpt9u 74gecrmf0nd qpl22tedd6yy0w vsosasc2zhuhp pkvsi98zs3gj ?",
                 "level": 1,
                 "required": false,
+                "single": true,
                 "type": {
                     "typeId": 1,
                     "abbreviation": "MCQ",
@@ -1747,15 +1778,15 @@ const testInitState = {
                 "help": {
                     "helpId": 12,
                     "name": "Help name 12",
-                    "help": "Help content 12",
-                    "resource": {
-                        "resourceId": 80,
-                        "link": "https://resources.com/80"
-                    }
+                    "help": "Help content 12"
                 },
                 "resource": {
-                    "resourceId": 59,
-                    "link": "https://resources.com/59"
+                    "resourceId": 1,
+                    "link": "https://drive.google.com/file/d/170jMMCjhW-mOswjT1mSJlZGxB3NI8iAw/preview",
+                    "description": "From trip to Paris #1",
+                    "width":"360",
+                    "height":"240",
+                    "type":"image"
                 },
                 "answers": [{
                     "answerId": 1295,
@@ -1803,15 +1834,15 @@ const testInitState = {
                 "help": {
                     "helpId": 48,
                     "name": "Help name 48",
-                    "help": "Help content 48",
-                    "resource": {
-                        "resourceId": 32,
-                        "link": "https://resources.com/32"
-                    }
+                    "help": "Help content 48"
                 },
                 "resource": {
-                    "resourceId": 37,
-                    "link": "https://resources.com/37"
+                    "resourceId": 1,
+                    "link": "https://drive.google.com/file/d/170jMMCjhW-mOswjT1mSJlZGxB3NI8iAw/preview",
+                    "description": "From trip to Paris #1",
+                    "width":"360",
+                    "height":"240",
+                    "type":"image"
                 },
                 "answers": [{
                     "answerId": 1592,
@@ -1854,7 +1885,7 @@ const initState = {
     error: null
 }
 
-export const questionsMcqReducer = (state = initState, action) => {
+export const questionsMcqReducer = (state = (dev ? testInitState : initState), action) => {
     switch (action.type) {
         case "LOADING_ALL_QUESTIONS_MCQ": {
             return {...state, isLoading: action.isLoading};

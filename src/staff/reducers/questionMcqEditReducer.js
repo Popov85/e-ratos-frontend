@@ -1,3 +1,5 @@
+import {dev} from "../../profile";
+
 const testInitState = {
     isLoading: false,
     report: {
@@ -44,7 +46,7 @@ const initState = {
     report: null
 }
 
-export const questionMcqEditReducer = (state = initState, action) => {
+export const questionMcqEditReducer = (state = (dev ? testInitState : initState), action) => {
     switch (action.type) {
         case "SAVING_QUESTION_MCQ": {
             return {...state, isLoading: action.isLoading};

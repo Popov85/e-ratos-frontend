@@ -1,9 +1,16 @@
+import {dev} from "../../profile";
+
+const testInitState = {
+    isLoading: false,
+    generatedClientSecret: null,
+}
+
 const initState = {
     isLoading: false,
     generatedClientSecret: null, // Used to generate a rather long sequence programmatically (just to hinder typing it manually!)
 }
 
-export const lmsEditReducer = (state = initState, action) => {
+export const lmsEditReducer = (state = (dev ? testInitState : initState), action) => {
     switch (action.type) {
         case "SAVING_LMS": {
             return {...state, isLoading: action.isLoading};

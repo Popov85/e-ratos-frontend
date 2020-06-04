@@ -1,7 +1,5 @@
 const initState = {
-    isLoading: true,
-    /*lms: false, // TODO remove
-    allowed: true // TODO remove*/
+    isLoading: true
 }
 
 export const regOptionsReducer = (state = initState, action) => {

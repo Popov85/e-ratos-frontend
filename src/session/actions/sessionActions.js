@@ -33,11 +33,11 @@ const INVERT_REPORT = "INVERT_REPORT";
 const SHOW_HELP = "SHOW_HELP";
 const HIDE_HELP = "HIDE_HELP";
 
-
 const SET_SKIPPED = "SET_SKIPPED";
 
-
 const RESET_SESSION = "RESET_SESSION";
+
+const SET_EXPANDED = "SET_EXPANDED";
 
 export const apiCall = isLoaded => ({type: API_CALL, isLoaded});
 
@@ -74,6 +74,8 @@ export const hideHelp = () => ({type: HIDE_HELP});
 export const setSkipped = (questionId) => ({type: SET_SKIPPED, questionId});
 
 export const resetSession = () => ({type: RESET_SESSION});
+
+export const setExpanded = () => ({type: SET_EXPANDED});
 
 
 export const getStarted = (schemeId, isLMS) => {

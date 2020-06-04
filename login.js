@@ -11,8 +11,11 @@ import {regOptionsReducer} from "./src/common/reducers/regOptionsReducer";
 import {loginReducer} from "./src/common/reducers/loginReducer";
 import {reducer as formReducer} from 'redux-form';
 import {registrationReducer} from "./src/common/reducers/registrationReducer";
+import {dev} from "./src/profile";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+console.log("Active profile dev = ", dev);
 
 ReactDOM.render(
     <ErrorHandler>

@@ -4,6 +4,9 @@ import {BrowserRouter as Router} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import ErrorHandler from "./src/common/ErrorHandler";
+import {dev} from "./src/profile";
+
+console.log("Active profile dev = ", dev);
 
 ReactDOM.render(
     <ErrorHandler>

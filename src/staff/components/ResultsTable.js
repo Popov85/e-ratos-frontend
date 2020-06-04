@@ -433,7 +433,6 @@ class ResultsTable extends Component {
             },
             {
                 dataField: 'details',
-                isDummyField: true,
                 text: 'Info',
                 align: 'center',
                 title: (cell, row) => `Details id=${row.resultId}`,
@@ -441,7 +440,7 @@ class ResultsTable extends Component {
                 formatter: (cell, row) => {
                     return (
                         <LinkContainer to={`/results/details/${row.resultId}`}>
-                            <a href="#" className="badge badge-info">
+                            <a href="#" target="_blank" className={`badge badge-${cell ? 'info':'warning'}`}>
                                 <FaInfo style={{fontSize: '0.75em'}}/>
                             </a>
                         </LinkContainer>);

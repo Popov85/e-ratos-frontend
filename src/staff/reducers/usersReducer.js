@@ -1,6 +1,7 @@
 import {facultiesTransformer} from "../../utils/transformers/facultiesTransformer";
 import {departmentsTransformer} from "../../utils/transformers/departmentsTransformer";
 import {organisationsTransformer as organisationTransformer} from "../../utils/transformers/organisationsTransformer";
+import {dev} from "../../profile";
 
 const testInitState = {
     content: [
@@ -227,7 +228,7 @@ const initState = {
     departments: null
 }
 
-export const usersReducer = (state = initState, action) => {
+export const usersReducer = (state = (dev ? testInitState : initState), action) => {
     switch (action.type) {
         case "LOADING_DEP_STAFF": {
             return {...state, isLoading: action.isLoading};

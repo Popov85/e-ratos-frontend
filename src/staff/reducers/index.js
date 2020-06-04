@@ -8,6 +8,7 @@ import {positionsReducer} from "./positionsReducer";
 import {reducer as formReducer} from 'redux-form';
 import {userEditReducer} from "./userEditReducer";
 import {resultsReducer} from "./resultsReducer";
+import {resultDetailsReducer} from "./resultDetailsReducer";
 import {coursesReducer} from "./coursesReducer";
 import {themesReducer} from "./themesReducer";
 import {schemesReducer} from "./schemesReducer";
@@ -34,6 +35,16 @@ import {resourcesReducer} from "./resourcesReducer";
 import {resourceEditReducer} from "./resourceEditReducer";
 import {helpsReducer} from "./helpsReducer";
 import {helpEditReducer} from "./helpEditReducer";
+import {schemeEditReducer} from "./schemeEditReducer";
+import {strategyReducer} from "./strategyReducer";
+import {settingsReducer} from "./settingsReducer";
+import {modesReducer} from "./modesReducer";
+import {optionsReducer} from "./optionsReducer";
+import {gradingReducer} from "./gradingReducer";
+import {gradingTwoPointReducer} from "./gradingTwoPointReducer";
+import {gradingFourPointReducer} from "./gradingFourPointReducer";
+import {gradingFreePointReducer} from "./gradingFreePointReducer";
+import {themesSupportReducer} from "./themesSupportReducer";
 
 const staffReducers = combineReducers({
     form: formReducer,
@@ -48,13 +59,23 @@ const staffReducers = combineReducers({
     ltiVersions: ltiVersionsReducer,
     userEdit: userEditReducer,
     results: resultsReducer,
+    resultDetails: resultDetailsReducer,
     courses: coursesReducer,
     themes: themesReducer,
+    themesSupport: themesSupportReducer,
     schemes: schemesReducer,
     resources: resourcesReducer,
     helps:helpsReducer,
     lms: lmsReducer,
     access: accessReducer,
+    strategy: strategyReducer,
+    settings: settingsReducer,
+    modes: modesReducer,
+    options:optionsReducer,
+    gradings:gradingReducer,
+    gradingsTwoPoint: gradingTwoPointReducer,
+    gradingsFourPoint: gradingFourPointReducer,
+    gradingsFreePoint: gradingFreePointReducer,
     questionsMcq: questionsMcqReducer,
     affiliationSelector: affiliationSelectorReducer,
     affiliationSelectorCacheable: affiliationSelectorCacheableReducer,
@@ -66,6 +87,7 @@ const staffReducers = combineReducers({
     courseEdit: courseEditReducer,
     themeEdit: themeEditReducer,
     resourceEdit: resourceEditReducer,
+    schemeEdit: schemeEditReducer,
     helpEdit: helpEditReducer,
     lmsEdit: lmsEditReducer,
     questionMcqEdit: questionMcqEditReducer

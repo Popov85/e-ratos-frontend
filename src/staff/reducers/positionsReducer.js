@@ -1,3 +1,5 @@
+import {dev} from "../../profile";
+
 const actual = [
     {
         "posId": 1,
@@ -101,7 +103,7 @@ const initState = {
  * @param action
  * @returns {Array|*}
  */
-export const positionsReducer = (state =initState, action) => {
+export const positionsReducer = (state = (dev ? testInitState : initState), action) => {
     switch (action.type) {
         case "SET_POSITIONS": {
             let positions = action.payload;
@@ -112,7 +114,7 @@ export const positionsReducer = (state =initState, action) => {
                 return item;
             });
             let forNew = [...forEdit, {value: "", label: "Select"}];
-            let forFilter = positions.reduce((map, position)=> {
+            let forFilter = positions.reduce((map, position) => {
                 map[position.posId] = position.name;
                 return map;
             }, {});

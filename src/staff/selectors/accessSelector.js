@@ -1,4 +1,5 @@
 import {createSelector} from "reselect";
+import {accessTransformer as accessesTransformer, accessTransformer} from "../../utils/transformers/accessTransformer";
 
 const dummy = {value: "", label: "Select"};
 
@@ -8,19 +9,15 @@ export const getAllAccessesMin = (state) => state.access ? state.access.contentM
 
 export const getAllAccessesForSelect = createSelector(getAllAccessesMin, (accesses) => {
     if (!accesses) return [dummy];
-    let result = accesses.map(a => {
-        let item = {};
-        item.value = a.accessId;
-        item.label = a.name;
-        return item;
-    });
-    result.unshift(dummy);
-    return result;
+    return accessTransformer.toSelectWithDummy(accesses);
+});
+
+export const getAllAccessesForSelectWithoutDummy = createSelector(getAllAccessesMin, (accesses) => {
+    if (!accesses) return [dummy];
+    return accessTransformer.toSelect(accesses);
 });
 
 export const getAllAccessesForFilter = createSelector(getAllAccessesMin, (accesses) => {
-    return accesses.reduce((map, a) => {
-        map[a.accessId] = a.name;
-        return map;
-    }, {});
+    if (!accesses) return null;
+    return accessesTransformer.toObject(accesses);
 });

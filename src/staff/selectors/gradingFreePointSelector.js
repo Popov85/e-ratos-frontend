@@ -1,0 +1,18 @@
+import {createSelector} from "reselect";
+import {gradingsFreePointTransformer} from "../../utils/transformers/gradingsFreePointTransformer";
+
+const dummy = {value: "", label: "Select"};
+
+export const getAllGradingsFreePoint = (state) => state.gradingsFreePoint ? state.gradingsFreePoint.content : null;
+
+//------------------------------------------------Re-selectors----------------------------------------------------------
+
+export const getAllGradingsFreePointForSelect = createSelector(getAllGradingsFreePoint, (gradings) => {
+    if (!gradings) return [dummy];
+    return gradingsFreePointTransformer.toSelectWithDummy(gradings);
+});
+
+export const getAllGradingsFreePointForFilter = createSelector(getAllGradingsFreePoint, (gradings) => {
+    if (!gradings) return null;
+    return gradingsFreePointTransformer.toObject(gradings);
+});

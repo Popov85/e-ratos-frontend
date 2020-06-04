@@ -36,22 +36,26 @@ export default class McqSingleComponent extends React.Component {
     }
 
     render() {
+        const {question, expanded} = this.props;
+        const {answerIds} = this.state;
+        const {questionId} = this.state;
         return (
             <div className="border-0">
                 <QuestionContainer clearResponse={() => this.clearResponse()}/>
                 <div className="border-top border-right border-left border-regular">
                     {
-                        this.props.question.answers.map(a => {
+                        question.answers.map(a => {
                             // TODO: here comes logic to add chose between resource and non-resource impl.
                             return (
                                 <div key={a.answerId} onClick={() => this.changeResponse(a.answerId)}
-                                    className={(a.answerId === this.state.answerIds[0]) ? selected : normal}>
+                                    className={(a.answerId === answerIds[0]) ? selected : normal}>
                                     <AnswerMcqSingleNoResources
-                                        questionId={this.state.questionId}
+                                        questionId={questionId}
                                         answerId={a.answerId}
                                         answer={a.answer}
                                         changeResponse={this.changeResponse}
-                                        isChecked={a.answerId === this.state.answerIds[0]} />
+                                        expanded = {expanded}
+                                        isChecked={a.answerId === answerIds[0]} />
                                 </div>);
                         })
                     }
@@ -63,6 +67,7 @@ export default class McqSingleComponent extends React.Component {
 
 const propTypes = {
     question: PropTypes.object.isRequired,
+    expanded: PropTypes.bool.isRequired,
     answerIds: PropTypes.array,
 
     putResponse: PropTypes.func.isRequired,

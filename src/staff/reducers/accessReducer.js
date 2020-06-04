@@ -1,12 +1,14 @@
+import {dev} from "../../profile";
+
 const testInitState = {
     contentMin: [
         {
             accessId: 1,
-            name: "private"
+            name: "dep-private"
         },
         {
             accessId: 2,
-            name: "dep-private"
+            name: "private"
         }
     ]
 }
@@ -15,7 +17,7 @@ const initState = {
     contentMin: null,
 }
 
-export const accessReducer = (state = initState, action) => {
+export const accessReducer = (state = (dev ? testInitState : initState), action) => {
     switch (action.type) {
         case "SET_ALL_ACCESSES_MIN": {
             const contentMin = action.payload;

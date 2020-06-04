@@ -15,8 +15,6 @@ export default class McqMultiComponent extends React.Component {
             className: 'ua.edu.ratos.service.domain.response.ResponseMCQ',
             answerIds: this.props.answerIds
         }
-        // Experiment
-        //this.changeResponse = this.changeResponse.bind(this);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -52,7 +50,7 @@ export default class McqMultiComponent extends React.Component {
     }
 
     render() {
-        const {question} = this.props;
+        const {question, expanded} = this.props;
         const {answerIds} = this.state;
         const {questionId} = this.state;
         return (
@@ -69,7 +67,8 @@ export default class McqMultiComponent extends React.Component {
                                         questionId = {questionId}
                                         answerId={a.answerId}
                                         answer={a.answer}
-                                        changeResponse={() => this.changeResponse()}
+                                        expanded={expanded}
+                                        changeResponse={() => this.changeResponse(a.answerId)}
                                         isChecked={answerIds.includes(a.answerId)}/>
                                 </div>);
                         })
@@ -82,6 +81,7 @@ export default class McqMultiComponent extends React.Component {
 
 const propTypes = {
     question: PropTypes.object.isRequired,
+    expanded: PropTypes.bool.isRequired,
     answerIds: PropTypes.array,
 
     putResponse: PropTypes.func.isRequired

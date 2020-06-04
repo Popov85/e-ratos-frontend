@@ -18,7 +18,7 @@ const ResourcePreloader = props => {
                 error &&
                 <div className="text-center text-secondary p-3">{error.message}</div>
             }
-            <iframe src={url} width={width ? width : '352'} height={height ? height : '240'}
+            <iframe src={url} width={width ? width : '360'} height={height ? height : '240'}
                     onLoad={() => setLoaded(true)} onError={()=>setError(new Error("Failure"))}/>
         </div>
     );

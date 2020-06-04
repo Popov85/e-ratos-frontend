@@ -1,3 +1,7 @@
+/**
+ * Warning! Do not use validators inside render function!
+ * @see https://github.com/redux-form/redux-form/issues/4148
+ */
 export const requiredField = value => {
     if (value && value.trim()!=='') return undefined;
     return "Field is required";

@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {getUserInfo} from "../../common/selectors/userSelector";
-import {getAllResourcesByDepartment} from "../actions/resourcesActions";
+import {clearAllResourcesFailures, getAllResourcesByDepartment} from "../actions/resourcesActions";
 import ResourcesLookup from "../components/ResourcesLookup";
 
 const mapStateToProps = state => {
@@ -13,6 +13,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        clearAllResourcesFailures: ()=>dispatch(clearAllResourcesFailures()),
         getAllResourcesByDepartment: ()=>dispatch(getAllResourcesByDepartment())
     }
 }

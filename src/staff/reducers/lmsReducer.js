@@ -1,3 +1,5 @@
+import {dev} from "../../profile";
+
 const testInitState = {
     content: [
         {
@@ -48,7 +50,7 @@ const initState = {
     isLoading: false
 }
 
-export const lmsReducer = (state = initState, action) => {
+export const lmsReducer = (state = (dev ? testInitState : initState), action) => {
     switch (action.type) {
         case "LOADING_ALL_LMS": {
             return {...state, isLoading: action.isLoading};

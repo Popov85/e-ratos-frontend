@@ -1,3 +1,5 @@
+import {dev} from "../../profile";
+
 const testInitState = {
     content: [
         {
@@ -47,7 +49,7 @@ const initState = {
     error: null
 }
 
-export const departmentsReducer = (state = initState, action) => {
+export const departmentsReducer = (state = (dev ? testInitState : initState), action) => {
     switch (action.type) {
         case "LOADING_ALL_DEP": {
             return {...state, isLoading: action.isLoading};

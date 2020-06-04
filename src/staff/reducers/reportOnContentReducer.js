@@ -1,3 +1,5 @@
+import {dev} from "../../profile";
+
 const initState = {
     data: null
 }
@@ -27,7 +29,7 @@ const getCSVHeaders=(requestedColumns)=> {
 }
 
 
-export const reportOnContentReducer = (state = testInitState, action) => {
+export const reportOnContentReducer = (state = (dev ? testInitState : initState), action) => {
     switch (action.type) {
         case "LOADING_REPORT_ON_CONTENT": {
             return {...state, isLoading: action.isLoading};

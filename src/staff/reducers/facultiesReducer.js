@@ -1,3 +1,5 @@
+import {dev} from "../../profile";
+
 const testInitState = {
     content: [
         {
@@ -35,7 +37,7 @@ const initState = {
     error: null
 }
 
-export const facultiesReducer = (state = initState, action) => {
+export const facultiesReducer = (state = (dev ? testInitState : initState), action) => {
     switch (action.type) {
         case "LOADING_ALL_FAC": {
             return {...state, isLoading: action.isLoading};

@@ -1,3 +1,5 @@
+import {dev} from "../../profile";
+
 const testInitState = {
     content: [
         {
@@ -23,7 +25,7 @@ const initState = {
     selectedId: 0 // Selected value for forms and tables to synchronize lists!
 }
 
-export const organisationsReducer = (state = initState, action) => {
+export const organisationsReducer = (state = (dev ? testInitState : initState), action) => {
     switch (action.type) {
         case "LOADING_ALL_ORG": {
             return {...state, isLoading: action.isLoading};

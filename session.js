@@ -11,6 +11,9 @@ import InfoContainer from "./src/session/containers/InfoContainer";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './main.css';
+import {dev} from "./src/profile";
+
+console.log("Active profile dev = ", dev);
 
 const testMode = {
     modeId: 1,

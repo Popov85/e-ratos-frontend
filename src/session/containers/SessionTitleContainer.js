@@ -9,7 +9,7 @@ const mapStateToProps = state => {
         context: getContext(state),
         userInfo: getUserInfo(state),
         schemeInfo: state.schemeInfo,
-        isTimeLimited: state.session.batch.sessionExpiresInSec,
+        isTimeLimited: state.session.batch.sessionExpiresInSec ? true : false,
         isPaused: state.session.paused
     }
 }

@@ -1,3 +1,5 @@
+import {dev} from "../../profile";
+
 const testInitState = {
     content: [
         {
@@ -144,7 +146,7 @@ const initState = {
     error: null
 }
 
-export const resourcesReducer = (state = initState, action) => {
+export const resourcesReducer = (state = (dev ? testInitState : initState), action) => {
     switch (action.type) {
         case "LOADING_ALL_RESOURCES": {
             return {...state, isLoading: action.isLoading};

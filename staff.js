@@ -12,10 +12,13 @@ import {Provider} from "react-redux";
 import thunk from "redux-thunk";
 import StaffPortalContainer from "./src/staff/containers/StaffPortalContainer";
 import staffReducers from "./src/staff/reducers/index";
+import {dev} from "./src/profile";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 let store=createStore(staffReducers, composeEnhancers(applyMiddleware(thunk)));
+
+console.log("Active profile dev = ", dev);
 
 ReactDOM.render(
     <ErrorHandler>

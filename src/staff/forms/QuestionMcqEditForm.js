@@ -12,6 +12,7 @@ import FieldWysiwyg from "./controls/FieldWysiwyg";
 import FieldSwitcher from "../../common/forms/controls/FieldSwitcher";
 import FieldLevel from "./controls/FieldLevel";
 import FieldResource from "./controls/FieldResource";
+import FieldHelp from "./controls/FieldHelp";
 
 const renderAnswer = (fields, answer, index) => {
     return (
@@ -70,7 +71,8 @@ let QuestionMcqEditForm = props => {
                 </div>
 
                 <div className="mb-3">
-                    <Field name="question" component={FieldWysiwyg} validate={[requiredDraft]}
+                    <Field name="question" component={FieldWysiwyg}
+                           validate={[requiredDraft]}
                            disabled={disabled || finished}/>
                 </div>
 
@@ -78,15 +80,11 @@ let QuestionMcqEditForm = props => {
                     <Field name="resource" component={FieldResource}/>
                 </div>
 
-                <div className="d-flex justify-content-center align-items-end mb-1">
-                    <div>
-                        <a href="#" onClick={() => alert('Show look-up for helps')}
-                           className="badge badge-dark mr-1">Add help</a>
-                    </div>
+                <div className="mb-3">
+                    <Field name="help" component={FieldHelp}/>
                 </div>
 
                 <FieldArray name="answers" component={renderAnswers}/>
-
 
                 <div className="form-group text-center mb-n1">
                     <button type="submit" value="Save" className="btn btn-sm btn-success mr-2">

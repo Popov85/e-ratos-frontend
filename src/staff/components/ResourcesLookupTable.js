@@ -50,7 +50,7 @@ const ResourcesLookupTable = props => {
             }),
             title: cell => cell,
             style: !expanded ? utilsCSS.getShortCellStyle('13px') : null,
-            headerStyle: () => utilsCSS.getDefaultHeaderStyle('200px', 'left', '13px'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('150px', 'left', '13px'),
             validator: (newValue) => {
                 if (required(newValue) || minLength2(newValue)) {
                     return {
@@ -60,19 +60,23 @@ const ResourcesLookupTable = props => {
                 }
                 return true;
             },
-            editable: true
+            editable: false
         },
         {
             dataField: 'staff',
             text: 'Created by',
             sort: true,
             sortFunc: (a, b, order) => staffFilter.getStaffSorted(a, b, order),
+            filter: textFilter({
+                onFilter: staffFilter.getStaffFiltered,
+                style: utilsCSS.getDefaultFilterStyle('13px')
+            }),
             formatter: (cell, row) => {
                 const {name, surname} = row.staff;
                 return `${surname} ${name}`;
             },
             style: utilsCSS.getShortCellStyle('13px'),
-            headerStyle: () => utilsCSS.getDefaultHeaderStyle('120px', 'left', '13px'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('100px', 'left', '13px'),
             title: cell => `${cell.name} ${cell.surname} (${cell.position})`,
             editable: false
         },
@@ -83,7 +87,7 @@ const ResourcesLookupTable = props => {
             align: 'left',
             title: cell => cell,
             style: utilsCSS.getShortCellStyle('13px'),
-            headerStyle: () => utilsCSS.getDefaultHeaderStyle('90px', 'left', '13px'),
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('100px', 'left', '13px'),
             editable: false
         },
         {
@@ -162,8 +166,7 @@ const ResourcesLookupTable = props => {
                                 paginationSize: 2,
                                 sizePerPageList: [
                                     {text: '5', value: 5},
-                                    {text: '10', value: 10},
-                                    {text: '15', value: 15},
+                                    {text: '10', value: 10}
                                 ],
                                 paginationTotalRenderer: utilsTable.getCustomTotal,
                                 sizePerPageRenderer: utilsTable.getCustomSizePerPageRenderer,

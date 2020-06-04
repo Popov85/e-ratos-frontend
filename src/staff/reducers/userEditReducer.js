@@ -1,8 +1,14 @@
+import {dev} from "../../profile";
+
+const testInitState = {
+    isLoading: false
+}
+
 const initState = {
     isLoading: false
 }
 
-export const userEditReducer = (state = initState, action) => {
+export const userEditReducer = (state = (dev ? testInitState : initState), action) => {
     switch (action.type) {
         case "SAVING_STAFF": {
             return {...state, isLoading: action.isLoading};

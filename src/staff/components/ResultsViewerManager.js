@@ -1,10 +1,10 @@
 import React from 'react';
 import {useParams} from "react-router-dom";
-import ResultsViewer from "./ResultsViewer";
+import ResultsViewerContainer from "../containers/ResultsViewerContainer";
 
 const UserEditManager = props => {
     let {resultId} = useParams();
-    return <ResultsViewer resultId = {Number(resultId)}/>
+    return <ResultsViewerContainer resultId = {Number(resultId)}/>
 };
 
 export default UserEditManager;

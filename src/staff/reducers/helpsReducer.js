@@ -1,3 +1,5 @@
+import {dev} from "../../profile";
+
 const testInitState = {
     content:[
         {
@@ -199,7 +201,7 @@ const initState = {
     error: null
 }
 
-export const helpsReducer = (state = initState, action) => {
+export const helpsReducer = (state = (dev ? testInitState : initState), action) => {
     switch (action.type) {
         case "LOADING_ALL_HELPS": {
             return {...state, isLoading: action.isLoading};

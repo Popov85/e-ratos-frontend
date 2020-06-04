@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 const mapStateToProps = state => {
     return {
         question: getQuestion(state),
+        expanded: state.session.expanded,
         answerIds: getResponse(state) ? getResponse(state).answerIds : [],
     }
 }

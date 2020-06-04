@@ -23,6 +23,6 @@ export const coursesTransformer = {
             .toSelect(courses);
         result.unshift(dummy);
         return result;
-    },
+    }
 
 }

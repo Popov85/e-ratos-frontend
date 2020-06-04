@@ -95,8 +95,6 @@ SessionControls.propTypes = {
     help: PropTypes.object,
     response: PropTypes.object,
 
-    putResponse:PropTypes.func.isRequired,
-
     getSkipped: PropTypes.func.isRequired,
     getChecked: PropTypes.func.isRequired,
     fetchHelp: PropTypes.func.isRequired,

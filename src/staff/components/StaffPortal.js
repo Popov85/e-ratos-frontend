@@ -27,6 +27,7 @@ import LmsContainer from "../containers/LmsContainer";
 import QuestionsMcqContainer from "../containers/QuestionsMcqContainer";
 import ResourcesContainer from "../containers/ResourcesContainer";
 import HelpsContainer from "../containers/HelpsContainer";
+import SchemesContainer from "../containers/SchemesContainer";
 
 class StaffPortal extends React.Component {
 
@@ -52,7 +53,7 @@ class StaffPortal extends React.Component {
                     <Route path="/structure/faculties" exact component={FacultiesContainer}/>
                     <Route path="/structure/departments" exact component={DepartmentsContainer}/>
                     <Route path="/courses" exact component={CoursesContainer}/>
-                    <Route path="/schemes" exact component={Schemes}/>
+                    <Route path="/schemes" exact component={SchemesContainer}/>
                     <Route path="/themes" exact component={ThemesContainer}/>
                     <Route path="/themes/:themeId/questions-mcq" exact component={QuestionsMcqContainer}/>
                     <Route path="/questions-mcq" exact component={QuestionsMcqContainer}/>

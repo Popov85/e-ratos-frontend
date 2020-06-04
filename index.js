@@ -4,5 +4,8 @@ import Welcome from "./src/common/Welcome";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './main.css';
+import {dev} from "./src/profile";
+
+console.log("Active profile dev = ", dev);
 
 ReactDOM.render(<Welcome/>, document.getElementById('app'));

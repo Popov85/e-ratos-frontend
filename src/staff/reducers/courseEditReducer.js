@@ -1,8 +1,15 @@
+import {dev} from "../../profile";
+
+const testInitState = {
+    isLoading: false,
+    error: null
+}
+
 const initState = {
     isLoading: false
 }
 
-export const courseEditReducer = (state = initState, action) => {
+export const courseEditReducer = (state = (dev ? testInitState : initState), action) => {
     switch (action.type) {
         case "SAVING_COURSE": {
             return {...state, isLoading: action.isLoading};

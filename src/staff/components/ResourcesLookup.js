@@ -48,6 +48,7 @@ ResourcesLookup.propTypes = {
     resources: PropTypes.object.isRequired,
 
     selectResource: PropTypes.func.isRequired,
+    clearAllResourcesFailures: PropTypes.func.isRequired,
     getAllResourcesByDepartment: PropTypes.func.isRequired
 };
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Passed from "./Passed";
 import TimeOut from "./TimeOut";
 
-const Result = (props) => {
+const Result = props => {
 
     const {user, scheme, passed, timeouted, percent, grade, timeSpent, points} = props.result;
 
@@ -61,9 +61,9 @@ const Result = (props) => {
     }
 
     return (
-        <div className="row pt-5">
-            <div className="col-xs-1 col-sm-2 col-md-3 col-lg-4"/>
-            <div className="col-xs-10 col-sm-8 col-md-6 col-lg-4">
+        <div className="row pt-3">
+            <div className="col-1 col-sm-2 col-md-3 col-lg-4"/>
+            <div className="col-10 col-sm-8 col-md-6 col-lg-4">
                 <div className="row mb-1 text-center">
                     <div className="col-12">
                         <Passed isPassed={passed}/>
@@ -93,7 +93,7 @@ const Result = (props) => {
                     {renderPoints()}
                 </div>
             </div>
-            <div className="col-xs-1 col-sm-2 col-md-3 col-lg-4"/>
+            <div className="col-1 col-sm-2 col-md-3 col-lg-4"/>
         </div>);
 }
 

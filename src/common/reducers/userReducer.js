@@ -1,3 +1,5 @@
+import {dev} from "../../profile";
+
 const allowedRolesGlobalAdmin = ["ROLE_GLOBAL-ADMIN"];
 const allowedRolesAtLeastOrgAdmin = [...allowedRolesGlobalAdmin, "ROLE_ORG-ADMIN"];
 const allowedRolesAtLeastFacAdmin = [...allowedRolesAtLeastOrgAdmin, "ROLE_FAC-ADMIN"];
@@ -42,7 +44,7 @@ const initState = {
     authenticated: null
 }
 
-export const userReducer = (state = initState, action) => {
+export const userReducer = (state = (dev ? testInitState : initState), action) => {
     switch (action.type) {
         case "LOADING_USER_INFO": {
             return {...state, isLoading: action.isLoading};

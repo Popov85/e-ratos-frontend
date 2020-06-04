@@ -1,8 +1,14 @@
+import {dev} from "../../profile";
+
+const testInitState = {
+    isLoading: false
+}
+
 const initState = {
     isLoading: false
 }
 
-export const orgEditReducer = (state = initState, action) => {
+export const orgEditReducer = (state = (dev ? testInitState : initState), action) => {
     switch (action.type) {
         case "SAVING_ORG": {
             return {...state, isLoading: action.isLoading};

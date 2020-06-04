@@ -21,7 +21,7 @@ export const utilsTable = {
     getCustomPageButtonRenderer({page, active, disabled, title, onPageChange}) {
         const handleClick = (e) => {e.preventDefault();onPageChange(page)};
         return (
-            <li className={`${active ? 'active' : ''} page-item`}>
+            <li key={page} className={`${active ? 'active' : ''} page-item`}>
                 <a href="#" className="page-link pt-1 pb-1 pl-2 pr-2" onClick={handleClick}>{page}</a>
             </li>
         );

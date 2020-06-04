@@ -1,7 +1,7 @@
 import React from 'react';
 
 const FieldString = props => {
-    const {sizeClass, marginClass} = props;
+    const {sizeClass, marginClass, disabled} = props;
     const {touched, error} = props.meta;
     const hasError = touched && error;
     return (
@@ -10,7 +10,7 @@ const FieldString = props => {
                        placeholder={props.placeholder}
                        className={`form-control ${sizeClass ? sizeClass : ''} ${!touched ? '' : error ? 'is-invalid': 'is-valid'}`}
                        onChange={e => props.input.onChange(e)}
-                       value={props.input.value}
+                       value={props.input.value} disabled={disabled}
                 />
                 {hasError && <div className="invalid-feedback">{error}</div>}
             </div>

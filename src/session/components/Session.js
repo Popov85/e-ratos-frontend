@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import Header from "../../common/Header";
 import StatusModContainer from "../containers/StatusModContainer";
@@ -10,6 +10,7 @@ import SessionNavigationContainer from "../containers/SessionNavigationContainer
 import SessionQuestionContainer from "../containers/SessionQuestionContainer";
 
 const Session = props => {
+
 
     const {context, mode, session, failure} = props;
     const {batch, help, isLoaded} = session;

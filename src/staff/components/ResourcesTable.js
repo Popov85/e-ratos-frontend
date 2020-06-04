@@ -13,7 +13,6 @@ import '../../../main.css';
 import ResourcePreloader from "./ResourcePreloader";
 import {OverlayTrigger, Tooltip} from "react-bootstrap";
 import ResourceEditModal from "./ResourceEditModal";
-import {utilsTable} from "../../utils/utilsTable";
 
 const ResourcesTable = props => {
     const initEditState = {mode: false, editableResourceId: null};

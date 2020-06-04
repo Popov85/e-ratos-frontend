@@ -13,17 +13,21 @@ import '../../../main.css';
 import {OverlayTrigger, Tooltip} from "react-bootstrap";
 import QuestionMcqEditModal from "./QuestionMcqEditModal";
 import {utilsHTML} from "../../utils/utilsHTML";
+import McqPreviewModal from "./McqPreviewModal";
 
 const QuestionsMcqTable = props => {
 
     const initEditState = {mode: false, editableQuestionId: null};
     const initDeleteState = {mode: false, deletableQuestionId: null};
+    const initPreviewState = {mode: false, previewQuestionId: null};
 
     const [edit, setEditMode] = useState(initEditState);
     const [remove, setDeleteMode] = useState(initDeleteState);
+    const [preview, setPreviewMode] = useState(initPreviewState);
 
     const deactivateEditModal = () => setEditMode(initEditState);
     const deactivateDeleteModal = () => setDeleteMode(initDeleteState);
+    const deactivatePreviewModal = () => setPreviewMode(initPreviewState);
 
     const {userInfo, questionsMcq, expanded} = props;
     const {authenticated} = userInfo;
@@ -181,7 +185,8 @@ const QuestionsMcqTable = props => {
                 const {questionId} = row;
                 return (
                     <div className="d-flex justify-content-between">
-                        <a href="#" className="badge badge-info" title = "Preview">
+                        <a href="#" className="badge badge-info" title = "Preview"
+                           onClick={() => setPreviewMode({mode: true, previewQuestionId: questionId})}>
                             <FaEye/>
                         </a>
                         <a href="#" className="badge badge-success" title = "Edit"
@@ -235,6 +240,11 @@ const QuestionsMcqTable = props => {
                               action="Delete the selected question?"
                               params={[props.theme.themeId, remove.deletableQuestionId]}
                               doActionIfOK={props.deleteQuestionMcq}/>
+            }
+            {
+                preview.mode &&
+                <McqPreviewModal show={preview.mode} deactivateModal={deactivatePreviewModal}
+                                 previewMcqQuestionId={preview.previewQuestionId} previewThemeId={props.theme.themeId}/>
             }
         </div>
     );

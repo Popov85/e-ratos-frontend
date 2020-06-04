@@ -2,6 +2,7 @@ import {facultiesTransformer} from "../../utils/transformers/facultiesTransforme
 import {departmentsTransformer} from "../../utils/transformers/departmentsTransformer";
 import {organisationsTransformer} from "../../utils/transformers/organisationsTransformer";
 import {Selected} from "../objects/Selected";
+import {dev} from "../../profile";
 
 const dummyValue = {
     value: "",
@@ -56,7 +57,7 @@ const initState = {
     selected: null
 }
 
-export const affiliationSelectorCacheableReducer = (state = initState, action) => {
+export const affiliationSelectorCacheableReducer = (state = (dev ? testInitState : initState), action) => {
     switch (action.type) {
         case "LOADING_COMPONENT_OF_AFFILIATION_SELECTOR_CACHEABLE": {
             return {...state, isLoading: action.isLoading};

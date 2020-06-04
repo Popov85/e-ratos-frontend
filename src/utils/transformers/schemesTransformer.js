@@ -1,3 +1,5 @@
+import {dummy} from "../constants";
+
 export const schemesTransformer = {
 
     toObject(schemes) {
@@ -15,5 +17,12 @@ export const schemesTransformer = {
             return item;
         });
     },
+
+    toSelectWithDummy(schemes) {
+        let result = schemesTransformer
+            .toSelect(schemes);
+        result.unshift(dummy);
+        return result;
+    }
 
 }

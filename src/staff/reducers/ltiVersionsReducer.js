@@ -1,3 +1,5 @@
+import {dev} from "../../profile";
+
 const actual = [
     {
         "versionId": 1,
@@ -20,7 +22,7 @@ const initState = {
  * @param action
  * @returns {Array|*}
  */
-export const ltiVersionsReducer = (state = initState, action) => {
+export const ltiVersionsReducer = (state = (dev ? testInitState : initState), action) => {
     switch (action.type) {
         case "SET_LTI_VERSIONS": {
             return {...state, content: action.payload};

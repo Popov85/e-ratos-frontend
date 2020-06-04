@@ -1,8 +1,16 @@
+import {dev} from "../../profile";
+
+const testInitState = {
+    isLoading: false,
+    error: null
+}
+
+
 const initState = {
     isLoading: false
 }
 
-export const facEditReducer = (state = initState, action) => {
+export const facEditReducer = (state = (dev ? testInitState : initState), action) => {
     switch (action.type) {
         case "SAVING_FAC": {
             return {...state, isLoading: action.isLoading};

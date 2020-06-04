@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import McqSingleContainer from "../containers/questions/McqSingleContainer";
 import McqMultiContainer from "../containers/questions/McqMultiContainer";
@@ -16,14 +16,18 @@ const SessionQuestion = props => {
             return (
                 <div className="row mt-0 mb-4">
                     <div className="col-12">
-                        {single ? <McqSingleContainer key={key}/> : <McqMultiContainer key={key}/>}
+                        {single ?
+                            <McqSingleContainer key={key}/>
+                            : <McqMultiContainer key={key} />}
                     </div>
                 </div>);
         }
         return (
             <div className="row mt-0 mb-4">
                 <div className="col-12">
-                    {single ? <McqSingleCheckedContainer key={key}/> : <McqMultiCheckedContainer key={key}/>}
+                    {single ?
+                        <McqSingleCheckedContainer key={key} />
+                        : <McqMultiCheckedContainer key={key} />}
                 </div>
             </div>);
     }
@@ -40,7 +44,8 @@ const SessionQuestion = props => {
                 throw new Error("Not implemented yet!");
             case 'ua.edu.ratos.service.dto.session.question.QuestionSQSessionOutDto':
                 throw new Error("Not implemented yet!");
-            default: throw new Error("Unrecognized class name!");
+            default:
+                throw new Error("Unrecognized class name!");
         }
     }
 
@@ -49,8 +54,7 @@ const SessionQuestion = props => {
 
 SessionQuestion.propTypes = {
     question: PropTypes.object.isRequired,
-    responseChecked: PropTypes.object.isRequired
-
+    responseChecked: PropTypes.object
 };
 
 export default SessionQuestion;
