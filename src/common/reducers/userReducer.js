@@ -50,7 +50,7 @@ export const userReducer = (state = (dev ? testInitState : initState), action) =
             return {...state, isLoading: action.isLoading};
         }
         case "LOADING_USER_INFO_FAILURE": {
-            return {...state, error: action.error};
+            return {...state, errorUser: action.error};
         }
         case "SET_USER_INFO": {
             let authenticated = action.payload;

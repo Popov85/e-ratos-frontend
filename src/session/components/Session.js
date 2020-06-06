@@ -11,7 +11,6 @@ import SessionQuestionContainer from "../containers/SessionQuestionContainer";
 
 const Session = props => {
 
-
     const {context, mode, session, failure} = props;
     const {batch, help, isLoaded} = session;
     const {schemeId, isLMS} = context;

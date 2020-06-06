@@ -20,7 +20,12 @@ class InfoContainer extends Component {
     }
 
     render() {
-        return <Info userInfo={this.props.userInfo} schemeInfo={this.props.schemeInfo}/>
+        return <Info
+            userInfo={this.props.userInfo}
+            schemeInfo={this.props.schemeInfo}
+            loadUserInfo={this.props.loadUserInfo}
+            loadSchemeInfo={this.props.loadSchemeInfo}
+        />
     }
 }
 
@@ -34,7 +39,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         loadUserInfo: () => dispatch(loadUserInfo()),
-        loadSchemeInfo: (schemeId) => dispatch(loadSchemeInfo(schemeId)),
+        loadSchemeInfo: () => dispatch(loadSchemeInfo(utilsURL.getSchemeId())),
     }
 }
 

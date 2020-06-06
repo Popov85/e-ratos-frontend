@@ -15,7 +15,6 @@ export const loadSchemeInfo = (schemeId) => {
             //console.log("Result (schemeInfo) = ", result);
             dispatch(setSchemeInfo(result.data));
         }).catch(e => {
-            console.log("Error loading SchemeInfo!", e);
             dispatch(loadingFailure(new Error("Failed to load schemeInfo")));
         }).finally(() => dispatch(loading(false)));
     }

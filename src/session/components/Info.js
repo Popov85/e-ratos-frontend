@@ -4,8 +4,8 @@ import {FaRedo} from 'react-icons/fa';
 
 import LogoMini from '../../common/LogoMini';
 import Spinner from '../../common/Spinner';
-import Failure from '../../common/Failure';
 import StartContainer from "../containers/StartContainer";
+import Header from "../../common/Header";
 
 const Info = props => {
 
@@ -24,7 +24,7 @@ const Info = props => {
         return (
             <div className="mt-3">
                 <div className="mb-2"><LogoMini/></div>
-                <Failure message="Failed to perform 'info' API call-s"/>
+                <Header title="SCHEME NOT FOUND" color="alert-danger"/>
                 <div className="row mt-3">
                     <div className="col-12 text-center">
                         <button className="btn btn-secondary"

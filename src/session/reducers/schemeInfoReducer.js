@@ -26,7 +26,8 @@ const testInitState = {
 }
 
 const initState = {
-    isLoading: true
+    isLoading: true,
+    errorScheme: null
 }
 
 export const schemeInfoReducer = (state = (dev ? testInitState : initState), action) => {
@@ -35,7 +36,8 @@ export const schemeInfoReducer = (state = (dev ? testInitState : initState), act
             return { ...state, isLoading: action.isLoading };
         }
         case "LOADING_SCHEME_INFO_FAILURE": {
-            return { ...state, error: action.error};
+            console.log("Error loading SchemeInfo!", action.error);
+            return { ...state, errorScheme: action.error};
         }
         case "SET_SCHEME_INFO": {
             return action.payload;
