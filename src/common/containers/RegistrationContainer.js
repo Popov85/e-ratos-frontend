@@ -11,7 +11,7 @@ import {
     getRegistered
 } from "../actions/registrationActions";
 import {getOrgId, getSavedCredentials, isLMS} from "../selectors/registrationSelector";
-import Registration from "../Registration";
+import Registration from "../components/Registration";
 
 const mapStateToProps = state => {
     return {

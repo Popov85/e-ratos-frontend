@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Overlay from "../../common/Overlay";
+import Overlay from "../../common/components/Overlay";
 import LoadingOverlay from "react-loading-overlay";
-import Error from "../../common/Error";
+import Error from "../../common/components/Error";
 import ResultsTable from "./ResultsTable";
 import Admin from "./Admin";
 import Switcher from "./Switcher";

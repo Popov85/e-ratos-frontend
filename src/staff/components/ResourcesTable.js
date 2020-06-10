@@ -5,7 +5,7 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import cellEditFactory from 'react-bootstrap-table2-editor';
 import filterFactory, {Comparator, dateFilter, textFilter} from 'react-bootstrap-table2-filter';
 import {FaFilm, FaImage, FaItunesNote, FaPencilAlt, FaTrashAlt, FaWpforms} from "react-icons/fa";
-import ConfirmModal from "../../common/ConfirmModal";
+import ConfirmModal from "../../common/components/ConfirmModal";
 import {minLength2, required} from "../../utils/validators";
 import {staffFilter} from "../../utils/filters/staffFilter";
 import {utilsCSS} from "../../utils/utilsCSS";

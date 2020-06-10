@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Failure from "../../common/Failure";
-import ProtectedResource from "../../common/ProtectedResource";
+import Failure from "../../common/components/Failure";
+import ProtectedResource from "../../common/components/ProtectedResource";
 import OrgEditForm from "../forms/OrgEditForm";
 
 class OrgEdit extends React.Component {

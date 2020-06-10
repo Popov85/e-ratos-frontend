@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import ProtectedResource from "../../common/ProtectedResource";
+import ProtectedResource from "../../common/components/ProtectedResource";
 import {FaPlus, FaSync} from "react-icons/fa";
 import LoadingOverlay from 'react-loading-overlay';
-import Error from "../../common/Error";
-import Overlay from "../../common/Overlay";
+import Error from "../../common/components/Error";
+import Overlay from "../../common/components/Overlay";
 import OrgTable from "./OrgTable";
 import OrgEditModal from "./OrgEditModal";
 

@@ -7,7 +7,7 @@ import filterFactory, {Comparator, dateFilter, selectFilter, textFilter} from 'r
 import {FaCaretSquareDown, FaCaretSquareUp, FaPencilAlt, FaTrashAlt} from "react-icons/fa";
 import CourseEditModal from "./CourseEditModal";
 import CourseAssociateModal from "./CourseAssociateModal";
-import ConfirmModal from "../../common/ConfirmModal";
+import ConfirmModal from "../../common/components/ConfirmModal";
 import {minLength2, required} from "../../utils/validators";
 import {staffFilter} from "../../utils/filters/staffFilter";
 import {lmsFilter} from "../../utils/filters/lmsFilter";

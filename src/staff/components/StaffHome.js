@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {OverlayTrigger, Tooltip} from "react-bootstrap";
 import {FaFilm} from "react-icons/fa";
-import LogoWhiteTeaching from "../../common/LogoWhiteTeaching";
+import LogoWhiteTeaching from "../../common/components/LogoWhiteTeaching";
 
 class StaffHome extends React.Component {
 

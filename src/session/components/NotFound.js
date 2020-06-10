@@ -1,7 +1,7 @@
 import React from 'react';
 import {FaRedo} from 'react-icons/fa';
-import LogoMini from '../../common/LogoMini';
-import Header from "../../common/Header";
+import LogoMini from '../../common/components/LogoMini';
+import Header from "../../common/components/Header";
 import PropTypes from "prop-types";
 
 const NotFound = (props) => {

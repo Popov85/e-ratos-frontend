@@ -4,8 +4,8 @@ import {Affiliation} from "../objects/Affiliation";
 import {FaStepForward} from "react-icons/fa";
 import PropTypes from 'prop-types';
 
-import ProtectedResource from "../../common/ProtectedResource";
-import Error from "../../common/Error";
+import ProtectedResource from "../../common/components/ProtectedResource";
+import Error from "../../common/components/Error";
 
 /**
  * Used to select org/fac/dep to view results;

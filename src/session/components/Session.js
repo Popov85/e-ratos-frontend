@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import Header from "../../common/Header";
+import Header from "../../common/components/Header";
 import StatusModContainer from "../containers/StatusModContainer";
 import HelpModContainer from "../containers/HelpModContainer";
 import SessionTitleContainer from "../containers/SessionTitleContainer";

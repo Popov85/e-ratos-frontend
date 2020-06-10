@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {FaRedo} from 'react-icons/fa';
 
-import LogoMini from '../../common/LogoMini';
-import Spinner from '../../common/Spinner';
+import LogoMini from '../../common/components/LogoMini';
+import Spinner from '../../common/components/Spinner';
 import StartContainer from "../containers/StartContainer";
-import Header from "../../common/Header";
+import Header from "../../common/components/Header";
 
 const Info = props => {
 
@@ -24,7 +24,12 @@ const Info = props => {
         return (
             <div className="mt-3">
                 <div className="mb-2"><LogoMini/></div>
-                <Header title="SCHEME NOT FOUND" color="alert-danger"/>
+                {
+                    errorUser && <Header title="USER NOT FOUND [SESSION EXPIRED]" color="alert-danger"/>
+                }
+                {
+                    errorScheme && <Header title="SCHEME NOT FOUND [WRONG URL]" color="alert-danger"/>
+                }
                 <div className="row mt-3">
                     <div className="col-12 text-center">
                         <button className="btn btn-secondary"

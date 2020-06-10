@@ -1,6 +1,6 @@
 import React from 'react';
 import {FaUserTie} from "react-icons/fa";
-import utils from "../utils/utils";
+import utils from "../../utils/utils";
 import {OverlayTrigger, Tooltip} from "react-bootstrap";
 import LogoWhite from "./LogoWhite";
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Failure from "../../common/Failure";
+import Failure from "../../common/components/Failure";
 import QuestionMcqEditForm from "../forms/QuestionMcqEditForm";
 import {convertFromRaw} from 'draft-js';
 import {stateToHTML} from 'draft-js-export-html';

@@ -7,7 +7,7 @@ import FieldText from "../../common/forms/controls/FieldText";
 import FieldSelectBadge from "../../common/forms/controls/FieldSelectBadge";
 import FieldRadio from "../../common/forms/controls/FieldRadio";
 import FieldSelectBadgeWithControls from "./controls/FieldSelectBadgeWithControls";
-import Failure from "../../common/Failure";
+import Failure from "../../common/components/Failure";
 import validateScheme from "../../utils/validators/validatorScheme";
 import ThemeLookupModal from "../components/ThemeLookupModal";
 import SchemeThemeEditModal from "../components/SchemeThemeEditModal";
@@ -212,6 +212,7 @@ let SchemeEditForm = props => {
     }
 
     const renderThemes = ({fields, meta: {error, submitFailed}}) => {
+        //console.log("All fields = ", fields.getAll());
         return (
             <div>
                 {

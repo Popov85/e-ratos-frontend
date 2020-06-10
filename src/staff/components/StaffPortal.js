@@ -20,7 +20,7 @@ import StructureContainer from "../containers/StructureContainer";
 import OrganisationsContainer from "../containers/OrganisationsContainer";
 import FacultiesContainer from "../containers/FacultiesContainer";
 import DepartmentsContainer from "../containers/DepartmentsContainer";
-import ProtectedResource from "../../common/ProtectedResource";
+import ProtectedResource from "../../common/components/ProtectedResource";
 import CoursesContainer from "../containers/CoursesContainer";
 import ThemesContainer from "../containers/ThemesContainer";
 import LmsContainer from "../containers/LmsContainer";

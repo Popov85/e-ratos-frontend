@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Failure from "../../common/Failure";
+import Failure from "../../common/components/Failure";
 import "../../../main.css";
 import {CSVLink} from "react-csv";
 import {FaFileCsv} from "react-icons/fa";

@@ -1,5 +1,5 @@
 import React from 'react';
-import logoMini from '../_assets/logo-mini.png';
+import logoMini from '../../_assets/logo-mini.png';
 
 
 const Logo = () => {

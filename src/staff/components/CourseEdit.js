@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Failure from "../../common/Failure";
+import Failure from "../../common/components/Failure";
 import CourseEditForm from "../forms/CourseEditForm";
 
 class CourseEdit extends React.Component {

@@ -5,7 +5,7 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import cellEditFactory, {Type} from 'react-bootstrap-table2-editor';
 import filterFactory, {textFilter} from 'react-bootstrap-table2-filter';
 import {FaEye, FaImage, FaPencilAlt, FaQuestionCircle, FaRegCheckSquare, FaRegSquare, FaTrashAlt} from "react-icons/fa";
-import ConfirmModal from "../../common/ConfirmModal";
+import ConfirmModal from "../../common/components/ConfirmModal";
 import {minLength8, required} from "../../utils/validators";
 import {questionSorted} from "../../utils/constants";
 import {utilsCSS} from "../../utils/utilsCSS";

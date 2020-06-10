@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Failure from "../../common/Failure";
+import Failure from "../../common/components/Failure";
 import {themesSupportTransformer} from "../../utils/transformers/themesSupportTransformer";
 import SchemeThemeEditForm from "../forms/SchemeThemeEditForm";
 
@@ -18,14 +18,16 @@ class SchemeThemeEdit extends React.Component {
 
     handleSubmit(data) {
         const {theme, fields, settings, index} = this.props;
-        // Transform to aimed object!
-        let transformed = themesSupportTransformer
-            .toObject(data, null, theme, fields.length);
-        //console.log("SchemeTheme = ", transformed);
         // If new push, else - replace!
         if (!settings && !index) {
+            let order = fields.length;
+            let transformed = themesSupportTransformer
+                .toObject(data, theme, order);
             fields.push(transformed);
         } else { // Replace existing!
+            let order = index;
+            let transformed = themesSupportTransformer
+                .toObject(data, theme, order);
             fields.splice(index, 1, transformed);
         }
         this.props.deactivateModal();

@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LoginContainer from "./src/common/containers/LoginContainer";
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
-import ErrorHandler from "./src/common/ErrorHandler";
+import ErrorHandler from "./src/common/components/ErrorHandler";
 import {Provider} from "react-redux";
 import thunk from "redux-thunk";
 import {regOptionsReducer} from "./src/common/reducers/regOptionsReducer";

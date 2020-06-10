@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import LoadingOverlay from 'react-loading-overlay';
-import Error from "../../common/Error";
-import Overlay from "../../common/Overlay";
+import Error from "../../common/components/Error";
+import Overlay from "../../common/components/Overlay";
 import QuestionsMcqTable from "./QuestionsMcqTable";
 import QuestionsNavbar from "./QuestionsNavbar";
 import QuestionMcqEditModal from "./QuestionMcqEditModal";

@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Failure from "./Failure";
 import RegistrationSuccess from './RegistrationSuccess';
-import RegistrationForm from "./forms/RegistrationForm";
-import LoginContainer from "./containers/LoginContainer";
-import '../../main.css';
+import RegistrationForm from "../forms/RegistrationForm";
+import LoginContainer from "../containers/LoginContainer";
+import '../../../main.css';
 
 const initialValues = null;
 

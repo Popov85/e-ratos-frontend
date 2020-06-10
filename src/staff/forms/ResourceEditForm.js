@@ -6,7 +6,7 @@ import {FaSignInAlt, FaTimes} from "react-icons/fa";
 import FieldText from "../../common/forms/controls/FieldText";
 import ResourcePreloader from "../components/ResourcePreloader";
 import {parse} from 'himalaya'
-import Failure from "../../common/Failure";
+import Failure from "../../common/components/Failure";
 import FieldStringBadge from "../../common/forms/controls/FieldStringBadge";
 import FieldSelectBadge from "../../common/forms/controls/FieldSelectBadge";
 

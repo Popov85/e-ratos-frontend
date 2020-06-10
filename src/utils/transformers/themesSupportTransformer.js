@@ -1,50 +1,9 @@
-/*
-Support
-   {
-            themeId : 17,
-            totalByTheme : 21,
-            typeLevelMap : {
-                1 : {
-                    type : "MCQ",
-                    totalLevel1 : 21,
-                    totalLevel2 : 0,
-                    totalLevel3 : 0,
-                    total : 21
-                }
-            }
-        },
-*/
-
-/*
-Real
-      "themes":[
-                    {
-                        "schemeThemeId": 1, // nullable
-                        "schemeId": 1, // nullable
-                        "themeId": 3,
-                        "theme": "Theme: Consequat etiam laborumcurabitur ipsum occaecat et tincidunt .",
-                        "order": 0,
-                        "settings":[
-                            {
-                                "schemeThemeSettingsId": 1, //nullable
-                                "schemeThemeId": 1, // nullable
-                                "typeId": 1,
-                                "type": "MCQ",
-                                "level1": 10,
-                                "level2": 0,
-                                "level3": 0
-                            }
-                        ]
-                    }
-                ],
- */
-
 export const themesSupportTransformer = {
 
-    toObject(themeSupport, schemeId, theme, order) {
+    toObject(themeSupport, theme, order) {
         let schemeTheme = {};
         schemeTheme.schemeThemeId = null;
-        schemeTheme.schemeId = schemeId;
+        schemeTheme.schemeId = null;
         schemeTheme.themeId = themeSupport.themeId;
         schemeTheme.theme = theme;
         schemeTheme.order = order;

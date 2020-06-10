@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Header from "../../../common/Header";
+import Header from "../../../common/components/Header";
 import ResourcePreloader from "../../../staff/components/ResourcePreloader";
 
 const QuestionCheckedComponent = (props) => {

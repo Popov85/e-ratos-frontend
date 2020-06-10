@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import PropTypes from "prop-types";
 import {Field, FieldArray, reduxForm} from 'redux-form';
 import {FaRegTrashAlt, FaSignInAlt} from "react-icons/fa";
-import Failure from "../../common/Failure";
+import Failure from "../../common/components/Failure";
 import validateSchemeTheme from "../../utils/validators/validatorSchemeTheme";
 import FieldNumberNoValidate from "../../common/forms/controls/FieldNumberNoValidate";
 

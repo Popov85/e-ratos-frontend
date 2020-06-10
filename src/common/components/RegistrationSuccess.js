@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {FaSignInAlt} from 'react-icons/fa';
-import LoginContainer from "./containers/LoginContainer";
+import LoginContainer from "../containers/LoginContainer";
 
 const RegistrationSuccess = (props) => {
 

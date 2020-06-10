@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Failure from "../../common/Failure";
+import Failure from "../../common/components/Failure";
 import QuestionMcqUploadDropBox from "./QuestionMcqUploadDropBox";
 
 class QuestionsMcqUpload extends React.Component {

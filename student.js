@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import {BrowserRouter as Router} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import ErrorHandler from "./src/common/ErrorHandler";
+import ErrorHandler from "./src/common/components/ErrorHandler";
 import {dev} from "./src/profile";
 
 console.log("Active profile dev = ", dev);

@@ -1,58 +1,55 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Failure from "./Failure";
-import ProfileForm from "./forms/ProfileForm";
-import {FaToggleOff, FaToggleOn} from "react-icons/fa";
-import {ProfileDto} from "../objects/ProfileDto";
 import {LinkContainer} from "react-router-bootstrap";
+import {PasswordsDto} from "../../objects/PasswordsDto";
+import PasswordsForm from "../forms/PasswordsForm";
+import {FaEye, FaEyeSlash} from "react-icons/fa";
 
-class Profile extends Component {
+class Password extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            isProfileEditMode: false
+            showPassword: false
         }
     }
-
     //Clear all messages
     componentDidMount() {
-        this.props.clearUserProfileFailure();
+        this.props.clearUserPasswordFailure();
     }
 
     handleSubmit(data) {
-        let profileDTO = new ProfileDto(
-            data.name, data.surname, data.email);
-        //console.log("profileDTO = ", profileDTO);
-        this.props.getProfileUpdated(profileDTO);
+        let passwordsDTO = new PasswordsDto(
+            data.oldPass, data.password);
+        console.log("passwordsDTO  = ", passwordsDTO);
+        this.props.getPasswordUpdated(passwordsDTO);
     }
 
     render() {
-        const {userInfo} = this.props;
-        const {authenticated} = userInfo;
-        const {isProfileUpdating, errorUpdatingProfile, message} = this.props.profile;
+        const {isPasswordUpdating, errorUpdatingPassword, message} = this.props.profile;
         return (
             <div className="p-1">
                 <div className="alert alert-secondary text-center">
                     <h5 className="alert-heading">
-                        <strong>Profile {this.state.isProfileEditMode && "[edit]"}</strong>
+                        <strong>Password [edit]</strong>
                     </h5>
                 </div>
                 <div className="row mt-1">
                     <div className="col-1 col-sm-2 col-md-3 col-lg-4"></div>
                     <div className="col-10 col-sm-8 col-md-6 col-lg-4">
                         {
-                            isProfileUpdating &&
+                            isPasswordUpdating &&
                             <div className="text-center text-secondary m-2">
                                 <span>Saving...</span>
                             </div>
                         }
                         {
-                            errorUpdatingProfile &&
+                            errorUpdatingPassword &&
                             <div className="alert alert-danger text-center p-1" role="alert">
                                 <span className="text-danger">
                                     <strong>
-                                    <Failure message={errorUpdatingProfile.message}/>
+                                    <Failure message={errorUpdatingPassword.message}/>
                                 </strong>
                                 </span>
                             </div>
@@ -65,30 +62,24 @@ class Profile extends Component {
                         }
                         <div className="card bg-transparent">
                             <div className="ratos-form-card card-body">
-                                <div className="text-right" title="Edit">
+                                <div className="text-right" title="Show password">
                                     <a href="#" className="badge badge-info mb-2"
-                                       onClick={() => this.setState({isProfileEditMode: !this.state.isProfileEditMode})}>
-                                        {(this.state.isProfileEditMode) ?
-                                            <FaToggleOn color="white" style={{fontSize: '1.25em'}}/> :
-                                            <FaToggleOff color="white" style={{fontSize: '1.25em'}}/>}
+                                       onClick={() => this.setState({showPassword: !this.state.showPassword})}>
+                                        {(this.state.showPassword) ?
+                                            <FaEye color="white" style={{fontSize: '1.25em'}}/> :
+                                            <FaEyeSlash color="white" style={{fontSize: '1.25em'}}/>}
                                     </a>
                                 </div>
-                                <ProfileForm
+                                <PasswordsForm
                                     onSubmit={data => this.handleSubmit(data)}
-                                    initialValues={
-                                        {
-                                            name: authenticated.name,
-                                            surname: authenticated.surname,
-                                            email: authenticated.email
-                                        }
-                                    }
-                                    disabled={!this.state.isProfileEditMode || isProfileUpdating}
+                                    disabled={isPasswordUpdating}
+                                    showPassword = {this.state.showPassword}
                                 />
                             </div>
                             <div className="card-footer pt-1 pb-1">
-                                <LinkContainer to={`/profile/password`}>
+                                <LinkContainer to={`/profile`}>
                                     <div className="text-center">
-                                        <a href="#" className = "badge badge-secondary">Change password?</a>
+                                        <a href="#" className = "badge badge-secondary">Back to profile</a>
                                     </div>
                                 </LinkContainer>
                             </div>
@@ -101,12 +92,10 @@ class Profile extends Component {
     }
 }
 
-Profile.propTypes = {
-    userInfo: PropTypes.object.isRequired,
+Password.propTypes = {
     profile: PropTypes.object.isRequired,
-
-    getProfileUpdated: PropTypes.func.isRequired,
-    clearUserProfileFailure: PropTypes.func.isRequired
+    getPasswordUpdated: PropTypes.func.isRequired,
+    clearUserPasswordFailure: PropTypes.func.isRequired
 };
 
-export default Profile;
+export default Password;

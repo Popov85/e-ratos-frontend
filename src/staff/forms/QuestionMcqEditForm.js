@@ -6,7 +6,7 @@ import {FaPlus, FaRegTrashAlt, FaSignInAlt} from "react-icons/fa";
 import FieldString from "../../common/forms/controls/FieldString";
 import FieldSelectNoValidate from "../../common/forms/controls/FieldSelectNoValidate";
 import validateMcq from "../../utils/validators/validatorMcq";
-import Failure from "../../common/Failure";
+import Failure from "../../common/components/Failure";
 import {percentSelectOptions} from "../../utils/constants";
 import FieldWysiwyg from "./controls/FieldWysiwyg";
 import FieldSwitcher from "../../common/forms/controls/FieldSwitcher";

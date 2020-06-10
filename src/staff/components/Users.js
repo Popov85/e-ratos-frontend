@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import UsersTable from "./UsersTable";
-import ProtectedResource from "../../common/ProtectedResource";
+import ProtectedResource from "../../common/components/ProtectedResource";
 import {FaCompress, FaExpand, FaPlus, FaSync} from "react-icons/fa";
 import LoadingOverlay from 'react-loading-overlay';
-import Error from "../../common/Error";
-import Overlay from "../../common/Overlay";
+import Error from "../../common/components/Error";
+import Overlay from "../../common/components/Overlay";
 import StaffEditModal from "./StaffEditModal";
 import CoursesTable from "./CoursesTable";
 

@@ -4,7 +4,7 @@ import {applyMiddleware, compose, createStore} from "redux";
 import {Provider} from "react-redux";
 import thunk from "redux-thunk";
 
-import ErrorHandler from "./src/common/ErrorHandler";
+import ErrorHandler from "./src/common/components/ErrorHandler";
 import allReducers from "./src/session/reducers/index";
 
 import InfoContainer from "./src/session/containers/InfoContainer";

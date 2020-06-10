@@ -1,5 +1,5 @@
 import {connect} from "react-redux";
-import Login from "../Login";
+import Login from "../components/Login";
 import {getRegOptions} from "../actions/regOptionsActions";
 import {getLogged} from "../actions/loginActions";
 import {reset} from 'redux-form';

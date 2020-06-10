@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {FaStepForward} from 'react-icons/fa';
 
-import LogoMini from '../../common/LogoMini';
-import Spinner from '../../common/Spinner';
-import Failure from '../../common/Failure';
-import Header from "../../common/Header";
+import LogoMini from '../../common/components/LogoMini';
+import Spinner from '../../common/components/Spinner';
+import Failure from '../../common/components/Failure';
+import Header from "../../common/components/Header";
 import NotFound from './NotFound';
 import FinishContainer from "../containers/FinishContainer";
 

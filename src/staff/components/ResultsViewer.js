@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import Result from "../../session/components/Result";
 import ResultByThemes from "../../session/components/ResultByThemes";
 import ResultByQuestions from "../../session/components/ResultByQuestions";
-import Failure from "../../common/Failure";
-import Overlay from "../../common/Overlay";
-import Error from "../../common/Error";
+import Failure from "../../common/components/Failure";
+import Overlay from "../../common/components/Overlay";
+import Error from "../../common/components/Error";
 
 class ResultsViewer extends Component {
 

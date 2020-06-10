@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import LogoMini from './LogoMini';
-import LoginForm from "./forms/LoginForm";
-import RegistrationContainer from "./containers/RegistrationContainer";
-import '../../main.css';
+import LoginForm from "../forms/LoginForm";
+import RegistrationContainer from "../containers/RegistrationContainer";
+import '../../../main.css';
 import Failure from "./Failure";
 
 /**

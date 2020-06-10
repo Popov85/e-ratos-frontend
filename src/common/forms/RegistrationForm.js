@@ -16,18 +16,18 @@ import FieldEmail from "./controls/FieldEmail";
 import FieldPassword from "./controls/FieldPassword";
 import {FaEye, FaEyeSlash, FaSignInAlt} from "react-icons/fa";
 import FieldSelectBadge from "./controls/FieldSelectBadge";
-import Affiliation from "../Affiliation";
+import Affiliation from "../components/Affiliation";
 
 const current = new Date().getFullYear();
 const years = [
-    {key: "", value: "Select"},
-    {key: current, value: current},
-    {key: current-1, value: current-1},
-    {key: current-2, value: current-2},
-    {key: current-3, value: current-3},
-    {key: current-4, value: current-4},
-    {key: current-5, value: current-5},
-    {key: current-6, value: current-6}
+    {value: "", label: "Select"},
+    {value: current, label: current},
+    {value: current-1, label: current-1},
+    {value: current-2, label: current-2},
+    {value: current-3, label: current-3},
+    {value: current-4, label: current-4},
+    {value: current-5, label: current-5},
+    {value: current-6, label: current-6}
 ];
 
 let RegistrationForm = props => {

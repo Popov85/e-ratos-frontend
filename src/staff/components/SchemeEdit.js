@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Failure from "../../common/Failure";
+import Failure from "../../common/components/Failure";
 import SchemeEditForm from "../forms/SchemeEditForm";
 
 class SchemeEdit extends React.Component {
@@ -51,7 +51,7 @@ class SchemeEdit extends React.Component {
     }
 
     handleSubmit(data) {
-        console.log("Scheme = ", data);
+        //console.log("Scheme = ", data);
         !data.schemeId ?
             this.props.saveScheme(data)
             : this.props.updateScheme(data);

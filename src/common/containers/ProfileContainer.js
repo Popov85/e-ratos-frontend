@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import {getUserInfo} from "../selectors/userSelector";
-import Profile from "../Profile";
+import Profile from "../components/Profile";
 import {clearUserProfileFailure, getPasswordUpdated, getProfileUpdated} from "../actions/profileAction";
 
 const mapStateToProps = state => {

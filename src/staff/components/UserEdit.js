@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Failure from "../../common/Failure";
+import Failure from "../../common/components/Failure";
 import UserEditForm from "../forms/UserEditForm";
 import {Staff} from "../objects/Staff";
 import {User} from "../objects/User";
 import {isRoleManageable} from "../../utils/security";
-import ProtectedResource from "../../common/ProtectedResource";
+import ProtectedResource from "../../common/components/ProtectedResource";
 
 class UserEdit extends React.Component {
 

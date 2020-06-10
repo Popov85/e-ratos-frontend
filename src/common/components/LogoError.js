@@ -1,5 +1,5 @@
 import React from 'react';
-import logoError from '../_assets/logo-error.png';
+import logoError from '../../_assets/logo-error.png';
 
 const LogoError = () => {
     return (

@@ -11,7 +11,7 @@ import filterFactory, {
     textFilter
 } from 'react-bootstrap-table2-filter';
 import {FaCheck, FaCompress, FaExpand, FaMinus, FaPencilAlt, FaPlus, FaSync, FaTrashAlt} from "react-icons/fa";
-import ConfirmModal from "../../common/ConfirmModal";
+import ConfirmModal from "../../common/components/ConfirmModal";
 import {minLength2, required} from "../../utils/validators";
 import {staffFilter} from "../../utils/filters/staffFilter";
 import {defaultSorted} from "../../utils/constants";

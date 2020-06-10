@@ -2,7 +2,7 @@ import React from 'react';
 import {FormSection, reduxForm} from "redux-form";
 import {FaStepForward} from "react-icons/fa";
 import PropTypes from 'prop-types';
-import ProtectedResource from "../../common/ProtectedResource";
+import ProtectedResource from "../../common/components/ProtectedResource";
 import AffiliationSelectorFields from "./AffiliationSelectorFields";
 
 let AffiliationSelectorForm = props => {

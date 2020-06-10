@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {FaCompress, FaExpand, FaPlus, FaSync} from "react-icons/fa";
 import LoadingOverlay from 'react-loading-overlay';
-import Error from "../../common/Error";
-import Overlay from "../../common/Overlay";
+import Error from "../../common/components/Error";
+import Overlay from "../../common/components/Overlay";
 import ResourceEditModal from "./ResourceEditModal";
 import ResourcesTable from "./ResourcesTable";
 
