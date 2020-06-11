@@ -1,5 +1,4 @@
 import React from 'react';
-import {FaUser} from "react-icons/fa";
 
 const FieldStringBadge = props => {
     const {touched, error} = props.meta;

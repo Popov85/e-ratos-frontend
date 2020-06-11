@@ -45,6 +45,8 @@ import {gradingTwoPointReducer} from "./gradingTwoPointReducer";
 import {gradingFourPointReducer} from "./gradingFourPointReducer";
 import {gradingFreePointReducer} from "./gradingFreePointReducer";
 import {themesSupportReducer} from "./themesSupportReducer";
+import {modeEditReducer} from "./modeEditReducer";
+import {settingsEditReducer} from "./settingsEditReducer";
 
 const staffReducers = combineReducers({
     form: formReducer,
@@ -89,6 +91,8 @@ const staffReducers = combineReducers({
     resourceEdit: resourceEditReducer,
     schemeEdit: schemeEditReducer,
     helpEdit: helpEditReducer,
+    modeEdit: modeEditReducer,
+    settingsEdit: settingsEditReducer,
     lmsEdit: lmsEditReducer,
     questionMcqEdit: questionMcqEditReducer
 });

@@ -8,9 +8,9 @@ export const getAllSettings = state => state.settings.content;
 
 //------------------------------------------Re-selectors----------------------------------------------------------------
 
-export const getSettingsById = createSelector(getAllSettings, getSettingsIdFromProps, (settings, settingsId) => {
+export const getSettingsById = createSelector(getAllSettings, getSettingsIdFromProps, (settings, setId) => {
     if (!settings) return null;
-    return settings.find(s => s.setId === settingsId);
+    return settings.find(s => s.setId === setId);
 });
 
 // For Table filter
