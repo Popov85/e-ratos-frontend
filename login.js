@@ -12,6 +12,7 @@ import {loginReducer} from "./src/common/reducers/loginReducer";
 import {reducer as formReducer} from 'redux-form';
 import {registrationReducer} from "./src/common/reducers/registrationReducer";
 import {dev} from "./src/profile";
+import {passwordResetReducer} from "./src/common/reducers/passResetReducer";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -23,6 +24,7 @@ ReactDOM.render(
             registration: registrationReducer,
             regOptions: regOptionsReducer,
             security: loginReducer,
+            passReset: passwordResetReducer,
             form: formReducer
         }), composeEnhancers(applyMiddleware(thunk)))}>
             <LoginContainer/>,

@@ -5,6 +5,7 @@ import LoginForm from "../forms/LoginForm";
 import RegistrationContainer from "../containers/RegistrationContainer";
 import '../../../main.css';
 import Failure from "./Failure";
+import PasswordResetContainer from "../containers/PasswordResetContainer";
 
 /**
  * Both staff and students will see this login page,
@@ -17,7 +18,8 @@ class Login extends Component {
         super(props);
         this.state = {
             showPassword: false,
-            registration: false
+            registration: false,
+            resetPassword: false
         };
         this.displayPassword = this.displayPassword.bind(this);
     }
@@ -62,8 +64,9 @@ class Login extends Component {
         const { security, savedCredentials} = this.props;
         if (security.logged && security.url)
             window.location.assign(security.url);
-        const { registration} = this.state;
+        const { registration, resetPassword} = this.state;
         if (registration) return <RegistrationContainer/>;
+        if (resetPassword) return <PasswordResetContainer/>;
         const {isLoggingIn, errorLoggingIn} = security;
         return (
             <div className="container-fluid">
@@ -115,7 +118,7 @@ class Login extends Component {
                             <div className="card-footer pt-0 pb-0">
                                 {this.renderFooter()}
                                 <div className="d-flex justify-content-center">
-                                    <small><a href="#">Forgot your password?</a></small>
+                                    <small><a href="#" onClick={() => this.setState({resetPassword: true})}>Forgot your password?</a></small>
                                 </div>
                             </div>
                         </div>
