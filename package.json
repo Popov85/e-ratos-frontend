@@ -1,15 +1,24 @@
 {
-  "name": "ratos-parcel",
+  "name": "e-ratos-frontend",
   "version": "1.0.0",
   "description": "",
-  "main": "index",
+  "source": [
+    "index.html",
+    "login.html",
+    "session.html",
+    "staff.html",
+    "student.html"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "parcel staff.html --open",
-    "dev": "parcel build *.js --no-minify",
-    "prod": "parcel build *.js"
+    "start": "parcel index.html",
+    "prod": "parcel build index.html login.html session.html staff.html student.html",
+    "dev": "parcel build index.html login.html session.html staff.html student.html --no-optimize"
   },
-  "author": "",
+  "browserslist": [
+    "> 0.25%",
+    "not dead"
+  ],
+  "author": "Popov85",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.0",
@@ -47,11 +56,10 @@
     "reselect": "^4.0.0"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
-    "parcel-bundler": "^1.12.4",
+    "@babel/core": "^7.24.5",
+    "events": "^3.3.0",
+    "parcel": "^2.12.0",
+    "process": "^0.11.10",
     "sass": "^1.23.6"
   }
 }

@@ -13,17 +13,24 @@ thus a separate deployment of this front-end is not implied.
 
 
 #### Technologies
-- React;
-- Redux;
-- Bootstrap;
-- HTML;
-- Babel;
-- Node.js (solely for development), npm
-- Parcel bundler (based on Webpack).
+- Node.js (v20.12.2 [LTS](https://github.com/nodejs/node/releases/tag/v20.12.2), for dev);
+- Npm (v10.5.0);
+- Parcel (v2.12.0+ Babel).
+- React (v16.12.0);
+- Redux (v4.0.4);
+- Bootstrap (v4.3.1);
+
+
+#### Local development:
+Make sure to set (profile.js at src/ root)
+
+`export const dev = true;`
+
+This set-up populates some test data out of the box to redux storage.
 
 #### Build and deployment
 For development:
-Launches index.html in browser and tracks changes in js.files
+Launches index.html in browser and tracks changes in .js files
 
 ```
 npm start

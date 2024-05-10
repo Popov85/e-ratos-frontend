@@ -3,11 +3,8 @@ import {connect} from "react-redux";
 import {reset} from "redux-form";
 import {getUserInfo} from "../../common/selectors/userSelector";
 import {
-    addAnswerOfQuestionMcq,
     clearQuestionMcqState,
-    deleteAnswerOfQuestionMcq,
     saveQuestionMcq,
-    updateAnswerOfQuestionMcq,
     updateQuestionMcq
 } from "../actions/questionMcqEditActions";
 import QuestionMcqEdit from "../components/QuestionMcqEdit";
@@ -29,10 +26,6 @@ const mapDispatchToProps = dispatch => {
     return {
         saveQuestionMcq: (questionMcqDTO) => dispatch(saveQuestionMcq(questionMcqDTO)),
         updateQuestionMcq: (questionMcqDTO) => dispatch(updateQuestionMcq(questionMcqDTO)),
-        addAnswerOfQuestionMcq: (questionId, answerMcqDTO) => dispatch(addAnswerOfQuestionMcq(questionId, answerMcqDTO)),
-        updateAnswerOfQuestionMcq: (questionId, answerMcqDTO) => dispatch(updateAnswerOfQuestionMcq(questionId, answerMcqDTO)),
-        deleteAnswerOfQuestionMcq: (questionId, answerId) => dispatch(deleteAnswerOfQuestionMcq(questionId, answerId)),
-
         clearQuestionMcqState: ()=>dispatch(clearQuestionMcqState()),
         // Get all department resources
         // Get all departments helps
