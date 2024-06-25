@@ -10,7 +10,7 @@ import filterFactory, {
     selectFilter,
     textFilter
 } from 'react-bootstrap-table2-filter';
-import {FaCheck, FaCompress, FaExpand, FaFlask, FaMinus, FaPencilAlt, FaPlus, FaSync, FaTrashAlt} from "react-icons/fa";
+import {FaCheck, FaCompress, FaExpand, FaFlask, FaMinus, FaPencilAlt, FaPlus, FaSync, FaTrashAlt, FaRegCopy} from "react-icons/fa";
 import ConfirmModal from "../../common/components/ConfirmModal";
 import {minLength2, required} from "../../../utils/validators";
 import {staffFilter} from "../../../utils/filters/staffFilter";
@@ -20,10 +20,12 @@ import '../../../../main.css';
 import {isEditable} from "../../../utils/security";
 import SchemesColumnsToggler from "./SchemesColumnsToggler";
 import SchemeEditModal from "./SchemeEditModal";
+import SchemeURLModal from "./SchemeURLModal";
 
 const SchemesTable = props => {
 
     const initNewState = false;
+    const initURLState = {mode: false, schemeId: null};
     const initEditState = {mode: false, editableSchemeId: null};
     const initDeleteState = {mode: false, deletableSchemeId: null};
 
@@ -31,6 +33,7 @@ const SchemesTable = props => {
     const initHiddenColumns =  ["Staff", "Created", "Access", "Themes", "Groups"];
 
     const [create, setNewMode] = useState(initNewState);
+    const [showURL, setURLMode] = useState(initURLState);
     const [edit, setEditMode] = useState(initEditState);
     const [remove, setDeleteMode] = useState(initDeleteState);
 
@@ -38,6 +41,7 @@ const SchemesTable = props => {
     const [hiddenColumns, setHiddenColumns] = useState(initHiddenColumns);
 
     const deactivateNewModal = () => setNewMode(initNewState);
+    const deactivateURLModal = () => setURLMode(initURLState);
     const deactivateEditModal = () => setEditMode(initEditState);
     const deactivateDeleteModal = () => setDeleteMode(initDeleteState);
 
@@ -342,6 +346,24 @@ const SchemesTable = props => {
             editable: false
         },
         {
+            dataField: 'url',
+            isDummyField: true,
+            editable: false,
+            text: 'URL',
+            align: 'center',
+            title: () => 'URL',
+            headerStyle: () => utilsCSS.getDefaultHeaderStyle('40px', 'center'),
+            formatter: (cell, row) => {
+                const { schemeId } = row;
+                return (
+                    <a href="#" className="badge badge-success"
+                       onClick={() => setURLMode({ mode: true, schemeId: schemeId })}>
+                        <FaRegCopy />
+                    </a>
+                );
+            }
+        },
+        {
             dataField: 'edit',
             isDummyField: true,
             editable: false,
@@ -439,6 +461,11 @@ const SchemesTable = props => {
                 edit.mode &&
                 <SchemeEditModal show={true} deactivateModal={deactivateEditModal}
                                  editableSchemeId={edit.editableSchemeId}/>
+            }
+            {
+                showURL.mode &&
+                <SchemeURLModal show={true} deactivateModal={deactivateURLModal}
+                                 schemeId={showURL.schemeId}/>
             }
             {
                 remove.mode &&
