@@ -1,0 +1,117 @@
+.bg-ratos {
+    background-color: lightyellow;
+}
+
+.border-regular {
+    border-color: lightgray;
+}
+
+.text-small {
+    font-size: 13px;
+}
+
+.custom-control-label:before {
+    background-color: white;
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+    border-color: #17a2b8;
+    background-color: #17a2b8;
+}
+
+.icon-hover:hover {
+    border-color: white;
+    opacity: 0.5;
+}
+
+#bModal > div, #sModal > div {
+    background-color: transparent !important;
+    border-color: transparent !important;
+}
+
+.tooltip-inner {
+    background-color: #6c757d !important;
+}
+
+.tooltip.bs-tooltip-right .arrow:before {
+    border-right-color: #6c757d !important;
+}
+
+.tooltip.bs-tooltip-left .arrow:before {
+    border-left-color: #6c757d !important;
+}
+
+.tooltip.bs-tooltip-bottom .arrow:before {
+    border-bottom-color: #6c757d !important;
+}
+
+.tooltip.bs-tooltip-top .arrow:before {
+    border-top-color: #6c757d !important;
+}
+
+/*TODO: apply only for questions?*/
+.tooltip-inner {
+    max-width: 750px !important;
+}
+
+table caption {
+    caption-side: top;
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 5px 0px;
+    background: GhostWhite;
+    height: 100%;
+}
+
+.staff-body-start {
+    overflow-x: hidden;
+    background-color: lightyellow;
+}
+
+.staff-body-normal {
+    max-width: 100%;
+    overflow-x: hidden;
+    background-color: white;
+}
+
+.ratos-form-fieldset legend {
+    display: block;
+    width: auto;
+    padding: 0 5px;
+    margin-bottom: 0;
+    font-size: inherit;
+    line-height: inherit;
+    border: auto;
+    border-bottom: none;
+}
+
+.ratos-form-fieldset fieldset {
+    border: 2px groove threedface;
+    padding: 5px;
+}
+
+.ratos-form-card.card-body {
+    padding: 0.5rem;
+}
+
+
+.nav-link-ratos {
+    color: gray!important;
+}
+
+.ratos-nav-background {
+    background-color: darkgrey;
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.filter-label  {
+    order: 2 !important;
+}
+
+.filter.date-filter  {
+    justify-content: center !important;
+}
+
+
+
+
+
