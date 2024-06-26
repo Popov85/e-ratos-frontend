@@ -31,14 +31,12 @@ let ResourceEditForm = props => {
             if (object.length !== 1)
                 throw new Error("Failed to parse the iframe..");
             const link = object[0].attributes.find(a => a.key === 'src').value;
-            const width = object[0].attributes.find(a => a.key === 'width').value;
-            const height = object[0].attributes.find(a => a.key === 'height').value;
+            const widthAttribute = object[0].attributes.find(a => a.key === 'width');
+            const heightAttribute = object[0].attributes.find(a => a.key === 'height');
+            const width = widthAttribute ? widthAttribute.value : '480';
+            const height = heightAttribute ? heightAttribute.value : '360';
             if (!link || link.length < 5)
                 throw new Error("Cannot determine the URL!");
-            if (!width || width.length < 1)
-                throw new Error("Cannot determine the width!");
-            if (!height || width.height < 1)
-                throw new Error("Cannot determine the height!");
             props.change("link", link);
             props.change("width", width);
             props.change("height", height);

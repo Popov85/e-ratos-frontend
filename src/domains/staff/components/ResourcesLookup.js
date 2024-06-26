@@ -26,18 +26,18 @@ class ResourcesLookup extends Component {
                     resources.content &&
                     <div className="pb-5">
                         <LoadingOverlay
-                            active={isUpdating ? true : false}
+                            active={!!isUpdating}
                             spinner
                             text='Performing API call...'>
                             <ResourcesLookupTable
                                 userInfo={userInfo}
                                 resources={resources.content}
-                                selectResource={this.props.selectResource}
+                                selectResource={this.props.selectResource}Т
                             />
                         </LoadingOverlay>
                     </div>
                 }
-                <Overlay show={isLoading ? true : false}/>
+                <Overlay show={!!isLoading}/>
             </div>
         );
     }

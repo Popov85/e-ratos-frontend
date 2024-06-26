@@ -28,9 +28,11 @@ So, make sure that proxy is set up properly to be available at the same URL as B
 Make sure to set (.env at src/ root)
 
 `# Define the profile. Allowed values: 'dev', 'prod',
+
 E_RATOS_PROFILE=dev`
 
 `# Define the base URL for the API or application. Allowed values: http://localhost:1234, https://www.e-ratos.xyz
+
 E_RATOS_BASE_URL=http://localhost:1234`
 
 This set-up populates some test data out of the box to redux storage.

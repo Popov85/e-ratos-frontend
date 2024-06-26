@@ -1,4 +1,3 @@
-import React from 'react';
 import {connect} from "react-redux";
 import {getUserInfo} from "../../common/selectors/userSelector";
 import {clearAllResourcesFailures, getAllResourcesByDepartment} from "../actions/resourcesActions";
@@ -7,7 +6,7 @@ import ResourcesLookup from "../components/ResourcesLookup";
 const mapStateToProps = state => {
     return {
         userInfo: getUserInfo(state),
-        resources: state.resources
+        resources: state.staff.resources
     }
 }
 
