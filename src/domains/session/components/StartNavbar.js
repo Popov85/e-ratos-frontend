@@ -8,7 +8,7 @@ const StartNavbar = (props) => {
     const {email} = props.userInfo;
     const {isLoggingOut} = props.auth;
     return (
-        <Navbar variant="dark" bg="info" expand="lg">
+        <Navbar variant="dark" bg="info" expand="lg" className="w-100">
             <Navbar.Brand className="text-light">
                 <strong>e-Ratos</strong>&nbsp;<small>session</small>
             </Navbar.Brand>

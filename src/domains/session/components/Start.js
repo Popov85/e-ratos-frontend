@@ -20,12 +20,21 @@ const Start = (props) => {
     const {isLMS, schemeId} = context;
 
     const renderStart = () => {
+        const {active} = props.schemeInfo;
         const {isLoaded} = props.session;
         if (!isLoaded)
             return (
                 <div className="text-center mt-3">
                     <button className="btn btn-info pl-5 pr-5" type="button" disabled>
                         Start <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"/>
+                    </button>
+                </div>
+            );
+        if (!active)
+            return (
+                <div className="text-center mt-3">
+                    <button className="btn btn-info pl-5 pr-5" type="button" disabled>
+                        Start
                     </button>
                 </div>
             );
@@ -42,7 +51,7 @@ const Start = (props) => {
             <div>
                 <StartNavbarContainer/>
                 <div className="mt-3 mb-2"><Logo/></div>
-                <Failure message={"Some failure"}/>
+                <Failure message={"Some failure: probably scheme is NOT available any more!"}/>
                 <div className="row mt-3">
                     <div className="col-12 text-center">
                         <button className="btn btn-info pl-5 pr-5" onClick={() => props.getStarted(schemeId, isLMS)}>
@@ -69,13 +78,23 @@ const Start = (props) => {
     if (status === "preserved") return <PreservedContainer/>;
 
     return (
-        <div>
+        <div className="container-fluid p-0">
             <StartNavbarContainer/>
-            <div className="container-fluid">
+            <div>
                 <div className="mb-2"><Logo/></div>
-                <Header
-                    title="WELCOME"
-                    color="alert-success"/>
+                {
+                    schemeInfo.active ? (
+                        <Header
+                            title="WELCOME"
+                            color="alert-success"
+                        />
+                    ) : (
+                        <Header
+                            title="REQUESTED SCHEME IS NOT AVAILABLE"
+                            color="alert-danger"
+                        />
+                    )
+                }
                 <div className="row">
                     <div className="col-xs-1 col-sm-2 col-md-3 col-lg-4 col-xl-4"/>
                     <div className="col-xs-10 col-sm-8 col-md-6 col-lg-4 col-xl-4">
@@ -104,7 +123,7 @@ const Start = (props) => {
                                 </div>
                                 <div className="col-9">
                                     <div className="alert-sm alert-info"
-                                         title="How many seconds per question you have">{(schemeInfo.timings < 0) ? "unlimited" : (schemeInfo.timings + " s per question")}</div>
+                                         title="How many seconds per question you have">{(schemeInfo.timings <= 0) ? "unlimited" : (schemeInfo.timings + " s per question")}</div>
                                 </div>
                             </div>
                             <div className="row mb-1">
@@ -118,7 +137,7 @@ const Start = (props) => {
                             </div>
                             <div className="row mb-1">
                                 <div className="col-3">
-                                    <div className="text-secondary">type:</div>
+                                    <div className="text-secondary">mode:</div>
                                 </div>
                                 <div className="col-9">
                                     <div className="alert-sm alert-info"
