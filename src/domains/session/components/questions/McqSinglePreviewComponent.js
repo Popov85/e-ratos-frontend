@@ -11,7 +11,8 @@ export default class McqSinglePreviewComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            answerIds: []
+            answerIds: [],
+            expanded: false
         }
     }
 
@@ -25,12 +26,16 @@ export default class McqSinglePreviewComponent extends React.Component {
         this.setState({ answerIds: [] });
     }
 
+    setExpanded() {
+        this.setState(prevState => ({ expanded: !prevState.expanded }));
+    }
+
     render() {
         const {question} = this.props;
         const {answerIds} = this.state;
         return (
             <div className="border-0">
-                <QuestionComponent question = {question} clearResponse={() => this.clearResponse()}/>
+                <QuestionComponent question = {question} clearResponse={() => this.clearResponse()} setExpanded={() =>this.setExpanded()}/>
                 <div className="border-top border-right border-left border-regular">
                     {
                         question.answers.map(a => {
@@ -43,6 +48,7 @@ export default class McqSinglePreviewComponent extends React.Component {
                                         answerId={a.answerId}
                                         answer={a.answer}
                                         changeResponse={this.changeResponse}
+                                        expanded = {this.state.expanded}
                                         isChecked={a.answerId === answerIds[0]} />
                                 </div>);
                         })

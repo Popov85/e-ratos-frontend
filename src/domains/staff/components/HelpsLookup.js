@@ -8,8 +8,7 @@ import HelpsLookupTable from "./HelpsLookupTable";
 class HelpsLookup extends Component {
 
     componentDidMount() {
-        const {helps} = this.props;
-        if (!helps.content) this.props.getAllHelpsByDepartment();
+        this.props.getAllHelpsByDepartment();
     }
 
     render() {
@@ -26,7 +25,7 @@ class HelpsLookup extends Component {
                     helps.content &&
                     <div className="pb-5">
                         <LoadingOverlay
-                            active={isUpdating ? true : false}
+                            active={!!isUpdating}
                             spinner
                             text='Performing API call...'>
                             <HelpsLookupTable
@@ -37,7 +36,7 @@ class HelpsLookup extends Component {
                         </LoadingOverlay>
                     </div>
                 }
-                <Overlay show={isLoading ? true : false}/>
+                <Overlay show={!!isLoading}/>
             </div>
         );
     }

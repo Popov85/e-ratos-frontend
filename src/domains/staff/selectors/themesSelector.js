@@ -15,7 +15,7 @@ export const getThemeById = createSelector(getAllThemes, getThemeIdFromProps, (t
 
 // This method throw Error if a valid result cannot be obtained!
 export const getThemeBySelectedId = createSelector(getAllThemes, getSelectedThemeIdFromProps, (themes, themeId) => {
-    if (!themes) throw new Error('No themes are present in the local store!');
+    if (!themes) return null;
     let result = themes.find(t => t.themeId === Number(themeId));
     if (!result) throw new Error('Theme is not found in the local store!');
     return result;

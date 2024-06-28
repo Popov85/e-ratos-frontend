@@ -1,4 +1,3 @@
-import React from 'react';
 import {connect} from "react-redux";
 import {getUserInfo} from "../../common/selectors/userSelector";
 import {clearAllHelpsFailures, getAllHelpsByDepartment} from "../actions/helpsActions";
@@ -7,7 +6,7 @@ import HelpsLookup from "../components/HelpsLookup";
 const mapStateToProps = state => {
     return {
         userInfo: getUserInfo(state),
-        helps: state.helps
+        helps: state.staff.helps
     }
 }
 

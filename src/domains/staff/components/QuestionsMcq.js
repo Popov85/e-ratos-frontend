@@ -6,6 +6,8 @@ import Overlay from "../../common/components/Overlay";
 import QuestionsMcqTable from "./QuestionsMcqTable";
 import QuestionsNavbar from "./QuestionsNavbar";
 import QuestionMcqEditModal from "./QuestionMcqEditModal";
+import {Redirect} from "react-router-dom";
+import NotFound from "../../common/components/NotFound";
 
 class QuestionsMcq extends Component {
 
@@ -23,9 +25,11 @@ class QuestionsMcq extends Component {
     }
 
     componentDidMount() {
-        const {questionsMcqContent, theme} = this.props;
-        if (!questionsMcqContent)
-            this.props.getAllQuestionsMcqByThemeId(theme.themeId);
+        const {themeId, theme} = this.props;
+        if (!theme) {
+            this.props.getThemeById(themeId);
+        }
+        this.props.getAllQuestionsMcqByThemeId(themeId);
     }
 
     activateModal() {
@@ -74,8 +78,9 @@ class QuestionsMcq extends Component {
 
     render() {
         const {newMode, expanded} = this.state;
-        const {authorization, questionsMcq, theme, questionsMcqContent} = this.props;
+        const {authorization, questionsMcq, themes, theme, questionsMcqContent} = this.props;
         const {isLoading, isUpdating, error, errorUpdate} = questionsMcq;
+        if (themes && !themes.isLoading && themes.error) return <NotFound/>;
         return (
             <div className="container-fluid p-0">
                 <div className="p-1">
@@ -144,7 +149,9 @@ class QuestionsMcq extends Component {
 QuestionsMcq.propTypes = {
     authorization: PropTypes.object.isRequired,
     questionsMcq: PropTypes.object.isRequired,
-    theme: PropTypes.object.isRequired,
+    themeId: PropTypes.number.isRequired,
+    themes: PropTypes.object,
+    theme: PropTypes.object,
     questionsMcqContent: PropTypes.array,
 
     getAllQuestionsMcqByThemeId: PropTypes.func.isRequired,

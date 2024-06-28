@@ -1,5 +1,8 @@
 import {connect} from "react-redux";
 import {
+    getThemeById
+} from "../actions/themesActions";
+import {
     clearAllQuestionsMcqFailures,
     deleteQuestionMcq,
     getAllQuestionsMcqByThemeId,
@@ -16,6 +19,8 @@ const mapStateToProps = (state, ownProps) => {
     return {
         authorization: state.auth.authorization,
         questionsMcq: state.staff.questionsMcq,
+        themeId: themeId,
+        themes: state.staff.themes,
         theme: getThemeBySelectedId(state, ownProps),
         questionsMcqContent: state.staff.questionsMcq.content[themeId],
     }
@@ -23,6 +28,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        getThemeById: (themeId) => dispatch(getThemeById(themeId)),
         getAllQuestionsMcqByThemeId: (themeId)=>dispatch(getAllQuestionsMcqByThemeId(themeId)),
         clearAllQuestionsMcqFailures: ()=>dispatch(clearAllQuestionsMcqFailures()),
         updateQuestionMcqName: (themeId, questionId, name)=>dispatch(updateQuestionMcqName(themeId, questionId, name)),

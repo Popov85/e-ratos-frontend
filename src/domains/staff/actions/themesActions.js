@@ -3,6 +3,7 @@ import {themesAPI as themeAPI, themesAPI} from "../_api/themesAPI";
 const LOADING_ALL_THEMES = "LOADING_ALL_THEMES";
 const LOADING_ALL_THEMES_FAILURE = "LOADING_ALL_THEMES_FAILURE";
 const CLEAR_LOADING_ALL_THEMES_FAILURE = "CLEAR_LOADING_ALL_THEMES_FAILURE";
+const SET_THEME = "SET_THEME";
 const SET_ALL_THEMES = "SET_ALL_THEMES";
 
 const UPDATING_THEME = "UPDATING_THEME";
@@ -20,6 +21,8 @@ export const loading = isLoading => ({type: LOADING_ALL_THEMES, isLoading});
 export const loadingFailure = error => ({type: LOADING_ALL_THEMES_FAILURE, error});
 export const clearLoadingFailure = () => ({type: CLEAR_LOADING_ALL_THEMES_FAILURE});
 export const setAllThemes = themes => ({type: SET_ALL_THEMES, payload: themes});
+
+export const setTheme = (theme) => ({type: SET_THEME, payload: theme});
 
 export const updating = isUpdating => ({type: UPDATING_THEME, isUpdating});
 export const updatingFailure = error => ({type: UPDATING_THEME_FAILURE, error});
@@ -57,6 +60,19 @@ export const deleteTheme = themeId => {
 }
 
 //-----------------------------------------------------Table------------------------------------------------------------
+
+export const getThemeById = (themeId) => {
+    return (dispatch) => {
+        dispatch(clearLoadingFailure());
+        dispatch(loading(true));
+        themesAPI.fetchThemeById(themeId).then(result => {
+            dispatch(setTheme(result.data));
+        }).catch(e => {
+            console.log("Error fetching theme by ID", e);
+            dispatch(loadingFailure(new Error("Failed to fetch a theme by ID")));
+        }).finally(() => dispatch(loading(false)));
+    }
+}
 
 export const getAllThemesByDepartment = () => {
     return (dispatch) => {

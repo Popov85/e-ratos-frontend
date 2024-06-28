@@ -243,6 +243,13 @@ export const themesReducer = (state = initState, action) => {
         case "CLEAR_ALL_THEMES_FAILURES": {
             return {...state, error: null, errorUpdate: null};
         }
+        case "SET_THEME": {
+            const { payload } = action;
+            // Ensure content is initialized
+            const content = (state.content || []).filter(item => item.id !== payload.themeId);
+            content.push(payload);
+            return {...state, content};
+        }
         case "SET_ALL_THEMES": {
             const content = action.payload;
             return {...state, content};

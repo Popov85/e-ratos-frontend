@@ -46,7 +46,7 @@ const QuestionComponent = (props) => {
                                 {expanded ? <FaCompress/> : <FaExpand/>}
                             </a>
                         </div>
-                            <div className={`badge badge-${level ===1 ? 'secondary' : (level==2) ? 'warning' : 'danger' } border p-1`}>
+                            <div className={`badge badge-${level ===1 ? 'secondary' : (level===2) ? 'warning' : 'danger' } border p-1`}>
                                 Level: <u>{level}</u>
                             </div>
                         </div>
