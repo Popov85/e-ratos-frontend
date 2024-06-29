@@ -6,7 +6,7 @@ import {setExpanded} from "../../actions/sessionActions";
 const mapStateToProps = (state, ownProps) => {
     return {
         question: getQuestion(state),
-        expanded: state.session.expanded,
+        expanded: state.session.session.expanded,
         clearResponse: ownProps.clearResponse
     }
 }
