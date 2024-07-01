@@ -22,10 +22,11 @@ const RunOutOfTime = (props) => {
     if (props.session.status === "finished") return <FinishContainer/>
     const {isLMS, schemeId} = props.context;
     return (
-        <div>
+        <div className="container-fluid p-0 mt-1">
             <LogoMini/>
             <Header title="YOU'VE RUN OUT OF TIME" color="alert-danger"/>
-            {props.failure.is ? <Failure message={props.failure.message} serverError={props.failure.serverError}/> : null}
+            {props.failure.is ?
+                <Failure message={props.failure.message} serverError={props.failure.serverError}/> : null}
             <div className="text-center mt-3">
                 <button className="btn btn-secondary"
                         onClick={() => props.getFinished(schemeId, isLMS)} title="Load the current results?">

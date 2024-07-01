@@ -20,7 +20,7 @@ const Preserved = (props) => {
         </div>);
 
     return (
-        <div>
+        <div className="container-fluid p-0">
             <LogoMini/>
             <Header title="SESSION HAS BEEN PRESERVED" color="alert-success"/>
             {

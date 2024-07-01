@@ -7,12 +7,15 @@ import PropTypes from "prop-types";
 const NotFound = (props) => {
 
     return (
-        <div>
+        <div className="container-fluid p-0 mt-1">
             <LogoMini/>
             <Header title="SESSION NOT FOUND" color="alert-warning"/>
             <div className="text-center mt-3">
                 <button className="btn btn-secondary"
-                        onClick={() => {props.resetSession(); props.resetFailure()} }
+                        onClick={() => {
+                            props.resetSession();
+                            props.resetFailure()
+                        }}
                         title="Start the scheme again">
                     Re-start&nbsp;<FaRedo color="white"/>
                 </button>
