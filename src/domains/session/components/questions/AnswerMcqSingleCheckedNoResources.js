@@ -12,7 +12,7 @@ const AnswerMcqSingleCheckedNoResources = (props) => {
     }
 
     return (
-        <div className="text-truncate">
+        <div className="text-truncate" style={{fontSize: props.fontSize + 'px'}}>
             <input type="radio"
                    className="ml-1"
                    name={"option" + questionId}
@@ -31,7 +31,8 @@ const propTypes = {
     answerId: PropTypes.number.isRequired,
     answer: PropTypes.string.isRequired,
     selected: PropTypes.bool.isRequired,
-    percent: PropTypes.number.isRequired
+    percent: PropTypes.number.isRequired,
+    fontSize: PropTypes.number.isRequired
 };
 
 AnswerMcqSingleCheckedNoResources.propTypes = propTypes;

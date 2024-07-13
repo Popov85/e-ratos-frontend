@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {FaCompress, FaEraser, FaExpand} from 'react-icons/fa';
+import {FaCompress, FaEraser, FaExpand, FaPlus, FaMinus} from 'react-icons/fa';
 import ResourcePreloader from "../../../staff/components/ResourcePreloader";
 import {utilsHTML} from "../../../../utils/utilsHTML";
 
@@ -31,7 +31,7 @@ const QuestionComponent = (props) => {
         <div>
             <div className="row">
                 <div className="col-12">
-                        <div className="d-flex align-items-center justify-content-between">
+                    <div className="d-flex align-items-center justify-content-between">
                         <div className="d-flex align-items-center justify-content-start">
                             <span title="Serial number in individual sequence"
                                   className="badge badge-secondary border p-1">
@@ -45,11 +45,16 @@ const QuestionComponent = (props) => {
                                onClick={() => props.setExpanded()} title="Expand/compress">
                                 {expanded ? <FaCompress/> : <FaExpand/>}
                             </a>
+                            <a href="#" className="badge badge-secondary border"
+                               onClick={() => props.setFontSize()} title="Increate/Decrease size">
+                                {props.fontSize < 24 ? <FaPlus/> : <FaMinus/>}
+                            </a>
                         </div>
-                            <div className={`badge badge-${level ===1 ? 'secondary' : (level===2) ? 'warning' : 'danger' } border p-1`}>
-                                Level: <u>{level}</u>
-                            </div>
+                        <div
+                            className={`badge badge-${level === 1 ? 'secondary' : (level === 2) ? 'warning' : 'danger'} border p-1`}>
+                            Level: <u>{level}</u>
                         </div>
+                    </div>
                 </div>
             </div>
 
@@ -57,7 +62,8 @@ const QuestionComponent = (props) => {
                 <div className="col-12 pl-0 pr-0 pt-1 pb-1">
                     <h6 className="text-secondary text-center p-0 m-0"
                         title={renderTitle()}>
-                        <span dangerouslySetInnerHTML={utilsHTML.createMarkup(question.question)}/>
+                        <span style={{fontSize: props.fontSize + 'px'}}
+                              dangerouslySetInnerHTML={utilsHTML.createMarkup(question.question)}/>
                     </h6>
                 </div>
             </div>
@@ -75,7 +81,9 @@ const QuestionComponent = (props) => {
 const propTypes = {
     question: PropTypes.object.isRequired,
     expanded: PropTypes.bool.isRequired,
+    fontSize: PropTypes.number.isRequired,
     setExpanded: PropTypes.func.isRequired,
+    setFontSize: PropTypes.func.isRequired,
     clearResponse: PropTypes.func
 };
 

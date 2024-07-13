@@ -90,6 +90,8 @@ const initState = {
 
     expanded: false,
 
+    fontSize: 16,
+
     result: null
 }
 
@@ -211,6 +213,14 @@ export const sessionReducer = (state = initState, action) => {
         }
         case "SET_EXPANDED": {
             return {...state, expanded: !state.expanded};
+        }
+        case "SET_FONT_SIZE": {
+            let currentFontSize = state.fontSize;
+            if (currentFontSize <= 22) {
+                return {...state, fontSize: currentFontSize + 2};
+            } else {
+                return {...state, fontSize: 16};
+            }
         }
         default:
             return state;

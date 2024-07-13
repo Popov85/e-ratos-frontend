@@ -12,8 +12,7 @@ const SessionTitle = props => {
     const renderSessionLeftTitle = () => {
         if (!props.isTimeLimited) return null;
         return (
-            <span
-                className="text-secondary text-small d-inline-flex border align-items-center justify-content-start float-left">
+            <span className="d-flex align-items-center">
                   {
                       pauseable ?
                           props.isPaused ?
@@ -38,10 +37,9 @@ const SessionTitle = props => {
     const renderSessionRightTitle = () => {
         const {email} = props.userInfo;
         return (
-            <span
-                className="text-secondary text-small border d-inline-flex border align-items-center justify-content-start float-right">
-                <span className="mr-1" title="Current user">{email}</span>
-                <span className="mr-1" title="Current context">{isLMS ? "|LMS" : "|non-LMS"}</span>
+            <span className="d-flex align-items-center text-white">
+                <strong className="mr-1 d-none d-md-inline" title="Current user">{email}</strong>
+                <strong className="mr-1 d-none d-md-inline" title="Current context">{isLMS ? "|LMS" : "|non-LMS"}</strong>
                 {
                     preservable ?
                         <a href="#" className="badge badge-secondary mr-1"
@@ -58,7 +56,7 @@ const SessionTitle = props => {
     }
 
     return (
-        <div>
+        <div className="bg-info p-0 text-secondary border d-flex align-items-center justify-content-between">
             {renderSessionLeftTitle()}
             {renderSessionRightTitle()}
         </div>

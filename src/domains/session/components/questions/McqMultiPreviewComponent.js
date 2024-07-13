@@ -12,7 +12,8 @@ export default class McqMultiPreviewComponent extends React.Component {
         super(props);
         this.state = {
             answerIds: [],
-            expanded: false
+            expanded: false,
+            fontSize: 16
         }
     }
 
@@ -45,12 +46,28 @@ export default class McqMultiPreviewComponent extends React.Component {
         this.setState(prevState => ({ expanded: !prevState.expanded }));
     }
 
+    setFontSize() {
+        this.setState(prevState => {
+            let currentFontSize = prevState.fontSize;
+            if (currentFontSize <= 22) {
+                return { fontSize: currentFontSize + 2 };
+            } else {
+                return { fontSize: 16 };
+            }
+        });
+    }
+
     render() {
         const {question} = this.props;
         const {answerIds} = this.state;
         return (
             <div className="border-0">
-                <QuestionComponent question = {question} clearResponse={() => this.clearResponse()} setExpanded={() => this.setExpanded()}/>
+                <QuestionComponent question = {question}
+                                   expanded = {this.state.expanded}
+                                   fontSize = {this.state.fontSize}
+                                   clearResponse={() => this.clearResponse()}
+                                   setExpanded={() =>this.setExpanded()}
+                                   setFontSize={() =>this.setFontSize()}/>
                 <div className="border-top border-right border-left border-regular">
                     {
                         question.answers.map(a => {
@@ -64,6 +81,7 @@ export default class McqMultiPreviewComponent extends React.Component {
                                         answer={a.answer}
                                         changeResponse={() => this.changeResponse()}
                                         expanded={this.state.expanded}
+                                        fontSize={this.state.fontSize}
                                         isChecked={answerIds.includes(a.answerId)}/>
                                 </div>);
                         })

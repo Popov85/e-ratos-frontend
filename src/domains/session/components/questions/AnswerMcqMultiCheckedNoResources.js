@@ -12,7 +12,7 @@ const AnswerMcqMultiCheckedNoResources = (props) => {
     }
 
     return (
-        <div className="text-truncate">
+        <div className="text-truncate" style={{fontSize: props.fontSize + 'px'}}>
             <input type="checkbox"
                    className="ml-1"
                    name={"option" + questionId}
@@ -31,6 +31,7 @@ const propTypes = {
     answer: PropTypes.string.isRequired,
     selected: PropTypes.bool.isRequired,
     percent: PropTypes.number.isRequired,
+    fontSize: PropTypes.number.isRequired,
     required: PropTypes.bool
 };
 

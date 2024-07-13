@@ -36,7 +36,7 @@ export default class McqSingleComponent extends React.Component {
     }
 
     render() {
-        const {question, expanded} = this.props;
+        const {question, expanded, fontSize} = this.props;
         const {answerIds} = this.state;
         const {questionId} = this.state;
         return (
@@ -55,6 +55,7 @@ export default class McqSingleComponent extends React.Component {
                                         answer={a.answer}
                                         changeResponse={this.changeResponse}
                                         expanded = {expanded}
+                                        fontSize = {fontSize}
                                         isChecked={a.answerId === answerIds[0]} />
                                 </div>);
                         })
@@ -68,6 +69,7 @@ export default class McqSingleComponent extends React.Component {
 const propTypes = {
     question: PropTypes.object.isRequired,
     expanded: PropTypes.bool.isRequired,
+    fontSize: PropTypes.number.isRequired,
     answerIds: PropTypes.array,
 
     putResponse: PropTypes.func.isRequired,

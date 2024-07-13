@@ -12,7 +12,7 @@ const AnswerMcqMultiNoResources = (props) => {
     }
 
     return (
-        <div className={`div-hover ${!expanded ? 'text-truncate': ''}`}>
+        <div className={`div-hover ${!expanded ? 'text-truncate': ''}`} style={{fontSize: props.fontSize + 'px'}}>
             <input type="checkbox"
                    className="ml-1"
                    name={"option"+questionId}
@@ -29,6 +29,7 @@ const propTypes = {
     answer: PropTypes.string.isRequired,
     isChecked: PropTypes.bool.isRequired,
     expanded: PropTypes.bool.isRequired,
+    fontSize: PropTypes.number.isRequired,
     changeResponse: PropTypes.func.isRequired
 };
 

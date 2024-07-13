@@ -50,15 +50,15 @@ class ResultByQuestions extends Component {
     renderMcqQuestion(questionResult) {
         if (!questionResult.correctAnswer) {
             if (questionResult.question.single) {
-                return <McqSingleAnsweredComponent checkedResponse={questionResult} />
+                return <McqSingleAnsweredComponent checkedResponse={questionResult} fontSize={this.props.fontSize}/>
             } else {
-                return <McqMultiAnsweredComponent checkedResponse={questionResult} />
+                return <McqMultiAnsweredComponent checkedResponse={questionResult} fontSize={this.props.fontSize}/>
             }
         } else {
             if (questionResult.question.single) {
-                return <McqSingleCheckedComponent checkedResponse={questionResult} />
+                return <McqSingleCheckedComponent checkedResponse={questionResult} fontSize={this.props.fontSize}/>
             } else {
-                return <McqMultiCheckedComponent checkedResponse={questionResult} />
+                return <McqMultiCheckedComponent checkedResponse={questionResult} fontSize={this.props.fontSize}/>
             }
         }
     }
@@ -127,7 +127,8 @@ class ResultByQuestions extends Component {
 }
 
 ResultByQuestions.propTypes = {
-    questionResults: PropTypes.array.isRequired
+    questionResults: PropTypes.array.isRequired,
+    fontSize: PropTypes.number.isRequired
 };
 
 export default ResultByQuestions;

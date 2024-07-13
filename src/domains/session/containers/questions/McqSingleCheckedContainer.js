@@ -4,7 +4,8 @@ import McqSingleCheckedComponent from "../../components/questions/McqSingleCheck
 
 const mapStateToProps = state => {
     return {
-        checkedResponse: getResponseChecked(state)
+        checkedResponse: getResponseChecked(state),
+        fontSize: state.session.session.fontSize,
     }
 }
 

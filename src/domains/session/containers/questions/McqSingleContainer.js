@@ -7,6 +7,7 @@ const mapStateToProps = state => {
     return {
         question: getQuestion(state),
         expanded: state.session.session.expanded,
+        fontSize: state.session.session.fontSize,
         answerIds: getResponse(state) ? getResponse(state).answerIds : [],
     }
 }

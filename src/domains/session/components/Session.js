@@ -39,7 +39,7 @@ const Session = props => {
     }
 
     return (
-        <div className="container-fluid p-1">
+        <div className="container-fluid p-0">
             {
                 (!isLoaded || (failure.is && failure.location === 'session')) &&
                 <StatusModContainer/>

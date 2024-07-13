@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {FaRedo} from 'react-icons/fa';
 import Result from './Result';
 import ResultByThemes from './ResultByThemes';
-import ResultByQuestions from './ResultByQuestions';
+import ResultByQuestionsContainer from "../containers/ResultByQuestionsContainer";
 
 const Finish = props => {
 
@@ -14,7 +14,7 @@ const Finish = props => {
         return (
             <div>
                 {themeResults ? <ResultByThemes themeResults={props.result.themeResults}/> : null}
-                {questionResults ? <ResultByQuestions questionResults={props.result.questionResults}/> : null}
+                {questionResults ? <ResultByQuestionsContainer questionResults={props.result.questionResults}/> : null}
             </div>
         );
     }

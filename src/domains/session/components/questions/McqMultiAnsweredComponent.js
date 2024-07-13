@@ -9,11 +9,11 @@ const normal = "bg-normal border-bottom border-regular";
 
 const McqMultiAnsweredComponent = (props) => {
 
-    const {checkedResponse} = props;
+    const {checkedResponse, fontSize} = props;
 
     return (
         <div>
-            <QuestionCheckedComponent checkedResponse={checkedResponse}/>
+            <QuestionCheckedComponent checkedResponse={checkedResponse} fontSize = {fontSize}/>
             <div className="border-top border-right border-left border-regular">
                 {
                     checkedResponse.question.answers.map(a => {
@@ -23,6 +23,7 @@ const McqMultiAnsweredComponent = (props) => {
                                     questionId={checkedResponse.question.questionId}
                                     answerId={a.answerId}
                                     answer={a.answer}
+                                    fontSize = {fontSize}
                                     selected={checkedResponse.response ? checkedResponse.response.answerIds.includes(a.answerId) : false}
                                 />
                             </div>);
@@ -34,7 +35,8 @@ const McqMultiAnsweredComponent = (props) => {
 };
 
 const propTypes = {
-    checkedResponse: PropTypes.object.isRequired
+    checkedResponse: PropTypes.object.isRequired,
+    fontSize: PropTypes.number.isRequired
 };
 
 McqMultiAnsweredComponent.propTypes = propTypes;

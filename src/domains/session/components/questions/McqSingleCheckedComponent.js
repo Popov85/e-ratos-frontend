@@ -8,7 +8,7 @@ const normal = "bg-normal border-bottom border-regular";
 
 const McqSingleCheckedComponent = (props) => {
 
-    const {checkedResponse} = props;
+    const {checkedResponse, fontSize} = props;
 
     const getPercent = (answerId) => {
         for (const a of checkedResponse.correctAnswer.correctAnswers) {
@@ -19,7 +19,7 @@ const McqSingleCheckedComponent = (props) => {
 
     return (
         <div>
-            <QuestionCheckedComponent checkedResponse={checkedResponse}/>
+            <QuestionCheckedComponent checkedResponse={checkedResponse} fontSize = {fontSize}/>
             <div className="border-top border-right border-left border-regular">
                 {
                     checkedResponse.question.answers.map(a => {
@@ -29,6 +29,7 @@ const McqSingleCheckedComponent = (props) => {
                                     questionId={checkedResponse.question.questionId}
                                     answerId={a.answerId}
                                     answer={a.answer}
+                                    fontSize = {props.fontSize}
                                     selected={checkedResponse.response ? checkedResponse.response.answerIds.includes(a.answerId) : false}
                                     percent={getPercent(a.answerId)}
                                 />
@@ -41,7 +42,8 @@ const McqSingleCheckedComponent = (props) => {
 };
 
 const propTypes = {
-    checkedResponse: PropTypes.object.isRequired
+    checkedResponse: PropTypes.object.isRequired,
+    fontSize: PropTypes.number.isRequired
 };
 
 McqSingleCheckedComponent.propTypes = propTypes

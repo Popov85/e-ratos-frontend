@@ -39,7 +39,7 @@ class CountdownBatch extends Component {
         if (!batchRemaining) return null;
         const forBatch = batchRemaining - (this.state.elapsed);
         return (
-            <span title="How much time left for this batch?">
+            <span title="How much time left for this batch?" className="text-white">
                 <strong>&nbsp;|&nbsp; for batch:</strong>
                 <span>{forBatch <= 0 ? "00:00:00" : utils.secToTime(forBatch)}</span>
             </span>

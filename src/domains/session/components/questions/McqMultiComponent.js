@@ -50,7 +50,7 @@ export default class McqMultiComponent extends React.Component {
     }
 
     render() {
-        const {question, expanded} = this.props;
+        const {question, expanded, fontSize} = this.props;
         const {answerIds} = this.state;
         const {questionId} = this.state;
         return (
@@ -68,6 +68,7 @@ export default class McqMultiComponent extends React.Component {
                                         answerId={a.answerId}
                                         answer={a.answer}
                                         expanded={expanded}
+                                        fontSize = {fontSize}
                                         changeResponse={() => this.changeResponse(a.answerId)}
                                         isChecked={answerIds.includes(a.answerId)}/>
                                 </div>);
@@ -82,6 +83,7 @@ export default class McqMultiComponent extends React.Component {
 const propTypes = {
     question: PropTypes.object.isRequired,
     expanded: PropTypes.bool.isRequired,
+    fontSize: PropTypes.number.isRequired,
     answerIds: PropTypes.array,
 
     putResponse: PropTypes.func.isRequired

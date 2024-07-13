@@ -42,8 +42,8 @@ class CountdownSession extends Component {
         const { sessionRemaining } = this.props;
         const forSession = sessionRemaining - this.state.elapsed;
         return (
-            <span title="How much time left for this session?">
-                <strong>Left time:</strong>
+            <span title="How much time left for this session?" className="text-white">
+                <strong>Left time: </strong>
                 <span>{forSession<=0? "00:00:00": utils.secToTime(forSession)}</span>
             </span>
         );

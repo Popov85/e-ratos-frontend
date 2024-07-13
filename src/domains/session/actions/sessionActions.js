@@ -39,6 +39,8 @@ const RESET_SESSION = "RESET_SESSION";
 
 const SET_EXPANDED = "SET_EXPANDED";
 
+const SET_FONT_SIZE = "SET_FONT_SIZE";
+
 export const apiCall = isLoaded => ({type: API_CALL, isLoaded});
 
 export const emptyBatch = () => ({type: EMPTY_BATCH, error: new Error("No Questions found in the first batch")});
@@ -76,6 +78,8 @@ export const setSkipped = (questionId) => ({type: SET_SKIPPED, questionId});
 export const resetSession = () => ({type: RESET_SESSION});
 
 export const setExpanded = () => ({type: SET_EXPANDED});
+
+export const setFontSize = () => ({type: SET_FONT_SIZE});
 
 
 export const getStarted = (schemeId, isLMS) => {
