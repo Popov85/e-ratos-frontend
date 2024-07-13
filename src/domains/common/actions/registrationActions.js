@@ -74,10 +74,9 @@ export const getRegistered = (regData, isLMS) => {
 export const getDerivedOrganisation = () => {
     return (dispatch) => {
         dispatch(loadingDerivedOrganisation(true));
-        appAPI.fetchDerivedOrganisation().then(result => {
-            let org = result.data;
-            dispatch(setDerivedOrganisation(org));
-            dispatch(getFaculties(org.orgId, true));
+        appAPI.fetchDerivedOrganisation().then(orgId => {
+            dispatch(setDerivedOrganisation(orgId));
+            dispatch(getFaculties(orgId, true));
         }).catch(() => {
             dispatch(loadingDerivedOrganisationFailure(new Error("Failed to fetch derived organisation info")));
         }).finally(() => dispatch(loadingDerivedOrganisation(false)));
@@ -87,8 +86,8 @@ export const getDerivedOrganisation = () => {
 export const getOrganisations = (isLMS) => {
     return (dispatch) => {
         dispatch(loadingOrganisations(true));
-        appAPI.fetchOrganisations(isLMS).then(result => {
-            dispatch(setOrganisations(result.data));
+        appAPI.fetchOrganisations(isLMS).then(organisations => {
+            dispatch(setOrganisations(organisations));
         }).catch(() => {
             dispatch(loadingOrganisationsFailure(new Error("Failed to fetch organisations info")));
         }).finally(() => dispatch(loadingOrganisations(false)));
@@ -98,8 +97,8 @@ export const getOrganisations = (isLMS) => {
 export const getFaculties = (orgId, isLMS) => {
     return (dispatch) => {
         dispatch(loadingFaculties(true));
-        appAPI.fetchFaculties(orgId, isLMS).then(result => {
-            dispatch(setFaculties(result.data));
+        appAPI.fetchFaculties(orgId, isLMS).then(faculties => {
+            dispatch(setFaculties(faculties));
         }).catch(() => {
             dispatch(loadingFacultiesFailure(new Error("Failed to fetch faculties info")));
         }).finally(() => dispatch(loadingFaculties(false)));
@@ -109,8 +108,8 @@ export const getFaculties = (orgId, isLMS) => {
 export const getClasses = (facId, isLMS) => {
     return (dispatch) => {
         dispatch(loadingClasses(true));
-        appAPI.fetchClasses(facId, isLMS).then(result => {
-            dispatch(setClasses(result.data));
+        appAPI.fetchClasses(facId, isLMS).then(classes => {
+            dispatch(setClasses(classes));
         }).catch(() => {
             dispatch(loadingClassesFailure(new Error("Failed to fetch classes info")));
         }).finally(() => dispatch(loadingClasses(false)));
@@ -120,9 +119,9 @@ export const getClasses = (facId, isLMS) => {
 export const getRegOptions = () => {
     return (dispatch) => {
         dispatch(loadingRegOptions(true));
-        appAPI.fetchRegOptions().then(result => {
-            //console.log("Result (regOptions) = ", result.data);
-            dispatch(setRegOptions(result.data));
+        appAPI.fetchRegOptions().then(data => {
+            //console.log("Result (regOptions) = ", data);
+            dispatch(setRegOptions(data));
         }).catch(e => {
             console.log("Error loading RegOptions!", e);
             dispatch(loadingRegOptionsFailure(new Error("Failed to load RegOptions")));

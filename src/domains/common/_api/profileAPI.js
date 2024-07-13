@@ -1,4 +1,4 @@
-import {instance} from "../../common/_api/axios";
+import {instance} from "./axios";
 
 export const profileAPI = {
 

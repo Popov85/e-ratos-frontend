@@ -1,4 +1,4 @@
-import appAPI from "../../common/_api/appAPI";
+import appAPI from "../_api/appAPI";
 
 const CHECKING_LOGGING = "CHECKING_LOGGING";
 const CHECKING_LOGGING_FAILURE = "CHECKING_LOGGING_FAILURE";
@@ -39,8 +39,8 @@ export const checkLogged = () => {
         dispatch(resetCheckLoggingFailure());
         dispatch(checkLogging(true));
         appAPI.fetchUserInfo()
-            .then(result => {
-                dispatch(setLoggedIn(result.data));
+            .then(userInfo => {
+                dispatch(setLoggedIn(userInfo));
             }).catch(e => {
             dispatch(setLoggedOut());
             dispatch(checkLoggingFailure(new Error("Failed to check if user is logged")));
@@ -53,8 +53,8 @@ export const getLogged = credentials => {
         dispatch(resetLoggingInFailure());
         dispatch(loggingIn(true));
         appAPI.doLogin(credentials)
-            .then(response => {
-                if (response.status === 200) {
+            .then(status => {
+                if (status === 200) {
                     // After successful login, fetch user profile
                     return appAPI.fetchUserInfo();
                 } else {
@@ -62,7 +62,7 @@ export const getLogged = credentials => {
                 }
             }).then(userInfo => {
             // Handle successful user profile fetch
-            dispatch(setLoggedIn(userInfo.data));
+            dispatch(setLoggedIn(userInfo));
         }).catch(error => {
             dispatch(loggingInFailure(error));
         }).finally(() => dispatch(loggingIn(false)));
@@ -74,6 +74,7 @@ export const getLoggedOut = () => {
         dispatch(serverResetLoggingOutFailure());
         dispatch(serverLoggingOut(true));
         appAPI.doLogout().then(() => {
+            // Ignore code status, do log out anyway
             dispatch(setLoggedOut());
         }).catch(e => {
             dispatch(serverLoggingOutFailure(new Error("Failed to log out")));
