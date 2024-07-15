@@ -1,7 +1,5 @@
 import {instance} from "./axios";
-import {Credentials} from "../types/Credentials";
 import {RegOptions} from "../types/RegOptions";
-import {UserInfo} from "../types/UserInfo";
 import {AxiosResponse} from "axios";
 import {Organisation} from "../types/Organisation";
 import {Faculty} from "../types/Faculty";
@@ -9,27 +7,10 @@ import {Class} from "../types/Class";
 import {Student} from "../types/Student";
 
 
-export const appAPI = {
-
-    async doLogin(credentials: Credentials): Promise<number> {
-        const response: AxiosResponse = await instance.post<string>('/login', credentials, {
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        });
-        return response.status;
-    },
-
-    async doLogout(): Promise<number> {
-        const response: AxiosResponse = await instance.post("/logout");
-        return response.status;
-    },
+export const registrationAPI = {
 
     async fetchRegOptions(): Promise<RegOptions> {
         const response: AxiosResponse<RegOptions> = await instance.get('/self-registration/options');
-        return response.data;
-    },
-
-    async fetchUserInfo(): Promise<UserInfo> {
-        const response: AxiosResponse<UserInfo> = await instance.get("/info/user");
         return response.data;
     },
 
@@ -57,6 +38,6 @@ export const appAPI = {
     async register(student: Student, isLMS: boolean): Promise<void> {
         await instance.post(`${isLMS ? '/lti' : ''}/sign-up`, student);
     }
-}
+};
 
-export default appAPI;
+export default registrationAPI;

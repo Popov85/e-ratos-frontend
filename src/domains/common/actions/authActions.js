@@ -1,4 +1,4 @@
-import appAPI from "../_api/appAPI";
+import authAPI from "../_api/authAPI";
 
 const CHECKING_LOGGING = "CHECKING_LOGGING";
 const CHECKING_LOGGING_FAILURE = "CHECKING_LOGGING_FAILURE";
@@ -38,7 +38,7 @@ export const checkLogged = () => {
     return (dispatch) => {
         dispatch(resetCheckLoggingFailure());
         dispatch(checkLogging(true));
-        appAPI.fetchUserInfo()
+        authAPI.fetchUserInfo()
             .then(userInfo => {
                 dispatch(setLoggedIn(userInfo));
             }).catch(e => {
@@ -52,11 +52,11 @@ export const getLogged = credentials => {
     return (dispatch) => {
         dispatch(resetLoggingInFailure());
         dispatch(loggingIn(true));
-        appAPI.doLogin(credentials)
+        authAPI.doLogin(credentials)
             .then(status => {
                 if (status === 200) {
                     // After successful login, fetch user profile
-                    return appAPI.fetchUserInfo();
+                    return authAPI.fetchUserInfo();
                 } else {
                     throw new Error("Unsuccessful authentication attempt!");
                 }
@@ -73,7 +73,7 @@ export const getLoggedOut = () => {
     return (dispatch) => {
         dispatch(serverResetLoggingOutFailure());
         dispatch(serverLoggingOut(true));
-        appAPI.doLogout().then(() => {
+        authAPI.doLogout().then(() => {
             // Ignore code status, do log out anyway
             dispatch(setLoggedOut());
         }).catch(e => {
