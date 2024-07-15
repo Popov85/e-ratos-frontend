@@ -7,9 +7,9 @@ import "../../../../main.css";
 
 const StaffNavbar = (props) => {
 
-    const {authorization} = props.auth;
+    const { authorization = {} } = props.auth ?? {};
 
-    const {name, surname} = props.userInfo;
+    const { name = '', surname = '' } = props.userInfo ?? {};
 
     const displayUserInfo = () => {
         return name + " " + surname;
@@ -26,11 +26,11 @@ const StaffNavbar = (props) => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto navbar-nav">
-                        <NavDropdown title="Admin" id="admin-nav-dropdown" hidden={!authorization.isAtLeastDepAdmin}>
+                        <NavDropdown title="Admin" id="admin-nav-dropdown" hidden={!authorization?.isAtLeastDepAdmin}>
                             <LinkContainer to="/staff/users">
                                 <NavDropdown.Item>Staff</NavDropdown.Item>
                             </LinkContainer>
-                            <LinkContainer to="/staff/structure" hidden={!authorization.isAtLeastFacAdmin}>
+                            <LinkContainer to="/staff/structure" hidden={!authorization?.isAtLeastFacAdmin}>
                                 <NavDropdown.Item>Structure</NavDropdown.Item>
                             </LinkContainer>
                         </NavDropdown>
