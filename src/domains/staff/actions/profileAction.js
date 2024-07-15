@@ -1,4 +1,4 @@
-import {profileAPI} from "../../common/_api/profileAPI";
+import {profileAPI} from "../_api/profileAPI";
 import {updateUserInfo} from "../../common/actions/authActions";
 
 const UPDATING_USER_PROFILE = "UPDATING_USER_PROFILE";
