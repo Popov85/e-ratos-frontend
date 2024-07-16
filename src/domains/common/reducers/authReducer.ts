@@ -26,13 +26,7 @@ const allowedRolesAtLeastInstructor: SecurityRole[] = [...allowedRolesAtLeastDep
 type State = {
     logged: boolean;
     authorized: boolean;
-    authorization: {
-        isGlobalAdmin?: boolean;
-        isAtLeastOrgAdmin?: boolean;
-        isAtLeastFacAdmin?: boolean;
-        isAtLeastDepAdmin?: boolean;
-        isAtLeastInstructor?: boolean;
-    } | null;
+    authorization: Partial<Authorization> | null;
     userInfo: Partial<UserInfo> | null;
     checkLogging?: boolean;
     errorCheckingLogging?: Error | null;

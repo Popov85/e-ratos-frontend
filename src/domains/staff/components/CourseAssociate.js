@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Failure from "../../common/components/Failure";
-import ProtectedResource from "../../common/components/ProtectedResource";
 import CourseAssociateForm from "../forms/CourseAssociateForm";
+import {Redirect} from "react-router-dom";
 
 class CourseAssociate extends React.Component {
 
@@ -26,7 +26,7 @@ class CourseAssociate extends React.Component {
     render() {
         const {course, userInfo, lmsesForSelect} = this.props;
         const {authenticated} = this.props.userInfo;
-        if (!authenticated.isAtLeastInstructor) return <ProtectedResource/>
+        if (!authenticated.isAtLeastInstructor) return <Redirect to='/unauthorized'/>
 
         const {isLoading, error, message} = this.props.courseEdit;
 

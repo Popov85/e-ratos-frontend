@@ -1,14 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {ServerError} from "../types/ServerError";
 
 const defaultMessage = 'failed to perform the action';
 
-const Failure = (props) => {
-    const message = props.message;
-    const details = props.details;
-    const serverError = props.serverError;
+type Props = {
+    message?: string;
+    details?: string;
+    serverError?: ServerError
+}
+
+const Failure: React.FC<Partial<Props>> = ({message = defaultMessage, details = '', serverError = {}}) => {
+
     return (<div>
-        <div className="text-center text-danger"> {(message) ? message : defaultMessage}</div>
+        <div className="text-center text-danger"> {message}</div>
         {(details ? <div className="d-flex justify-content-center">
             <details open={false}>
                 <summary className="border text-secondary"><small>Details</small></summary>
@@ -18,18 +22,10 @@ const Failure = (props) => {
         {(serverError ? <div className="d-flex justify-content-center">
             <details open={false}>
                 <summary className="border text-secondary"><small>Server message</small></summary>
-                <small>{serverError.message}</small>
+                <small>{serverError?.message}</small>
             </details>
         </div> : null)}
     </div>);
 }
-
-const propTypes = {
-    message: PropTypes.string,
-    details: PropTypes.string,
-    serverError: PropTypes.object
-};
-
-Failure.propTypes = propTypes;
 
 export default Failure;

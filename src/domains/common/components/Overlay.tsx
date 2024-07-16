@@ -1,14 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Modal from "react-bootstrap/Modal";
 import Spinner from "./Spinner";
 
-const Overlay = props => {
+type Props = {
+    show: boolean
+}
+
+const Overlay: React.FC<Props> = ({show}) => {
 
     return (
         <Modal
             id="sModal"
-            show={props.show}
+            show={show}
             backdrop="static"
             keyboard={false}
             size="sm"
@@ -20,8 +23,5 @@ const Overlay = props => {
     );
 };
 
-Overlay.propTypes = {
-    show: PropTypes.bool.isRequired
-};
 
 export default Overlay;

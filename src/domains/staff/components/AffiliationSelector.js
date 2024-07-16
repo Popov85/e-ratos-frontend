@@ -4,7 +4,6 @@ import {Affiliation} from "../objects/Affiliation";
 import {FaStepForward} from "react-icons/fa";
 import PropTypes from 'prop-types';
 
-import ProtectedResource from "../../common/components/ProtectedResource";
 import Error from "../../common/components/Error";
 import {Redirect} from "react-router-dom";
 

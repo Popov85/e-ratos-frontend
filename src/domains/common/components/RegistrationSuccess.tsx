@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import {FaSignInAlt} from 'react-icons/fa';
+// @ts-ignore
 import LoginContainer from "../containers/LoginContainer";
 
-const RegistrationSuccess = (props) => {
+const RegistrationSuccess: React.FC = () => {
 
     const [state, setState] = useState({OK: false});
 
@@ -35,6 +36,5 @@ const RegistrationSuccess = (props) => {
         </div>
     </div>);
 }
-
 
 export default RegistrationSuccess;
