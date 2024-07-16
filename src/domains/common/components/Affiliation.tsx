@@ -1,28 +1,48 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {Organisation} from "../types/Organisation";
+import {Faculty} from "../types/Faculty";
+import {Class} from "../types/Class";
 
-const Affiliation = (props) => {
+type Props = {
+    orgId: number;
+    isLMS: boolean;
+    input: any; //react-form specific
+    meta: any; //react-form specific
+    registration: {
+        ORG: Array<Organisation>;
+        FAC: Array<Faculty>;
+        CLA: Array<Class>;
+    };
+
+    getFaculties: (orgId: number, isLMS: boolean) => void;
+    getClasses: (facId: number, isLMS: boolean) => void;
+    clearFaculties: () => void;
+    clearClasses: () => void;
+}
+
+
+const Affiliation: React.FC<Props> = (props) => {
 
     const {isLMS, orgId} = props;
 
-    const handleOrgChange = (value) => {
+    const handleOrgChange = (value: number) => {
         props.clearClasses();
         props.clearFaculties();
         props.input.onChange({"orgId": value});
-        if (value !== "") props.getFaculties(value, isLMS);
+        if (value) props.getFaculties(value, isLMS);
     }
 
-    const handleFacChange = (value) => {
+    const handleFacChange = (value: number) => {
         props.clearClasses();
         if (isLMS) {
             props.input.onChange({"orgId": orgId, "facId": value});
         } else {
             props.input.onChange({...props.input.value, "classId": null, "facId": value});
         }
-        if (value !== "") props.getClasses(value, isLMS);
+        if (value) props.getClasses(value, isLMS);
     }
 
-    const handleClaChange = (value) => {
+    const handleClaChange = (value: number) => {
         if (isLMS) {
             props.input.onChange({...props.input.value, "orgId": orgId, "classId": value});
         } else {
@@ -40,12 +60,13 @@ const Affiliation = (props) => {
                 </div>
                 <select id="orgId" name="orgId"
                         className={`custom-select ${!touched ? '' : hasError && error.fields.includes("orgId") ? 'is-invalid' : 'is-valid'}`}
-                        onChange={e => handleOrgChange(e.target.value)}
+                        onChange={e => handleOrgChange(Number(e.target.value))}
                         value={props.input.value !== "" ? props.input.orgId : ""}>
-                    {props.registration.ORG.map(item => <option key={item.orgId} value={item.orgId}>{item.name}</option>)}
+                    {props.registration.ORG.map(item => <option key={item.orgId}
+                                                                value={item.orgId}>{item.name}</option>)}
                 </select>
                 {hasError && error.fields.includes("orgId") &&
-                <div className="invalid-feedback d-block">Organisation must be selected</div>}
+                    <div className="invalid-feedback d-block">Organisation must be selected</div>}
             </div>
 
             <div className="input-group form-group " title="Select your faculty">
@@ -54,12 +75,13 @@ const Affiliation = (props) => {
                 </div>
                 <select id="facId" name="facId"
                         className={`custom-select ${!touched ? '' : hasError && error.fields.includes("facId") ? 'is-invalid' : 'is-valid'}`}
-                        onChange={e => handleFacChange(e.target.value)}
+                        onChange={e => handleFacChange(Number(e.target.value))}
                         value={props.input.value !== "" ? props.input.facId : ""}>
-                    {props.registration.FAC.map(item => <option key={item.facId} value={item.facId}>{item.name}</option>)}
+                    {props.registration.FAC.map(item => <option key={item.facId}
+                                                                value={item.facId}>{item.name}</option>)}
                 </select>
                 {hasError && error.fields.includes("facId") &&
-                <div className="invalid-feedback d-block">Faculty must be selected</div>}
+                    <div className="invalid-feedback d-block">Faculty must be selected</div>}
             </div>
 
             <div className="input-group form-group " title="Select your class">
@@ -68,27 +90,16 @@ const Affiliation = (props) => {
                 </div>
                 <select id="classId" name="classId"
                         className={`custom-select ${!touched ? '' : hasError && error.fields.includes("classId") ? 'is-invalid' : 'is-valid'}`}
-                        onChange={e => handleClaChange(e.target.value)}
+                        onChange={e => handleClaChange(Number(e.target.value))}
                         value={props.input.value !== "" ? props.input.classId : ""}>
-                    {props.registration.CLA.map(item => <option key={item.classId} value={item.classId}>{item.name}</option>)}
+                    {props.registration.CLA.map(item => <option key={item.classId}
+                                                                value={item.classId}>{item.name}</option>)}
                 </select>
                 {hasError && error.fields.includes("classId") &&
-                <div className="invalid-feedback d-block">Class must be selected</div>}
+                    <div className="invalid-feedback d-block">Class must be selected</div>}
             </div>
         </div>
     );
 }
-
-Affiliation.propTypes = {
-    // If from LMS
-    orgId: PropTypes.number,
-    isLMS: PropTypes.bool.isRequired,
-    registration: PropTypes.object.isRequired,
-
-    getFaculties: PropTypes.func.isRequired,
-    getClasses: PropTypes.func.isRequired,
-    clearFaculties: PropTypes.func.isRequired,
-    clearClasses: PropTypes.func.isRequired,
-};
 
 export default Affiliation;
