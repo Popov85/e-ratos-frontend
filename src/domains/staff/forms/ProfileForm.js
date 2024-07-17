@@ -2,8 +2,8 @@ import React from 'react'
 import {Field, reduxForm} from 'redux-form';
 import '../../../../main.css';
 import {email, minLength2, required} from "../../../utils/validators";
-import FieldString from "./controls/FieldString";
-import FieldEmailBadgeAt from "./controls/FieldEmailBadgeAt";
+import FieldString from "../../common/forms/controls/FieldString";
+import FieldEmailBadgeAt from "../../common/forms/controls/FieldEmailBadgeAt";
 
 let ProfileForm = props => {
 

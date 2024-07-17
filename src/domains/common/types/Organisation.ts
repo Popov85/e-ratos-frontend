@@ -1,4 +1,4 @@
 export type Organisation = {
-    orgId: number;
+    orgId: number | string;
     name: string;
 };

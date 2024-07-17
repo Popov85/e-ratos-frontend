@@ -14,7 +14,7 @@ import {
     SERVER_RESET_LOGGING_OUT_FAILURE,
     AuthActionTypes
 } from "../actions/authActions";
-import { UserInfo } from "../types/UserInfo";
+import {UserInfo} from "../types/UserInfo";
 import {SecurityRole} from "../types/SecurityRole";
 
 const allowedRolesGlobalAdmin: SecurityRole[] = [SecurityRole.ROLE_GLOBAL_ADMIN];
@@ -28,12 +28,12 @@ type State = {
     authorized: boolean;
     authorization: Partial<Authorization> | null;
     userInfo: Partial<UserInfo> | null;
-    checkLogging?: boolean;
-    errorCheckingLogging?: Error | null;
-    isLoggingIn?: boolean;
-    errorLoggingIn?: Error | null;
-    isLoggingOut?: boolean;
-    errorLoggingOut?: Error | null;
+    checkLogging: boolean;
+    errorCheckingLogging: Error | null;
+    isLoggingIn: boolean;
+    errorLoggingIn: Error | null;
+    isLoggingOut: boolean;
+    errorLoggingOut: Error | null;
 }
 
 const initState: State = {
@@ -52,24 +52,26 @@ const initState: State = {
 export const authReducer = (state: State = initState, action: AuthActionTypes): State => {
     switch (action.type) {
         case CHECKING_LOGGING: {
-            return { ...state, checkLogging: action.payload?.inProgress };
+            const inProgress = action.payload?.inProgress ?? false;
+            return {...state, checkLogging: inProgress};
         }
         case CHECKING_LOGGING_FAILURE: {
             console.warn("Failed to check logging, error = ", action.payload?.error);
-            return { ...state, errorCheckingLogging: action.payload?.error };
+            return {...state, errorCheckingLogging: action.payload?.error ?? null};
         }
         case RESET_CHECKING_LOGGING_FAILURE: {
-            return { ...state, errorCheckingLogging: null };
+            return {...state, errorCheckingLogging: null};
         }
         case LOGGING_IN: {
-            return { ...state, isLoggingIn: action.payload?.inProgress };
+            const inProgress = action.payload?.inProgress ?? false;
+            return {...state, isLoggingIn: inProgress};
         }
         case LOGGING_IN_FAILURE: {
             console.error("Failed to login, error = ", action.payload?.error);
-            return { ...state, errorLoggingIn: action.payload?.error };
+            return {...state, errorLoggingIn: action.payload?.error ?? null};
         }
         case RESET_LOGGING_IN_FAILURE: {
-            return { ...state, errorLoggingIn: null };
+            return {...state, errorLoggingIn: null};
         }
         case SET_LOGGED_IN: {
             const userInfo: UserInfo = action.payload!;
@@ -87,23 +89,24 @@ export const authReducer = (state: State = initState, action: AuthActionTypes): 
             };
         }
         case SET_LOGGED_OUT: {
-            return { ...state, logged: false, userInfo: null, authorization: {} };
+            return {...state, logged: false, userInfo: null, authorization: {}};
         }
         case SERVER_LOGGING_OUT: {
-            return { ...state, isLoggingOut: action.payload?.isProgress };
+            const isProgress = action.payload?.isProgress ?? false;
+            return {...state, isLoggingOut: isProgress};
         }
         case SERVER_LOGGING_OUT_FAILURE: {
             console.log("Failed to logout, error = ", action.payload?.error);
-            return { ...state, errorLoggingOut: action.payload?.error };
+            return {...state, errorLoggingOut: action.payload?.error ?? null};
         }
         case SERVER_RESET_LOGGING_OUT_FAILURE: {
-            return { ...state, errorLoggingOut: null };
+            return {...state, errorLoggingOut: null};
         }
         case SET_AUTHORIZED: {
-            return { ...state, authorized: action.payload?.authorized! };
+            return {...state, authorized: action.payload?.authorized!};
         }
         case UPDATE_USER_INFO: {
-            let userInfo= action.payload;
+            let userInfo = action.payload;
             if (!userInfo) {
                 return state;
             }

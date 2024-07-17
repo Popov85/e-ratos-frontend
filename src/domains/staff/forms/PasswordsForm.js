@@ -2,7 +2,7 @@ import React from 'react'
 import {Field, reduxForm} from 'redux-form';
 import {minLength8, passwordsMustMatch, required} from "../../../utils/validators";
 import '../../../../main.css';
-import FieldPassword from "./controls/FieldPassword";
+import FieldPassword from "../../common/forms/controls/FieldPassword";
 
 let PasswordsForm = props => {
 

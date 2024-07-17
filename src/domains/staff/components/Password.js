@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Failure from "./Failure";
+import Failure from "../../common/components/Failure";
 import {LinkContainer} from "react-router-bootstrap";
 import PasswordsForm from "../forms/PasswordsForm";
 import {FaEye, FaEyeSlash} from "react-icons/fa";

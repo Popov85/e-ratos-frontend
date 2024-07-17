@@ -1,4 +1,4 @@
 export type Faculty = {
-    facId: number;
+    facId: number | string;
     name: string;
 };

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Failure from "./Failure";
+import Failure from "../../common/components/Failure";
 import ProfileForm from "../forms/ProfileForm";
 import {FaToggleOff, FaToggleOn} from "react-icons/fa";
 import {LinkContainer} from "react-router-bootstrap";

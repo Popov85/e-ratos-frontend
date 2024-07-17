@@ -1,7 +1,7 @@
 import React from 'react';
 import {Redirect, Route} from "react-router-dom";
-import ProfileContainer from "../../common/containers/ProfileContainer";
-import PasswordContainer from "../../common/containers/PasswordContainer";
+import ProfileContainer from "../../staff/containers/ProfileContainer";
+import PasswordContainer from "../../staff/containers/PasswordContainer";
 import PropTypes from "prop-types";
 import StudentNavbarContainer from "../containers/StudentNavbarContainer";
 
