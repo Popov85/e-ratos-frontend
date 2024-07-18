@@ -1,7 +1,7 @@
 export type Student = {
     studId: number | null;
     user: {
-        userId: number;
+        userId: number | null;
         name: string;
         surname: string;
         email: string;

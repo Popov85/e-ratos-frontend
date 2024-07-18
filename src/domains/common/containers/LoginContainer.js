@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 import Login from "../components/Login";
 import {reset} from 'redux-form';
-import {getSavedCredentials} from "../selectors/registrationSelector";
+import {getSavedCredentialsSelector} from "../selectors/registrationSelector";
 import {getLogged} from "../actions/authActions";
 import {getRegOptions, clearRegisteredCredentials} from "../actions/registrationActions";
 
@@ -9,7 +9,7 @@ const mapStateToProps = state => {
     return {
         auth: state.auth,
         regOptions: state.registration.regOptions,
-        savedCredentials: getSavedCredentials(state)
+        savedCredentials: getSavedCredentialsSelector(state)
     }
 }
 

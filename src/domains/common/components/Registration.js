@@ -6,8 +6,6 @@ import RegistrationForm from "../forms/RegistrationForm";
 import LoginContainer from "../containers/LoginContainer";
 import '../../../../main.css';
 
-
-
 const initialValues = null;
 
 class Registration extends Component {

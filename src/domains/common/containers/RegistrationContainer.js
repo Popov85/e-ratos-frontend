@@ -10,15 +10,15 @@ import {
     getOrganisations,
     getRegistered
 } from "../actions/registrationActions";
-import {getOrgId, getSavedCredentials, isLMS} from "../selectors/registrationSelector";
+import {getOrgIdSelector, getSavedCredentialsSelector, isLMSSelector} from "../selectors/registrationSelector";
 import Registration from "../components/Registration";
 
 const mapStateToProps = state => {
     return {
-        isLMS: isLMS(state),
-        orgId: getOrgId(state),
+        isLMS: isLMSSelector(state),
+        orgId: getOrgIdSelector(state),
         registration: state.registration,
-        savedCredentials: getSavedCredentials(state),
+        savedCredentials: getSavedCredentialsSelector(state),
     }
 }
 

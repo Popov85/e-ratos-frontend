@@ -27,7 +27,7 @@ export type AuthState = {
     logged: boolean;
     authorized: boolean;
     authorization: Partial<Authorization> | null;
-    userInfo: Partial<UserInfo> | null;
+    userInfo: UserInfo | null;
     checkLogging: boolean;
     errorCheckingLogging: Error | null;
     isLoggingIn: boolean;
@@ -114,10 +114,8 @@ export const authReducer = (state: AuthState = initState, action: AuthActionType
                 ...state,
                 userInfo: {
                     ...state.userInfo,
-                    name: userInfo.name,
-                    surname: userInfo.surname,
-                    email: userInfo.email,
-                }
+                    ...userInfo, // This will overwrite only the provided properties in userInfo
+                },
             };
         }
         default:

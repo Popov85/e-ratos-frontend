@@ -28,16 +28,14 @@ import {
     SET_REGISTERED_CREDENTIALS,
     RegActionTypes
 } from '../actions/registrationActions';
+import {SavedCredentials} from "../types/SavedCredentials";
 
 export type RegistrationState = {
     isLoading: boolean;
     ORG: Array<Organisation>;
     FAC: Array<Faculty>;
     CLA: Array<Class>;
-    savedCredentials?: {
-        email: string;
-        password: string;
-    } | null;
+    savedCredentials?: SavedCredentials | null;
     isLoadingRegOptions: boolean;
     regOptions: RegOptions | null;
     error: Error | null;
