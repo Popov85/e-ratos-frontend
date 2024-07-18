@@ -23,7 +23,7 @@ const allowedRolesAtLeastFacAdmin: SecurityRole[] = [...allowedRolesAtLeastOrgAd
 const allowedRolesAtLeastDepAdmin: SecurityRole[] = [...allowedRolesAtLeastFacAdmin, SecurityRole.ROLE_DEP_ADMIN];
 const allowedRolesAtLeastInstructor: SecurityRole[] = [...allowedRolesAtLeastDepAdmin, SecurityRole.ROLE_INSTRUCTOR];
 
-type State = {
+export type AuthState = {
     logged: boolean;
     authorized: boolean;
     authorization: Partial<Authorization> | null;
@@ -36,7 +36,7 @@ type State = {
     errorLoggingOut: Error | null;
 }
 
-const initState: State = {
+const initState: AuthState = {
     logged: false,
     authorized: false,
     authorization: null,
@@ -49,7 +49,7 @@ const initState: State = {
     errorLoggingOut: null
 };
 
-export const authReducer = (state: State = initState, action: AuthActionTypes): State => {
+export const authReducer = (state: AuthState = initState, action: AuthActionTypes): AuthState => {
     switch (action.type) {
         case CHECKING_LOGGING: {
             const inProgress = action.payload?.inProgress ?? false;

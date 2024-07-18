@@ -29,7 +29,7 @@ import {
     RegActionTypes
 } from '../actions/registrationActions';
 
-interface RegistrationState {
+export type RegistrationState = {
     isLoading: boolean;
     ORG: Array<Organisation>;
     FAC: Array<Faculty>;
