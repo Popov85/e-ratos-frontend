@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { reset } from 'redux-form';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {reset} from 'redux-form';
 import {getOrgIdSelector, getSavedCredentialsSelector, isLMSSelector} from "../selectors/registrationSelector";
 import '../../../../main.css';
 import Failure from "./Failure";
@@ -13,19 +13,18 @@ import {RootState} from "../../../store/rootReducer";
 import {SavedCredentials} from "../types/SavedCredentials";
 import {RegistrationState} from "../reducers/registrationReducer";
 import {
-    clearClasses,
-    clearFaculties,
-    getClasses,
     getDerivedOrganisation,
-    getFaculties,
     getOrganisations,
     getRegistered
 } from "../actions/registrationActions";
 import {Student} from "../types/Student";
+import {Dispatch} from "redux";
+import RegistrationFormFC, {RegistrationFormData} from "../forms/RegistrationFormFC";
+
 
 const RegistrationFC: React.FC = () => {
 
-    const dispatch = useDispatch();
+    const dispatch: Dispatch<any> = useDispatch();
 
     const isLMS: boolean = useSelector((state: RootState) => isLMSSelector(state));
     const orgId: number | null = useSelector((state: RootState) => getOrgIdSelector(state));
@@ -34,7 +33,6 @@ const RegistrationFC: React.FC = () => {
 
     const [regSuccess, setRegSuccess] = useState<boolean>(false);
     const [regCancelled, setRegCancelled] = useState<boolean>(false);
-    const [showPassword, setShowPassword] = useState<boolean>(false);
 
     useEffect(() => {
         if (isLMS) {
@@ -44,7 +42,7 @@ const RegistrationFC: React.FC = () => {
         }
     }, []);
 
-    const handleSubmit = (formData: any) => {
+    const handleSubmit = (formData: RegistrationFormData): void => {
         const {name, surname, email, password, affiliation, year} = formData;
 
         const userId = null;
@@ -69,10 +67,6 @@ const RegistrationFC: React.FC = () => {
 
         dispatch(getRegistered(student, isLMS));
         setRegSuccess(true);
-    };
-
-    const displayPassword = () => {
-        setShowPassword(!showPassword);
     };
 
     const {isLoading, error} = registration;
@@ -107,20 +101,12 @@ const RegistrationFC: React.FC = () => {
                                     <Failure message={error.message}/>
                                 </div>
                             }
-                            <RegistrationForm
+                            <RegistrationFormFC
                                 onSubmit={handleSubmit}
-                                initialValues={null}
                                 isLMS={isLMS}
                                 orgId={orgId}
                                 disabled={registration.isLoading}
-                                showPassword={showPassword}
-                                displayPassword={displayPassword}
-                                registration={registration}
-                                //getFaculties={()=>dispatch(getFaculties(orgId, isLMS))}//TODO
-                                //getClasses={()=>dispatch(getClasses(facId, isLMS))}//TODO
-                                clearFaculties={()=>dispatch(clearFaculties())}
-                                clearClasses={()=>dispatch(clearClasses())}
-                                resetForm={()=>dispatch(reset('registration'))}/>
+                              />
                         </div>
                         <div className="card-footer pt-1 pb-1">
                             <div className="text-center text-secondary">

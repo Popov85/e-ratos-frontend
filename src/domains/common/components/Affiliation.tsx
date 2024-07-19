@@ -2,6 +2,9 @@ import React from 'react';
 import {Organisation} from "../types/Organisation";
 import {Faculty} from "../types/Faculty";
 import {Class} from "../types/Class";
+import {useDispatch} from "react-redux";
+import {Dispatch} from "redux";
+import {clearClasses, clearFaculties, getClasses, getFaculties} from "../actions/registrationActions";
 
 type Props = {
     orgId: number;
@@ -14,32 +17,34 @@ type Props = {
         CLA: Array<Class>;
     };
 
-    getFaculties: (orgId: number, isLMS: boolean) => void;
-    getClasses: (facId: number, isLMS: boolean) => void;
-    clearFaculties: () => void;
-    clearClasses: () => void;
+    //getFaculties: (orgId: number, isLMS: boolean) => void;
+    //getClasses: (facId: number, isLMS: boolean) => void;
+    //clearFaculties: () => void;
+    //clearClasses: () => void;
 }
 
 
 const Affiliation: React.FC<Props> = (props) => {
 
+    const dispatch: Dispatch<any> = useDispatch();
+
     const {isLMS, orgId} = props;
 
     const handleOrgChange = (value: number) => {
-        props.clearClasses();
-        props.clearFaculties();
+        dispatch(clearClasses());
+        dispatch(clearFaculties());
         props.input.onChange({"orgId": value});
-        if (value) props.getFaculties(value, isLMS);
+        if (value) dispatch(getFaculties(value, isLMS));
     }
 
     const handleFacChange = (value: number) => {
-        props.clearClasses();
+        dispatch(clearClasses());
         if (isLMS) {
             props.input.onChange({"orgId": orgId, "facId": value});
         } else {
             props.input.onChange({...props.input.value, "classId": null, "facId": value});
         }
-        if (value) props.getClasses(value, isLMS);
+        if (value) dispatch(getClasses(value, isLMS));
     }
 
     const handleClaChange = (value: number) => {
