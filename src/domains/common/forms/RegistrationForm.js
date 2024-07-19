@@ -8,7 +8,7 @@ import {
     passwordsMustMatch,
     required,
     requiredField
-} from "../../../utils/validators";
+} from "../../../utils/validators/validators";
 
 import '../../../../main.css';
 import FieldString from "./controls/FieldString";
