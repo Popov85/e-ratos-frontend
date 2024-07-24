@@ -24,8 +24,6 @@ import Affiliation from "../components/Affiliation";
 import {useDispatch, useSelector} from "react-redux";
 import {Dispatch} from "redux";
 import {clearClasses, clearFaculties} from "../actions/registrationActions";
-import {RegistrationState} from "../reducers/registrationReducer";
-import {RootState} from "../../../store/rootReducer";
 
 const current: number = new Date().getFullYear();
 
@@ -66,8 +64,6 @@ const RegistrationForm: React.FC<InjectedFormProps<RegistrationFormData, Registr
 
     const dispatch: Dispatch<any> = useDispatch();
 
-    const registration: RegistrationState = useSelector((state: RootState) => state.registration);
-
     const [showPassword, setShowPassword] = useState<boolean>(false);
 
     const displayPassword = () => {
@@ -106,7 +102,6 @@ const RegistrationForm: React.FC<InjectedFormProps<RegistrationFormData, Registr
                        validate={[allSelected]}
                        isLMS={props.isLMS}
                        orgId={props.orgId}
-                       registration={registration}
                      />
 
                 <Field name="year" component={FieldSelectBadge}

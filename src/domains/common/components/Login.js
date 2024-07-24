@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import LoginForm from "../forms/LoginForm";
-import RegistrationContainer from "../containers/RegistrationContainer";
+//import RegistrationContainer from "../containers/RegistrationContainer";
 import '../../../../main.css';
 import Failure from "./Failure";
 import logo from '../../../assets/logo-white.png';
+import RegistrationFC from "./RegistrationFC";
 
 /**
  * Both staff and students will see this login page,
@@ -59,7 +60,7 @@ class Login extends Component {
     render() {
         const {auth, savedCredentials} = this.props;
         const {registration} = this.state;
-        if (registration) return <RegistrationContainer/>;
+        if (registration) return <RegistrationFC/>;
         const {isLoggingIn, errorLoggingIn} = auth;
         return (
             <div className="container-fluid">

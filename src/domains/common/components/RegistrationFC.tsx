@@ -1,17 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {reset} from 'redux-form';
 import {getOrgIdSelector, getSavedCredentialsSelector, isLMSSelector} from "../selectors/registrationSelector";
 import '../../../../main.css';
 import Failure from "./Failure";
 //@ts-ignore
-import RegistrationForm from "../forms/RegistrationForm";
 import RegistrationSuccess from './RegistrationSuccess';
 //@ts-ignore
 import LoginContainer from "../containers/LoginContainer";
 import {RootState} from "../../../store/rootReducer";
 import {SavedCredentials} from "../types/SavedCredentials";
-import {RegistrationState} from "../reducers/registrationReducer";
 import {
     getDerivedOrganisation,
     getOrganisations,
@@ -28,7 +25,10 @@ const RegistrationFC: React.FC = () => {
 
     const isLMS: boolean = useSelector((state: RootState) => isLMSSelector(state));
     const orgId: number | null = useSelector((state: RootState) => getOrgIdSelector(state));
-    const registration: RegistrationState = useSelector((state: RootState) => state.registration);
+    const { isLoading, error } = useSelector((state: RootState) => ({
+        isLoading: state.registration.isLoading,
+        error: state.registration.error,
+    }));
     const savedCredentials: SavedCredentials | null = useSelector((state: RootState) => getSavedCredentialsSelector(state));
 
     const [regSuccess, setRegSuccess] = useState<boolean>(false);
@@ -69,8 +69,6 @@ const RegistrationFC: React.FC = () => {
         setRegSuccess(true);
     };
 
-    const {isLoading, error} = registration;
-
     if (regCancelled) return <LoginContainer/>;
     if (regSuccess && savedCredentials) return <RegistrationSuccess/>;
 
@@ -105,7 +103,7 @@ const RegistrationFC: React.FC = () => {
                                 onSubmit={handleSubmit}
                                 isLMS={isLMS}
                                 orgId={orgId}
-                                disabled={registration.isLoading}
+                                disabled={isLoading}
                               />
                         </div>
                         <div className="card-footer pt-1 pb-1">
