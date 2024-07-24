@@ -5,7 +5,7 @@ import LoginForm from "../forms/LoginForm";
 import '../../../../main.css';
 import Failure from "./Failure";
 import logo from '../../../assets/logo-white.png';
-import RegistrationFC from "./RegistrationFC";
+import Registration from "./Registration";
 
 /**
  * Both staff and students will see this login page,
@@ -60,7 +60,7 @@ class Login extends Component {
     render() {
         const {auth, savedCredentials} = this.props;
         const {registration} = this.state;
-        if (registration) return <RegistrationFC/>;
+        if (registration) return <Registration/>;
         const {isLoggingIn, errorLoggingIn} = auth;
         return (
             <div className="container-fluid">

@@ -16,10 +16,10 @@ import {
 } from "../actions/registrationActions";
 import {Student} from "../types/Student";
 import {Dispatch} from "redux";
-import RegistrationFormFC, {RegistrationFormData} from "../forms/RegistrationFormFC";
+import RegistrationFormFC, {RegistrationFormData} from "../forms/RegistrationForm";
 
 
-const RegistrationFC: React.FC = () => {
+const Registration: React.FC = () => {
 
     const dispatch: Dispatch<any> = useDispatch();
 
@@ -124,4 +124,4 @@ const RegistrationFC: React.FC = () => {
     );
 }
 
-export default RegistrationFC;
+export default Registration;

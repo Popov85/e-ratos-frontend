@@ -18,25 +18,12 @@ import FieldEmail from "./controls/FieldEmail";
 //@ts-ignore
 import FieldPassword from "./controls/FieldPassword";
 import { FaEye, FaEyeSlash, FaSignInAlt } from "react-icons/fa";
-//@ts-ignore
-import FieldSelectBadge from "./controls/FieldSelectBadge";
 import Affiliation from "../components/Affiliation";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {Dispatch} from "redux";
 import {clearClasses, clearFaculties} from "../actions/registrationActions";
-
-const current: number = new Date().getFullYear();
-
-const years: Array<{ value: string | number; label: string }> = [
-    { value: "", label: "Select" },
-    { value: current, label: current.toString() },
-    { value: current - 1, label: (current - 1).toString() },
-    { value: current - 2, label: (current - 2).toString() },
-    { value: current - 3, label: (current - 3).toString() },
-    { value: current - 4, label: (current - 4).toString() },
-    { value: current - 5, label: (current - 5).toString() },
-    { value: current - 6, label: (current - 6).toString() }
-];
+import {years} from "../../../utils/utilsYears";
+import FieldSelectBadge from "./controls/FieldSelectBadge";
 
 
 interface RegistrationFormProps {
@@ -59,7 +46,6 @@ export interface RegistrationFormData {
     year: number;
 }
 
-
 const RegistrationForm: React.FC<InjectedFormProps<RegistrationFormData, RegistrationFormProps> & RegistrationFormProps> = (props) => {
 
     const dispatch: Dispatch<any> = useDispatch();
@@ -73,20 +59,30 @@ const RegistrationForm: React.FC<InjectedFormProps<RegistrationFormData, Registr
     return (
         <form onSubmit={props.handleSubmit}>
             <fieldset disabled={props.disabled}>
-                <Field name="name" component={FieldString} placeholder="name"
+                <Field name="name"
+                       component={FieldString}
+                       placeholder="name"
                        validate={[required, minLength2]} />
 
-                <Field name="surname" component={FieldString} placeholder="surname"
+                <Field name="surname"
+                       component={FieldString}
+                       placeholder="surname"
                        validate={[required, minLength2]} />
 
-                <Field name="email" component={FieldEmail} placeholder="name@example.com"
+                <Field name="email"
+                       component={FieldEmail}
+                       placeholder="name@example.com"
                        validate={[required, email]} />
 
-                <Field name="password" component={FieldPassword} placeholder="password"
+                <Field name="password"
+                       component={FieldPassword}
+                       placeholder="password"
                        showPassword={showPassword}
                        validate={[required, minLength8]} />
 
-                <Field name="passwordConfirmed" component={FieldPassword} placeholder="confirm password"
+                <Field name="passwordConfirmed"
+                       component={FieldPassword}
+                       placeholder="confirm password"
                        showPassword={showPassword}
                        validate={[required, minLength8, passwordsMustMatch]} />
 
@@ -98,16 +94,19 @@ const RegistrationForm: React.FC<InjectedFormProps<RegistrationFormData, Registr
 
                 <hr />
 
-                <Field name="affiliation" component={Affiliation}
+                <Field name="affiliation"
+                       component={Affiliation}
                        validate={[allSelected]}
                        isLMS={props.isLMS}
                        orgId={props.orgId}
                      />
 
-                <Field name="year" component={FieldSelectBadge}
+                <Field name="year"
+                       component={FieldSelectBadge}
                        items={years}
                        validate={[requiredField]}
-                       badge="Year" width={50}
+                       badge="Year"
+                       width={50}
                        title="Select year of entrance" />
 
                 <div className="form-group text-center mb-n1">
