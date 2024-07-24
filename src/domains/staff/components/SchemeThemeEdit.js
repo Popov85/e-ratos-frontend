@@ -42,7 +42,7 @@ class SchemeThemeEdit extends React.Component {
         let typeLevelMap = null;
         if (themeSupport) {
             typeLevelMap = Object.entries(themeSupport.typeLevelMap)
-                .map(([key, value])=>({...value, typeId: key}));
+                .map(([key, value]) => ({...value, typeId: key}));
         }
 
         return (
@@ -79,20 +79,18 @@ class SchemeThemeEdit extends React.Component {
                                         initialValues={
                                             {
                                                 themeId: themeSupport.themeId,
-                                                typeLevelMap: typeLevelMap
+                                                typeLevelMap: typeLevelMap,
+                                                settings: settings
                                             }
                                         }
                                         theme={themeSupport.theme}
-                                        settings={settings}
-                                        typeLevelMap = {typeLevelMap}
                                         finished={!!message}
                                         disabled={isLoading}
-                                        resetForm = {this.props.resetForm}
+                                        resetForm={this.props.resetForm}
                                         onSubmit={data => this.handleSubmit(data)}
                                     />
                                 }
                             </div>
-
                         </div>
                     </div>
                 </div>
