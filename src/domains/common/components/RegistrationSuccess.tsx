@@ -5,9 +5,9 @@ import LoginContainer from "../containers/LoginContainer";
 
 const RegistrationSuccess: React.FC = () => {
 
-    const [state, setState] = useState({OK: false});
+    const [state, setState] = useState<boolean>(false);
 
-    if (state.OK) return <LoginContainer/>;
+    if (state) return <LoginContainer/>;
 
     return (<div className="container-fluid">
         <div className="row mt-5">
@@ -25,7 +25,7 @@ const RegistrationSuccess: React.FC = () => {
                         </div>
                         <div className="form-group text-center mb-n1">
                             <button type="button" value="Sign In" className="btn btn-sm btn-success pl-5 pr-5"
-                                    onClick={() => setState({OK: true})}>
+                                    onClick={() => setState(true)}>
                                 <div className="align-middle"><FaSignInAlt color="white"/> Sign In</div>
                             </button>
                         </div>

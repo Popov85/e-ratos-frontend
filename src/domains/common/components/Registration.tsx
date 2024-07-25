@@ -3,7 +3,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getOrgIdSelector, getSavedCredentialsSelector, isLMSSelector} from "../selectors/registrationSelector";
 import '../../../../main.css';
 import Failure from "./Failure";
-//@ts-ignore
 import RegistrationSuccess from './RegistrationSuccess';
 //@ts-ignore
 import LoginContainer from "../containers/LoginContainer";
@@ -16,7 +15,7 @@ import {
 } from "../actions/registrationActions";
 import {Student} from "../types/Student";
 import {Dispatch} from "redux";
-import RegistrationFormFC, {RegistrationFormData} from "../forms/RegistrationForm";
+import RegistrationForm, {RegistrationFormData} from "../forms/RegistrationForm";
 
 
 const Registration: React.FC = () => {
@@ -25,7 +24,7 @@ const Registration: React.FC = () => {
 
     const isLMS: boolean = useSelector((state: RootState) => isLMSSelector(state));
     const orgId: number | null = useSelector((state: RootState) => getOrgIdSelector(state));
-    const { isLoading, error } = useSelector((state: RootState) => ({
+    const {isLoading, error} = useSelector((state: RootState) => ({
         isLoading: state.registration.isLoading,
         error: state.registration.error,
     }));
@@ -53,7 +52,7 @@ const Registration: React.FC = () => {
             email,
             password
         };
-        const { orgId, facId, classId } = affiliation;
+        const {orgId, facId, classId} = affiliation;
         const studId = null;
 
         const student: Student = {
@@ -99,12 +98,12 @@ const Registration: React.FC = () => {
                                     <Failure message={error.message}/>
                                 </div>
                             }
-                            <RegistrationFormFC
+                            <RegistrationForm
                                 onSubmit={handleSubmit}
                                 isLMS={isLMS}
                                 orgId={orgId}
                                 disabled={isLoading}
-                              />
+                            />
                         </div>
                         <div className="card-footer pt-1 pb-1">
                             <div className="text-center text-secondary">

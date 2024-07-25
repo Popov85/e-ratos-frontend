@@ -3,10 +3,10 @@ import {WrappedFieldInputProps, WrappedFieldMetaProps} from "redux-form";
 import {Years} from "../../types/Years";
 
 type Props = {
-    items: Array<any>;
-    width: number;
-    title: string;
-    badge: string;
+    items?: Array<any>;
+    width?: number;
+    title?: string;
+    badge?: string;
     input: WrappedFieldInputProps;
     meta: WrappedFieldMetaProps;
 }
@@ -16,12 +16,19 @@ const initItems = [{
     "label": "Select"
 }];
 
-const FieldSelectBadge: React.FC<Props> = ({items = initItems, width, title, badge, input, meta}) => {
+const FieldSelectBadge: React.FC<Props> = ({
+                                               items = initItems,
+                                               width = 100,
+                                               title = '',
+                                               badge = 'Select',
+                                               input,
+                                               meta
+                                           }) => {
     const {touched, error} = meta;
     const hasError = touched && error;
 
     return (
-        <div className={`input-group form-group w-${width || 100}`} title={title}>
+        <div className={`input-group form-group w-${width}`} title={title}>
             <div className="input-group-prepend">
                 <label className="input-group-text" htmlFor={badge}>{badge}</label>
             </div>
