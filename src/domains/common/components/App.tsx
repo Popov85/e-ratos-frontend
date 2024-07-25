@@ -1,24 +1,39 @@
 import React, {useEffect} from 'react';
 import {Redirect, Route, Switch, useHistory, useLocation} from 'react-router-dom';
 import Forbidden from "./Forbidden";
-import PropTypes from "prop-types";
 import NotFound from "./NotFound";
 import Initializer from "./Initializer";
+//@ts-ignore
 import StaffPortalContainer from "../../staff/containers/StaffPortalContainer";
+//@ts-ignore
 import StudentPortalContainer from "../../student/containers/StudentPortalContainer";
+//@ts-ignore
 import SessionLaunchContainer from "../../session/containers/SessionLaunchContainer";
 import Login from "./Login";
+import {Dispatch} from "redux";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../../store/rootReducer";
+import {checkLogged} from "../actions/authActions";
+import {Location} from "history";
 
+type LocationState = {
+    from: Location<LocationState>;
+}
 
-const App = ({userInfo, logged, checkLogging, checkLogged}) => {
+const App: React.FC = () => {
 
     const history = useHistory();
-    const location = useLocation();
+    const location: Location<LocationState> = useLocation();
+    const dispatch: Dispatch<any> = useDispatch();
+
+    const logged = useSelector((state: RootState) => state.auth.logged);
+    const checkLogging = useSelector((state: RootState) => state.auth.checkLogging);
+    const userInfo = useSelector((state: RootState) => state.auth.userInfo);
 
     useEffect(() => {
         let {pathname, search} = location;
         console.log('Initial URL = ', pathname + search);
-        checkLogged();
+        dispatch(checkLogged());
     }, []); // Only run once on mount
 
     useEffect(() => {
@@ -36,6 +51,7 @@ const App = ({userInfo, logged, checkLogging, checkLogged}) => {
             }
         }
     }, [logged]); // Only run on mount and additionally every time logged changes
+
 
     const defaultRedirect = () => {
         if (logged && userInfo) {
@@ -61,14 +77,6 @@ const App = ({userInfo, logged, checkLogging, checkLogged}) => {
             <Route component={NotFound}/>
         </Switch>
     );
-};
-
-App.propTypes = {
-    logged: PropTypes.bool,
-    checkLogging: PropTypes.bool,
-    userInfo: PropTypes.object,
-
-    checkLogged: PropTypes.func
 };
 
 export default App;

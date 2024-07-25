@@ -17,6 +17,7 @@
   "author": "Popov85",
   "license": "ISC",
   "dependencies": {
+    "@types/react-router-dom": "^5.1.2",
     "axios": "^0.27.2",
     "bootstrap": "^4.4.1",
     "classnames": "^2.2.6",
@@ -25,7 +26,7 @@
     "draft-js-export-html": "^1.4.1",
     "draft-js-import-html": "^1.4.1",
     "himalaya": "^1.1.0",
-    "history": "latest",
+    "history": "4.10.1",
     "html-to-draftjs": "^1.5.0",
     "http-proxy-middleware": "^2.0.6",
     "prop-types": "^15.7.2",
@@ -55,6 +56,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.24.5",
+    "@types/history": "^4.7.8",
     "@types/react": "16.9.56",
     "@types/react-bootstrap": "1.0.0",
     "@types/react-dom": "16.9.24",
