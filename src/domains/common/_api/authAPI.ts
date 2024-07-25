@@ -7,7 +7,8 @@ import {AxiosResponse} from "axios";
 export const authAPI = {
 
     async doLogin(credentials: Credentials): Promise<number> {
-        const response: AxiosResponse = await instance.post<string>('/login', credentials, {
+        const urlEncodedCred: string = new URLSearchParams(credentials).toString()
+        const response: AxiosResponse = await instance.post<string>('/login', urlEncodedCred, {
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         });
         return response.status;

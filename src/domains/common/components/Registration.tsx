@@ -4,8 +4,6 @@ import {getOrgIdSelector, getSavedCredentialsSelector, isLMSSelector} from "../s
 import '../../../../main.css';
 import Failure from "./Failure";
 import RegistrationSuccess from './RegistrationSuccess';
-//@ts-ignore
-import LoginContainer from "../containers/LoginContainer";
 import {RootState} from "../../../store/rootReducer";
 import {SavedCredentials} from "../types/SavedCredentials";
 import {
@@ -16,11 +14,20 @@ import {
 import {Student} from "../types/Student";
 import {Dispatch} from "redux";
 import RegistrationForm, {RegistrationFormData} from "../forms/RegistrationForm";
+import Login from "./Login";
 
 
 const Registration: React.FC = () => {
 
     const dispatch: Dispatch<any> = useDispatch();
+
+    useEffect(() => {
+        if (isLMS) {
+            dispatch(getDerivedOrganisation());
+        } else {
+            dispatch(getOrganisations(false));
+        }
+    }, []);
 
     const isLMS: boolean = useSelector((state: RootState) => isLMSSelector(state));
     const orgId: number | null = useSelector((state: RootState) => getOrgIdSelector(state));
@@ -32,14 +39,6 @@ const Registration: React.FC = () => {
 
     const [regSuccess, setRegSuccess] = useState<boolean>(false);
     const [regCancelled, setRegCancelled] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (isLMS) {
-            dispatch(getDerivedOrganisation());
-        } else {
-            dispatch(getOrganisations(false));
-        }
-    }, []);
 
     const handleSubmit = (formData: RegistrationFormData): void => {
         const {name, surname, email, password, affiliation, year} = formData;
@@ -68,7 +67,7 @@ const Registration: React.FC = () => {
         setRegSuccess(true);
     };
 
-    if (regCancelled) return <LoginContainer/>;
+    if (regCancelled) return <Login/>;
     if (regSuccess && savedCredentials) return <RegistrationSuccess/>;
 
     return (

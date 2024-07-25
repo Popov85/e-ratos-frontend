@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react';
 import {Redirect, Route, Switch, useHistory, useLocation} from 'react-router-dom';
 import Forbidden from "./Forbidden";
-import LoginContainer from "../containers/LoginContainer";
 import PropTypes from "prop-types";
 import NotFound from "./NotFound";
 import Initializer from "./Initializer";
 import StaffPortalContainer from "../../staff/containers/StaffPortalContainer";
 import StudentPortalContainer from "../../student/containers/StudentPortalContainer";
 import SessionLaunchContainer from "../../session/containers/SessionLaunchContainer";
+import Login from "./Login";
 
 
 const App = ({userInfo, logged, checkLogging, checkLogged}) => {
@@ -52,7 +52,7 @@ const App = ({userInfo, logged, checkLogging, checkLogged}) => {
 
     return (
         <Switch>
-            <Route exact path="/login" component={LoginContainer}/>
+            <Route exact path="/login" component={Login}/>
             <Route path="/staff" component={StaffPortalContainer}/>
             <Route path="/student" component={StudentPortalContainer}/>
             <Route path="/session" component={SessionLaunchContainer}/>

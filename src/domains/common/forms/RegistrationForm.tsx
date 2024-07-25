@@ -22,13 +22,13 @@ import FieldEmail from "./controls/FieldEmail";
 import FieldPassword from "./controls/FieldPassword";
 
 
-interface RegistrationFormProps {
+type RegistrationFormProps = {
     orgId: number | null;
     isLMS: boolean;
     disabled: boolean;
 }
 
-export interface RegistrationFormData {
+export type RegistrationFormData = {
     name: string;
     surname: string;
     email: string;

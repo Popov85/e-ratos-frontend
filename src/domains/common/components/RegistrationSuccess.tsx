@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import {FaSignInAlt} from 'react-icons/fa';
-// @ts-ignore
-import LoginContainer from "../containers/LoginContainer";
+import Login from "./Login";
+
 
 const RegistrationSuccess: React.FC = () => {
 
     const [state, setState] = useState<boolean>(false);
 
-    if (state) return <LoginContainer/>;
+    if (state) return <Login/>;
 
     return (<div className="container-fluid">
         <div className="row mt-5">
