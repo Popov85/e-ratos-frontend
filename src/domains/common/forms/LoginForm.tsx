@@ -1,12 +1,9 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 import '../../../../main.css';
-// @ts-ignore
-import {email, minLength8, required} from "../../../utils/validators";
-// @ts-ignore
-import FieldEmailBadge from "./controls/FieldEmailBadge";
 import FieldPasswordBadge from "./controls/FieldPasswordBadge";
-
+import FieldEmailBadge from "./controls/FieldEmailBadge";
+import {email, minLength8, required} from "../../../utils/validators/validators";
 
 type LoginFormProps = {
     disabled: boolean
@@ -17,7 +14,6 @@ export type LoginFormData = {
     password: string;
     rememberMe: boolean;
 }
-
 
 let LoginForm: React.FC<InjectedFormProps<LoginFormData, LoginFormProps> & LoginFormProps> = props => {
 
