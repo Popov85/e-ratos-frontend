@@ -14,7 +14,7 @@ export const instance: AxiosInstance = axios.create({
     withCredentials: true
 });
 
-// Response interceptor for handling responses and errors
+// BaseResponse interceptor for handling responses and errors
 instance.interceptors.response.use(
     (response: AxiosResponse): AxiosResponse => {
         if (response.status >= 200 && response.status < 300) {
