@@ -1,4 +1,4 @@
-import {QuestionClass} from "./QuestionClass";
+import {QuestionClassEnum} from "./QuestionClassEnum";
 
 export type BatchInfo = {
     questions: Array<Question>,
@@ -35,5 +35,5 @@ export type Question = {
         width: number;
         height: number;
     };
-    className: QuestionClass;
+    className: QuestionClassEnum;
 };

@@ -1,7 +1,7 @@
-import {QuestionClass} from "../QuestionClass";
+import {QuestionClassEnum} from "../QuestionClassEnum";
 
 export interface BaseResponse {
     questionId: number;
     nullable: boolean;
-    className: QuestionClass;
+    className: QuestionClassEnum;
 }

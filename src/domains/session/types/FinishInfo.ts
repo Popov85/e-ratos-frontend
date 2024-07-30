@@ -2,7 +2,7 @@ import {ResponseMCQ} from "./responses/impl/ResponseMCQ";
 import {ResponseFBSQ} from "./responses/impl/ResponseFBSQ";
 import {AnswerFBSQ} from "./answers/impl/AnswerFBSQ";
 import {AnswerMCQ} from "./answers/impl/AnswerMCQ";
-import {QuestionClass} from "./QuestionClass";
+import {QuestionClassEnum} from "./QuestionClassEnum";
 
 export type FinishInfo = {
     user: string,
@@ -49,7 +49,7 @@ export type QuestionResult = {
             width: number;
             height: number;
         };
-        className: QuestionClass;
+        className: QuestionClassEnum;
     };
     response?: ResponseMCQ | ResponseFBSQ; // TODO: add more impl
     correctAnswer?: AnswerMCQ | AnswerFBSQ; //TODO: add more impl
