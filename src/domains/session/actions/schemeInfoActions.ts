@@ -44,7 +44,7 @@ export const setSchemeInfo = (schemeInfo: SchemeInfo): SetSchemeInfoAction => ({
 
 // Async Action (Thunk)
 export const loadSchemeInfo = (schemeId: number) => {
-    return (dispatch: Dispatch<SchemeInfoActions>) => {
+    return (dispatch: Dispatch<SchemeInfoActions>): void => {
         dispatch(resetFailure());
         dispatch(loading(true));
         sessionAPI.getSchemeInfo(schemeId).then((result: SchemeInfo) => {

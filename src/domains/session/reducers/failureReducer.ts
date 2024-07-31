@@ -5,13 +5,13 @@ import {
     SessionFailureActions,
     SET_SESSION_FAILURE, SET_SESSION_FAILURE_WITH_BODY
 } from "../actions/failureActions";
-import {SessionStatesEnum} from "../types/SessionStatesEnum";
+import {SessionErrorsEnum} from "../types/SessionErrorsEnum";
 import {SessionExceptionsEnum} from "../types/SessionExceptionsEnum";
 
 type SessionFailureState =  {
     is: boolean;
     modal: boolean;
-    type: SessionStatesEnum | null;
+    type: SessionErrorsEnum | null;
     location: string | null;
     message: string | null;
     serverError: ServerError | string | null;
@@ -40,9 +40,9 @@ export const failureReducer = (state: SessionFailureState = initState, action: S
             return {
                 ...state,
                 is: true,
-                location: action.payload?.location || null,
-                message: action.payload?.message || null,
-                serverError: action.payload?.error || null,
+                location: action.payload?.location ?? null,
+                message: action.payload?.message ?? null,
+                serverError: action.payload?.error ?? null,
             };
         }
         case SET_SESSION_FAILURE_WITH_BODY: {
@@ -54,7 +54,7 @@ export const failureReducer = (state: SessionFailureState = initState, action: S
                         ...state,
                         is: true,
                         location,
-                        type: SessionStatesEnum.Opened,
+                        type: SessionErrorsEnum.Opened,
                         message: body.message,
                     };
                 }
@@ -63,7 +63,7 @@ export const failureReducer = (state: SessionFailureState = initState, action: S
                         ...state,
                         is: true,
                         location,
-                        type: SessionStatesEnum.NotFound,
+                        type: SessionErrorsEnum.NotFound,
                         message: body.message,
                     };
                 }
@@ -72,7 +72,7 @@ export const failureReducer = (state: SessionFailureState = initState, action: S
                         ...state,
                         is: true,
                         location,
-                        type: SessionStatesEnum.RunOutOfTime,
+                        type: SessionErrorsEnum.RunOutOfTime,
                         message: body.message,
                     };
                 }
@@ -81,7 +81,7 @@ export const failureReducer = (state: SessionFailureState = initState, action: S
                         ...state,
                         is: true,
                         location,
-                        type: SessionStatesEnum.Unknown,
+                        type: SessionErrorsEnum.Unknown,
                         message,
                         serverError: 'Some error has occurred!',
                     };

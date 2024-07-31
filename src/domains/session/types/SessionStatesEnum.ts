@@ -1,6 +1,7 @@
 export enum SessionStatesEnum {
-    Opened = "opened",
-    NotFound = "notFound",
-    RunOutOfTime = "runOutOfTime",
-    Unknown = "unknown",
+    Init = "init",
+    Started = "started",
+    Finished = "finished",
+    Cancelled = "cancelled",
+    Preserved = "preserved"
 }
