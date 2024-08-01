@@ -36,7 +36,7 @@ interface SessionState {
     reports: Map<number, Complaint>;
     responses: Map<number, ResponseMCQ | ResponseFBSQ>;
     responsesChecked: Map<number, QuestionResult>;
-    preserved: Map<string, string>;
+    preserved: Map<string, string>; // Java's singleton map is expected with single key being 'key'
     expanded: boolean;
     fontSize: number;
     result: FinishInfo | null;
@@ -57,7 +57,7 @@ const initState: SessionState = {
     reports: new Map<number, Complaint>(),
     responses: new Map<number, ResponseMCQ | ResponseFBSQ>(),
     responsesChecked: new Map<number, QuestionResult>(),
-    preserved: new Map<string, string>(),//TODO: Earlier it was {key : {}} object
+    preserved: new Map<string, string>(),// Java's singleton map is expected with single key being 'key'
     expanded: false,
     fontSize: 16,
     result: null,

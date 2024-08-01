@@ -6,10 +6,15 @@ const defaultMessage = 'failed to perform the action';
 type Props = {
     message?: string;
     details?: string;
-    serverError?: ServerError
+    serverError?: ServerError | string
 }
 
 const Failure: React.FC<Partial<Props>> = ({message = defaultMessage, details = '', serverError = {}}) => {
+
+    const errorMessage = typeof serverError === 'string'
+        ? serverError
+        : serverError?.message;
+
 
     return (<div>
         <div className="text-center text-danger"> {message}</div>
@@ -22,7 +27,7 @@ const Failure: React.FC<Partial<Props>> = ({message = defaultMessage, details = 
         {(serverError ? <div className="d-flex justify-content-center">
             <details open={false}>
                 <summary className="border text-secondary"><small>Server message</small></summary>
-                <small>{serverError?.message}</small>
+                <small>{errorMessage}</small>
             </details>
         </div> : null)}
     </div>);

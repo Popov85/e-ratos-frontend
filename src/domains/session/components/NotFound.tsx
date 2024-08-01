@@ -2,9 +2,14 @@ import React from 'react';
 import {FaRedo} from 'react-icons/fa';
 import LogoMini from '../../common/components/LogoMini';
 import Header from "../../common/components/Header";
-import PropTypes from "prop-types";
+import {Dispatch} from "redux";
+import {useDispatch} from "react-redux";
+import {resetSession} from "../actions/sessionActions";
+import {resetFailure} from "../actions/failureActions";
 
-const NotFound = (props) => {
+const NotFound: React.FC = () => {
+
+    const dispatch: Dispatch<any> = useDispatch();
 
     return (
         <div className="container-fluid p-0 mt-1">
@@ -13,8 +18,8 @@ const NotFound = (props) => {
             <div className="text-center mt-3">
                 <button className="btn btn-secondary"
                         onClick={() => {
-                            props.resetSession();
-                            props.resetFailure()
+                            dispatch(resetSession());
+                            dispatch(resetFailure());
                         }}
                         title="Start the scheme again">
                     Re-start&nbsp;<FaRedo color="white"/>
@@ -23,10 +28,5 @@ const NotFound = (props) => {
         </div>
     );
 }
-
-NotFound.propTypes = {
-    resetSession: PropTypes.func.isRequired,
-    resetFailure: PropTypes.func.isRequired
-};
 
 export default NotFound;

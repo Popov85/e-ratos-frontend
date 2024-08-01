@@ -1,11 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {Dispatch} from "redux";
+import {useDispatch, useSelector} from "react-redux";
 import {FaRedo} from 'react-icons/fa';
 import Header from "../../common/components/Header";
+import {resetSession} from "../actions/sessionActions";
+import {RootState} from "../../../store/rootReducer";
+import {getResult} from "../selectors/contextSelector";
+import {FinishInfo} from "../types/FinishInfo";
 
-const Cancelled = (props) => {
+const Cancelled: React.FC = () => {
 
-    const {user, scheme, passed} = props.result;
+    const dispatch: Dispatch<any> = useDispatch();
+
+    const result: FinishInfo | null = useSelector((state: RootState) => getResult(state));
+
+    if (!result) return null;
+
+    const {user, scheme, passed} = result;
 
     return (
         <div className="container-fluid p-0">
@@ -37,12 +48,10 @@ const Cancelled = (props) => {
                                 <div className="col-4">
                                     <div className="text-secondary">passed:</div>
                                 </div>
-
                                 <div className="col-8">
                                     <div
                                         className={`alert-sm alert-${(passed) ? "success" : "danger"}`}>{(passed) ? "Yes" : "No"}</div>
                                 </div>
-
                             </div>
 
                         </div>
@@ -53,7 +62,7 @@ const Cancelled = (props) => {
 
                 <div className="row text-center mt-3">
                     <div className="col-12">
-                        <button className="btn btn-secondary" onClick={() => props.resetSession()}>
+                        <button className="btn btn-secondary" onClick={() => dispatch(resetSession())}>
                             Re-start&nbsp;<FaRedo color="white"/>
                         </button>
                     </div>
@@ -62,11 +71,5 @@ const Cancelled = (props) => {
         </div>
     )
 }
-
-Cancelled.propTypes = {
-    result: PropTypes.object.isRequired,
-
-    resetSession: PropTypes.func.isRequired
-};
 
 export default Cancelled;

@@ -7,6 +7,10 @@ export const getUserInfo = (state: RootState): UserInfo | null => {
 }
 
 export const getRole = (state: RootState): SecurityRole | null => {
-    let userInfo = getUserInfo(state);
+    let userInfo: UserInfo | null = getUserInfo(state);
     return userInfo?.role ?? null;
+}
+
+export const isLMS = (state: RootState): boolean => {
+    return getUserInfo(state)?.lms ?? false;
 }

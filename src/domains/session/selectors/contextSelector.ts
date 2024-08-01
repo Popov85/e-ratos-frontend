@@ -1,7 +1,8 @@
 import {RootState} from "../../../store/rootReducer";
 import {Mode, SchemeInfo} from "../types/SchemeInfo";
-import {UserInfo} from "../../common/types/UserInfo";
+//import {UserInfo} from "../../common/types/UserInfo";
 import {Context} from "../types/Context";
+import {FinishInfo} from "../types/FinishInfo";
 
 /**
  * This returns a convenience object to be passed around without the need to pass both
@@ -17,18 +18,18 @@ export const getContext = (state: RootState): Context | null => {
     } as Context;
 }
 
-export const getUserInfo = (state: RootState): UserInfo | null => {
-    return state.auth.userInfo;
-}
-
 export const getSchemeInfo = (state: RootState): SchemeInfo | null => {
     return state.session.schemeInfo.schemeInfo ?? null;
 }
 
-export const isLMS = (state: RootState): boolean => {
+/*export const isLMS = (state: RootState): boolean => {
     return state.auth.userInfo?.lms ?? false;
-}
+}*/
 
 export const getMode = (state: RootState): Mode | null => {
     return state.session.schemeInfo.schemeInfo?.mode ?? null;
+}
+
+export const getResult = (state: RootState): FinishInfo | null => {
+    return state.session.session.result ?? null;
 }

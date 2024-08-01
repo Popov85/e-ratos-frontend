@@ -6,17 +6,7 @@ import Header from "../../common/components/Header";
 // @ts-ignore
 import SessionContainer from "../containers/SessionContainer";
 // @ts-ignore
-import OpenedContainer from "../containers/OpenedContainer";
-// @ts-ignore
 import FinishContainer from "../containers/FinishContainer";
-// @ts-ignore
-import CancelledContainer from "../containers/CancelledContainer";
-// @ts-ignore
-import RunOutOfTimeContainer from "../containers/RunOutOfTimeContainer";
-// @ts-ignore
-import PreservedContainer from "../containers/PreservedContainer";
-// @ts-ignore
-import NotFoundContainer from "../containers/NotFoundContainer";
 import '../../../../main.css';
 import {Dispatch} from "redux";
 import {useDispatch, useSelector} from "react-redux";
@@ -28,6 +18,11 @@ import {SchemeInfo} from "../types/SchemeInfo";
 import {SessionErrorsEnum} from "../types/SessionErrorsEnum";
 import {SessionStatesEnum} from "../types/SessionStatesEnum";
 import StartNavbar from "./StartNavbar";
+import Opened from "./Opened";
+import NotFound from "./NotFound";
+import RunOutOfTime from "./RunOutOfTime";
+import Cancelled from "./Cancelled";
+import Preserved from "./Preserved";
 
 
 const Start: React.FC = () => {
@@ -66,7 +61,7 @@ const Start: React.FC = () => {
         return (
             <div className="text-center mt-3">
                 <button className="btn btn-info pl-5 pr-5" onClick={() => dispatch(getStarted(schemeId, isLMS))}>
-                    Start&nbsp;<FaRocket color="white"/>
+                    Start&nbsp;&nbsp;<FaRocket color="white"/>
                 </button>
             </div>);
     }
@@ -92,17 +87,17 @@ const Start: React.FC = () => {
     // Fail-safe protection.
     if (!context || !schemeInfo) return null;
 
-    if (failure.type === SessionErrorsEnum.Opened) return <OpenedContainer/>;
-    if (failure.type === SessionErrorsEnum.NotFound) return <NotFoundContainer/>
-    if (failure.type === SessionErrorsEnum.RunOutOfTime) return <RunOutOfTimeContainer/>
+    if (failure.type === SessionErrorsEnum.Opened) return <Opened/>;
+    if (failure.type === SessionErrorsEnum.NotFound) return <NotFound/>
+    if (failure.type === SessionErrorsEnum.RunOutOfTime) return <RunOutOfTime/>
     if (failure.is && failure.location === "start") return renderFailure();
 
     const {status} = session;
 
     if (status === SessionStatesEnum.Started) return <SessionContainer/>;
     if (status === SessionStatesEnum.Finished) return <FinishContainer/>;
-    if (status === SessionStatesEnum.Cancelled) return <CancelledContainer/>;
-    if (status === SessionStatesEnum.Preserved) return <PreservedContainer/>;
+    if (status === SessionStatesEnum.Cancelled) return <Cancelled/>;
+    if (status === SessionStatesEnum.Preserved) return <Preserved/>;
 
     return (
         <div className="container-fluid p-0">
