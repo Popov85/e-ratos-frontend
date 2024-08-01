@@ -52,12 +52,12 @@ const initState: SessionState = {
     help: false,
     report: false,
     paused: false,
-    stars: new Map(),
-    helps: new Map(),
-    reports: new Map(),
-    responses: new Map(),
-    responsesChecked: new Map(),
-    preserved: new Map(),//TODO: Earlier it was {key : {}} object
+    stars: new Map<number, Stars>(),
+    helps: new Map<number, Help>(),
+    reports: new Map<number, Complaint>(),
+    responses: new Map<number, ResponseMCQ | ResponseFBSQ>(),
+    responsesChecked: new Map<number, QuestionResult>(),
+    preserved: new Map<string, string>(),//TODO: Earlier it was {key : {}} object
     expanded: false,
     fontSize: 16,
     result: null,
