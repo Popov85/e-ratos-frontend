@@ -4,8 +4,6 @@ import Logo from '../../common/components/Logo';
 import Failure from '../../common/components/Failure';
 import Header from "../../common/components/Header";
 // @ts-ignore
-import StartNavbarContainer from "../containers/StartNavbarContainer";
-// @ts-ignore
 import SessionContainer from "../containers/SessionContainer";
 // @ts-ignore
 import OpenedContainer from "../containers/OpenedContainer";
@@ -29,6 +27,7 @@ import {Context} from "../types/Context";
 import {SchemeInfo} from "../types/SchemeInfo";
 import {SessionErrorsEnum} from "../types/SessionErrorsEnum";
 import {SessionStatesEnum} from "../types/SessionStatesEnum";
+import StartNavbar from "./StartNavbar";
 
 
 const Start: React.FC = () => {
@@ -75,7 +74,7 @@ const Start: React.FC = () => {
     const renderFailure = () => {
         return (
             <div>
-                <StartNavbarContainer/>
+                <StartNavbar/>
                 <div className="mt-3 mb-2"><Logo/></div>
                 <Failure message={"Some failure: probably scheme is NOT available any more!"}/>
                 <div className="row mt-3">
@@ -107,7 +106,7 @@ const Start: React.FC = () => {
 
     return (
         <div className="container-fluid p-0">
-            <StartNavbarContainer/>
+            <StartNavbar/>
             <div>
                 <div className="mb-2"><Logo/></div>
                 {

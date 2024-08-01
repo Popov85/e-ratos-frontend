@@ -1,12 +1,29 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {Button, Navbar} from "react-bootstrap";
 import {FaSignOutAlt, FaUserGraduate} from 'react-icons/fa';
+import {Dispatch} from "redux";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../../store/rootReducer";
+import {getUserInfo} from "../../common/selectors/userSelector";
+import {UserInfo} from "../../common/types/UserInfo";
+import {getContext} from "../selectors/contextSelector";
+import {getLoggedOut} from "../../common/actions/authActions";
+import {Context} from "../types/Context";
 
-const StartNavbar = (props) => {
-    const {isLMS} = props.context;
-    const {email} = props.userInfo;
-    const {isLoggingOut} = props.auth;
+const StartNavbar: React.FC = () => {
+
+    const dispatch: Dispatch<any> = useDispatch();
+
+    const userInfo: UserInfo | null = useSelector((state: RootState) => getUserInfo(state));
+    const context: Context | null = useSelector((state: RootState) => getContext(state));
+    const isLoggingOut: boolean = useSelector((state: RootState) => state.auth.isLoggingOut);
+
+    // Fail-safe protection
+    if (!userInfo || !context) return null;
+
+    const {isLMS} = context;
+    const {email} = userInfo;
+
     return (
         <Navbar variant="dark" bg="info" expand="lg" className="w-100">
             <Navbar.Brand className="text-light">
@@ -25,7 +42,8 @@ const StartNavbar = (props) => {
                 </Navbar.Text>
                 {
                     !isLoggingOut ?
-                        <Button variant="light" size="sm" onClick={() => props.getLoggedOut()} title="Wish to log out?">
+                        <Button variant="light" size="sm" onClick={() => dispatch(getLoggedOut())}
+                                title="Wish to log out?">
                             Logout <FaSignOutAlt/>
                         </Button> :
                         <span className="text-light">Logout..</span>
@@ -34,13 +52,5 @@ const StartNavbar = (props) => {
         </Navbar>
     );
 }
-
-StartNavbar.propTypes = {
-    auth: PropTypes.object.isRequired,
-    userInfo: PropTypes.object.isRequired,
-    context: PropTypes.object.isRequired,
-
-    getLoggedOut: PropTypes.func,
-};
 
 export default StartNavbar;
