@@ -467,7 +467,7 @@ export const fetchHelp = (schemeId: number, questionId: number, isLMS: boolean) 
 };
 
 // Helper Function for Dispatching Failure Actions
-const dispatchFailure = (message: string, error: AxiosError | Error, location: SessionErrorLocationsEnum, dispatch: Dispatch<any>) => {
+const dispatchFailure = (message: string, error: AxiosError | Error, location: string, dispatch: Dispatch<any>) => {
     if (!axios.isAxiosError(error)) {
         dispatch(failureActions.setFailure(error.message, message, location.toString()));
     } else {

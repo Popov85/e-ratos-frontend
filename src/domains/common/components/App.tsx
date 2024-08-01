@@ -7,14 +7,14 @@ import Initializer from "./Initializer";
 import StaffPortalContainer from "../../staff/containers/StaffPortalContainer";
 //@ts-ignore
 import StudentPortalContainer from "../../student/containers/StudentPortalContainer";
-//@ts-ignore
-import SessionLaunchContainer from "../../session/containers/SessionLaunchContainer";
 import Login from "./Login";
 import {Dispatch} from "redux";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../store/rootReducer";
 import {checkLogged} from "../actions/authActions";
 import {Location} from "history";
+import SessionLaunch from "../../session/components/SessionLaunch";
+import {SecurityRole} from "../types/SecurityRole";
 
 type LocationState = {
     from: Location<LocationState>;
@@ -55,7 +55,7 @@ const App: React.FC = () => {
 
     const defaultRedirect = () => {
         if (logged && userInfo) {
-            if (userInfo.role === 'ROLE_STUDENT') {
+            if (userInfo.role === SecurityRole.ROLE_STUDENT) {
                 return <Redirect to="/student"/>;
             }
             return <Redirect to="/staff"/>;
@@ -71,7 +71,7 @@ const App: React.FC = () => {
             <Route exact path="/login" component={Login}/>
             <Route path="/staff" component={StaffPortalContainer}/>
             <Route path="/student" component={StudentPortalContainer}/>
-            <Route path="/session" component={SessionLaunchContainer}/>
+            <Route path="/session" component={SessionLaunch}/>
             <Route exact path="/" render={defaultRedirect}/>
             <Route exact path="/unauthorized" component={Forbidden}/>
             <Route component={NotFound}/>

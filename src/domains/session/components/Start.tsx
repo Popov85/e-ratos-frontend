@@ -1,27 +1,53 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {FaRocket} from 'react-icons/fa';
 import Logo from '../../common/components/Logo';
 import Failure from '../../common/components/Failure';
 import Header from "../../common/components/Header";
+// @ts-ignore
 import StartNavbarContainer from "../containers/StartNavbarContainer";
+// @ts-ignore
 import SessionContainer from "../containers/SessionContainer";
+// @ts-ignore
 import OpenedContainer from "../containers/OpenedContainer";
+// @ts-ignore
 import FinishContainer from "../containers/FinishContainer";
+// @ts-ignore
 import CancelledContainer from "../containers/CancelledContainer";
+// @ts-ignore
 import RunOutOfTimeContainer from "../containers/RunOutOfTimeContainer";
+// @ts-ignore
 import PreservedContainer from "../containers/PreservedContainer";
+// @ts-ignore
 import NotFoundContainer from "../containers/NotFoundContainer";
 import '../../../../main.css';
+import {Dispatch} from "redux";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../../store/rootReducer";
+import {getStarted} from "../actions/sessionActions";
+import {getContext, getSchemeInfo} from "../selectors/contextSelector";
+import {Context} from "../types/Context";
+import {SchemeInfo} from "../types/SchemeInfo";
+import {SessionErrorsEnum} from "../types/SessionErrorsEnum";
+import {SessionStatesEnum} from "../types/SessionStatesEnum";
 
 
-const Start = (props) => {
-    const {context, schemeInfo} = props;
-    const {isLMS, schemeId} = context;
+const Start: React.FC = () => {
+
+    const dispatch: Dispatch<any> = useDispatch();
+
+    // At this point context is fully loaded and available!
+    const context: Context = useSelector((state: RootState) => getContext(state)) as Context;
+    // At this point scheme info is fully loaded and present!
+    const schemeInfo: SchemeInfo = useSelector((state: RootState) => getSchemeInfo(state)) as SchemeInfo;
+    const session = useSelector((state: RootState) => state.session.session);
+    const failure = useSelector((state: RootState) => state.session.failure);
+
+    const {schemeId, isLMS} = context;
+
 
     const renderStart = () => {
-        const {active} = props.schemeInfo;
-        const {isLoaded} = props.session;
+        const {active} = schemeInfo;
+        const {isLoaded} = session;
         if (!isLoaded)
             return (
                 <div className="text-center mt-3">
@@ -40,7 +66,7 @@ const Start = (props) => {
             );
         return (
             <div className="text-center mt-3">
-                <button className="btn btn-info pl-5 pr-5" onClick={() => props.getStarted(schemeId, isLMS)}>
+                <button className="btn btn-info pl-5 pr-5" onClick={() => dispatch(getStarted(schemeId, isLMS))}>
                     Start&nbsp;<FaRocket color="white"/>
                 </button>
             </div>);
@@ -54,7 +80,8 @@ const Start = (props) => {
                 <Failure message={"Some failure: probably scheme is NOT available any more!"}/>
                 <div className="row mt-3">
                     <div className="col-12 text-center">
-                        <button className="btn btn-info pl-5 pr-5" onClick={() => props.getStarted(schemeId, isLMS)}>
+                        <button className="btn btn-info pl-5 pr-5"
+                                onClick={() => dispatch(getStarted(schemeId, isLMS))}>
                             Re-try <FaRocket/>
                         </button>
                     </div>
@@ -63,19 +90,20 @@ const Start = (props) => {
         );
     }
 
-    const {failure} = props;
+    // Fail-safe protection.
+    if (!context || !schemeInfo) return null;
 
-    if (failure.type === "opened") return <OpenedContainer/>;
-    if (failure.type === 'notFound') return <NotFoundContainer/>
-    if (failure.type === 'runOutOfTime') return <RunOutOfTimeContainer/>
+    if (failure.type === SessionErrorsEnum.Opened) return <OpenedContainer/>;
+    if (failure.type === SessionErrorsEnum.NotFound) return <NotFoundContainer/>
+    if (failure.type === SessionErrorsEnum.RunOutOfTime) return <RunOutOfTimeContainer/>
     if (failure.is && failure.location === "start") return renderFailure();
 
-    const {status} = props.session;
+    const {status} = session;
 
-    if (status === "started") return <SessionContainer/>;
-    if (status === "finished") return <FinishContainer/>;
-    if (status === "cancelled") return <CancelledContainer/>;
-    if (status === "preserved") return <PreservedContainer/>;
+    if (status === SessionStatesEnum.Started) return <SessionContainer/>;
+    if (status === SessionStatesEnum.Finished) return <FinishContainer/>;
+    if (status === SessionStatesEnum.Cancelled) return <CancelledContainer/>;
+    if (status === SessionStatesEnum.Preserved) return <PreservedContainer/>;
 
     return (
         <div className="container-fluid p-0">
@@ -83,7 +111,7 @@ const Start = (props) => {
             <div>
                 <div className="mb-2"><Logo/></div>
                 {
-                    schemeInfo.active ? (
+                    schemeInfo?.active ? (
                         <Header
                             title="WELCOME"
                             color="alert-success"
@@ -163,16 +191,5 @@ const Start = (props) => {
             </div>
         </div>)
 }
-
-const propTypes = {
-    context: PropTypes.object.isRequired,
-    schemeInfo: PropTypes.object.isRequired,
-    session: PropTypes.object.isRequired,
-    failure: PropTypes.object,
-
-    getStarted: PropTypes.func.isRequired
-};
-
-Start.propTypes = propTypes;
 
 export default Start;

@@ -1,26 +1,37 @@
 import React, {useEffect} from 'react';
-import PropTypes from 'prop-types';
 import {FaRedo} from 'react-icons/fa';
+import {useLocation} from 'react-router-dom';
 
 import LogoMini from '../../common/components/LogoMini';
 import Spinner from '../../common/components/Spinner';
 import Header from "../../common/components/Header";
-import {useLocation} from "react-router-dom";
-import utilsURL from "../../../utils/utilsURL";
 import LogoError from "../../common/components/LogoError";
-import StartContainer from "../containers/StartContainer";
+import {Dispatch} from "redux";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../../store/rootReducer";
+import {loadSchemeInfo} from "../actions/schemeInfoActions";
+import {SchemeInfo} from "../types/SchemeInfo";
+import utilsURL from "../../../utils/utilsURL";
+import {Location} from 'history';
+import {getContext, getSchemeInfo} from "../selectors/contextSelector";
+import {Context} from "../types/Context";
+import Start from "./Start";
 
-const SessionLaunch = props => {
+const SessionLaunch: React.FC = () => {
 
-    const {isLoading, errorScheme, schemeInfo} = props.schemeInfo;
+    const location: Location = useLocation();
+    const schemeId: number = Number(utilsURL.getParam(location, "schemeId"));
 
-    const location = useLocation();
+    const dispatch: Dispatch<any> = useDispatch();
 
-    const schemeId = utilsURL.getParam(location, "schemeId");
+    const isLoading: boolean = useSelector((state: RootState) => state.session.schemeInfo.isLoading);
+    const errorScheme: Error | null = useSelector((state: RootState) => state.session.schemeInfo.errorScheme);
+    const context: Context | null = useSelector((state: RootState) => getContext(state));
+    const schemeInfo: SchemeInfo | null = useSelector((state: RootState) => getSchemeInfo(state));
 
-    useEffect(() => {
+    useEffect((): void => {
         // Load schemeInfo
-        props.loadSchemeInfo(schemeId);
+        dispatch(loadSchemeInfo(schemeId));
     }, []);
 
     const renderLoading = () => {
@@ -42,7 +53,7 @@ const SessionLaunch = props => {
                 <div className="mt-3">
                     <div className="text-center">
                         <button className="btn btn-secondary"
-                                onClick={() => props.loadSchemeInfo(schemeId)}
+                                onClick={() => loadSchemeInfo(schemeId)}
                                 title="Re-try to load init scheme data">
                             Re-try&nbsp;<FaRedo color="white"/>
                         </button>
@@ -54,13 +65,8 @@ const SessionLaunch = props => {
 
     if (isLoading) return renderLoading();
     if (errorScheme) return renderFailure();
-    if (schemeInfo) return <StartContainer/>;
+    if (schemeInfo && context) return <Start/>;
     return null;
-};
-
-SessionLaunch.propTypes = {
-    schemeInfo: PropTypes.object,
-    loadSchemeInfo: PropTypes.func.isRequired
 };
 
 export default SessionLaunch;
