@@ -6,8 +6,6 @@ import Spinner from '../../common/components/Spinner';
 import Failure from '../../common/components/Failure';
 import Header from "../../common/components/Header";
 import NotFound from './NotFound';
-// @ts-ignore
-import FinishContainer from "../containers/FinishContainer";
 import {Dispatch} from "redux";
 import {useDispatch, useSelector} from "react-redux";
 import {getFinished} from "../actions/sessionActions";
@@ -16,6 +14,7 @@ import {RootState} from "../../../store/rootReducer";
 import {getContext} from "../selectors/contextSelector";
 import {SessionErrorsEnum} from "../types/SessionErrorsEnum";
 import {SessionStatesEnum} from "../types/SessionStatesEnum";
+import Finish from "./Finish";
 
 const RunOutOfTime: React.FC = () => {
 
@@ -37,7 +36,7 @@ const RunOutOfTime: React.FC = () => {
         </div>);
 
     if (failure.type === SessionErrorsEnum.NotFound) return <NotFound/>
-    if (status === SessionStatesEnum.Finished) return <FinishContainer/>
+    if (status === SessionStatesEnum.Finished) return <Finish/>
     const {isLMS, schemeId} = context;
     return (
         <div className="container-fluid p-0 mt-1">

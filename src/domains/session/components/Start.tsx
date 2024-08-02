@@ -3,10 +3,6 @@ import {FaRocket} from 'react-icons/fa';
 import Logo from '../../common/components/Logo';
 import Failure from '../../common/components/Failure';
 import Header from "../../common/components/Header";
-// @ts-ignore
-import SessionContainer from "../containers/SessionContainer";
-// @ts-ignore
-import FinishContainer from "../containers/FinishContainer";
 import '../../../../main.css';
 import {Dispatch} from "redux";
 import {useDispatch, useSelector} from "react-redux";
@@ -23,6 +19,8 @@ import NotFound from "./NotFound";
 import RunOutOfTime from "./RunOutOfTime";
 import Cancelled from "./Cancelled";
 import Preserved from "./Preserved";
+import Session from "./Session";
+import Finish from "./Finish";
 
 
 const Start: React.FC = () => {
@@ -36,8 +34,10 @@ const Start: React.FC = () => {
     const session = useSelector((state: RootState) => state.session.session);
     const failure = useSelector((state: RootState) => state.session.failure);
 
-    const {schemeId, isLMS} = context;
+    // Fail-safe protection.
+    if (!context || !schemeInfo) return null;
 
+    const {schemeId, isLMS} = context;
 
     const renderStart = () => {
         const {active} = schemeInfo;
@@ -84,18 +84,15 @@ const Start: React.FC = () => {
         );
     }
 
-    // Fail-safe protection.
-    if (!context || !schemeInfo) return null;
-
     if (failure.type === SessionErrorsEnum.Opened) return <Opened/>;
     if (failure.type === SessionErrorsEnum.NotFound) return <NotFound/>
     if (failure.type === SessionErrorsEnum.RunOutOfTime) return <RunOutOfTime/>
     if (failure.is && failure.location === "start") return renderFailure();
 
-    const {status} = session;
+    const status: SessionStatesEnum = session.status;
 
-    if (status === SessionStatesEnum.Started) return <SessionContainer/>;
-    if (status === SessionStatesEnum.Finished) return <FinishContainer/>;
+    if (status === SessionStatesEnum.Started) return <Session/>;
+    if (status === SessionStatesEnum.Finished) return <Finish/>;
     if (status === SessionStatesEnum.Cancelled) return <Cancelled/>;
     if (status === SessionStatesEnum.Preserved) return <Preserved/>;
 

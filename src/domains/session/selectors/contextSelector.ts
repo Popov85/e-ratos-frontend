@@ -1,6 +1,5 @@
 import {RootState} from "../../../store/rootReducer";
 import {Mode, SchemeInfo} from "../types/SchemeInfo";
-//import {UserInfo} from "../../common/types/UserInfo";
 import {Context} from "../types/Context";
 import {FinishInfo} from "../types/FinishInfo";
 
@@ -21,10 +20,6 @@ export const getContext = (state: RootState): Context | null => {
 export const getSchemeInfo = (state: RootState): SchemeInfo | null => {
     return state.session.schemeInfo.schemeInfo ?? null;
 }
-
-/*export const isLMS = (state: RootState): boolean => {
-    return state.auth.userInfo?.lms ?? false;
-}*/
 
 export const getMode = (state: RootState): Mode | null => {
     return state.session.schemeInfo.schemeInfo?.mode ?? null;
