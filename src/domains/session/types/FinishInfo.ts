@@ -49,6 +49,7 @@ export type QuestionResult = {
             width: number;
             height: number;
         };
+        single?: boolean; // TODO: Only for MCQ!
         className: QuestionClassEnum;
     };
     response?: ResponseMCQ | ResponseFBSQ; // TODO: add more impl

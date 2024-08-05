@@ -1,11 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {FinishInfo} from "../types/FinishInfo";
 import Passed from "./Passed";
 import TimeOut from "./TimeOut";
 
-const Result = props => {
+type Props = {
+    result: FinishInfo
+}
 
-    const {user, scheme, passed, timeouted, percent, grade, timeSpent, points} = props.result;
+const Result: React.FC<Props> = ({result: {user, scheme, passed, timeouted, percent, grade, timeSpent, points}}) => {
 
     const renderScore = () => {
         if (!percent) return null;
@@ -99,11 +101,5 @@ const Result = props => {
         </div>
     );
 }
-
-const propTypes = {
-    result: PropTypes.object.isRequired
-};
-
-Result.propTypes = propTypes;
 
 export default Result;

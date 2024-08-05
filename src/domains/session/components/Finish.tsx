@@ -1,17 +1,14 @@
 import React, {useState} from 'react';
 import {FaRedo} from 'react-icons/fa';
-// @ts-ignore
-import Result from './Result';
-// @ts-ignore
-import ResultByThemes from './ResultByThemes';
-// @ts-ignore
-import ResultByQuestionsContainer from "../containers/ResultByQuestionsContainer";
 import {Dispatch} from "redux";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../store/rootReducer";
 import {getResult} from "../selectors/contextSelector";
 import {FinishInfo} from "../types/FinishInfo";
 import {resetSession} from "../actions/sessionActions";
+import Result from "./Result";
+import ResultByThemes from "./ResultByThemes";
+import ResultByQuestions from "./ResultByQuestions";
 
 const Finish: React.FC = () => {
 
@@ -28,8 +25,8 @@ const Finish: React.FC = () => {
         const {themeResults, questionResults} = result;
         return (
             <div>
-                {themeResults ? <ResultByThemes themeResults={result.themeResults}/> : null}
-                {questionResults ? <ResultByQuestionsContainer questionResults={result.questionResults}/> : null}
+                {themeResults ? <ResultByThemes themeResults={themeResults!}/> : null}
+                {questionResults ? <ResultByQuestions questionResults={result.questionResults!}/> : null}
             </div>
         );
     }

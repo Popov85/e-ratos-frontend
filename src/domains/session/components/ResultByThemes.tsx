@@ -1,9 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {ThemeResult} from "../types/FinishInfo";
 
-const ResultByThemes = props => {
+const ResultByThemes: React.FC<{ themeResults: Array<ThemeResult> }> = ({themeResults = []}) => {
 
-    const renderTheme = themeResult => {
+    if (themeResults.length === 0) return null;
+
+    const renderTheme = (themeResult: ThemeResult) => {
         return (
             <div key={themeResult.theme.themeId} className="row bg-light mt-1 mb-1 no-gutters">
                 <div className="col-8 text-truncate border">
@@ -20,22 +22,16 @@ const ResultByThemes = props => {
             </div>);
     }
 
-    let output = [];
-    props.themeResults.map(t => output.push(renderTheme(t)));
     return (
         <div className="row mt-3 mr-1 ml-1">
             <div className="col-0 col-sm-1 col-md-2"/>
             <div className="col-12 col-sm-10 col-md-8">
                 <h6 className="text-center text-secondary"><u>Result by themes:</u></h6>
-                {output}
+                {themeResults.map((t: ThemeResult) => renderTheme(t))}
             </div>
             <div className="col-0 col-sm-1 col-md-2"/>
         </div>
     );
 }
-
-ResultByThemes.propTypes = {
-    themeResults: PropTypes.array.isRequired
-};
 
 export default ResultByThemes;
