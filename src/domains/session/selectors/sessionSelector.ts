@@ -1,6 +1,6 @@
 import {RootState} from "../../../store/rootReducer";
 import {BatchInfo, Question} from "../types/BatchInfo";
-import {FinishInfo} from "../types/FinishInfo";
+import {FinishInfo, QuestionResult} from "../types/FinishInfo";
 import {Help} from "../types/Help";
 import {Stars} from "../types/Stars";
 import {Complaint} from "../types/Complain";
@@ -47,9 +47,9 @@ export const getResponse = (state: RootState): ResponseMCQ | ResponseFBSQ | null
     return state.session.session.responses.get(question.questionId) ?? null;
 }
 
-export const getResponseChecked = (state: RootState) => {
+export const getResponseChecked = (state: RootState): QuestionResult | null => {
     const question: Question | null = getQuestion(state);
     if (!question) return null;
-    return state.session.session.responsesChecked.get(question.questionId);
+    return state.session.session.responsesChecked.get(question.questionId) ?? null;
 }
 

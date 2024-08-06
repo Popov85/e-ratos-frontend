@@ -398,7 +398,7 @@ export const getSkipped = (schemeId: number, questionId: number, isLMS: boolean)
 };
 
 // TODO: add more impl for responses
-export const getChecked = (schemeId: number, isLMS: boolean, questionId: number, response: ResponseMCQ | ResponseFBSQ) => {
+export const getChecked = (schemeId: number, isLMS: boolean, questionId: number, response: ResponseMCQ | ResponseFBSQ | null) => {
     return (dispatch: Dispatch<SessionActions | any>): void => {
         dispatch(failureActions.resetFailure());
         dispatch(apiCall(false));

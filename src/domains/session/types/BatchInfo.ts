@@ -35,5 +35,6 @@ export type Question = {
         width: number;
         height: number;
     };
+    single?: boolean;
     className: QuestionClassEnum;
 };

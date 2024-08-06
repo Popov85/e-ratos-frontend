@@ -1,19 +1,26 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {BatchInfo} from "../types/BatchInfo";
+import {useSelector} from "react-redux";
+import {RootState} from "../../../store/rootReducer";
+import {getBatch} from "../selectors/sessionSelector";
 
-const SessionInfo = props => {
+const SessionInfo: React.FC = () => {
 
-    const {questionsLeft, batchesLeft, currentScore, effectiveScore, progress} = props.batch;
+    const currentBatch: BatchInfo | null = useSelector((state: RootState) => getBatch(state));
+
+    if (!currentBatch) return null;
+
+    const {questionsLeft, batchesLeft, currentScore, effectiveScore, progress} = currentBatch;
 
     return (
         <span className="text-center text-secondary border">
                 <small>
                     {
-                        questionsLeft !== 'undefined' ? <span title="Questions remaining in this session"><strong>Left questions: </strong>{questionsLeft}</span>
+                        questionsLeft !== undefined ? <span title="Questions remaining in this session"><strong>Left questions: </strong>{questionsLeft}</span>
                             : null
                     }
                     {
-                        batchesLeft !== 'undefined' ? <span
+                        batchesLeft !== undefined ? <span
                                 title="Batches remaining in this session"><strong>|&nbsp;Left batches: </strong>{batchesLeft}</span>
                             : null
                     }
@@ -35,10 +42,6 @@ const SessionInfo = props => {
                 </small>
             </span>
     );
-};
-
-SessionInfo.propTypes = {
-    batch: PropTypes.object.isRequired
 };
 
 export default SessionInfo;

@@ -1,19 +1,5 @@
 import React from 'react';
 import Header from "../../common/components/Header";
-//@ts-ignore
-import StatusModContainer from "../containers/StatusModContainer";
-//@ts-ignore
-import HelpModContainer from "../containers/HelpModContainer";
-//@ts-ignore
-import SessionTitleContainer from "../containers/SessionTitleContainer";
-//@ts-ignore
-import SessionInfoContainer from "../containers/SessionInfoContainer";
-//@ts-ignore
-import SessionControlsContainer from "../containers/SessionControlsContainer";
-//@ts-ignore
-import SessionNavigationContainer from "../containers/SessionNavigationContainer";
-//@ts-ignore
-import SessionQuestionContainer from "../containers/SessionQuestionContainer";
 import {Dispatch} from "redux";
 import {useDispatch, useSelector} from "react-redux";
 import {Context} from "../types/Context";
@@ -26,6 +12,13 @@ import {getFinishedBatch, getNext} from "../actions/sessionActions";
 import {ResponseMCQ} from "../types/responses/impl/ResponseMCQ";
 import {ResponseFBSQ} from "../types/responses/impl/ResponseFBSQ";
 import {QuestionResult} from "../types/FinishInfo";
+import StatusMod from "./StatusMod";
+import HelpMod from "./HelpMod";
+import SessionTitle from "./SessionTitle";
+import SessionInfo from "./SessionInfo";
+import SessionControls from "./SessionControls";
+import SessionNavigation from "./SessionNavigation";
+import SessionQuestion from "./SessionQuestion";
 
 const Session: React.FC = () => {
 
@@ -64,15 +57,14 @@ const Session: React.FC = () => {
     return (
         <div className="container-fluid p-0">
             {
-                (!isLoaded || (failure.is && failure.location === 'session')) &&
-                <StatusModContainer/>
+                (!isLoaded || (failure.is && failure.location === 'session')) && <StatusMod/>
             }
             {
-                help && <HelpModContainer/>
+                help && <HelpMod/>
             }
             <div className="row mb-3">
                 <div className="col-12">
-                    <SessionTitleContainer/>
+                    <SessionTitle/>
                 </div>
             </div>
 
@@ -84,7 +76,7 @@ const Session: React.FC = () => {
 
             <div className="row">
                 <div className="col-12 text-center">
-                    <SessionInfoContainer/>
+                    <SessionInfo/>
                 </div>
             </div>
 
@@ -92,7 +84,7 @@ const Session: React.FC = () => {
                 <div className="col-12 text-center">
                     {
                         !responseChecked && question &&
-                        <SessionControlsContainer/>
+                        <SessionControls/>
                     }
                 </div>
             </div>
@@ -102,13 +94,13 @@ const Session: React.FC = () => {
                     {
                         !question ?
                             <Header title="SKIPPED SUCCESSFULLY" color="alert-warning" widely={true}/> :
-                            <SessionQuestionContainer/>
+                            <SessionQuestion/>
                     }
                 </div>
             </div>
             <div className="row">
                 <div className="col-12">
-                    <SessionNavigationContainer handleSubmit={handleSubmit}/>
+                    <SessionNavigation handleSubmit={handleSubmit}/>
                 </div>
             </div>
         </div>
