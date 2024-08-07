@@ -1,8 +1,4 @@
 import React from 'react';
-// @ts-ignore
-import CountdownSessionContainer from "../containers/CountdownSessionContainer";
-// @ts-ignore
-import CountdownBatchContainer from "../containers/CountdownBatchContainer";
 import {FaPause, FaPlay, FaPowerOff, FaSave} from "react-icons/fa";
 import {Dispatch} from "redux";
 import {useDispatch, useSelector} from "react-redux";
@@ -15,6 +11,8 @@ import {UserInfo} from "../../common/types/UserInfo";
 import {SchemeInfo} from "../types/SchemeInfo";
 import {getBatch} from "../selectors/sessionSelector";
 import {BatchInfo} from "../types/BatchInfo";
+import CountdownSession from "./CountdownSession";
+import CountdownBatch from "./CountdownBatch";
 
 
 const SessionTitle: React.FC = () => {
@@ -51,8 +49,8 @@ const SessionTitle: React.FC = () => {
                           :
                           null
                   }
-                <CountdownSessionContainer/>
-                <CountdownBatchContainer/>
+                <CountdownSession/>
+                <CountdownBatch/>
               </span>
         );
     }
