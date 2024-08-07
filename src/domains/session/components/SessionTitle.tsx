@@ -31,7 +31,7 @@ const SessionTitle: React.FC = () => {
     const {pauseable, preservable} = schemeInfo.mode;
 
     const renderSessionLeftTitle = () => {
-        if (!!currentBatch.sessionExpiresInSec) return null;
+        if (!currentBatch.sessionExpiresInSec) return null;
         return (
             <span className="d-flex align-items-center">
                   {

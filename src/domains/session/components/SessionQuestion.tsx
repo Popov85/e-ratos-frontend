@@ -19,7 +19,7 @@ const SessionQuestion: React.FC = () => {
     const question: Question | null = useSelector((state: RootState) => getQuestion(state));
     const responseChecked: QuestionResult | null = useSelector((state: RootState) => getResponseChecked(state));
 
-    if (!question || !responseChecked) return null;
+    if (!question) return null;
 
     const key: number = question.questionId;
 
