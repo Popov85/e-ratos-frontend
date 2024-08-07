@@ -8,7 +8,7 @@ import {ResponseMCQ} from "../types/responses/impl/ResponseMCQ";
 import {ResponseFBSQ} from "../types/responses/impl/ResponseFBSQ";
 import {Stars} from "../types/Stars";
 import {Help} from "../types/Help";
-import {Complaint} from "../types/Complain";
+import {Complaint} from "../types/Complaint";
 import {SessionErrorLocationsEnum} from "../types/SessionErrorLocationsEnum";
 import axios, {AxiosError} from "axios";
 import {ServerError} from "../../common/types/ServerError";

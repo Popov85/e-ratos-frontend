@@ -6,7 +6,7 @@ import {FinishInfo, QuestionResult} from "../types/FinishInfo";
 import {ResponseMCQ} from "../types/responses/impl/ResponseMCQ";
 import {ResponseFBSQ} from "../types/responses/impl/ResponseFBSQ";
 import {Stars} from "../types/Stars";
-import {Complaint} from "../types/Complain";
+import {Complaint} from "../types/Complaint";
 import {Help} from "../types/Help";
 
 export const sessionAPI = {

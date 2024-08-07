@@ -18,7 +18,7 @@ import {
     SESSION_SHOW_PREV_QUESTION_IN_BATCH, SESSION_SHOW_REPORT, SessionActions
 } from "../actions/sessionActions";
 import {Stars} from "../types/Stars";
-import {Complaint} from "../types/Complain";
+import {Complaint} from "../types/Complaint";
 import {ResponseMCQ} from "../types/responses/impl/ResponseMCQ";
 import {ResponseFBSQ} from "../types/responses/impl/ResponseFBSQ";
 

@@ -1,10 +1,6 @@
 import React from 'react';
 import {OverlayTrigger, Tooltip} from "react-bootstrap";
-// @ts-ignore
-import ReportedContainer from "../containers/ReportedContainer";
 import {FaCheck, FaFlagCheckered, FaQuestion, FaTimes, FaUndo} from "react-icons/fa";
-// @ts-ignore
-import SessionRatingContainer from "../containers/SessionRatingContainer";
 import {getContext, getMode} from "../selectors/contextSelector";
 import {getHelp, getQuestion, getResponse} from "../selectors/sessionSelector";
 import {Dispatch} from "redux";
@@ -17,6 +13,8 @@ import {Question} from "../types/BatchInfo";
 import {Help} from "../types/Help";
 import {ResponseFBSQ} from "../types/responses/impl/ResponseFBSQ";
 import {ResponseMCQ} from "../types/responses/impl/ResponseMCQ";
+import SessionRating from "./SessionRating";
+import Reported from "./Reported";
 
 const SessionControls: React.FC = () => {
 
@@ -99,7 +97,7 @@ const SessionControls: React.FC = () => {
         <div>
             <div className="mb-1">
                 {
-                    starrable ? <SessionRatingContainer/> : null
+                    starrable ? <SessionRating/> : null
                 }
             </div>
             <div>
@@ -109,7 +107,7 @@ const SessionControls: React.FC = () => {
             </div>
             <div className="mt-2">
                 {
-                    reportModeOn ? <ReportedContainer/> : null
+                    reportModeOn ? <Reported/> : null
                 }
             </div>
         </div>);

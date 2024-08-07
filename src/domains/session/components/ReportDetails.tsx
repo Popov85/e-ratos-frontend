@@ -2,7 +2,7 @@ import React from 'react';
 import {OverlayTrigger, Popover} from "react-bootstrap";
 import {FaRegQuestionCircle} from 'react-icons/fa';
 
-const ReportDetails = () => {
+const ReportDetails: React.FC = () => {
 
     const renderPopover = () => {
         return (

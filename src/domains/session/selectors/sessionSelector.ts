@@ -3,7 +3,7 @@ import {BatchInfo, Question} from "../types/BatchInfo";
 import {FinishInfo, QuestionResult} from "../types/FinishInfo";
 import {Help} from "../types/Help";
 import {Stars} from "../types/Stars";
-import {Complaint} from "../types/Complain";
+import {Complaint} from "../types/Complaint";
 import {ResponseMCQ} from "../types/responses/impl/ResponseMCQ";
 import {ResponseFBSQ} from "../types/responses/impl/ResponseFBSQ";
 

@@ -1,9 +1,18 @@
 import React, {useState} from 'react';
-import PropTypes from 'prop-types';
 import {FaCheck, FaCheckSquare, FaRegSquare} from 'react-icons/fa';
+import {getContext, getSchemeInfo} from "../selectors/contextSelector";
+import {getQuestion, getReport} from "../selectors/sessionSelector";
+import {Dispatch} from "redux";
+import {useDispatch, useSelector} from "react-redux";
+import {Context} from "../types/Context";
+import {RootState} from "../../../store/rootReducer";
+import {Question} from "../types/BatchInfo";
+import {Complaint} from "../types/Complaint";
+import {SchemeInfo} from "../types/SchemeInfo";
+import {getReported, hideReport} from "../actions/sessionActions";
 import ReportDetails from "./ReportDetails";
 
-const complaintTypes = [
+const complaintTypes: Array<ComplaintDetails> = [
     {typeId: 1, name: "Incorrect question", abb: "IQ"},
     {typeId: 2, name: "Typo in question", abb: "TQ"},
     {typeId: 3, name: "Typo in answer", abb: "TA"},
@@ -12,11 +21,20 @@ const complaintTypes = [
     {typeId: 6, name: "Other mistake", abb: "OM"}
 ];
 
-const Reported = (props) => {
+const Reported: React.FC = () => {
 
-    const [state, setState] = useState({complaintTypeIds: props.complaints ? props.complaints : new Array()});
+    const dispatch: Dispatch<any> = useDispatch();
 
-    const updateChecked = (typeId) => {
+    const context: Context | null = useSelector((state: RootState) => getContext(state));
+    const schemeInfo: SchemeInfo | null = useSelector((state: RootState) => getSchemeInfo(state));
+    const question: Question | null = useSelector((state: RootState) => getQuestion(state));
+    const complaints: Complaint | null = useSelector((state: RootState) => getReport(state));
+
+    if (!context || !schemeInfo || !question) return null;
+
+    const [state, setState] = useState({complaintTypeIds: complaints ? complaints.complaintTypeIds : new Array<number>()});
+
+    const updateChecked = (typeId: number): void => {
         const {complaintTypeIds} = state;
         if (complaintTypeIds && complaintTypeIds.includes(typeId)) {
             removeComplaint(typeId);
@@ -25,40 +43,41 @@ const Reported = (props) => {
         }
     }
 
-    const addComplaint = (id) => {
-        let newArray = state.complaintTypeIds.slice();
+    const addComplaint = (id: number): void => {
+        let newArray: Array<number> = state.complaintTypeIds.slice();
         newArray.push(id);
         setState({complaintTypeIds: newArray});
     }
 
-    const removeComplaint = (id) => {
-        let newArray = state.complaintTypeIds.slice();
-        let pos = newArray.indexOf(id);
+    const removeComplaint = (id: number): void => {
+        let newArray: Array<number> = state.complaintTypeIds.slice();
+        let pos: number = newArray.indexOf(id);
         newArray.splice(pos, 1);
         setState({complaintTypeIds: newArray});
     }
 
-    const putComplaint = () => {
-        const types = state.complaintTypeIds;
-        const {schemeId, isLMS, questionId} = props;
+    const putComplaint = (): void => {
+        const types: Array<number> = state.complaintTypeIds;
+        const schemeId: number = schemeInfo.schemeId;
+        const questionId: number = question.questionId;
         // Send only types that have not been sent yet
-        const oldTypes = props.complaints;
+        const oldTypes: Complaint | null = complaints;
         if (!oldTypes) {// First attempt
-            props.getReported(schemeId, questionId, isLMS, types);
+            dispatch(getReported(schemeId, questionId, context.isLMS, types));
         } else {// Second attempt: decide what to send?
             let result = new Array();
-            for (let i = 0; i < types.length; i++) {
-                if (!oldTypes.includes(types[i])) result.push(types[i]);
+            for (let i: number = 0; i < types.length; i++) {
+                if (!oldTypes.complaintTypeIds.includes(types[i])) result.push(types[i]);
             }
             if (result.length > 0) {
-                props.getReported(schemeId, questionId, isLMS, result);
+                dispatch(getReported(schemeId, questionId, context.isLMS, result));
             } else {// Nothing changed, just close report mode
-                props.hideReport();
+                dispatch(hideReport());
             }
         }
     }
 
-    const renderMock = (typeId, name, abb) => {
+    const renderMock = (typeId: number, name: string, abb: string) => {
         return (
             <span key={typeId} className="mr-3">
                 <a href="#" className="badge badge-danger mr-1" onClick={() => updateChecked(typeId)} title={name}>
@@ -72,7 +91,6 @@ const Reported = (props) => {
             </span>);
     }
 
-    const {complaints} = props;
     const {complaintTypeIds} = state;
     return (
         <div className="row ">
@@ -86,7 +104,7 @@ const Reported = (props) => {
                 </h6>
                 <span>
                     {
-                        complaintTypes.map(c => {
+                        complaintTypes.map((c: ComplaintDetails) => {
                             return renderMock(c.typeId, c.name, c.abb);
                         })
                     }
@@ -103,15 +121,5 @@ const Reported = (props) => {
         </div>
     );
 }
-
-Reported.propTypes = {
-    isLMS: PropTypes.bool.isRequired,
-    schemeId: PropTypes.number.isRequired,
-    questionId: PropTypes.number.isRequired,
-    complaints: PropTypes.array,
-
-    hideReport: PropTypes.func.isRequired,
-    getReported: PropTypes.func.isRequired
-};
 
 export default Reported;
