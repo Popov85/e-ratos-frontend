@@ -1,4 +1,4 @@
-import {BatchInfo, Question} from '../types/BatchInfo';
+import {BatchInfo} from '../types/BatchInfo';
 import {FinishInfo, QuestionResult} from '../types/FinishInfo';
 import {Help} from '../types/Help';
 import {SessionStatesEnum} from "../types/SessionStatesEnum";
@@ -21,6 +21,7 @@ import {Stars} from "../types/Stars";
 import {Complaint} from "../types/Complaint";
 import {ResponseMCQ} from "../types/responses/impl/ResponseMCQ";
 import {ResponseFBSQ} from "../types/responses/impl/ResponseFBSQ";
+import {BaseQuestion} from "../types/questions/BaseQuestion";
 
 interface SessionState {
     status: SessionStatesEnum;
@@ -197,7 +198,7 @@ export const sessionReducer = (state: SessionState = initState, action: SessionA
             updatedResponses.delete(skippedQuestionId);
 
             // Filter out the skipped question from the batch questions
-            const updatedQuestions: Array<Question> = batch.questions.filter((q: Question): boolean => q.questionId !== skippedQuestionId);
+            const updatedQuestions: Array<BaseQuestion> = batch.questions.filter((q: BaseQuestion): boolean => q.questionId !== skippedQuestionId);
 
             // Create a new batch with the updated questions list
             const updatedBatch: BatchInfo = { ...batch, questions: updatedQuestions };

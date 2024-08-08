@@ -9,19 +9,19 @@ import {fetchHelp, getChecked, getSkipped, invertReport, showHelp} from "../acti
 import {Context} from "../types/Context";
 import {RootState} from "../../../store/rootReducer";
 import {Mode} from "../types/SchemeInfo";
-import {Question} from "../types/BatchInfo";
 import {Help} from "../types/Help";
 import {ResponseFBSQ} from "../types/responses/impl/ResponseFBSQ";
 import {ResponseMCQ} from "../types/responses/impl/ResponseMCQ";
 import SessionRating from "./SessionRating";
 import Reported from "./Reported";
+import {BaseQuestion} from "../types/questions/BaseQuestion";
 
 const SessionControls: React.FC = () => {
 
     const dispatch: Dispatch<any> = useDispatch();
 
     const context: Context | null = useSelector((state: RootState) => getContext(state));
-    const question: Question | null = useSelector((state: RootState) => getQuestion(state));
+    const question: BaseQuestion | null = useSelector((state: RootState) => getQuestion(state));
     const mode: Mode | null = useSelector((state: RootState) => getMode(state));
     const help: Help | null = useSelector((state: RootState) => getHelp(state));
     const response: ResponseMCQ | ResponseFBSQ | null = useSelector((state: RootState) => getResponse(state));

@@ -7,7 +7,7 @@ import {RootState} from "../../../store/rootReducer";
 import {getContext, getMode, getSchemeInfo} from "../selectors/contextSelector";
 import {Mode, SchemeInfo} from "../types/SchemeInfo";
 import {getQuestion, getResponseChecked} from "../selectors/sessionSelector";
-import {BatchInfo, Question} from "../types/BatchInfo";
+import {BatchInfo} from "../types/BatchInfo";
 import {getFinishedBatch, getNext} from "../actions/sessionActions";
 import {ResponseMCQ} from "../types/responses/impl/ResponseMCQ";
 import {ResponseFBSQ} from "../types/responses/impl/ResponseFBSQ";
@@ -19,6 +19,7 @@ import SessionInfo from "./SessionInfo";
 import SessionControls from "./SessionControls";
 import SessionNavigation from "./SessionNavigation";
 import SessionQuestion from "./SessionQuestion";
+import {BaseQuestion} from "../types/questions/BaseQuestion";
 
 const Session: React.FC = () => {
 
@@ -27,7 +28,7 @@ const Session: React.FC = () => {
     const schemeInfo: SchemeInfo | null = useSelector((state: RootState) => getSchemeInfo(state));
     const context: Context | null = useSelector((state: RootState) => getContext(state));
     const mode: Mode | null = useSelector((state: RootState) => getMode(state));
-    const question: Question | null = useSelector((state: RootState) => getQuestion(state));
+    const question: BaseQuestion | null = useSelector((state: RootState) => getQuestion(state));
     const isLoaded: boolean = useSelector((state: RootState) => state.session.session.isLoaded);
     const help: boolean = useSelector((state: RootState) => state.session.session.help);
     const batch: BatchInfo | null = useSelector((state: RootState) => state.session.session.batch);

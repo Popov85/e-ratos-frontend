@@ -1,14 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Header from "../../../common/components/Header";
+// @ts-ignore
 import ResourcePreloader from "../../../staff/components/ResourcePreloader";
+import {QuestionResult} from "../../types/FinishInfo";
 
-const QuestionCheckedComponent = (props) => {
+type Props = {
+    checkedResponse: QuestionResult;
+    fontSize: number;
+}
 
-    const {checkedResponse} = props;
+const QuestionChecked: React.FC<Props> = ({checkedResponse, fontSize}) => {
 
     const renderResources = () => {
-        const {resource} = props.checkedResponse.question;
+        const {resource} = checkedResponse.question;
         if (!resource) return null;
         return (
             <div className="text-center">
@@ -26,7 +30,7 @@ const QuestionCheckedComponent = (props) => {
                     color={`alert-${checkedResponse.score > 0 ? 'success' : 'danger'}`} widely={true}/>
             <div className="row text-center border rounded ml-0 mr-0 mt-0 mb-1 ">
                 <div className="col-12 pl-0 pr-0 pt-0 pb-0">
-                    <h6 className="text-secondary text-center m-0 p-0" style={{fontSize: props.fontSize + 'px'}}
+                    <h6 className="text-secondary text-center m-0 p-0" style={{fontSize: fontSize + 'px'}}
                         title={"Level: " + checkedResponse.question.level + " | " + "required: " + checkedResponse.question.required}>
                         {checkedResponse.question.question}
                     </h6>
@@ -37,11 +41,4 @@ const QuestionCheckedComponent = (props) => {
     );
 }
 
-const propTypes = {
-    checkedResponse: PropTypes.object.isRequired,
-    fontSize: PropTypes.number.isRequired
-};
-
-QuestionCheckedComponent.propTypes = propTypes;
-
-export default QuestionCheckedComponent;
+export default QuestionChecked;

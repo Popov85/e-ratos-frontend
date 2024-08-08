@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import './Question.css';
-import QuestionCheckedComponent from "./QuestionCheckedComponent";
+import QuestionCheckedComponent from "./QuestionChecked";
 import AnswerMcqMultiAnsweredNoResources from "./AnswerMcqMultiAnsweredNoResources";
 
 const normal = "bg-normal border-bottom border-regular";

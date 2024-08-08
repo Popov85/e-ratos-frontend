@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import './Question.css';
 import AnswerMcqSingleAnsweredNoResources from "./AnswerMcqSingleAnsweredNoResources";
-import QuestionCheckedComponent from "./QuestionCheckedComponent";
+import QuestionCheckedComponent from "./QuestionChecked";
 
 const normal = "bg-normal border-bottom border-regular";
 

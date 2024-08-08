@@ -7,13 +7,14 @@ import McqSingleAnsweredComponent from "./questions/McqSingleAnsweredComponent";
 // @ts-ignore
 import McqMultiAnsweredComponent from "./questions/McqMultiAnsweredComponent";
 // @ts-ignore
-import McqSingleCheckedComponent from "./questions/McqSingleCheckedComponent";
+import McqSingleCheckedComponent from "./questions/McqSingleChecked";
 // @ts-ignore
-import McqMultiCheckedComponent from "./questions/McqMultiCheckedComponent";
+import McqMultiCheckedComponent from "./questions/McqMultiChecked";
 import {QuestionResult} from "../types/FinishInfo";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../store/rootReducer";
 import {QuestionClassEnum} from "../types/QuestionClassEnum";
+import {QuestionMCQ} from "../types/questions/impl/QuestionMCQ";
 
 type Props = {
     questionResults: Array<QuestionResult>
@@ -59,14 +60,15 @@ const ResultByQuestions: React.FC<Props> = ({questionResults = []}) => {
     };
 
     const renderMcqQuestion = (questionResult: QuestionResult) => {
+        const mcqQuestion: QuestionMCQ = questionResult.question as QuestionMCQ;
         if (!questionResult.correctAnswer) {
-            if (questionResult.question.single) {
+            if (mcqQuestion.single) {
                 return <McqSingleAnsweredComponent checkedResponse={questionResult} fontSize={fontSize}/>
             } else {
                 return <McqMultiAnsweredComponent checkedResponse={questionResult} fontSize={fontSize}/>
             }
         } else {
-            if (questionResult.question.single) {
+            if (mcqQuestion.single) {
                 return <McqSingleCheckedComponent checkedResponse={questionResult} fontSize={fontSize}/>
             } else {
                 return <McqMultiCheckedComponent checkedResponse={questionResult} fontSize={fontSize}/>

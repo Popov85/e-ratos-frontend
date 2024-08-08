@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './Question.css';
 import AnswerMcqMultiNoResources from "./AnswerMcqMultiNoResources";
-import QuestionComponent from "./QuestionComponent";
+import Question from "./Question";
 
 const normal = "bg-normal border-bottom border-regular";
 const selected = "bg-selected border-bottom border-regular";
@@ -62,12 +62,12 @@ export default class McqMultiPreviewComponent extends React.Component {
         const {answerIds} = this.state;
         return (
             <div className="border-0">
-                <QuestionComponent question = {question}
-                                   expanded = {this.state.expanded}
-                                   fontSize = {this.state.fontSize}
-                                   clearResponse={() => this.clearResponse()}
-                                   setExpanded={() =>this.setExpanded()}
-                                   setFontSize={() =>this.setFontSize()}/>
+                <Question question = {question}
+                          expanded = {this.state.expanded}
+                          fontSize = {this.state.fontSize}
+                          clearResponse={() => this.clearResponse()}
+                          setExpanded={() =>this.setExpanded()}
+                          setFontSize={() =>this.setFontSize()}/>
                 <div className="border-top border-right border-left border-regular">
                     {
                         question.answers.map(a => {

@@ -8,8 +8,8 @@ import {RootState} from "../../../store/rootReducer";
 import {getContext} from "../selectors/contextSelector";
 import {getStarred} from "../actions/sessionActions";
 import {getQuestion, getStars} from "../selectors/sessionSelector";
-import {Question} from "../types/BatchInfo";
 import {Stars} from "../types/Stars";
+import {BaseQuestion} from "../types/questions/BaseQuestion";
 
 
 const SessionRating: React.FC = () => {
@@ -17,7 +17,7 @@ const SessionRating: React.FC = () => {
     const dispatch: Dispatch<any> = useDispatch();
 
     const context: Context | null = useSelector((state: RootState) => getContext(state));
-    const question: Question | null = useSelector((state: RootState) => getQuestion(state));
+    const question: BaseQuestion | null = useSelector((state: RootState) => getQuestion(state));
     const initStars: Stars | null = useSelector((state: RootState) => getStars(state));
 
     if (!context || !question) return null;

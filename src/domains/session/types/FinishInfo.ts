@@ -1,8 +1,6 @@
-import {ResponseMCQ} from "./responses/impl/ResponseMCQ";
-import {ResponseFBSQ} from "./responses/impl/ResponseFBSQ";
-import {AnswerFBSQ} from "./answers/impl/AnswerFBSQ";
-import {AnswerMCQ} from "./answers/impl/AnswerMCQ";
-import {QuestionClassEnum} from "./QuestionClassEnum";
+import {BaseQuestion} from "./questions/BaseQuestion";
+import {BaseCorrectAnswer} from "./answers/correct/BaseCorrectAnswer";
+import {BaseResponse} from "./responses/BaseResponse";
 
 export type FinishInfo = {
     user: string,
@@ -27,33 +25,9 @@ export type ThemeResult = {
 }
 
 export type QuestionResult = {
-    question: {
-        questionId: number;
-        serialNumber: number;
-        question: string;
-        level: string;
-        type: number;
-        lang: string;
-        themeDomain: {
-            themeId: number;
-            name: string;
-        };
-        required: boolean;
-        partialResponseAllowed: boolean;
-        helpAvailable: boolean;
-        resource?: {
-            resourceId: number;
-            link: string;
-            description: string;
-            type: string;
-            width: number;
-            height: number;
-        };
-        single?: boolean; // TODO: Only for MCQ!
-        className: QuestionClassEnum;
-    };
-    response?: ResponseMCQ | ResponseFBSQ; // TODO: add more impl
-    correctAnswer?: AnswerMCQ | AnswerFBSQ; //TODO: add more impl
+    question: BaseQuestion;
+    response?: BaseResponse;
+    correctAnswer?: BaseCorrectAnswer;
     score: number;
     bounty: number;
     penalty: number;

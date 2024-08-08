@@ -1,19 +1,35 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {FaCompress, FaEraser, FaExpand, FaPlus, FaMinus} from 'react-icons/fa';
+import {FaCompress, FaEraser, FaExpand, FaMinus, FaPlus} from 'react-icons/fa';
+// @ts-ignore
 import ResourcePreloader from "../../../staff/components/ResourcePreloader";
+import {getQuestion} from "../../selectors/sessionSelector";
+import {Dispatch} from "redux";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../../../store/rootReducer";
+import {BaseQuestion} from "../../types/questions/BaseQuestion";
+import {setExpanded, setFontSize} from "../../actions/sessionActions";
 import {utilsHTML} from "../../../../utils/utilsHTML";
 
-const QuestionComponent = (props) => {
+type Props = {
+    clearResponse: () => void;
+}
 
-    const {question, expanded} = props;
+const Question: React.FC<Props> = ({clearResponse}) => {
+
+    const dispatch: Dispatch<any> = useDispatch();
+
+    const question: BaseQuestion | null = useSelector((state: RootState) => getQuestion(state));
+    const expanded: boolean = useSelector((state: RootState) => state.session.session.expanded);
+    const fontSize: number = useSelector((state: RootState) => state.session.session.fontSize);
+
+    if (!question) return null;
 
     const renderTitle = () => {
         return "Level: " + question.level + " | " + "required: " + question.required;
     }
 
     const renderResources = () => {
-        const {resource} = props.question;
+        const {resource} = question;
         if (!resource) return null;
         return (
             <div className="text-center">
@@ -38,16 +54,16 @@ const QuestionComponent = (props) => {
                                 #{serialNumber ? serialNumber : 1}
                             </span>
                             <a href="#" className="badge badge-secondary border"
-                               onClick={() => props.clearResponse()} title="Clear your answer">
+                               onClick={() => clearResponse()} title="Clear your answer">
                                 <FaEraser color="white"/>
                             </a>
                             <a href="#" className="badge badge-secondary border"
-                               onClick={() => props.setExpanded()} title="Expand/compress">
+                               onClick={() => dispatch(setExpanded())} title="Expand/compress">
                                 {expanded ? <FaCompress/> : <FaExpand/>}
                             </a>
                             <a href="#" className="badge badge-secondary border"
-                               onClick={() => props.setFontSize()} title="Increate/Decrease size">
-                                {props.fontSize < 24 ? <FaPlus/> : <FaMinus/>}
+                               onClick={() => dispatch(setFontSize())} title="Increate/Decrease size">
+                                {fontSize < 24 ? <FaPlus/> : <FaMinus/>}
                             </a>
                         </div>
                         <div
@@ -62,7 +78,7 @@ const QuestionComponent = (props) => {
                 <div className="col-12 pl-0 pr-0 pt-1 pb-1">
                     <h6 className="text-secondary text-center p-0 m-0"
                         title={renderTitle()}>
-                        <span style={{fontSize: props.fontSize + 'px'}}
+                        <span style={{fontSize: fontSize + 'px'}}
                               dangerouslySetInnerHTML={utilsHTML.createMarkup(question.question)}/>
                     </h6>
                 </div>
@@ -78,15 +94,4 @@ const QuestionComponent = (props) => {
     );
 }
 
-const propTypes = {
-    question: PropTypes.object.isRequired,
-    expanded: PropTypes.bool.isRequired,
-    fontSize: PropTypes.number.isRequired,
-    setExpanded: PropTypes.func.isRequired,
-    setFontSize: PropTypes.func.isRequired,
-    clearResponse: PropTypes.func
-};
-
-QuestionComponent.propTypes = propTypes;
-
-export default QuestionComponent;
+export default Question;

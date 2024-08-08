@@ -6,11 +6,11 @@ import {Dispatch} from "redux";
 import {useDispatch, useSelector} from "react-redux";
 import {Context} from "../types/Context";
 import {RootState} from "../../../store/rootReducer";
-import {Question} from "../types/BatchInfo";
 import {Complaint} from "../types/Complaint";
 import {SchemeInfo} from "../types/SchemeInfo";
 import {getReported, hideReport} from "../actions/sessionActions";
 import ReportDetails from "./ReportDetails";
+import {BaseQuestion} from "../types/questions/BaseQuestion";
 
 const complaintTypes: Array<ComplaintDetails> = [
     {typeId: 1, name: "Incorrect question", abb: "IQ"},
@@ -27,7 +27,7 @@ const Reported: React.FC = () => {
 
     const context: Context | null = useSelector((state: RootState) => getContext(state));
     const schemeInfo: SchemeInfo | null = useSelector((state: RootState) => getSchemeInfo(state));
-    const question: Question | null = useSelector((state: RootState) => getQuestion(state));
+    const question: BaseQuestion | null = useSelector((state: RootState) => getQuestion(state));
     const complaints: Complaint | null = useSelector((state: RootState) => getReport(state));
 
     if (!context || !schemeInfo || !question) return null;
