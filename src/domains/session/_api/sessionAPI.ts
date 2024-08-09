@@ -57,7 +57,7 @@ export const sessionAPI = {
     // Preserve session request
     async preserve(schemeId: number, isLMS: boolean): Promise<Map<string, string>> {
         const result: AxiosResponse<Map<string, string>> = await instance.get(`${isLMS ? '/lms' : '/student'}/session/preserve/${schemeId}`);
-        return result.data;
+        return new Map(Object.entries(result.data));
     },
 
     // Retrieve session request

@@ -2,7 +2,7 @@ import sessionAPI from "../_api/sessionAPI";
 import * as failureActions from "./failureActions";
 import {Dispatch} from "redux";
 import {GenericAction} from "../../common/types/GenericAction";
-import {BatchInfo, Question} from "../types/BatchInfo";
+import {BatchInfo} from "../types/BatchInfo";
 import {FinishInfo, QuestionResult} from "../types/FinishInfo";
 import {ResponseMCQ} from "../types/responses/impl/ResponseMCQ";
 import {ResponseFBSQ} from "../types/responses/impl/ResponseFBSQ";
@@ -12,6 +12,7 @@ import {Complaint} from "../types/Complaint";
 import {SessionErrorLocationsEnum} from "../types/SessionErrorLocationsEnum";
 import axios, {AxiosError} from "axios";
 import {ServerError} from "../../common/types/ServerError";
+import {BaseQuestion} from "../types/questions/BaseQuestion";
 
 // Action Types
 export const SESSION_API_CALL = "SESSION_API_CALL" as const;
@@ -243,7 +244,7 @@ export const getStarted = (schemeId: number, isLMS: boolean) => {
         dispatch(apiCall(false));
         sessionAPI.start(schemeId, isLMS).then((batchInfo: BatchInfo): void => {
             dispatch(resetSession());
-            const questions: Array<Question> = batchInfo.questions;
+            const questions: Array<BaseQuestion> = batchInfo.questions;
             if (questions === null || questions.length === 0) {
                 dispatch(emptyBatch());
             } else {

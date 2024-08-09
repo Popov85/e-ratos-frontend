@@ -10,6 +10,7 @@ import {ResponseMCQ} from "../../types/responses/impl/ResponseMCQ";
 import {QuestionClassEnum} from "../../types/QuestionClassEnum";
 import {putResponse} from "../../actions/sessionActions";
 import AnswerMcqMultiNoResources from "./AnswerMcqMultiNoResources";
+import {ResponseClassEnum} from "../../types/ResponseClassEnum";
 
 const normal = "bg-normal border-bottom border-regular";
 const selected = "bg-selected border-bottom border-regular";
@@ -36,7 +37,7 @@ const McqMulti: React.FC = () => {
         const responseMCQ: ResponseMCQ = {
             questionId: questionId,
             nullable: false,
-            className: QuestionClassEnum.QuestionMCQClass,
+            className: ResponseClassEnum.ResponseMCQClass,
             answerIds: answerIds
         };
         dispatch(putResponse(questionId, responseMCQ));

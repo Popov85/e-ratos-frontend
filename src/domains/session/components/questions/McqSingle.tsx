@@ -11,6 +11,7 @@ import {QuestionClassEnum} from "../../types/QuestionClassEnum";
 import {QuestionMCQ} from "../../types/questions/impl/QuestionMCQ";
 import Question from "./Question";
 import AnswerMcqSingleNoResources from "./AnswerMcqSingleNoResources";
+import {ResponseClassEnum} from "../../types/ResponseClassEnum";
 
 const normal: string = "bg-normal border-bottom border-regular";
 const selected: string = "bg-selected border-bottom border-regular";
@@ -37,7 +38,7 @@ const McqSingle: React.FC = () => {
         const responseMCQ: ResponseMCQ = {
             questionId: questionId,
             nullable: false,
-            className: QuestionClassEnum.QuestionMCQClass,
+            className: ResponseClassEnum.ResponseMCQClass,
             answerIds: answerIds
         };
         dispatch(putResponse(questionId, responseMCQ));
