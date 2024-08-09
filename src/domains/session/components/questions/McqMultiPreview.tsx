@@ -7,7 +7,7 @@ import {BaseQuestion} from "../../types/questions/BaseQuestion";
 import {AnswerMCQ} from "../../types/answers/given/impl/AnswerMCQ";
 
 const normal: string = "bg-normal border-bottom border-regular";
-const selected = "bg-selected border-bottom border-regular";
+const selected: string = "bg-selected border-bottom border-regular";
 
 type Props = {
     question: QuestionMCQ;

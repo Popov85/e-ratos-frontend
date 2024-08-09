@@ -12,8 +12,8 @@ import {putResponse} from "../../actions/sessionActions";
 import AnswerMcqMultiNoResources from "./AnswerMcqMultiNoResources";
 import {ResponseClassEnum} from "../../types/ResponseClassEnum";
 
-const normal = "bg-normal border-bottom border-regular";
-const selected = "bg-selected border-bottom border-regular";
+const normal: string = "bg-normal border-bottom border-regular";
+const selected: string = "bg-selected border-bottom border-regular";
 
 const McqMulti: React.FC = () => {
 
