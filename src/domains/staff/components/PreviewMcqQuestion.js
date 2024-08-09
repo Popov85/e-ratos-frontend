@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import McqMultiPreviewComponent from "../../session/components/questions/McqMultiPreviewComponent";
-import McqSinglePreviewComponent from "../../session/components/questions/McqSinglePreviewComponent";
+import McqSinglePreview from "../../session/components/questions/McqSinglePreview";
+import McqMultiPreview from "../../session/components/questions/McqMultiPreview";
+
 
 const PreviewMcqQuestion = props => {
     const {questionMcq} = props;
 
     if (questionMcq.single)
-        return <McqSinglePreviewComponent question={questionMcq}/>;
-    return <McqMultiPreviewComponent question={questionMcq}/>;
+        return <McqSinglePreview question={questionMcq}/>;
+    return <McqMultiPreview question={questionMcq}/>;
 
 };
 

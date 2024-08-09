@@ -34,7 +34,9 @@ const SessionQuestion: React.FC = () => {
         return (
             <div className="row mt-0 mb-4">
                 <div className="col-12">
-                    {single ? <McqSingleChecked key={key}/> : <McqMultiChecked key={key}/>}
+                    {single
+                        ? <McqSingleChecked checkedResponse={responseChecked} key={key}/>
+                        : <McqMultiChecked checkedResponse={responseChecked} key={key}/>}
                 </div>
             </div>);
     }

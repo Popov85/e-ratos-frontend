@@ -1,9 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-const AnswerMcqMultiAnsweredNoResources = (props) => {
+type Props = {
+    questionId: number;
+    answerId: number;
+    answer: string;
+    fontSize: number;
+    selected: boolean;
+}
 
-    const {questionId, answerId, answer, selected, fontSize} = props;
+const AnswerMcqMultiAnsweredNoResources: React.FC<Props> = ({questionId, answerId, answer, selected, fontSize}) => {
 
     return (
         <div className="text-truncate" style={{fontSize: fontSize + 'px'}}>
@@ -16,15 +21,5 @@ const AnswerMcqMultiAnsweredNoResources = (props) => {
         </div>
     );
 };
-
-const propTypes = {
-    questionId: PropTypes.number.isRequired,
-    answerId: PropTypes.number.isRequired,
-    answer: PropTypes.string.isRequired,
-    selected: PropTypes.bool.isRequired,
-    fontSize: PropTypes.number.isRequired
-};
-
-AnswerMcqMultiAnsweredNoResources.propTypes = propTypes;
 
 export default AnswerMcqMultiAnsweredNoResources;

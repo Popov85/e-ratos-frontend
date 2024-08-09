@@ -11,16 +11,21 @@ import {setExpanded, setFontSize} from "../../actions/sessionActions";
 import {utilsHTML} from "../../../../utils/utilsHTML";
 
 type Props = {
+    question?: BaseQuestion;
+    expanded?: boolean;
+    fontSize?:number;
+    setExpanded?: () => void;
+    setFontSize?: () => void;
     clearResponse: () => void;
 }
 
-const Question: React.FC<Props> = ({clearResponse}) => {
+const Question: React.FC<Props> = ({clearResponse, ...props}) => {
 
     const dispatch: Dispatch<any> = useDispatch();
 
-    const question: BaseQuestion | null = useSelector((state: RootState) => getQuestion(state));
-    const expanded: boolean = useSelector((state: RootState) => state.session.session.expanded);
-    const fontSize: number = useSelector((state: RootState) => state.session.session.fontSize);
+    const question: BaseQuestion | null = props.question ?? useSelector((state: RootState) => getQuestion(state));
+    const expanded: boolean = props.expanded ?? useSelector((state: RootState) => state.session.session.expanded);
+    const fontSize: number = props.fontSize ?? useSelector((state: RootState) => state.session.session.fontSize);
 
     if (!question) return null;
 
@@ -58,11 +63,11 @@ const Question: React.FC<Props> = ({clearResponse}) => {
                                 <FaEraser color="white"/>
                             </a>
                             <a href="#" className="badge badge-secondary border"
-                               onClick={() => dispatch(setExpanded())} title="Expand/compress">
-                                {expanded ? <FaCompress/> : <FaExpand/>}
+                               onClick={() => props.setExpanded?.() || dispatch(setExpanded())} title="Expand/compress">
+                            {expanded ? <FaCompress/> : <FaExpand/>}
                             </a>
                             <a href="#" className="badge badge-secondary border"
-                               onClick={() => dispatch(setFontSize())} title="Increate/Decrease size">
+                               onClick={() => props.setFontSize?.() || dispatch(setFontSize())} title="Increate/Decrease size">
                                 {fontSize < 24 ? <FaPlus/> : <FaMinus/>}
                             </a>
                         </div>

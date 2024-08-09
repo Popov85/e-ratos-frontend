@@ -2,19 +2,13 @@ import React, {useEffect, useRef, useState} from 'react';
 import {FaInfoCircle} from 'react-icons/fa';
 
 import './questions/Question.css';
-// @ts-ignore
-import McqSingleAnsweredComponent from "./questions/McqSingleAnsweredComponent";
-// @ts-ignore
-import McqMultiAnsweredComponent from "./questions/McqMultiAnsweredComponent";
-// @ts-ignore
-import McqSingleCheckedComponent from "./questions/McqSingleChecked";
-// @ts-ignore
-import McqMultiCheckedComponent from "./questions/McqMultiChecked";
 import {QuestionResult} from "../types/FinishInfo";
-import {useSelector} from "react-redux";
-import {RootState} from "../../../store/rootReducer";
 import {QuestionClassEnum} from "../types/QuestionClassEnum";
 import {QuestionMCQ} from "../types/questions/impl/QuestionMCQ";
+import McqSingleAnswered from "./questions/McqSingleAnswered";
+import McqMultiAnswered from "./questions/McqMultiAnswered";
+import McqSingleChecked from "./questions/McqSingleChecked";
+import McqMultiChecked from "./questions/McqMultiChecked";
 
 type Props = {
     questionResults: Array<QuestionResult>
@@ -23,8 +17,6 @@ type Props = {
 const ResultByQuestions: React.FC<Props> = ({questionResults = []}) => {
 
     if (questionResults.length === null) return null;
-
-    const fontSize: number | null = useSelector((state: RootState) => state.session.session.fontSize);
 
     const [detailsId, setDetailsId] = useState<number | null>(null);
 
@@ -63,15 +55,15 @@ const ResultByQuestions: React.FC<Props> = ({questionResults = []}) => {
         const mcqQuestion: QuestionMCQ = questionResult.question as QuestionMCQ;
         if (!questionResult.correctAnswer) {
             if (mcqQuestion.single) {
-                return <McqSingleAnsweredComponent checkedResponse={questionResult} fontSize={fontSize}/>
+                return <McqSingleAnswered checkedResponse={questionResult}/>
             } else {
-                return <McqMultiAnsweredComponent checkedResponse={questionResult} fontSize={fontSize}/>
+                return <McqMultiAnswered checkedResponse={questionResult}/>
             }
         } else {
             if (mcqQuestion.single) {
-                return <McqSingleCheckedComponent checkedResponse={questionResult} fontSize={fontSize}/>
+                return <McqSingleChecked checkedResponse={questionResult}/>
             } else {
-                return <McqMultiCheckedComponent checkedResponse={questionResult} fontSize={fontSize}/>
+                return <McqMultiChecked checkedResponse={questionResult}/>
             }
         }
     };
