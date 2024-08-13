@@ -1,11 +1,21 @@
 import React from 'react';
 import {Redirect, Route} from "react-router-dom";
+//@ts-ignore
 import ProfileContainer from "../../staff/containers/ProfileContainer";
+//@ts-ignore
 import PasswordContainer from "../../staff/containers/PasswordContainer";
-import PropTypes from "prop-types";
+//@ts-ignore
 import StudentNavbarContainer from "../containers/StudentNavbarContainer";
+import {useSelector} from "react-redux";
+import {RootState} from "../../../store/rootReducer";
 
-const StudentPortal = ({logged, authorized}) => {
+const StudentPortal: React.FC = () => {
+
+    const logged: boolean = useSelector((state: RootState) => state.auth.logged);
+
+    const authorized: boolean = useSelector((state: RootState) => state.auth.authorized);
+
+    if (!logged) return null;
 
     if (logged && !authorized) {
         return <Redirect to="/unauthorized"/>;
@@ -27,10 +37,5 @@ const StudentPortal = ({logged, authorized}) => {
         </div>
     );
 }
-
-StudentPortal.propTypes = {
-    logged: PropTypes.bool.isRequired,
-    authorized: PropTypes.bool.isRequired
-};
 
 export default StudentPortal;

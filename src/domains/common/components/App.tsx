@@ -3,10 +3,6 @@ import {Redirect, Route, Switch, useHistory, useLocation} from 'react-router-dom
 import Forbidden from "./Forbidden";
 import NotFound from "./NotFound";
 import Initializer from "./Initializer";
-//@ts-ignore
-import StaffPortalContainer from "../../staff/containers/StaffPortalContainer";
-//@ts-ignore
-import StudentPortalContainer from "../../student/containers/StudentPortalContainer";
 import Login from "./Login";
 import {Dispatch} from "redux";
 import {useDispatch, useSelector} from "react-redux";
@@ -15,6 +11,8 @@ import {checkLogged} from "../actions/authActions";
 import {Location} from "history";
 import SessionLaunch from "../../session/components/SessionLaunch";
 import {SecurityRole} from "../types/SecurityRole";
+import StaffPortal from "../../staff/components/StaffPortal";
+import StudentPortal from "../../student/components/StudentPortal";
 
 type LocationState = {
     from: Location<LocationState>;
@@ -69,8 +67,8 @@ const App: React.FC = () => {
     return (
         <Switch>
             <Route exact path="/login" component={Login}/>
-            <Route path="/staff" component={StaffPortalContainer}/>
-            <Route path="/student" component={StudentPortalContainer}/>
+            <Route path="/staff" component={StaffPortal}/>
+            <Route path="/student" component={StudentPortal}/>
             <Route path="/session" component={SessionLaunch}/>
             <Route exact path="/" render={defaultRedirect}/>
             <Route exact path="/unauthorized" component={Forbidden}/>
