@@ -1,17 +1,28 @@
 import {createSelector} from "reselect";
+// @ts-ignore
 import {organisationsTransformer} from "../../../utils/transformers/organisationsTransformer";
+// @ts-ignore
 import {dummy} from "../../../utils/constants";
+import {RootState} from "../../../store/rootReducer";
+import {Organisation} from "../types/Organisation";
 
-export const getOrgIdFromProps = (state, props) => props.orgId;
+interface OrgProps {
+    orgId?: number;
+}
 
-export const getAllOrganisations = (state) => state.staff.organisations.content;
+export const getOrgIdFromProps = (_state: RootState, props: OrgProps) => props.orgId;
+
+export const getAllOrganisations = (state: RootState): Array<Organisation> => state.staff.organisations.content;
 
 //--------------------------------------------------Re-selectors--------------------------------------------------------
 // For editing (from table)
-export const getOrgById = createSelector(getAllOrganisations, getOrgIdFromProps, (organisations, orgId) => {
-    if (!organisations) return null;
-    return organisations.find(o => o.orgId === orgId);
-});
+export const getOrgById = createSelector(
+    [getAllOrganisations, getOrgIdFromProps],
+    (organisations: Array<Organisation>, orgId?: number): Organisation | null => {
+        if (!orgId) return null;
+        return organisations.find((o: Organisation): boolean => o.orgId === orgId) || null;
+    }
+) as (state: RootState, props: OrgProps) => Organisation | null;
 
 // For Table filter
 export const getAllOrgForFilter = createSelector(getAllOrganisations, (organisations) => {

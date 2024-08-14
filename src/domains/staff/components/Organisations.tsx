@@ -5,14 +5,13 @@ import LoadingOverlay from 'react-loading-overlay';
 import Error from "../../common/components/Error";
 import Overlay from "../../common/components/Overlay";
 //@ts-ignore
-import OrgTable from "./OrgTable";
-//@ts-ignore
 import OrgEditModal from "./OrgEditModal";
 import {Redirect} from "react-router-dom";
 import {Dispatch} from "redux";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../store/rootReducer";
 import {clearAllOrgFailures, getAllOrganisations, updateOrgName} from "../actions/organisationsActions";
+import OrgTable from "./OrgTable";
 
 
 const Organisations: React.FC = () => {
@@ -33,7 +32,7 @@ const Organisations: React.FC = () => {
         dispatch(getAllOrganisations());
     }, []);
 
-    const deactivateModal = () => {
+    const deactivateModal = (): void => {
         setNewMode(false);
     };
 
@@ -45,7 +44,7 @@ const Organisations: React.FC = () => {
 
     const handleTableChange = (type: string, {cellEdit}: {
         cellEdit: { rowId: number, dataField: string, newValue: string }
-    }) => {
+    }): void => {
         if (cellEdit) {
             const {rowId, dataField, newValue} = cellEdit;
             handleUpdate(rowId, dataField, newValue);
@@ -78,7 +77,6 @@ const Organisations: React.FC = () => {
                             <LoadingOverlay active={!!isUpdating} spinner text='Performing API call...'>
                                 <OrgTable
                                     organisations={content}
-                                    //deleteOrg={deleteOrg} // TODO: move!
                                     onTableChange={handleTableChange}
                                 />
                             </LoadingOverlay>

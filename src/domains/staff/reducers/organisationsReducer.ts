@@ -34,7 +34,7 @@ const initState: OrganisationsState = {
     isLoading: false,
     isUpdating: false,
     error: null,
-    errorUpdate:null
+    errorUpdate: null
 };
 
 // Reducer function
@@ -64,10 +64,10 @@ export const organisationsReducer = (state: OrganisationsState = initState, acti
             return {...state, error: null, errorUpdate: null};
         }
         case SET_ALL_ORG: {
-            return { ...state, content: action.payload ?? [] };
+            return {...state, content: action.payload ?? []};
         }
         case ADD_ORG_IN_STORE: {
-            return action.payload ? { ...state, content: [...state.content, action.payload] } : state;
+            return action.payload ? {...state, content: [...state.content, action.payload]} : state;
         }
         case UPDATE_ORG_IN_STORE: {
             if (action.payload) {
@@ -82,10 +82,10 @@ export const organisationsReducer = (state: OrganisationsState = initState, acti
         case UPDATE_ORG_NAME_IN_STORE: {
             const payload = action.payload;
             if (payload) {
-                const { orgId, name } = payload;
+                const {orgId, name} = payload;
                 return {
                     ...state,
-                    content: state.content.map((o: Organisation) => o.orgId === orgId ? { ...o, name } : o),
+                    content: state.content.map((o: Organisation) => o.orgId === orgId ? {...o, name} : o),
                 };
             }
             return state;
@@ -93,10 +93,10 @@ export const organisationsReducer = (state: OrganisationsState = initState, acti
         case DELETE_ORG_FROM_STORE: {
             const payload = action.payload;
             if (payload) {
-                const { orgId } = payload;
+                const {orgId} = payload;
                 return {
                     ...state,
-                    content: state.content.filter(o => o.orgId !== orgId),
+                    content: state.content.filter((o: Organisation) => o.orgId !== orgId),
                 };
             }
             return state;

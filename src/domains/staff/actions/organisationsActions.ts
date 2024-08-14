@@ -170,7 +170,7 @@ export const getAllOrganisations = () => {
                 dispatch(setAllOrg(organisations));
             })
             .catch(e => {
-                console.log("Error fetching all organisations!", e);
+                console.warn("Error fetching all organisations!", e);
                 dispatch(loadingFailure(new Error("Failed to fetch all organisations")));
             })
             .finally(() => dispatch(loading(false)));

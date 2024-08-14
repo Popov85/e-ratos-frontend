@@ -33,7 +33,7 @@ const Login: React.FC = () => {
     const regOptions: RegOptions | null = useSelector((state: RootState) => state.registration.regOptions);
     const savedCredentials: SavedCredentials | null = useSelector((state: RootState) => getSavedCredentialsSelector(state))
 
-    const handleSubmit = (data: any) => {
+    const handleSubmit = (data: any): void => {
         const credentials: Credentials = {
             username: data.username,
             password: data.password,

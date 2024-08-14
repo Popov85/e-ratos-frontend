@@ -1,23 +1,37 @@
 import React, {useState} from 'react';
-import PropTypes from 'prop-types';
+//@ts-ignore
 import BootstrapTable from 'react-bootstrap-table-next';
+//@ts-ignore
 import paginationFactory from 'react-bootstrap-table2-paginator';
+//@ts-ignore
 import cellEditFactory from 'react-bootstrap-table2-editor';
+//@ts-ignore
 import filterFactory, {textFilter} from 'react-bootstrap-table2-filter';
 import {FaPencilAlt, FaTrashAlt} from "react-icons/fa";
+import {Organisation} from "../types/Organisation";
+import {Dispatch} from "redux";
+import {useDispatch} from "react-redux";
+import {deleteOrg} from "../actions/organisationsActions";
 import OrgEditModal from "./OrgEditModal";
 
-const initState = {mode: false, editableOrgId: null};
+const initState: { mode: boolean, editableOrgId: number | undefined } = {mode: false, editableOrgId: undefined};
 
-const OrgTable = props => {
+type Props = {
+    organisations: Array<Organisation>;
+    onTableChange: (type: string, {cellEdit}: {
+        cellEdit: { rowId: number; dataField: string; newValue: string; };
+    }) => void;
+}
+
+const OrgTable: React.FC<Props> = ({organisations, onTableChange}) => {
+
+    const dispatch: Dispatch<any> = useDispatch();
 
     const [edit, setEditMode] = useState(initState);
 
-    const deactivateModal = () => {
+    const deactivateModal = (): void => {
         setEditMode(initState);
     }
-
-    const {organisations} = props;
 
     const defaultSorted = [{
         dataField: 'name',
@@ -35,7 +49,7 @@ const OrgTable = props => {
             text: 'Organisation',
             sort: true,
             filter: textFilter(),
-            title: cell => cell,
+            title: (cell: any) => cell,
             editable: true
         },
         {
@@ -48,11 +62,11 @@ const OrgTable = props => {
             headerStyle: () => {
                 return {width: '40px', textAlign: 'center'};
             },
-            formatter: (cell, row) => {
+            formatter: (cell: any, row: any) => {
                 const {orgId} = row;
                 return (
                     <a href="#" className="badge badge-info"
-                       onClick={() => setEditMode({mode: true, editableOrgId: orgId})} >
+                       onClick={() => setEditMode({mode: true, editableOrgId: orgId})}>
                         <FaPencilAlt/>
                     </a>);
             }
@@ -63,14 +77,14 @@ const OrgTable = props => {
             editable: false,
             text: 'Del',
             align: 'center',
-            title: () => 'Delete',
+            title: (): string => 'Delete',
             headerStyle: () => {
                 return {width: '40px', textAlign: 'center'};
             },
-            formatter: (cell, row) => {
+            formatter: (cell: any, row: any) => {
                 const {orgId} = row;
                 return (
-                    <a href="#" className="badge badge-warning" onClick={() => props.deleteOrg(orgId)}>
+                    <a href="#" className="badge badge-warning" onClick={() => dispatch(deleteOrg(orgId))}>
                         <FaTrashAlt/>
                     </a>);
             }
@@ -97,20 +111,15 @@ const OrgTable = props => {
                             })}
                             headerClasses="thead-light"
                             cellEdit={cellEditFactory({mode: 'dbclick'})}
-                            noDataIndication={() => "No data!"}
-                            onTableChange={props.onTableChange}
+                            noDataIndication={(): string => "No data!"}
+                            onTableChange={onTableChange}
             />
             {
                 edit.mode &&
-                <OrgEditModal show={edit.mode} deactivateModal={deactivateModal} editableOrgId = {edit.editableOrgId}/>
+                <OrgEditModal show={edit.mode} deactivateModal={deactivateModal} editableOrgId={edit.editableOrgId}/>
             }
         </div>
     );
-};
-
-OrgTable.propTypes = {
-    organisations: PropTypes.array.isRequired,
-    onTableChange: PropTypes.func.isRequired
 };
 
 export default OrgTable;
