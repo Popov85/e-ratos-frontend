@@ -5,6 +5,7 @@ import {organisationsTransformer} from "../../../utils/transformers/organisation
 import {dummy} from "../../../utils/constants";
 import {RootState} from "../../../store/rootReducer";
 import {Organisation} from "../types/Organisation";
+import {TableObject} from "../types/table/TableObject";
 
 interface OrgProps {
     orgId?: number;
@@ -28,7 +29,7 @@ export const getOrgById = createSelector(
 export const getAllOrgForFilter = createSelector(getAllOrganisations, (organisations) => {
     if (!organisations) return null;
     return organisationsTransformer.toObject(organisations);
-});
+}) as (state: RootState, props: OrgProps) => TableObject | null;
 
 // For Select drop-down
 export const getAllOrgForEdit = createSelector(getAllOrganisations, (organisations) => {

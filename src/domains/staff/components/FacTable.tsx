@@ -1,23 +1,46 @@
 import React, {useState} from 'react';
-import PropTypes from 'prop-types';
+// @ts-ignore
 import BootstrapTable from 'react-bootstrap-table-next';
+// @ts-ignore
 import paginationFactory from 'react-bootstrap-table2-paginator';
+// @ts-ignore
 import cellEditFactory from 'react-bootstrap-table2-editor';
+// @ts-ignore
 import filterFactory, {selectFilter, textFilter} from 'react-bootstrap-table2-filter';
 import {FaPencilAlt, FaTrashAlt} from "react-icons/fa";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../../store/rootReducer";
+import {Dispatch} from "redux";
+import {deleteFac} from "../actions/facultiesActions";
+import {Faculty} from "../types/Faculty";
+import {TableObject} from "../types/table/TableObject";
 import FacEditModal from "./FacEditModal";
 
-const initState = {mode: false, editableFacId: null};
+const initState = {mode: false, editableFacId: undefined};
 
-const FacTable = props => {
+type Props = {
+    faculties: Faculty[];
+    organisations: TableObject | null;
+    onTableChange: (type: string, {cellEdit}: any) => void
+}
+
+const FacTable: React.FC<Props> = ({faculties, organisations, onTableChange}) => {
+
+    const dispatch: Dispatch<any> = useDispatch();
+
+    const logged: boolean = useSelector((state: RootState) => state.auth.logged);
+
+    const authorization: Partial<Authorization | null> = useSelector((state: RootState) => state.auth.authorization);
+
+    if (!logged || !authorization) return null;
+
+    if (!organisations) return null;
 
     const [edit, setEditMode] = useState(initState);
 
-    const deactivateModal = () => {
+    const deactivateModal = (): void => {
         setEditMode(initState);
     }
-
-    const {authorization, faculties, organisations} = props;
 
     const defaultSorted = [{
         dataField: 'name',
@@ -37,8 +60,8 @@ const FacTable = props => {
             filter: selectFilter({
                 options: organisations
             }),
-            formatter: cell => organisations[cell],
-            title: cell => cell,
+            formatter: (cell: any) => organisations[cell],
+            title: (cell: any) => cell,
             editable: false,
             hidden: !authorization.isGlobalAdmin,
         },
@@ -47,7 +70,7 @@ const FacTable = props => {
             text: 'Faculty',
             sort: true,
             filter: textFilter(),
-            title: cell => cell,
+            title: (cell: any) => cell,
             editable: true
         },
         {
@@ -56,14 +79,15 @@ const FacTable = props => {
             editable: false,
             text: 'Upd',
             align: 'center',
-            title: () => 'Update',
+            title: (): string => 'Update',
             headerStyle: () => {
                 return {width: '40px', textAlign: 'center'};
             },
-            formatter: (cell, row) => {
+            formatter: (cell: any, row: any) => {
                 const {facId} = row;
                 return (
-                    <a href="#" className="badge badge-info" onClick={() => setEditMode({mode: true, editableFacId: facId})}>
+                    <a href="#" className="badge badge-info"
+                       onClick={() => setEditMode({mode: true, editableFacId: facId})}>
                         <FaPencilAlt/>
                     </a>);
             }
@@ -74,14 +98,14 @@ const FacTable = props => {
             editable: false,
             text: 'Del',
             align: 'center',
-            title: () => 'Delete',
+            title: (): string => 'Delete',
             headerStyle: () => {
                 return {width: '40px', textAlign: 'center'};
             },
-            formatter: (cell, row) => {
+            formatter: (cell: any, row: any) => {
                 const {facId} = row;
                 return (
-                    <a href="#" className="badge badge-warning" onClick={() => props.deleteFac(facId)}>
+                    <a href="#" className="badge badge-warning" onClick={() => dispatch(deleteFac(facId))}>
                         <FaTrashAlt/>
                     </a>);
             }
@@ -107,22 +131,15 @@ const FacTable = props => {
                             })}
                             headerClasses="thead-light"
                             cellEdit={cellEditFactory({mode: 'dbclick'})}
-                            noDataIndication={() => "No data!"}
-                            onTableChange={props.onTableChange}
+                            noDataIndication={(): string => "No data!"}
+                            onTableChange={onTableChange}
             />
             {
                 edit.mode &&
-                <FacEditModal show={edit.mode} deactivateModal={deactivateModal} editableFacId = {edit.editableFacId}/>
+                <FacEditModal show={edit.mode} deactivateModal={deactivateModal} editableFacId={edit.editableFacId}/>
             }
         </div>
     );
-};
-
-FacTable.propTypes = {
-    authorization: PropTypes.object.isRequired,
-    faculties: PropTypes.array.isRequired,
-    organisations: PropTypes.object,
-    onTableChange: PropTypes.func.isRequired
 };
 
 export default FacTable;

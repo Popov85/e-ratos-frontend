@@ -1,17 +1,29 @@
 import {createSelector} from "reselect";
+// @ts-ignore
 import {facultiesTransformer} from "../../../utils/transformers/facultiesTransformer";
+// @ts-ignore
 import {dummy, dummyArray} from "../../../utils/constants";
+import {RootState} from "../../../store/rootReducer";
+import {Faculty} from "../types/Faculty";
 
-export const getFacIdFromProps = (state, props) => props.facId;
+interface FacProps {
+    facId?: number;
+}
 
-export const getAllFaculties = (state) => state.staff.faculties.content;
+export const getFacIdFromProps = (state: RootState, props: FacProps) => props.facId;
+
+export const getAllFaculties = (state: RootState) => state.staff.faculties.content;
 
 //------------------------------------------Re-selectors----------------------------------------------------------------
 // For editing (from table)
-export const getFacById = createSelector(getAllFaculties, getFacIdFromProps, (faculties, facId) => {
-    if (!faculties) return null;
-    return faculties.find(f => f.facId === facId);
-});
+export const getFacById = createSelector(
+    getAllFaculties,
+    getFacIdFromProps,
+    (faculties: Faculty[], facId?: number): Faculty | null => {
+        if (!faculties || facId === undefined) return null;
+        return faculties.find((f: Faculty) => f.facId === facId) || null;
+    }
+) as (state: RootState, props: FacProps) => Faculty | null;
 
 // For Table filter
 export const getAllFacForFilter = createSelector(getAllFaculties, (faculties) => {
@@ -37,6 +49,7 @@ export const getMap = createSelector(getAllFaculties, (faculties) => {
     console.log("Getting map from smart selector!");
     let result = new Map();
     faculties.forEach(f => {
+        //@ts-ignore
         let orgId = f.organisation.orgId;
         let item = {facId: f.facId, name: f.name};
         if (result.has(orgId)) {
@@ -52,6 +65,7 @@ export const getMap = createSelector(getAllFaculties, (faculties) => {
 // 1) GLOBAl_ADMIN - default is dummy, after selecting - get from map by orgId
 // 2) ORG_ADMIN - default is all from store+dummy, never change
 // 3) FAC_ADMIN - default is dummy, never change
+// @ts-ignore
 export const getAllFacForNewByOrgId = state => {
     const {isGlobalAdmin, isAtLeastOrgAdmin}
         = state.auth.authorization;

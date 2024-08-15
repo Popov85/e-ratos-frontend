@@ -56,17 +56,17 @@ export type OrganisationsActionTypes =
     | DeleteOrgFromStoreAction;
 
 // Action creators using the generic type
-export const loading = (isLoading: boolean): LoadingAction => ({
+const loading = (isLoading: boolean): LoadingAction => ({
     type: LOADING_ALL_ORG,
     payload: {isLoading},
 });
 
-export const loadingFailure = (error: Error): LoadingFailureAction => ({
+const loadingFailure = (error: Error): LoadingFailureAction => ({
     type: LOADING_ALL_ORG_FAILURE,
     payload: {error},
 });
 
-export const clearLoadingFailure = (): ClearLoadingFailureAction => ({
+const clearLoadingFailure = (): ClearLoadingFailureAction => ({
     type: CLEAR_LOADING_ALL_ORG_FAILURE,
 });
 
@@ -84,17 +84,17 @@ export const clearOrgIdSelected = (): ClearOrgSelectedAction => ({
     type: CLEAR_ORG_SELECTED,
 });
 
-export const updating = (isUpdating: boolean): UpdatingAction => ({
+const updating = (isUpdating: boolean): UpdatingAction => ({
     type: UPDATING_ORG,
     payload: {isUpdating},
 });
 
-export const updatingFailure = (error: Error): UpdatingFailureAction => ({
+const updatingFailure = (error: Error): UpdatingFailureAction => ({
     type: UPDATING_ORG_FAILURE,
     payload: {error},
 });
 
-export const clearUpdatingFailure = (): ClearUpdatingFailureAction => ({
+const clearUpdatingFailure = (): ClearUpdatingFailureAction => ({
     type: CLEAR_UPDATING_ORG_FAILURE,
 });
 
@@ -112,12 +112,12 @@ export const updateOrgInStore = (org: Organisation): UpdateOrgInStoreAction => (
     payload: org,
 });
 
-export const updateOrgNameInStore = (orgId: number, name: string): UpdateOrgNameInStoreAction => ({
+const updateOrgNameInStore = (orgId: number, name: string): UpdateOrgNameInStoreAction => ({
     type: UPDATE_ORG_NAME_IN_STORE,
     payload: {orgId, name},
 });
 
-export const deleteOrgFromStore = (orgId: number): DeleteOrgFromStoreAction => ({
+const deleteOrgFromStore = (orgId: number): DeleteOrgFromStoreAction => ({
     type: DELETE_ORG_FROM_STORE,
     payload: {orgId},
 });

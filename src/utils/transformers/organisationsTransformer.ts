@@ -1,4 +1,9 @@
+//@ts-ignore
 import {dummy} from "../constants";
+import {Organisation} from "../../domains/staff/types/Organisation";
+import {TableObject} from "../../domains/staff/types/table/TableObject";
+import {TableSelect} from "../../domains/staff/types/table/TableSelect";
+
 
 export const organisationsTransformer = {
 
@@ -7,8 +12,8 @@ export const organisationsTransformer = {
      * @param organisations
      * @returns {*}
      */
-    toObject(organisations) {
-        return organisations.reduce((map, org) => {
+    toObject(organisations: Organisation[]): TableObject {
+        return organisations.reduce((map: TableObject, org: Organisation) => {
             map[org.orgId] = org.name;
             return map;
         }, {});
@@ -19,13 +24,11 @@ export const organisationsTransformer = {
      * @param organisations
      * @returns {*}
      */
-    toSelect(organisations) {
-        return organisations.map(o => {
-            let item = {};
-            item.value = o.orgId;
-            item.label = o.name;
-            return item;
-        });
+    toSelect(organisations: Organisation[]): TableSelect[] {
+        return organisations.map((o: Organisation) => ({
+            value: o.orgId as string,
+            label: o.name,
+        }));
     },
 
     /**
@@ -33,9 +36,8 @@ export const organisationsTransformer = {
      * @param organisations
      * @returns {*}
      */
-    toSelectWithDummy(organisations) {
-        let result = organisationsTransformer
-            .toSelect(organisations);
+    toSelectWithDummy(organisations: Organisation[]): TableSelect[] {
+        let result: Array<TableSelect> = this.toSelect(organisations);
         result.unshift(dummy);
         return result;
     },
@@ -47,7 +49,9 @@ export const organisationsTransformer = {
      * @param users
      * @returns {*}
      */
+    //@ts-ignore
     fromUsersToFilter (users) {
+        //@ts-ignore
         return users.reduce((map, user)=> {
             map[user.department.faculty.organisation.orgId] = user.department.faculty.organisation.name;
             return map;

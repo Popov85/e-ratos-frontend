@@ -2,10 +2,7 @@ import {combineReducers} from "redux";
 
 import {organisationsReducer} from "./organisationsReducer";
 import {orgEditReducer} from "./orgEditReducer";
-//@ts-ignore
 import {facultiesReducer} from "./facultiesReducer";
-//@ts-ignore
-import {facEditReducer} from "./facEditReducer";
 //@ts-ignore
 import {departmentsReducer} from "./departmentsReducer";
 //@ts-ignore
@@ -84,13 +81,14 @@ import {themesSupportReducer} from "./themesSupportReducer";
 import {modeEditReducer} from "./modeEditReducer";
 //@ts-ignore
 import {settingsEditReducer} from "./settingsEditReducer";
+import {facEditReducer} from "./facEditReducer";
 
 // Define the RootState type
 export type RootStaffState = {
     organisations: ReturnType<typeof organisationsReducer>;
     orgEdit: ReturnType<typeof orgEditReducer>;
-    faculties: any,
-    facEdit: any,
+    faculties: ReturnType<typeof facultiesReducer>,
+    facEdit: ReturnType<typeof facEditReducer>,
     departments: any,
     depEdit: any,
 

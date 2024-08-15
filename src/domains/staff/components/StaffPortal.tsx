@@ -19,8 +19,6 @@ import ReportOnContentContainer from "../containers/ReportOnContentContainer";
 //@ts-ignore
 import ReportOnResultsContainer from "../containers/ReportOnResultsContainer";
 //@ts-ignore
-import FacultiesContainer from "../containers/FacultiesContainer";
-//@ts-ignore
 import DepartmentsContainer from "../containers/DepartmentsContainer";
 //@ts-ignore
 import CoursesContainer from "../containers/CoursesContainer";
@@ -42,6 +40,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../../store/rootReducer";
 import Structure from "./Structure";
 import Organisations from "./Organisations";
+import Faculties from "./Faculties";
 
 const StaffPortal: React.FC = () => {
 
@@ -65,7 +64,7 @@ const StaffPortal: React.FC = () => {
                 <Route path="/staff/users" exact component={UsersContainer}/>
                 <Route path="/staff/structure" component={Structure}/>
                 <Route path="/staff/structure/organisations" exact component={Organisations}/>
-                <Route path="/staff/structure/faculties" exact component={FacultiesContainer}/>
+                <Route path="/staff/structure/faculties" exact component={Faculties}/>
                 <Route path="/staff/structure/departments" exact component={DepartmentsContainer}/>
                 <Route path="/staff/courses" exact component={CoursesContainer}/>
                 <Route path="/staff/schemes" exact component={SchemesContainer}/>
