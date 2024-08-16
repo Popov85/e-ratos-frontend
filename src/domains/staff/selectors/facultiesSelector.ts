@@ -5,6 +5,7 @@ import {facultiesTransformer} from "../../../utils/transformers/facultiesTransfo
 import {dummy, dummyArray} from "../../../utils/constants";
 import {RootState} from "../../../store/rootReducer";
 import {Faculty} from "../types/Faculty";
+import {TableObject} from "../types/table/TableObject";
 
 interface FacProps {
     facId?: number;
@@ -25,10 +26,13 @@ export const getFacById = createSelector(
 ) as (state: RootState, props: FacProps) => Faculty | null;
 
 // For Table filter
-export const getAllFacForFilter = createSelector(getAllFaculties, (faculties) => {
+export const getAllFacForFilter = createSelector(
+    getAllFaculties,
+    (faculties: Array<Faculty>): TableObject | null => {
     if (!faculties) return null;
     return facultiesTransformer.toObject(faculties);
-});
+}) as (state: RootState, props: FacProps) => TableObject | null;
+
 
 // For Select drop-down
 export const getAllFacForEdit = createSelector(getAllFaculties, (faculties) => {

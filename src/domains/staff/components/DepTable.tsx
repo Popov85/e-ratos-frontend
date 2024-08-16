@@ -1,23 +1,42 @@
 import React, {useState} from 'react';
-import PropTypes from 'prop-types';
+//@ts-ignore
 import BootstrapTable from 'react-bootstrap-table-next';
+//@ts-ignore
 import paginationFactory from 'react-bootstrap-table2-paginator';
+//@ts-ignore
 import cellEditFactory from 'react-bootstrap-table2-editor';
+//@ts-ignore
 import filterFactory, {selectFilter, textFilter} from 'react-bootstrap-table2-filter';
 import {FaPencilAlt, FaTrashAlt} from "react-icons/fa";
+//@ts-ignore
 import DepEditModal from "./DepEditModal";
+import {Dispatch} from "redux";
+import {useDispatch} from "react-redux";
+import {deleteDep} from "../actions/departmentsActions";
+import {TableObject} from "../types/table/TableObject";
+import {Department} from "../types/Department";
 
 const initState = {mode: false, editableDepId: null};
 
-const DepTable = props => {
+type Props = {
+    authorization: Partial<Authorization>;
+    departments: Array<Department>;
+    organisations: TableObject | null;
+    faculties: TableObject | null;
+    onTableChange: (type: string, {cellEdit}: any) => void;
+}
+
+const DepTable: React.FC<Props> = ({authorization, departments, faculties, organisations, onTableChange}) => {
+
+    if (!organisations || !faculties) return null;
+
+    const dispatch: Dispatch<any> = useDispatch();
 
     const [edit, setEditMode] = useState(initState);
 
-    const deactivateModal = () => {
+    const deactivateModal = (): void => {
         setEditMode(initState);
     }
-
-    const {authorization, departments, faculties, organisations} = props;
 
     const defaultSorted = [{
         dataField: 'name',
@@ -37,8 +56,8 @@ const DepTable = props => {
             filter: selectFilter({
                 options: organisations
             }),
-            formatter: cell => organisations[cell],
-            title: cell => cell,
+            formatter: (cell: any) => organisations[cell],
+            title: (cell: any) => cell,
             editable: false,
             hidden: !authorization.isGlobalAdmin,
         },
@@ -49,8 +68,8 @@ const DepTable = props => {
             filter: selectFilter({
                 options: faculties
             }),
-            formatter: cell => faculties[cell],
-            title: cell => cell,
+            formatter: (cell: any) => faculties[cell],
+            title: (cell: any) => cell,
             editable: false,
             hidden: !authorization.isAtLeastOrgAdmin,
         },
@@ -60,7 +79,7 @@ const DepTable = props => {
             text: 'Department',
             sort: true,
             filter: textFilter(),
-            title: cell => cell,
+            title: (cell: any) => cell,
             editable: true
         },
         {
@@ -69,11 +88,11 @@ const DepTable = props => {
             editable: false,
             text: 'Upd',
             align: 'center',
-            title: () => 'Update',
+            title: (): string => 'Update',
             headerStyle: () => {
                 return {width: '40px', textAlign: 'center'};
             },
-            formatter: (cell, row) => {
+            formatter: (cell: any, row: any) => {
                 const {depId} = row;
                 return (
                     <a href="#" className="badge badge-info"
@@ -88,14 +107,14 @@ const DepTable = props => {
             editable: false,
             text: 'Del',
             align: 'center',
-            title: () => 'Delete',
+            title: (): string => 'Delete',
             headerStyle: () => {
                 return {width: '40px', textAlign: 'center'};
             },
-            formatter: (cell, row) => {
+            formatter: (cell: any, row: any) => {
                 const {depId} = row;
                 return (
-                    <a href="#" className="badge badge-warning" onClick={() => props.deleteDep(depId)}>
+                    <a href="#" className="badge badge-warning" onClick={() => dispatch(deleteDep(depId))}>
                         <FaTrashAlt/>
                     </a>);
             }
@@ -122,8 +141,8 @@ const DepTable = props => {
                             })}
                             headerClasses="thead-light"
                             cellEdit={cellEditFactory({mode: 'dbclick'})}
-                            noDataIndication={() => "No data!"}
-                            onTableChange={props.onTableChange}
+                            noDataIndication={(): string => "No data!"}
+                            onTableChange={onTableChange}
             />
             {
                 edit.mode &&
@@ -131,16 +150,6 @@ const DepTable = props => {
             }
         </div>
     );
-};
-
-DepTable.propTypes = {
-    authorization: PropTypes.object.isRequired,
-    departments: PropTypes.array.isRequired,
-    faculties: PropTypes.object,
-    organisations: PropTypes.object,
-
-    deleteDep: PropTypes.func.isRequired,
-    onTableChange: PropTypes.func.isRequired
 };
 
 export default DepTable;

@@ -66,7 +66,7 @@ const clearLoadingFailure = (): ClearLoadingAllFacFailureAction => ({
     type: CLEAR_LOADING_ALL_FAC_FAILURE,
 });
 
-export const setAllFac = (allFac: any[]): SetAllFacAction => ({
+export const setAllFac = (allFac: Faculty[]): SetAllFacAction => ({
     type: SET_ALL_FAC,
     payload: {allFac},
 });

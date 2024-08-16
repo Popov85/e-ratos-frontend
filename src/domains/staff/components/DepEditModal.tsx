@@ -1,22 +1,26 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Modal from "react-bootstrap/Modal";
 import {Alert} from "react-bootstrap";
+//@ts-ignore
 import DepEditContainer from "../containers/DepEditContainer";
 
-const DepEditModal = props => {
+type Props = {
+    show: boolean;
+    deactivateModal: () => void;
+    editableDepId?: number;
+}
 
-    const {editableDepId} = props;
+const DepEditModal: React.FC<Props> = ({show, deactivateModal, editableDepId}) => {
 
     return (
         <Modal
             id='depEdit'
-            show={props.show}
+            show={show}
             backdrop='static'
             keyboard={false}
             scrollable={true}
             centered>
-            <Alert variant="info" onClose={() => props.deactivateModal()} className="text-center m-0" dismissible >
+            <Alert variant="info" onClose={() => deactivateModal()} className="text-center m-0" dismissible >
                 <strong>Department</strong>
                 {
                     editableDepId ? '[edit]' : '[new]'
@@ -27,12 +31,6 @@ const DepEditModal = props => {
             </Modal.Body>
         </Modal>
     );
-};
-
-DepEditModal.propTypes = {
-    show: PropTypes.bool.isRequired,
-    editableDepId: PropTypes.number, // Nullable for new objects
-    deactivateModal: PropTypes.func.isRequired
 };
 
 export default DepEditModal;

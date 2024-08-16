@@ -1,4 +1,8 @@
+//@ts-ignore
 import {dummy} from "../constants";
+import {TableObject} from "../../domains/staff/types/table/TableObject";
+import {Faculty} from "../../domains/staff/types/Faculty";
+import {FormSelect} from "../../domains/staff/types/form/FormSelect";
 
 export const facultiesTransformer = {
 
@@ -7,9 +11,9 @@ export const facultiesTransformer = {
      * @param faculties
      * @returns {*}
      */
-    toObject(faculties) {
-        return faculties.reduce((map, fac) => {
-            map[fac.facId] = fac.name;
+    toObject(faculties: Faculty[]): TableObject {
+        return faculties.reduce((map: TableObject, fac: Faculty) => {
+            map[fac.facId!] = fac.name;
             return map;
         }, {});
     },
@@ -19,13 +23,11 @@ export const facultiesTransformer = {
      * @param faculties
      * @returns {*}
      */
-    toSelect(faculties) {
-        return faculties.map(f => {
-            let item = {};
-            item.value = f.facId;
-            item.label = f.name;
-            return item;
-        });
+    toSelect(faculties: Faculty[]): FormSelect[] {
+        return faculties.map((f: Faculty) => ({
+            value: f.facId as string,
+            label: f.name,
+        }));
     },
 
     /**
@@ -33,9 +35,8 @@ export const facultiesTransformer = {
      * @param faculties
      * @returns {*}
      */
-    toSelectWithDummy(faculties) {
-        let result = facultiesTransformer
-            .toSelect(faculties);
+    toSelectWithDummy(faculties: Faculty[]): FormSelect[] {
+        let result: FormSelect[] = facultiesTransformer.toSelect(faculties);
         result.unshift(dummy);
         return result;
     },
@@ -48,8 +49,10 @@ export const facultiesTransformer = {
      * @param users
      * @returns {*}
      */
-    toFilter (users) {
-        return users.reduce((map, user)=> {
+    //@ts-ignore
+    toFilter(users) {
+        //@ts-ignore
+        return users.reduce((map, user) => {
             map[user.department.faculty.facId] = user.department.faculty.name;
             return map;
         }, {});
