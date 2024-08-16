@@ -1,7 +1,5 @@
 import React, {useEffect} from 'react';
 import Failure from "../../common/components/Failure";
-//@ts-ignore
-import FacEditForm from "../forms/FacEditForm";
 import {Redirect} from "react-router-dom";
 import {Dispatch} from "redux";
 import {useDispatch, useSelector} from "react-redux";
@@ -10,16 +8,18 @@ import {RootState} from "../../../store/rootReducer";
 import {getUserInfo} from "../../common/selectors/userSelector";
 import {UserInfo} from "../../common/types/UserInfo";
 import {getAllOrgForNew} from "../selectors/organisationsSelector";
-import {TableSelect} from "../types/table/TableSelect";
+import {FormSelect} from "../types/form/FormSelect";
 import {reset} from "redux-form";
 import {FacultyInput} from "../_api/facultiesAPI";
 import {getFacById} from "../selectors/facultiesSelector";
+import {Faculty} from "../types/Faculty";
+import FacEditForm from "../forms/FacEditForm";
 
 type Props = {
     facId?: number;
 }
 
-const FacEdit: React.FC<Props> =({facId}) => {
+const FacEdit: React.FC<Props> = ({facId}) => {
 
     const dispatch: Dispatch<any> = useDispatch();
 
@@ -33,9 +33,9 @@ const FacEdit: React.FC<Props> =({facId}) => {
 
     const facEdit = useSelector((state: RootState) => state.staff.facEdit);
 
-    const organisations: TableSelect[] | null = useSelector((state: RootState) => getAllOrgForNew(state));
+    const organisations: Array<FormSelect> | null = useSelector((state: RootState) => getAllOrgForNew(state, {}));
 
-    const faculty = facId ? useSelector((state: RootState) => getFacById(state, {facId})) : null;
+    const faculty: Faculty | null = facId ? useSelector((state: RootState) => getFacById(state, {facId})) : null;
 
     useEffect(() => {
         // Clear all previous messages
@@ -49,9 +49,9 @@ const FacEdit: React.FC<Props> =({facId}) => {
         !data.facId ? dispatch(saveFac(data)) : dispatch(updateFac(data));
     };
 
-    if (!authorization.isAtLeastOrgAdmin) return <Redirect to="/unauthorized" />;
+    if (!authorization.isAtLeastOrgAdmin) return <Redirect to="/unauthorized"/>;
 
-    const { isLoading, error, message } = facEdit;
+    const {isLoading, error, message} = facEdit;
 
     return (
         <div>
@@ -66,7 +66,7 @@ const FacEdit: React.FC<Props> =({facId}) => {
                         <div className="alert alert-danger text-center p-1" role="alert">
                             <span className="text-danger">
                                 <strong>
-                                    <Failure message={error.message} />
+                                    <Failure message={error.message}/>
                                 </strong>
                             </span>
                         </div>
@@ -86,7 +86,7 @@ const FacEdit: React.FC<Props> =({facId}) => {
                                         ? {
                                             facId: faculty.facId,
                                             name: faculty.name,
-                                            orgId: faculty.organisation?.orgId,
+                                            orgId: Number(faculty.organisation?.orgId),
                                         }
                                         : undefined
                                 }
@@ -98,7 +98,7 @@ const FacEdit: React.FC<Props> =({facId}) => {
                             />
                         </div>
                         <div className="form-group text-center mt-n2 mb-2" hidden={!!message}>
-                            <a href="#" className="badge badge-secondary" onClick={()=>dispatch(reset('fac-edit'))}>
+                            <a href="#" className="badge badge-secondary" onClick={() => dispatch(reset('fac-edit'))}>
                                 Reset
                             </a>
                         </div>

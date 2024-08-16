@@ -17,11 +17,10 @@ export const getAllFaculties = (state: RootState) => state.staff.faculties.conte
 //------------------------------------------Re-selectors----------------------------------------------------------------
 // For editing (from table)
 export const getFacById = createSelector(
-    getAllFaculties,
-    getFacIdFromProps,
+    [getAllFaculties, getFacIdFromProps],
     (faculties: Faculty[], facId?: number): Faculty | null => {
         if (!faculties || facId === undefined) return null;
-        return faculties.find((f: Faculty) => f.facId === facId) || null;
+        return faculties.find((f: Faculty): boolean => f.facId === facId) || null;
     }
 ) as (state: RootState, props: FacProps) => Faculty | null;
 

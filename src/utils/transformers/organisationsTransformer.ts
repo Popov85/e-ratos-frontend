@@ -2,7 +2,7 @@
 import {dummy} from "../constants";
 import {Organisation} from "../../domains/staff/types/Organisation";
 import {TableObject} from "../../domains/staff/types/table/TableObject";
-import {TableSelect} from "../../domains/staff/types/table/TableSelect";
+import {FormSelect} from "../../domains/staff/types/form/FormSelect";
 
 
 export const organisationsTransformer = {
@@ -24,7 +24,7 @@ export const organisationsTransformer = {
      * @param organisations
      * @returns {*}
      */
-    toSelect(organisations: Organisation[]): TableSelect[] {
+    toSelect(organisations: Organisation[]): FormSelect[] {
         return organisations.map((o: Organisation) => ({
             value: o.orgId as string,
             label: o.name,
@@ -36,8 +36,8 @@ export const organisationsTransformer = {
      * @param organisations
      * @returns {*}
      */
-    toSelectWithDummy(organisations: Organisation[]): TableSelect[] {
-        let result: Array<TableSelect> = this.toSelect(organisations);
+    toSelectWithDummy(organisations: Organisation[]): FormSelect[] {
+        let result: Array<FormSelect> = this.toSelect(organisations);
         result.unshift(dummy);
         return result;
     },

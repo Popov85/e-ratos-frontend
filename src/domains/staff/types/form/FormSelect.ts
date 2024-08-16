@@ -1,4 +1,4 @@
-export type TableSelect = {
+export type FormSelect = {
     value: string;
     label: string;
 }

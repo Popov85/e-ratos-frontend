@@ -46,3 +46,8 @@ const minLength = (min: number) => (value: string | undefined): string | undefin
 
 export const minLength2 = minLength(2);
 export const minLength8 = minLength(8);
+
+export const number = (value: any): string | undefined =>
+    value !== undefined && value !== null && value !== '' && isNaN(Number(value))
+        ? 'Must be a number'
+        : undefined;
