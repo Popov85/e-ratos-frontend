@@ -24,11 +24,11 @@ class Users extends Component {
     }
 
     deactivateModal = () => {
-        this.setState({ newMode: false });
+        this.setState({newMode: false});
     }
 
     expandedSwitch = () => {
-        this.setState(prevState => ({ expanded: !prevState.expanded }));
+        this.setState(prevState => ({expanded: !prevState.expanded}));
     }
 
     loadStaffBasedOnRole = () => {
@@ -65,9 +65,9 @@ class Users extends Component {
         }
     }
 
-    handleTableChange = (type, { cellEdit }) => {
+    handleTableChange = (type, {cellEdit}) => {
         if (cellEdit) {
-            const { rowId, dataField, newValue } = cellEdit;
+            const {rowId, dataField, newValue} = cellEdit;
             this.handleUpdate(rowId, dataField, newValue);
         }
     }
@@ -78,66 +78,69 @@ class Users extends Component {
         const {isLoading, isUpdating, error, errorUpdate} = users;
 
         return (
-            <div className="p-1">
-                <div className="alert alert-secondary text-center mb-1">
-                    <h5 className="alert-heading">
-                        <strong>Staff management</strong>
-                    </h5>
-                </div>
-                {
-                    (error || errorUpdate) &&
-                    <Error message="Operation failed!" close={() => this.props.clearAllFailures()}/>
-                }
-                {
-                    !isLoading &&
-                    <div className="d-flex justify-content-between mb-1">
-                        <div>
-                            {
-                                users.content &&
-                                <button type="button" className="btn btn-sm btn-secondary" title="Expand/compress"
-                                        onClick={this.expandedSwitch}>
-                                    {expanded ? <FaCompress/> : <FaExpand/>}
+            <div className="container-fluid p-0">
+                <div className="p-1">
+                    <div className="alert alert-secondary text-center mb-1">
+                        <h5 className="alert-heading">
+                            <strong>Staff management</strong>
+                        </h5>
+                    </div>
+                    {
+                        (error || errorUpdate) &&
+                        <Error message="Operation failed!" close={() => this.props.clearAllFailures()}/>
+                    }
+                    {
+                        !isLoading &&
+                        <div className="d-flex justify-content-between mb-1">
+                            <div>
+                                {
+                                    users.content &&
+                                    <button type="button" className="btn btn-sm btn-secondary" title="Expand/compress"
+                                            onClick={this.expandedSwitch}>
+                                        {expanded ? <FaCompress/> : <FaExpand/>}
+                                    </button>
+                                }
+                            </div>
+                            <div>
+                                <button className="btn btn-sm btn-success"
+                                        onClick={() => this.setState({newMode: true})}>
+                                    <FaPlus/>&nbsp;New
                                 </button>
-                            }
+                                <button className="btn btn-sm btn-info ml-2"
+                                        onClick={this.loadStaffBasedOnRole}>
+                                    <FaSync/>&nbsp;Refresh
+                                </button>
+                            </div>
                         </div>
+                    }
+                    {
+                        positions.actual && users.content &&
                         <div>
-                            <button className="btn btn-sm btn-success" onClick={() => this.setState({newMode: true})}>
-                                <FaPlus/>&nbsp;New
-                            </button>
-                            <button className="btn btn-sm btn-info ml-2"
-                                    onClick={this.loadStaffBasedOnRole}>
-                                <FaSync/>&nbsp;Refresh
-                            </button>
+                            <LoadingOverlay
+                                active={!!isUpdating}
+                                spinner
+                                text='Performing API call...'>
+                                <UsersTable
+                                    roles={roles}
+                                    users={users}
+                                    userInfo={userInfo}
+                                    authorization={authorization}
+                                    positions={positions}
+                                    expanded={expanded}
+                                    deleteStaff={this.props.deleteStaff}
+                                    onTableChange={this.handleTableChange}
+                                />
+                            </LoadingOverlay>
                         </div>
-                    </div>
-                }
-                {
-                    positions.actual && users.content &&
-                    <div>
-                        <LoadingOverlay
-                            active={!!isUpdating}
-                            spinner
-                            text='Performing API call...'>
-                            <UsersTable
-                                roles={roles}
-                                users={users}
-                                userInfo={userInfo}
-                                authorization={authorization}
-                                positions={positions}
-                                expanded={expanded}
-                                deleteStaff={this.props.deleteStaff}
-                                onTableChange={this.handleTableChange}
-                            />
-                        </LoadingOverlay>
-                    </div>
-                }
+                    }
 
-                <Overlay show={!!isLoading}/>
-                {
-                    newMode &&
-                    <StaffEditModal show={this.state.newMode} deactivateModal={this.deactivateModal}/>
-                }
+                    <Overlay show={!!isLoading}/>
+                    {
+                        newMode &&
+                        <StaffEditModal show={this.state.newMode} deactivateModal={this.deactivateModal}/>
+                    }
 
+                </div>
             </div>
         );
     }
