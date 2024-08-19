@@ -5,7 +5,6 @@ import {orgEditReducer} from "./orgEditReducer";
 import {facultiesReducer} from "./facultiesReducer";
 import {facEditReducer} from "./facEditReducer";
 import {departmentsReducer} from "./departmentsReducer";
-//@ts-ignore
 import {depEditReducer} from "./depEditReducer";
 //@ts-ignore
 import {usersReducer} from "./usersReducer";
@@ -89,7 +88,7 @@ export type RootStaffState = {
     faculties: ReturnType<typeof facultiesReducer>,
     facEdit: ReturnType<typeof facEditReducer>,
     departments: ReturnType<typeof departmentsReducer>,
-    depEdit: any,
+    depEdit: ReturnType<typeof depEditReducer>,
 
     profile: any,
     users: any,

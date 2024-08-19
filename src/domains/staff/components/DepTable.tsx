@@ -8,15 +8,14 @@ import cellEditFactory from 'react-bootstrap-table2-editor';
 //@ts-ignore
 import filterFactory, {selectFilter, textFilter} from 'react-bootstrap-table2-filter';
 import {FaPencilAlt, FaTrashAlt} from "react-icons/fa";
-//@ts-ignore
-import DepEditModal from "./DepEditModal";
 import {Dispatch} from "redux";
 import {useDispatch} from "react-redux";
 import {deleteDep} from "../actions/departmentsActions";
 import {TableObject} from "../types/table/TableObject";
 import {Department} from "../types/Department";
+import DepEditModal from "./DepEditModal";
 
-const initState = {mode: false, editableDepId: null};
+const initState = {mode: false, editableDepId: undefined};
 
 type Props = {
     authorization: Partial<Authorization>;

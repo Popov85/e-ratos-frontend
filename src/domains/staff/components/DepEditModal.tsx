@@ -1,8 +1,7 @@
 import React from 'react';
 import Modal from "react-bootstrap/Modal";
 import {Alert} from "react-bootstrap";
-//@ts-ignore
-import DepEditContainer from "../containers/DepEditContainer";
+import DepEdit from "./DepEdit";
 
 type Props = {
     show: boolean;
@@ -27,7 +26,7 @@ const DepEditModal: React.FC<Props> = ({show, deactivateModal, editableDepId}) =
                 }
             </Alert>
             <Modal.Body>
-                <DepEditContainer depId = {editableDepId}/>
+                <DepEdit depId = {editableDepId}/>
             </Modal.Body>
         </Modal>
     );
