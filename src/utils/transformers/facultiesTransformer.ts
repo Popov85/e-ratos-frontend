@@ -3,6 +3,7 @@ import {dummy} from "../constants";
 import {TableObject} from "../../domains/staff/types/table/TableObject";
 import {Faculty} from "../../domains/staff/types/Faculty";
 import {FormSelect} from "../../domains/staff/types/form/FormSelect";
+import {Staff} from "../../domains/staff/types/Staff";
 
 export const facultiesTransformer = {
 
@@ -24,7 +25,7 @@ export const facultiesTransformer = {
      * @returns {*}
      */
     toSelect(faculties: Faculty[]): FormSelect[] {
-        return faculties.map((f: Faculty) => ({
+        return faculties.map((f: Faculty): FormSelect => ({
             value: f.facId as string,
             label: f.name,
         }));
@@ -49,11 +50,9 @@ export const facultiesTransformer = {
      * @param users
      * @returns {*}
      */
-    //@ts-ignore
-    toFilter(users) {
-        //@ts-ignore
-        return users.reduce((map, user) => {
-            map[user.department.faculty.facId] = user.department.faculty.name;
+    toFilter(users: Array<Staff>): TableObject {
+        return users.reduce((map: TableObject, user: Staff) => {
+            map[user.department!.faculty!.facId!] = user.department!.faculty!.name;
             return map;
         }, {});
     }

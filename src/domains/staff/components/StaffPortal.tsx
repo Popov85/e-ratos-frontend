@@ -7,8 +7,6 @@ import Complaints from "./Complaints";
 //@ts-ignore
 import StaffNavbarContainer from "../containers/StaffNavbarContainer";
 //@ts-ignore
-import UsersContainer from "../containers/UsersContainer";
-//@ts-ignore
 import ResultsContainer from "../containers/ResultsContainer";
 //@ts-ignore
 import ProfileContainer from "../containers/ProfileContainer";
@@ -40,6 +38,7 @@ import Structure from "./Structure";
 import Organisations from "./Organisations";
 import Faculties from "./Faculties";
 import Departments from "./Departments";
+import Users from "./Users";
 
 const StaffPortal: React.FC = () => {
 
@@ -60,7 +59,7 @@ const StaffPortal: React.FC = () => {
             </div>
             <div className="row">
                 <Route path="/staff" exact render={() => <Redirect to="/staff/courses" />} />
-                <Route path="/staff/users" exact component={UsersContainer}/>
+                <Route path="/staff/users" exact component={Users}/>
                 <Route path="/staff/structure" component={Structure}/>
                 <Route path="/staff/structure/organisations" exact component={Organisations}/>
                 <Route path="/staff/structure/faculties" exact component={Faculties}/>

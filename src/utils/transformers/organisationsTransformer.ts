@@ -3,6 +3,7 @@ import {dummy} from "../constants";
 import {Organisation} from "../../domains/staff/types/Organisation";
 import {TableObject} from "../../domains/staff/types/table/TableObject";
 import {FormSelect} from "../../domains/staff/types/form/FormSelect";
+import {Staff} from "../../domains/staff/types/Staff";
 
 
 export const organisationsTransformer = {
@@ -49,11 +50,9 @@ export const organisationsTransformer = {
      * @param users
      * @returns {*}
      */
-    //@ts-ignore
-    fromUsersToFilter (users) {
-        //@ts-ignore
-        return users.reduce((map, user)=> {
-            map[user.department.faculty.organisation.orgId] = user.department.faculty.organisation.name;
+    toFilter (users: Array<Staff>): TableObject {
+        return users.reduce((map: TableObject, user: Staff)=> {
+            map[user.department!.faculty!.organisation!.orgId!] = user.department!.faculty!.organisation!.name;
             return map;
         }, {});
     }

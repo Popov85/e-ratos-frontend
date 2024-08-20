@@ -99,10 +99,10 @@ const DepEdit: React.FC<Props> = ({depId}) => {
                                 initialValues={
                                     department
                                         ? {
-                                            depId: department.depId,
+                                            depId: department.depId as number,
                                             name: department.name,
-                                            facId: department.faculty?.facId,
-                                            orgId: Number(department.faculty?.organisation?.orgId),
+                                            facId: department.faculty!.facId as number,
+                                            orgId: department.faculty!.organisation!.orgId as number,
                                         }
                                         : undefined
                                 }

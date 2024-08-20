@@ -4,13 +4,19 @@ import FieldString from "../../common/forms/controls/FieldString";
 import {minLength2, number, required} from "../../../utils/validators/validators";
 import {FaSignInAlt} from "react-icons/fa";
 import FieldSelectBadge from "../../common/forms/controls/FieldSelectBadge";
-import {DepartmentInput} from "../_api/departmentsAPI";
 import {Dispatch} from "redux";
 import {useDispatch} from "react-redux";
 import {setOrgIdSelected} from "../actions/organisationsActions";
 import {FormSelect} from "../types/form/FormSelect";
 
-interface DepEditFormProps {
+export type DepEditOwnProps = {
+    depId: number,
+    name: string,
+    facId: number,
+    orgId: number,
+}
+
+type DepEditFormProps = {
     authorization: Authorization;
     organisations?: Array<FormSelect> | null;
     faculties?: Array<FormSelect> | null;
@@ -18,7 +24,7 @@ interface DepEditFormProps {
     finished: boolean;
 }
 
-const DepEditForm: React.FC<InjectedFormProps<DepartmentInput, DepEditFormProps> & DepEditFormProps> =
+const DepEditForm: React.FC<InjectedFormProps<DepEditOwnProps, DepEditFormProps> & DepEditFormProps> =
     ({authorization, disabled, finished, handleSubmit, change, organisations, faculties}) => {
 
     const dispatch: Dispatch<any> = useDispatch();
@@ -45,9 +51,9 @@ const DepEditForm: React.FC<InjectedFormProps<DepartmentInput, DepEditFormProps>
                         name="orgId"
                         component={FieldSelectBadge}
                         badge="Organisation"
-                        items={organisations}
+                        items={organisations || []}
                         validate={[required, number]}
-                        onChange={(event, newValue) => orgOnChange(newValue)}
+                        onChange={(event: any, newValue: number) => orgOnChange(newValue)}
                     />
                 )}
                 {authorization.isAtLeastOrgAdmin && (
@@ -55,7 +61,7 @@ const DepEditForm: React.FC<InjectedFormProps<DepartmentInput, DepEditFormProps>
                         name="facId"
                         component={FieldSelectBadge}
                         badge="Faculty"
-                        items={faculties}
+                        items={faculties || []}
                         validate={[required, number]}
                     />
                 )}
@@ -71,4 +77,4 @@ const DepEditForm: React.FC<InjectedFormProps<DepartmentInput, DepEditFormProps>
     );
 };
 
-export default reduxForm<DepartmentInput, DepEditFormProps>({form: 'dep-edit', enableReinitialize: true})(DepEditForm);
+export default reduxForm<DepEditOwnProps, DepEditFormProps>({form: 'dep-edit', enableReinitialize: true})(DepEditForm);

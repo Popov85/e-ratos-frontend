@@ -6,7 +6,6 @@ import {facultiesReducer} from "./facultiesReducer";
 import {facEditReducer} from "./facEditReducer";
 import {departmentsReducer} from "./departmentsReducer";
 import {depEditReducer} from "./depEditReducer";
-//@ts-ignore
 import {usersReducer} from "./usersReducer";
 //@ts-ignore
 import {positionsReducer} from "./positionsReducer";
@@ -89,10 +88,10 @@ export type RootStaffState = {
     facEdit: ReturnType<typeof facEditReducer>,
     departments: ReturnType<typeof departmentsReducer>,
     depEdit: ReturnType<typeof depEditReducer>,
+    users: ReturnType<typeof usersReducer>,
+    positions: any,
 
     profile: any,
-    users: any,
-    positions: any,
     ltiVersions: any,
     userEdit: any,
     results: any,
@@ -136,10 +135,10 @@ const staffReducers = combineReducers<RootStaffState>({
     facEdit: facEditReducer,
     departments:  departmentsReducer,
     depEdit: depEditReducer,
-
-    profile: profileReducer,
     users: usersReducer,
     positions: positionsReducer,
+
+    profile: profileReducer,
     ltiVersions: ltiVersionsReducer,
     userEdit: userEditReducer,
     results: resultsReducer,
