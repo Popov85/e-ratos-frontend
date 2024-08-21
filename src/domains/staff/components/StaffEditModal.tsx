@@ -1,38 +1,36 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Modal from "react-bootstrap/Modal";
 import {Alert} from "react-bootstrap";
+// @ts-ignore
 import UserEditContainer from "../containers/UserEditContainer";
 
-const StaffEditModal = props => {
+type Props = {
+    show: boolean;
+    deactivateModal: () => void;
+    editableStaffId?: number
+}
 
-    const {editableStaffId} = props;
+const StaffEditModal: React.FC<Props> = ({show, editableStaffId, deactivateModal}) => {
 
     return (
         <Modal
             id='staffEdit'
-            show={props.show}
+            show={show}
             backdrop='static'
             keyboard={false}
             scrollable={true}
             centered>
-            <Alert variant="info" onClose={() => props.deactivateModal()} className="text-center m-0" dismissible >
+            <Alert variant="info" onClose={() => deactivateModal()} className="text-center m-0" dismissible>
                 <strong>Staff</strong>
                 {
                     editableStaffId ? '[edit]' : '[new]'
                 }
             </Alert>
             <Modal.Body>
-                <UserEditContainer staffId = {editableStaffId}/>
+                <UserEditContainer staffId={editableStaffId}/>
             </Modal.Body>
         </Modal>
     );
-};
-
-StaffEditModal.propTypes = {
-    show: PropTypes.bool.isRequired,
-    editableStaffId: PropTypes.number, // Nullable for new objects
-    deactivateModal: PropTypes.func.isRequired
 };
 
 export default StaffEditModal;

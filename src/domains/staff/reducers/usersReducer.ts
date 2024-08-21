@@ -22,7 +22,7 @@ import {
 import {departmentsTransformer} from "../../../utils/transformers/departmentsTransformer";
 import {TableObject} from "../types/table/TableObject";
 
-interface UsersState {
+type UsersState = {
     content: Staff[];
     organisations: TableObject | null;
     faculties: TableObject | null;

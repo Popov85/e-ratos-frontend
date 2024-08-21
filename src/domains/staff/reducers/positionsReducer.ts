@@ -8,7 +8,7 @@ interface PositionsState {
     actual: Position[];
     forEdit: Array<FormSelect>;
     forNew: Array<FormSelect>;
-    forFilter: TableObject | null;
+    forFilter: TableObject;
 }
 
 // Initialize the state
@@ -16,7 +16,7 @@ const initState: PositionsState = {
     actual: [],
     forEdit: [],
     forNew: [],
-    forFilter: null,
+    forFilter: {},
 };
 
 // The reducer function

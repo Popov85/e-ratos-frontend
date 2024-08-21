@@ -1,14 +1,9 @@
 import React, {useEffect, useState} from 'react';
 // @ts-ignore
 import LoadingOverlay from 'react-loading-overlay';
-
-// @ts-ignore
-import UsersTable from './UsersTable';
 import {FaCompress, FaExpand, FaPlus, FaSync} from 'react-icons/fa';
 import Error from '../../common/components/Error';
 import Overlay from '../../common/components/Overlay';
-// @ts-ignore
-import StaffEditModal from './StaffEditModal';
 import {Dispatch} from "redux";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../store/rootReducer";
@@ -19,9 +14,14 @@ import {
     getAllStaffByDepartment,
     getAllStaffByFaculty,
     getAllStaffByOrganisation,
-    getAllStaffByRatos, updateStaffEmail, updateStaffName, updateStaffSurname
+    getAllStaffByRatos,
+    updateStaffEmail,
+    updateStaffName,
+    updateStaffSurname
 } from "../actions/usersActions";
 import {getPositions} from "../actions/positionsActions";
+import UsersTable from "./UsersTable";
+import StaffEditModal from "./StaffEditModal";
 
 const Users: React.FC = () => {
 
@@ -33,13 +33,11 @@ const Users: React.FC = () => {
 
     const userInfo: UserInfo | null = useSelector((state: RootState) => getUserInfo(state));
 
+    const users = useSelector((state: RootState) => state.staff.users);
+
     if (!logged || !authorization || !userInfo) return null;
 
-    const users: any = useSelector((state: RootState) => state.staff.users);
-
-    const roles: any = null; // useSelector((state: RootState) => state.staff.roles); //TODO
-
-    const positions: any = useSelector((state: RootState) => state.staff.positions);
+    const positions = useSelector((state: RootState) => state.staff.positions);
 
     const [newMode, setNewMode] = useState<boolean>(false);
 
@@ -72,7 +70,7 @@ const Users: React.FC = () => {
         }
     };
 
-    const handleUpdate = (staffId: number, dataField: string, newValue: string) => {
+    const handleUpdate = (staffId: number, dataField: string, newValue: string): void => {
         switch (dataField) {
             case 'user.name':
                 dispatch(updateStaffName(staffId, newValue));
@@ -106,12 +104,12 @@ const Users: React.FC = () => {
                     </h5>
                 </div>
                 {(error || errorUpdate) && (
-                    <Error message="Operation failed!" close={()=>dispatch(clearAllStaffFailures())}/>
+                    <Error message="Operation failed!" close={() => dispatch(clearAllStaffFailures())}/>
                 )}
                 {!isLoading && (
                     <div className="d-flex justify-content-between mb-1">
                         <div>
-                            {users.content && (
+                            {users.content && users.content.length > 0 && (
                                 <button
                                     type="button"
                                     className="btn btn-sm btn-secondary"
@@ -138,7 +136,7 @@ const Users: React.FC = () => {
                         </div>
                     </div>
                 )}
-                {positions.actual && users.content && (
+                {positions.actual && positions.actual.length > 0 && users.content && users.content.length > 0 && (
                     <div>
                         <LoadingOverlay
                             active={!!isUpdating}
@@ -146,13 +144,9 @@ const Users: React.FC = () => {
                             text="Performing API call..."
                         >
                             <UsersTable
-                                roles={roles}
-                                users={users}
-                                userInfo={userInfo}
                                 authorization={authorization}
-                                positions={positions}
+                                userInfo={userInfo}
                                 expanded={expanded}
-                                //deleteStaff={deleteStaff} //TODO: to move!
                                 onTableChange={handleTableChange}
                             />
                         </LoadingOverlay>
