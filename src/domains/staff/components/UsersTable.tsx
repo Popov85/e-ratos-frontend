@@ -8,10 +8,6 @@ import cellEditFactory from 'react-bootstrap-table2-editor';
 // @ts-ignore
 import filterFactory, {selectFilter, textFilter} from 'react-bootstrap-table2-filter';
 import {FaPencilAlt, FaTrashAlt} from "react-icons/fa";
-// @ts-ignore
-import {utilsCSS} from "../../../utils/utilsCSS";
-// @ts-ignore
-import {isRoleManageable} from "../../../utils/security";
 import {email, minLength2, required} from "../../../utils/validators/validators";
 import {UserInfo} from "../../common/types/UserInfo";
 import {Dispatch} from "redux";
@@ -21,6 +17,8 @@ import {Roles} from "../objects/Roles";
 import {RootState} from "../../../store/rootReducer";
 import {getRoles} from "../selectors/rolesSelector";
 import StaffEditModal from "./StaffEditModal";
+import {utilsCSS} from "../../../utils/utilsCSS";
+import {isRoleManageable} from "../../../utils/security";
 
 type Props = {
     authorization: Authorization;
@@ -222,7 +220,7 @@ const UsersTable: React.FC<Props> = props => {
             formatter: (cell: any, row: any) => {
                 const {staffId} = row;
                 const {role} = row.user;
-                const isEditable = isRoleManageable(role, props.userInfo.role);
+                const isEditable: boolean = isRoleManageable(role, props.userInfo.role);
                 return (
                     <a href="#" className={`badge badge-${isEditable ? 'info' : 'secondary'}`}
                        onClick={() => isEditable ? setEditMode({
@@ -245,7 +243,7 @@ const UsersTable: React.FC<Props> = props => {
             formatter: (cell: any, row: any) => {
                 const {staffId} = row;
                 const {role} = row.user;
-                const isEditable = isRoleManageable(role, props.userInfo.role);
+                const isEditable: boolean = isRoleManageable(role, props.userInfo.role);
                 return (
                     <a href="#" className={`badge badge-${isEditable ? 'warning' : 'secondary'}`}
                        onClick={() => isEditable ? dispatch(deleteStaff(staffId)) : null}>

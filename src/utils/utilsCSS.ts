@@ -1,6 +1,6 @@
 export const utilsCSS = {
 
-    getDefaultHeaderStyle(width, align, size) {
+    getDefaultHeaderStyle(width: string, align: string, size: number = 16): any {
         return {
             width: `${width}`,
             textAlign: `${align}`,
@@ -8,19 +8,19 @@ export const utilsCSS = {
         }
     },
 
-    getDefaultFilterStyle(size) {
+    getDefaultFilterStyle(size: number): any {
         return {
             fontSize: `${size ? size : '16px'}`
         }
     },
 
-    getDefaultCellStyle(size) {
+    getDefaultCellStyle(size: number): any {
         return {
             fontSize: `${size ? size : '16px'}`
         }
     },
 
-    getShortCellStyle(size) {
+    getShortCellStyle(size: number): any {
         return {
             whiteSpace: 'nowrap',
             overflow: 'hidden',
@@ -29,12 +29,13 @@ export const utilsCSS = {
             fontSize: `${size ? size : '16px'}`
         }
     },
-    getShortEditorStyle(size) {
+
+    getShortEditorStyle(size: number): any {
         return {
             backgroundColor: 'GhostWhite',
             fontSize: `${size ? size : '16px'}`
         }
-    },
+    }
 }
 
 
