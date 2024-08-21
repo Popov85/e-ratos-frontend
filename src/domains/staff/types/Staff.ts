@@ -1,5 +1,7 @@
 import {SecurityRole} from "../../common/types/SecurityRole";
 import {Department} from "./Department";
+import {Position} from "./Position";
+import {User} from "./User";
 
 export type Staff = {
     staffId: number | null;
@@ -11,16 +13,3 @@ export type Staff = {
     department?: Department;
     active?: boolean;
 };
-
-type User = {
-    userId: number | null;
-    name: string;
-    surname: string;
-    email: string;
-    password: string;
-}
-
-type Position = {
-    positionId: number;
-    name: string;
-}

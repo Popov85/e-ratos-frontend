@@ -21,6 +21,7 @@ import {
     getAllStaffByOrganisation,
     getAllStaffByRatos, updateStaffEmail, updateStaffName, updateStaffSurname
 } from "../actions/usersActions";
+import {getPositions} from "../actions/positionsActions";
 
 const Users: React.FC = () => {
 
@@ -40,24 +41,24 @@ const Users: React.FC = () => {
 
     const positions: any = useSelector((state: RootState) => state.staff.positions);
 
+    const [newMode, setNewMode] = useState<boolean>(false);
 
-    const [newMode, setNewMode] = useState(false);
-    const [expanded, setExpanded] = useState(false);
+    const [expanded, setExpanded] = useState<boolean>(false);
 
     useEffect(() => {
-        //dispatch(getPositions()); //TODO
+        dispatch(getPositions());
         loadStaffBasedOnRole();
     }, []);
 
-    const deactivateModal = () => {
+    const deactivateModal = (): void => {
         setNewMode(false);
     };
 
-    const expandedSwitch = () => {
+    const expandedSwitch = (): void => {
         setExpanded(!expanded);
     };
 
-    const loadStaffBasedOnRole = () => {
+    const loadStaffBasedOnRole = (): void => {
         const {isGlobalAdmin, isAtLeastOrgAdmin, isAtLeastFacAdmin} = authorization;
 
         if (isGlobalAdmin) {

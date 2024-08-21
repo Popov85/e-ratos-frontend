@@ -7,7 +7,6 @@ import {facEditReducer} from "./facEditReducer";
 import {departmentsReducer} from "./departmentsReducer";
 import {depEditReducer} from "./depEditReducer";
 import {usersReducer} from "./usersReducer";
-//@ts-ignore
 import {positionsReducer} from "./positionsReducer";
 //@ts-ignore
 import {userEditReducer} from "./userEditReducer";
@@ -89,7 +88,7 @@ export type RootStaffState = {
     departments: ReturnType<typeof departmentsReducer>,
     depEdit: ReturnType<typeof depEditReducer>,
     users: ReturnType<typeof usersReducer>,
-    positions: any,
+    positions: ReturnType<typeof positionsReducer>,
 
     profile: any,
     ltiVersions: any,
