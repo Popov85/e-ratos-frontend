@@ -23,17 +23,17 @@ export type OrgEditActions =
     | ClearSavingOrgAction;
 
 // Action Creators
-export const loading = (isLoading: boolean): SavingOrgAction => ({
+const loading = (isLoading: boolean): SavingOrgAction => ({
     type: SAVING_ORG,
     payload: { isLoading }
 });
 
-export const loadingFailure = (error: Error): SavingOrgFailureAction => ({
+const loadingFailure = (error: Error): SavingOrgFailureAction => ({
     type: SAVING_ORG_FAILURE,
     payload: { error }
 });
 
-export const loadingSuccess = (message: string): SavingOrgSuccessAction => ({
+const loadingSuccess = (message: string): SavingOrgSuccessAction => ({
     type: SAVING_ORG_SUCCESS,
     payload: { message }
 });

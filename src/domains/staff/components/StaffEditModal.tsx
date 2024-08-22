@@ -1,8 +1,7 @@
 import React from 'react';
 import Modal from "react-bootstrap/Modal";
 import {Alert} from "react-bootstrap";
-// @ts-ignore
-import UserEditContainer from "../containers/UserEditContainer";
+import UserEdit from "./UserEdit";
 
 type Props = {
     show: boolean;
@@ -27,7 +26,7 @@ const StaffEditModal: React.FC<Props> = ({show, editableStaffId, deactivateModal
                 }
             </Alert>
             <Modal.Body>
-                <UserEditContainer staffId={editableStaffId}/>
+                <UserEdit staffId={editableStaffId}/>
             </Modal.Body>
         </Modal>
     );

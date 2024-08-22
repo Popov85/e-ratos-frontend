@@ -7,9 +7,9 @@ import {facEditReducer} from "./facEditReducer";
 import {departmentsReducer} from "./departmentsReducer";
 import {depEditReducer} from "./depEditReducer";
 import {usersReducer} from "./usersReducer";
-import {positionsReducer} from "./positionsReducer";
-//@ts-ignore
 import {userEditReducer} from "./userEditReducer";
+import {positionsReducer} from "./positionsReducer";
+import {affiliationSelectorReducer} from "./affiliationSelectorReducer";
 //@ts-ignore
 import {resultsReducer} from "./resultsReducer";
 //@ts-ignore
@@ -22,8 +22,6 @@ import {themesReducer} from "./themesReducer";
 import {schemesReducer} from "./schemesReducer";
 //@ts-ignore
 import {affiliationSelectorCacheableReducer} from "./affiliationSelectorCacheableReducer";
-//@ts-ignore
-import {affiliationSelectorReducer} from "./affiliationSelectorReducer";
 //@ts-ignore
 import {profileReducer} from "./profileReducer";
 //@ts-ignore
@@ -88,11 +86,12 @@ export type RootStaffState = {
     departments: ReturnType<typeof departmentsReducer>,
     depEdit: ReturnType<typeof depEditReducer>,
     users: ReturnType<typeof usersReducer>,
+    userEdit: ReturnType<typeof userEditReducer>,
     positions: ReturnType<typeof positionsReducer>,
+    affiliationSelector: ReturnType<typeof affiliationSelectorReducer>,
 
     profile: any,
     ltiVersions: any,
-    userEdit: any,
     results: any,
     resultDetails: any,
     courses: any,
@@ -112,7 +111,6 @@ export type RootStaffState = {
     gradingsFourPoint: any,
     gradingsFreePoint: any,
     questionsMcq: any,
-    affiliationSelector: any,
     affiliationSelectorCacheable: any,
     reportOnContent: any,
     reportOnResults: any,
@@ -135,11 +133,12 @@ const staffReducers = combineReducers<RootStaffState>({
     departments:  departmentsReducer,
     depEdit: depEditReducer,
     users: usersReducer,
+    userEdit: userEditReducer,
     positions: positionsReducer,
+    affiliationSelector: affiliationSelectorReducer,
 
     profile: profileReducer,
     ltiVersions: ltiVersionsReducer,
-    userEdit: userEditReducer,
     results: resultsReducer,
     resultDetails: resultDetailsReducer,
     courses: coursesReducer,
@@ -159,7 +158,6 @@ const staffReducers = combineReducers<RootStaffState>({
     gradingsFourPoint: gradingFourPointReducer,
     gradingsFreePoint: gradingFreePointReducer,
     questionsMcq: questionsMcqReducer,
-    affiliationSelector: affiliationSelectorReducer,
     affiliationSelectorCacheable: affiliationSelectorCacheableReducer,
     reportOnContent: reportOnContentReducer,
     reportOnResults: reportOnResultsReducer,
