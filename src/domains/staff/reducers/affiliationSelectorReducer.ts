@@ -26,22 +26,6 @@ const facultiesInit = [dummyValue];
 
 const departmentsInit = [dummyValue];
 
-const testSelected = {
-    org: {
-        value: 1,
-        label: "Organisation #1"
-    },
-    fac: {
-        value: 1,
-        label: "Faculty #1"
-    },
-    dep: {
-        value: 1,
-        label: "Department #1"
-    }
-}
-
-
 // Define the state interface
 type AffiliationState = {
     organisations: Array<FormSelect>;
@@ -97,20 +81,6 @@ export const affiliationSelectorReducer = (state: AffiliationState = initState, 
             }
             return state;
         }
-
-        /*case SET_SELECTED: {
-            let affiliation = action.payload;
-            const {orgId, facId, depId} = affiliation; // strings
-            let org, fac, dep;
-            if (orgId) org = state.organisations.find(o=>o.value===Number(orgId));
-            if (facId) fac = state.faculties.find(f=>f.value===Number(facId));
-            if (depId) dep = state.departments.find(d=>d.value===Number(depId));
-            let selected = new Selected(org, fac, dep);
-            return {...state, selected};
-        }*/
-        /*case CLEAR_SELECTED: {
-            return {...state, selected: null};
-        }*/
         case CLEAR_ALL_ON_ORGANISATION_RESET: {
             return {...state, faculties: facultiesInit, departments: departmentsInit};
         }

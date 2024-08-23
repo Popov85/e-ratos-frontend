@@ -9,3 +9,9 @@ export enum SecurityRole {
     ROLE_ORG_ADMIN = 'ROLE_ORG_ADMIN',
     ROLE_GLOBAL_ADMIN = 'ROLE_GLOBAL_ADMIN'
 }
+
+export const getSecurityRole = (role: string): SecurityRole | Array<SecurityRole> => {
+    return role in SecurityRole
+        ? SecurityRole[role as keyof typeof SecurityRole]
+        : [];
+};

@@ -1,14 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {WrappedFieldInputProps, WrappedFieldMetaProps} from "redux-form";
 
 type Props = {
     placeholder?: string;
-    showPassword?: boolean;
     input: WrappedFieldInputProps;
     meta: WrappedFieldMetaProps;
 }
 
-const FieldPassword: React.FC<Props> = ({placeholder = 'Password', showPassword = false, input, meta}) => {
+const FieldPassword: React.FC<Props> = ({placeholder = 'Password', input, meta}) => {
+
+    // TODO: add functionality to display password if needed!
+    const [showPassword, setShowPassword] = useState(false);
+
     const {touched, error} = meta;
     const hasError = touched && error;
     return (

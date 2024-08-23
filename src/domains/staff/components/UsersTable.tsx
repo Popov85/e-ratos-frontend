@@ -273,7 +273,7 @@ const UsersTable: React.FC<Props> = props => {
                             headerClasses="thead-light"
                             wrapperClasses="table-responsive"
                             cellEdit={cellEditFactory({mode: 'dbclick'})}
-                            noDataIndication={() => "No data!"}
+                            noDataIndication={(): string => "No data!"}
                             onTableChange={props.onTableChange}
             />
             {

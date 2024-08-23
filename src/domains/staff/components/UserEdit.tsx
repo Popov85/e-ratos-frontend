@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import Failure from "../../common/components/Failure";
-// @ts-ignore
-import UserEditForm from "../forms/UserEditForm";
+import UserEditForm, {UserEditOwnProps} from "../forms/UserEditForm";
 import {Dispatch} from "redux";
 import {useDispatch, useSelector} from "react-redux";
 import {resetStaffState, saveStaff, updateStaff} from "../actions/userEditActions";
@@ -16,6 +15,7 @@ import {getPositions} from "../actions/positionsActions";
 import {getRoles} from "../selectors/rolesSelector";
 import {Roles} from "../objects/Roles";
 import {initAffiliationSelector, initAffiliationSelectorForStaffEditForm} from "../actions/affiliationSelectorActions";
+import {getSecurityRole, SecurityRole} from "../../common/types/SecurityRole";
 
 type Props = {
     staffId?: number
@@ -37,9 +37,7 @@ const UserEdit: React.FC<Props> = ({staffId}) => {
 
     const {isLoading, error, message} = userEdit;
 
-    const affiliationSelector = useSelector((state: RootState) => state.staff.affiliationSelector);
-
-    const staff: Staff | null = useSelector((state: RootState) => getUserById(state, {staffId: 1}));
+    const staff: Staff | null = useSelector((state: RootState) => getUserById(state, {staffId: staffId}));
 
     const role: Roles =  useSelector((state: RootState) => getRoles(state)) as Roles;
 
@@ -62,11 +60,8 @@ const UserEdit: React.FC<Props> = ({staffId}) => {
         }
     }, []);
 
-    const handleSubmit = (data: any): void => {
-        const staffId = data.userId;
-        const [role] = data.role;
-        const actualRole = role.length > 1 ? role : data.role;
-
+    const handleSubmit = (data: UserEditOwnProps): void => {
+        const staffId: number = data.userId;
         const staff: Staff = {
             staffId: staffId,
             user: {
@@ -76,10 +71,10 @@ const UserEdit: React.FC<Props> = ({staffId}) => {
                 password: data.password,
                 email: data.email
             },
-            role: actualRole,
+            role: getSecurityRole(data.role),
             active: data.active,
-            positionId: data.positionId,
-            depId: data.affiliation ? data.affiliation.depId : null
+            positionId: Number(data.positionId),
+            depId: data.affiliation ? Number(data.affiliation.depId) : undefined
         };
 
         if (!staffId) {
@@ -120,33 +115,27 @@ const UserEdit: React.FC<Props> = ({staffId}) => {
                             initialValues={
                                 staff
                                     ? {
-                                        userId: staff.staffId,
+                                        userId: staff.staffId as number,
                                         name: staff.user.name,
                                         surname: staff.user.surname,
                                         email: staff.user.email,
-                                        active: staff.active,
-                                        role: staff.role,
-                                        positionId: staff.position?.posId,
+                                        active: staff.user.active,
+                                        role: staff.user?.role!.toString(),
+                                        positionId: staff.position?.posId.toString(),
                                         affiliation: {
-                                            depId: staff.department?.depId,
-                                            facId: staff.department?.faculty?.facId,
-                                            orgId: staff.department?.faculty?.organisation?.orgId,
+                                            depId: staff.department?.depId as string,
+                                            facId: staff.department?.faculty?.facId as string,
+                                            orgId: staff.department?.faculty?.organisation?.orgId as string,
                                         },
                                     }
-                                    : null
+                                    : undefined
                             }
                             positions={positions}
                             roles={roles}
-                            userInfo={userInfo}
                             authorization={authorization}
                             disabled={isLoading}
                             isNew={!staff}
                             finished={!!message}
-                            /*affiliationSelector={affiliationSelector}
-                            getAllFacultiesForSelectorByOrganisationId={getAllFacultiesForSelectorByOrganisationId}
-                            getAllDepartmentsForSelectorByFacultyId={getAllDepartmentsForSelectorByFacultyId}
-                            clearAllOnOrganisationReset={clearAllOnOrganisationReset}
-                            clearAllOnFacultyReset={clearAllOnFacultyReset}*/// TODO: move to form!
                         />
                     </div>
                     <div className="form-group text-center mt-n2 mb-2">

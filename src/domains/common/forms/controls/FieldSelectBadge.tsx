@@ -1,9 +1,10 @@
 import React from 'react';
 import {WrappedFieldInputProps, WrappedFieldMetaProps} from "redux-form";
 import {Years} from "../../types/Years";
+import {FormSelect} from "../../../staff/types/form/FormSelect";
 
 type Props = {
-    items?: Array<any>;
+    items?: Array<FormSelect>;
     width?: number;
     title?: string;
     badge?: string;

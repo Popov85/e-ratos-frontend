@@ -71,11 +71,11 @@ const setDepartmentsForSelector = (departments: Array<Department>): SetDepForSel
     payload: {departments},
 });
 
-const clearAllOnOrganisationReset = (): ClearAllOnOrganisationResetAction => ({
+export const clearAllOnOrganisationReset = (): ClearAllOnOrganisationResetAction => ({
     type: CLEAR_ALL_ON_ORGANISATION_RESET,
 });
 
-const clearAllOnFacultyReset = (): ClearAllOnFacultyResetAction => ({
+export const clearAllOnFacultyReset = (): ClearAllOnFacultyResetAction => ({
     type: CLEAR_ALL_ON_FACULTY_RESET,
 });
 

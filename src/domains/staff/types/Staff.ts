@@ -6,10 +6,10 @@ import {User} from "./User";
 export type Staff = {
     staffId: number | null;
     user: User;
-    role: SecurityRole | Array<SecurityRole>;
     positionId?: number;
     position?: Position;
     depId?: number;
     department?: Department;
+    role?: SecurityRole | Array<SecurityRole>;
     active?: boolean;
 };
