@@ -1,11 +1,20 @@
 import React from 'react'
-import {Field, reduxForm} from 'redux-form';
+import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 import '../../../../main.css';
-import {email, minLength2, required} from "../../../utils/validators";
+import {email, minLength2, required} from "../../../utils/validators/validators";
 import FieldString from "../../common/forms/controls/FieldString";
+import {Profile} from "../types/Profile";
 import FieldEmailBadgeAt from "../../common/forms/controls/FieldEmailBadgeAt";
 
-let ProfileForm = props => {
+// Define the props for your component
+type ProfileEditFormProps = {
+    disabled: boolean;
+}
+
+// Combine the props with `InjectedFormProps` from `redux-form`
+type Props = InjectedFormProps<Profile, ProfileEditFormProps> & ProfileEditFormProps;
+
+const ProfileForm: React.FC<Props> = props => {
 
     return (
         <form onSubmit={props.handleSubmit}>
@@ -28,6 +37,4 @@ let ProfileForm = props => {
     )
 }
 
-ProfileForm = reduxForm({form: 'profile-form', enableReinitialize: true})(ProfileForm)
-
-export default ProfileForm
+export default reduxForm<Profile, ProfileEditFormProps>({form: 'profile-form', enableReinitialize: true})(ProfileForm);

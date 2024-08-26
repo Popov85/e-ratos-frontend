@@ -1,7 +1,14 @@
 import React from 'react';
 import {FaAt} from "react-icons/fa";
+import {WrappedFieldInputProps, WrappedFieldMetaProps} from "redux-form";
 
-const FieldEmailBadge = props => {
+type Props = {
+    placeholder?: string;
+    input: WrappedFieldInputProps;
+    meta: WrappedFieldMetaProps;
+}
+
+const FieldEmailBadge: React.FC<Props> = props => {
     const {touched, error} = props.meta;
     const hasError = touched && error;
     return (

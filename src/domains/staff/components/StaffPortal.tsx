@@ -9,8 +9,6 @@ import StaffNavbarContainer from "../containers/StaffNavbarContainer";
 //@ts-ignore
 import ResultsContainer from "../containers/ResultsContainer";
 //@ts-ignore
-import ProfileContainer from "../containers/ProfileContainer";
-//@ts-ignore
 import PasswordContainer from "../containers/PasswordContainer";
 //@ts-ignore
 import ReportOnContentContainer from "../containers/ReportOnContentContainer";
@@ -39,6 +37,7 @@ import Organisations from "./Organisations";
 import Faculties from "./Faculties";
 import Departments from "./Departments";
 import Users from "./Users";
+import Profile from "./Profile";
 
 const StaffPortal: React.FC = () => {
 
@@ -77,7 +76,7 @@ const StaffPortal: React.FC = () => {
                 <Route path="/staff/results/details/:resultId" exact component={ResultsViewerManager}/>
                 <Route path="/staff/report/on-content" exact component={ReportOnContentContainer}/>
                 <Route path="/staff/report/on-results" exact component={ReportOnResultsContainer}/>
-                <Route path="/staff/profile" exact component={ProfileContainer}/>
+                <Route path="/staff/profile" exact component={Profile}/>
                 <Route path="/staff/profile/password" exact component={PasswordContainer}/>
             </div>
         </div>

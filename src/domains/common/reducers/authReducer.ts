@@ -12,10 +12,11 @@ import {
     SERVER_LOGGING_OUT,
     SERVER_LOGGING_OUT_FAILURE,
     SERVER_RESET_LOGGING_OUT_FAILURE,
-    AuthActionTypes
+    AuthActionTypes, UPDATE_USER_PROFILE
 } from "../actions/authActions";
 import {UserInfo} from "../types/UserInfo";
 import {SecurityRole} from "../types/SecurityRole";
+import {Profile} from "../../staff/types/Profile";
 
 const allowedRolesGlobalAdmin: SecurityRole[] = [SecurityRole.ROLE_GLOBAL_ADMIN];
 const allowedRolesAtLeastOrgAdmin: SecurityRole[] = [...allowedRolesGlobalAdmin, SecurityRole.ROLE_ORG_ADMIN];
@@ -105,8 +106,9 @@ export const authReducer = (state: AuthState = initState, action: AuthActionType
         case SET_AUTHORIZED: {
             return {...state, authorized: action.payload?.authorized!};
         }
+        // TODO: consider to deprecate!
         case UPDATE_USER_INFO: {
-            let userInfo = action.payload;
+            let userInfo: UserInfo | undefined = action.payload;
             if (!userInfo) {
                 return state;
             }
@@ -116,6 +118,22 @@ export const authReducer = (state: AuthState = initState, action: AuthActionType
                     ...state.userInfo,
                     ...userInfo, // This will overwrite only the provided properties in userInfo
                 },
+            };
+        }
+        case UPDATE_USER_PROFILE: {
+            const profile: Profile | undefined= action.payload?.profile;
+            if (!profile) {
+                return state;
+            }
+            if (!state.userInfo) return state;
+            return {
+                ...state,
+                userInfo: {
+                    ...state.userInfo,
+                    name: profile.name || state.userInfo.name,
+                    surname: profile.surname || state.userInfo.surname,
+                    email: profile.email || state.userInfo.email,
+                }
             };
         }
         default:

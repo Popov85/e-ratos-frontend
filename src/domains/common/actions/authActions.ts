@@ -1,8 +1,9 @@
-import { Dispatch } from "redux";
+import {Dispatch} from "redux";
 import authAPI from "../_api/authAPI";
 import {UserInfo} from "../types/UserInfo";
 import {Credentials} from "../types/Credentials";
 import {GenericAction} from "../types/GenericAction";
+import {Profile} from "../../staff/types/Profile";
 
 // Action type constants
 export const CHECKING_LOGGING = "CHECKING_LOGGING";
@@ -15,6 +16,7 @@ export const SET_LOGGED_IN = "SET_LOGGED_IN";
 export const SET_LOGGED_OUT = "SET_LOGGED_OUT";
 export const SET_AUTHORIZED = "SET_AUTHORIZED";
 export const UPDATE_USER_INFO = "UPDATE_USER_INFO";
+export const UPDATE_USER_PROFILE = "UPDATE_USER_PROFILE";
 export const SERVER_LOGGING_OUT = "SERVER_LOGGING_OUT";
 export const SERVER_LOGGING_OUT_FAILURE = "SERVER_LOGGING_OUT_FAILURE";
 export const SERVER_RESET_LOGGING_OUT_FAILURE = "SERVER_RESET_LOGGING_OUT_FAILURE";
@@ -30,6 +32,7 @@ export type SetLoggedInAction = GenericAction<typeof SET_LOGGED_IN, UserInfo>;
 export type SetLoggedOutAction = GenericAction<typeof SET_LOGGED_OUT>;
 export type SetAuthorizedAction = GenericAction<typeof SET_AUTHORIZED, { authorized: boolean }>;
 export type UpdateUserInfoAction = GenericAction<typeof UPDATE_USER_INFO, UserInfo>;
+export type UpdateUserProfileAction = GenericAction<typeof UPDATE_USER_PROFILE, {profile: Profile}>;
 export type ServerLoggingOutAction = GenericAction<typeof SERVER_LOGGING_OUT, { isProgress: boolean }>;
 export type ServerLoggingOutFailureAction = GenericAction<typeof SERVER_LOGGING_OUT_FAILURE, { error: Error }>;
 export type ServerResetLoggingOutFailureAction = GenericAction<typeof SERVER_RESET_LOGGING_OUT_FAILURE>;
@@ -48,17 +51,18 @@ export type AuthActionTypes =
     | UpdateUserInfoAction
     | ServerLoggingOutAction
     | ServerLoggingOutFailureAction
-    | ServerResetLoggingOutFailureAction;
+    | ServerResetLoggingOutFailureAction
+    | UpdateUserProfileAction;
 
 // Action creators using the generic type
 export const checkLogging = (inProgress: boolean): CheckLoggingAction => ({
     type: CHECKING_LOGGING,
-    payload: { inProgress },
+    payload: {inProgress},
 });
 
 export const checkLoggingFailure = (error: Error): CheckLoggingFailureAction => ({
     type: CHECKING_LOGGING_FAILURE,
-    payload: { error },
+    payload: {error},
 });
 
 export const resetCheckLoggingFailure = (): ResetCheckLoggingFailureAction => ({
@@ -67,12 +71,12 @@ export const resetCheckLoggingFailure = (): ResetCheckLoggingFailureAction => ({
 
 export const loggingIn = (inProgress: boolean): LoggingInAction => ({
     type: LOGGING_IN,
-    payload: { inProgress },
+    payload: {inProgress},
 });
 
 export const loggingInFailure = (error: Error): LoggingInFailureAction => ({
     type: LOGGING_IN_FAILURE,
-    payload: { error },
+    payload: {error},
 });
 
 export const resetLoggingInFailure = (): ResetLoggingInFailureAction => ({
@@ -90,12 +94,12 @@ export const setLoggedOut = (): SetLoggedOutAction => ({
 
 export const serverLoggingOut = (isProgress: boolean): ServerLoggingOutAction => ({
     type: SERVER_LOGGING_OUT,
-    payload: { isProgress },
+    payload: {isProgress},
 });
 
 export const serverLoggingOutFailure = (error: Error): ServerLoggingOutFailureAction => ({
     type: SERVER_LOGGING_OUT_FAILURE,
-    payload: { error },
+    payload: {error},
 });
 
 export const serverResetLoggingOutFailure = (): ServerResetLoggingOutFailureAction => ({
@@ -104,23 +108,30 @@ export const serverResetLoggingOutFailure = (): ServerResetLoggingOutFailureActi
 
 export const setAuthorized = (authorized: boolean): SetAuthorizedAction => ({
     type: SET_AUTHORIZED,
-    payload: { authorized },
+    payload: {authorized},
 });
 
+// TODO: consider to deprecate!
 export const updateUserInfo = (userInfo: UserInfo): UpdateUserInfoAction => ({
     type: UPDATE_USER_INFO,
     payload: userInfo,
 });
 
+export const updateUserProfile = (profile: Profile): UpdateUserProfileAction => ({
+    type: UPDATE_USER_PROFILE,
+    payload: {profile},
+});
+
 // Thunk actions
 export const checkLogged = () => {
-    return (dispatch: Dispatch<AuthActionTypes>) => {
+    return (dispatch: Dispatch<AuthActionTypes>): void => {
         dispatch(resetCheckLoggingFailure());
         dispatch(checkLogging(true));
         authAPI.fetchUserInfo()
-            .then((userInfo: UserInfo) => {
+            .then((userInfo: UserInfo): void => {
                 dispatch(setLoggedIn(userInfo));
-            }).catch(e => {
+            }).catch((e: Error) : void => {
+            console.warn("Error checking if user is logged in!", e);
             dispatch(setLoggedOut());
             dispatch(checkLoggingFailure(new Error("Failed to check if user is logged")));
         }).finally(() => dispatch(checkLogging(false)));
@@ -128,34 +139,40 @@ export const checkLogged = () => {
 }
 
 export const getLogged = (credentials: Credentials) => {
-    return (dispatch: Dispatch<AuthActionTypes>) => {
+    return (dispatch: Dispatch<AuthActionTypes>): void => {
         dispatch(resetLoggingInFailure());
         dispatch(loggingIn(true));
         authAPI.doLogin(credentials)
-            .then(status => {
+            .then((status: number) => {
                 if (status === 200) {
                     // After successful login, fetch user profile
                     return authAPI.fetchUserInfo();
                 } else {
                     throw new Error("Unsuccessful authentication attempt!");
                 }
-            }).then((userInfo: UserInfo) => {
+            }).then((userInfo: UserInfo): void => {
             // Handle successful user profile fetch
             dispatch(setLoggedIn(userInfo));
-        }).catch(error => {
-            dispatch(loggingInFailure(error));
+        }).catch((e: Error) : void => {
+            console.warn("Error logging in!", e);
+            dispatch(loggingInFailure(e));
         }).finally(() => dispatch(loggingIn(false)));
     }
 }
 
 export const getLoggedOut = () => {
-    return (dispatch: Dispatch<AuthActionTypes>) => {
+    return (dispatch: Dispatch<AuthActionTypes>): void => {
         dispatch(serverResetLoggingOutFailure());
         dispatch(serverLoggingOut(true));
-        authAPI.doLogout().then(() => {
-            // Ignore code status, do log out anyway
-            dispatch(setLoggedOut());
-        }).catch(e => {
+        authAPI.doLogout().then((status: number): void => {
+            if (status >= 200 && status < 300) {
+                // Ignore code status, do log out anyway
+                dispatch(setLoggedOut());
+            } else {
+                throw new Error("Failed to execute API to log out!");
+            }
+        }).catch((e: Error) : void => {
+            console.warn("Error logging out!", e);
             dispatch(serverLoggingOutFailure(new Error("Failed to log out")));
         }).finally(() => dispatch(serverLoggingOut(false)));
     }

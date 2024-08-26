@@ -135,7 +135,8 @@ export const updateOrgName = (orgId: number, name: string) => {
                     throw new Error("Failed to execute API to update an organisation!");
                 }
             })
-            .catch(e => {
+            .catch((e: Error): void  => {
+                console.warn("Error updating organisation name!", e);
                 dispatch(updatingFailure(new Error("Failed to update org's name")));
             })
             .finally(() => dispatch(updating(false)));
@@ -154,7 +155,8 @@ export const deleteOrg = (orgId: number) => {
                     throw new Error("Failed to execute API to delete an organisation!");
                 }
             })
-            .catch(e => {
+            .catch((e: Error): void => {
+                console.warn("Error deleting an organisation!", e);
                 dispatch(updatingFailure(new Error("Failed to delete org")));
             })
             .finally(() => dispatch(updating(false)));
@@ -169,7 +171,7 @@ export const getAllOrganisations = () => {
             .then((organisations: Array<Organisation>): void => {
                 dispatch(setAllOrg(organisations));
             })
-            .catch(e => {
+            .catch((e: Error): void  => {
                 console.warn("Error fetching all organisations!", e);
                 dispatch(loadingFailure(new Error("Failed to fetch all organisations")));
             })

@@ -10,6 +10,7 @@ import {usersReducer} from "./usersReducer";
 import {userEditReducer} from "./userEditReducer";
 import {positionsReducer} from "./positionsReducer";
 import {affiliationSelectorReducer} from "./affiliationSelectorReducer";
+import {profileReducer} from "./profileReducer";
 //@ts-ignore
 import {resultsReducer} from "./resultsReducer";
 //@ts-ignore
@@ -22,8 +23,6 @@ import {themesReducer} from "./themesReducer";
 import {schemesReducer} from "./schemesReducer";
 //@ts-ignore
 import {affiliationSelectorCacheableReducer} from "./affiliationSelectorCacheableReducer";
-//@ts-ignore
-import {profileReducer} from "./profileReducer";
 //@ts-ignore
 import {reportOnContentReducer} from "./reportOnContentReducer";
 //@ts-ignore
@@ -89,8 +88,8 @@ export type RootStaffState = {
     userEdit: ReturnType<typeof userEditReducer>,
     positions: ReturnType<typeof positionsReducer>,
     affiliationSelector: ReturnType<typeof affiliationSelectorReducer>,
+    profile: ReturnType<typeof profileReducer>,
 
-    profile: any,
     ltiVersions: any,
     results: any,
     resultDetails: any,
