@@ -1,12 +1,11 @@
 import React from 'react';
 import {Redirect, Route} from "react-router-dom";
 //@ts-ignore
-import PasswordContainer from "../../staff/containers/PasswordContainer";
-//@ts-ignore
 import StudentNavbarContainer from "../containers/StudentNavbarContainer";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../store/rootReducer";
 import Profile from "../../staff/components/Profile";
+import Password from "../../staff/components/Password";
 
 const StudentPortal: React.FC = () => {
 
@@ -31,7 +30,7 @@ const StudentPortal: React.FC = () => {
                 <Route path="/student/rating" render={() => <div>Rating TODO</div>}/>
                 <Route path="/student/charts" render={() => <div>Charts TODO</div>}/>
                 <Route path="/student/profile" exact component={Profile}/>
-                <Route path="/student/profile/password" exact component={PasswordContainer}/>
+                <Route path="/student/profile/password" exact component={Password}/>
             </div>
         </div>
     );
