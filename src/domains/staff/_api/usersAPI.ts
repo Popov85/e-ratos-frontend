@@ -2,6 +2,12 @@ import {instance} from "../../common/_api/axios";
 import {AxiosResponse} from "axios";
 import {Staff} from "../types/Staff";
 
+// TODO: consider this precise type..
+export type StaffInput = Omit<Staff, 'position' | 'department'> & {
+    posId: number;
+    depId: number;
+};
+
 export const usersAPI = {
 
     async saveStaff(staff: Staff): Promise<Staff> {

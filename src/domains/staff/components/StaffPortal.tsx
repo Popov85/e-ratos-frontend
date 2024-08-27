@@ -62,7 +62,9 @@ const StaffPortal: React.FC = () => {
                 <Route path="/staff/structure/organisations" exact component={Organisations}/>
                 <Route path="/staff/structure/faculties" exact component={Faculties}/>
                 <Route path="/staff/structure/departments" exact component={Departments}/>
+
                 <Route path="/staff/courses" exact component={CoursesContainer}/>
+
                 <Route path="/staff/schemes" exact component={SchemesContainer}/>
                 <Route path="/staff/themes" exact component={ThemesContainer}/>
                 <Route path="/staff/themes/:themeId/questions-mcq" exact component={QuestionsMcqContainer}/>

@@ -1,4 +1,4 @@
-import {usersAPI} from "../_api/usersAPI";
+import {StaffInput, usersAPI} from "../_api/usersAPI";
 import {addStaffInStore, updateStaffInStore} from "./usersActions";
 import {GenericAction} from "../../common/types/GenericAction";
 import {Staff} from "../types/Staff";
