@@ -31,6 +31,7 @@ export const getAllCoursesForSelect = createSelector(getAnyCourses, (courses) =>
     return coursesTransformer.toSelectWithDummy(courses);
 });
 
+// @Deprecated
 // For Table filter, extract courses from themes array for filter
 export const extractAccessesFromCoursesForTableFilter = createSelector(getAllCourses, (courses) => {
     if (!courses) return {};

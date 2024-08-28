@@ -1,26 +1,53 @@
 import React, {useState} from 'react';
-import PropTypes from 'prop-types';
+// @ts-ignore
 import BootstrapTable from 'react-bootstrap-table-next';
+// @ts-ignore
 import paginationFactory from 'react-bootstrap-table2-paginator';
+// @ts-ignore
 import cellEditFactory from 'react-bootstrap-table2-editor';
+// @ts-ignore
 import filterFactory, {Comparator, dateFilter, selectFilter, textFilter} from 'react-bootstrap-table2-filter';
 import {FaCaretSquareDown, FaCaretSquareUp, FaPencilAlt, FaTrashAlt} from "react-icons/fa";
+// @ts-ignore
 import CourseEditModal from "./CourseEditModal";
+// @ts-ignore
 import CourseAssociateModal from "./CourseAssociateModal";
 import ConfirmModal from "../../common/components/ConfirmModal";
+// @ts-ignore
 import {minLength2, required} from "../../../utils/validators";
+// @ts-ignore
 import {staffFilter} from "../../../utils/filters/staffFilter";
+// @ts-ignore
 import {lmsFilter} from "../../../utils/filters/lmsFilter";
+// @ts-ignore
 import {defaultSorted, lmsOptions} from "../../../utils/constants";
 import {utilsCSS} from "../../../utils/utilsCSS";
 import '../../../../main.css';
 import {isEditable} from "../../../utils/security";
+import {UserInfo} from "../../common/types/UserInfo";
+import {Course} from "../types/Course";
+import {TableObject} from "../types/table/TableObject";
+import {Dispatch} from "redux";
+import {useDispatch} from "react-redux";
+import {deleteCourse, disassociateCourseWithLMS} from "../actions/coursesActions";
 
-const CoursesTable = props => {
-    const initEditState = {mode: false, editableCourseId: null};
-    const initDeleteState = {mode: false, deletableCourseId: null};
-    const initAssociateState = {mode: false, associatableCourseId: null};
-    const initDisassociateState = {mode: false, disassociatableCourseId: null};
+type Props = {
+    userInfo: UserInfo,
+    authorization: Authorization,
+    courses: Array<Course>,
+    accesses: TableObject,
+    expanded: boolean,
+    onTableChange: (type: string, {cellEdit}: any) => void;
+}
+
+const CoursesTable: React.FC<Props> = props => {
+
+    const dispatch: Dispatch<any> = useDispatch();
+
+    const initEditState = {mode: false, editableCourseId: 0};
+    const initDeleteState = {mode: false, deletableCourseId: 0};
+    const initAssociateState = {mode: false, associatableCourseId: 0};
+    const initDisassociateState = {mode: false, disassociatableCourseId: 0};
 
     const [edit, setEditMode] = useState(initEditState);
     const [remove, setDeleteMode] = useState(initDeleteState);
@@ -45,10 +72,10 @@ const CoursesTable = props => {
             text: 'Course',
             sort: true,
             filter: textFilter(),
-            title: cell => cell,
+            title: (cell: any) => cell,
             style: !expanded ? utilsCSS.getShortCellStyle : null,
             headerStyle: () => utilsCSS.getDefaultHeaderStyle('350px', 'left'),
-            validator: (newValue) => {
+            validator: (newValue: any) => {
                 if (required(newValue) || minLength2(newValue)) {
                     return {
                         valid: false,
@@ -57,26 +84,26 @@ const CoursesTable = props => {
                 }
                 return true;
             },
-            editable:  (cell, row) => {
+            editable: (cell: any, row: any) => {
                 const {staff, access} = row;
-                return isEditable(authorization, staff, access);
+                return isEditable(userInfo, staff, access);
             }
         },
         {
             dataField: 'staff',
             text: 'Created by',
             sort: true,
-            sortFunc: (a, b, order) => staffFilter.getStaffSorted(a, b, order),
+            sortFunc: (a: any, b: any, order: any) => staffFilter.getStaffSorted(a, b, order),
             filter: textFilter({
                 onFilter: staffFilter.getStaffFiltered
             }),
-            formatter: (cell, row) => {
+            formatter: (cell: any, row: any): string => {
                 const {name, surname} = row.staff;
                 return `${surname} ${name}`;
             },
             style: utilsCSS.getShortCellStyle,
             headerStyle: () => utilsCSS.getDefaultHeaderStyle('180px', 'left'),
-            title: cell => `${cell.name} ${cell.surname} (${cell.position})`,
+            title: (cell: any): string => `${cell.name} ${cell.surname} (${cell.position})`,
             editable: false
         },
         {
@@ -90,7 +117,7 @@ const CoursesTable = props => {
                 dateClassName: 'w-auto ml-0 pl-0 pr-0',
                 comparators: [Comparator.EQ, Comparator.GT, Comparator.LT],
             }),
-            title: cell => cell,
+            title: (cell: any) => cell,
             style: utilsCSS.getShortCellStyle,
             headerStyle: () => utilsCSS.getDefaultHeaderStyle('220px', 'center'),
             editable: false
@@ -102,8 +129,8 @@ const CoursesTable = props => {
             filter: selectFilter({
                 options: accesses
             }),
-            formatter: cell => accesses[cell],
-            title: cell => cell,
+            formatter: (cell: any) => accesses[cell],
+            title: (cell: any) => cell,
             style: utilsCSS.getShortCellStyle,
             headerStyle: () => utilsCSS.getDefaultHeaderStyle('100px', 'center'),
             editable: false
@@ -119,12 +146,12 @@ const CoursesTable = props => {
             }),
             style: utilsCSS.getShortCellStyle,
             headerStyle: () => utilsCSS.getDefaultHeaderStyle('100px', 'center'),
-            formatter: (cell) => {
+            formatter: (cell: any) => {
                 return cell ?
                     <span className="badge badge-success pt-1 pb-1 pr-2 pl-2" title={cell.name}>LMS</span> :
                     <span className="badge badge-dark pt-1 pb-1 pr-2 pl-2">non-LMS</span>;
             },
-            title: cell => cell,
+            title: (cell: any) => cell,
 
             editable: false
         },
@@ -134,13 +161,13 @@ const CoursesTable = props => {
             editable: false,
             text: 'Do',
             align: 'center',
-            title: (cell, row) => row.lms ? 'Disassociate?' : 'Associate with LMS?',
+            title: (cell: any, row: any) => row.lms ? 'Disassociate?' : 'Associate with LMS?',
             headerStyle: () => utilsCSS.getDefaultHeaderStyle('40px', 'center'),
-            formatter: (cell, row) => {
+            formatter: (cell: any, row: any) => {
                 const {courseId, lms, staff, access} = row;
                 return (
                     <a href="#" className={`badge badge-${isEditable(userInfo, staff, access) ? 'dark' : 'secondary'}`}
-                       onClick={() => isEditable(userInfo, staff, access)?
+                       onClick={() => isEditable(userInfo, staff, access) ?
                            !lms ?
                                setAssociateMode({mode: true, associatableCourseId: courseId})
                                : setDisassociateMode({mode: true, disassociatableCourseId: courseId})
@@ -157,10 +184,11 @@ const CoursesTable = props => {
             align: 'center',
             title: () => 'Update',
             headerStyle: () => utilsCSS.getDefaultHeaderStyle('40px', 'center'),
-            formatter: (cell, row) => {
+            formatter: (cell: any, row: any) => {
                 const {courseId, staff, access} = row;
                 return (
-                    <a href="#" className={`badge badge-${isEditable(userInfo, staff, access) ? 'success' : 'secondary'}`}
+                    <a href="#"
+                       className={`badge badge-${isEditable(userInfo, staff, access) ? 'success' : 'secondary'}`}
                        onClick={() => isEditable(userInfo, staff, access) ? setEditMode({
                            mode: true,
                            editableCourseId: courseId
@@ -177,10 +205,11 @@ const CoursesTable = props => {
             align: 'center',
             title: () => 'Delete',
             headerStyle: () => utilsCSS.getDefaultHeaderStyle('40px', 'center'),
-            formatter: (cell, row) => {
+            formatter: (cell: any, row: any) => {
                 const {courseId, staff, access} = row;
                 return (
-                    <a href="#" className={`badge badge-${isEditable(userInfo, staff, access) ? 'warning' : 'secondary'}`}
+                    <a href="#"
+                       className={`badge badge-${isEditable(userInfo, staff, access) ? 'warning' : 'secondary'}`}
                        onClick={() => isEditable(userInfo, staff, access) ? setDeleteMode({
                            mode: true,
                            deletableCourseId: courseId
@@ -226,7 +255,7 @@ const CoursesTable = props => {
                 <ConfirmModal show={remove.mode} deactivateModal={deactivateDeleteModal}
                               action="Delete the selected course?"
                               params={[remove.deletableCourseId]}
-                              doActionIfOK={props.deleteCourse}/>
+                              doActionIfOK={dispatch(deleteCourse(remove.deletableCourseId))}/>
             }
             {
                 associate.mode &&
@@ -238,24 +267,11 @@ const CoursesTable = props => {
                 <ConfirmModal show={disassociate.mode} deactivateModal={deactivateDisassociateModal}
                               action="Disassociate the course and LMS?"
                               params={[disassociate.disassociatableCourseId]}
-                              doActionIfOK={props.disassociateCourseWithLMS}/>
+                              doActionIfOK={() => dispatch(disassociateCourseWithLMS(disassociate.disassociatableCourseId))}/>
             }
 
         </div>
     );
-};
-
-CoursesTable.propTypes = {
-    userInfo: PropTypes.object.isRequired,
-    authorization: PropTypes.object.isRequired,
-    courses: PropTypes.array.isRequired,
-    accesses: PropTypes.object.isRequired,
-    expanded: PropTypes.bool.isRequired,
-
-    deleteCourse: PropTypes.func.isRequired,
-    associateCourseWithLMS: PropTypes.func.isRequired,
-    disassociateCourseWithLMS: PropTypes.func.isRequired,
-    onTableChange: PropTypes.func.isRequired
 };
 
 export default CoursesTable;

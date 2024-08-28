@@ -11,12 +11,11 @@ import {userEditReducer} from "./userEditReducer";
 import {positionsReducer} from "./positionsReducer";
 import {affiliationSelectorReducer} from "./affiliationSelectorReducer";
 import {profileReducer} from "./profileReducer";
+import {coursesReducer} from "./coursesReducer";
 //@ts-ignore
 import {resultsReducer} from "./resultsReducer";
 //@ts-ignore
 import {resultDetailsReducer} from "./resultDetailsReducer";
-//@ts-ignore
-import {coursesReducer} from "./coursesReducer";
 //@ts-ignore
 import {themesReducer} from "./themesReducer";
 //@ts-ignore
@@ -89,11 +88,11 @@ export type RootStaffState = {
     positions: ReturnType<typeof positionsReducer>,
     affiliationSelector: ReturnType<typeof affiliationSelectorReducer>,
     profile: ReturnType<typeof profileReducer>,
+    courses: ReturnType<typeof coursesReducer>,
 
     ltiVersions: any,
     results: any,
     resultDetails: any,
-    courses: any,
     themes: any,
     themesSupport: any,
     schemes: any,
@@ -135,12 +134,12 @@ const staffReducers = combineReducers<RootStaffState>({
     userEdit: userEditReducer,
     positions: positionsReducer,
     affiliationSelector: affiliationSelectorReducer,
-
     profile: profileReducer,
+    courses: coursesReducer,
+
     ltiVersions: ltiVersionsReducer,
     results: resultsReducer,
     resultDetails: resultDetailsReducer,
-    courses: coursesReducer,
     themes: themesReducer,
     themesSupport: themesSupportReducer,
     schemes: schemesReducer,

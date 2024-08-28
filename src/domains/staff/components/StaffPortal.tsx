@@ -13,8 +13,6 @@ import ReportOnContentContainer from "../containers/ReportOnContentContainer";
 //@ts-ignore
 import ReportOnResultsContainer from "../containers/ReportOnResultsContainer";
 //@ts-ignore
-import CoursesContainer from "../containers/CoursesContainer";
-//@ts-ignore
 import ThemesContainer from "../containers/ThemesContainer";
 //@ts-ignore
 import LmsContainer from "../containers/LmsContainer";
@@ -37,6 +35,7 @@ import Departments from "./Departments";
 import Users from "./Users";
 import Profile from "./Profile";
 import Password from "./Password";
+import Courses from "./Courses";
 
 const StaffPortal: React.FC = () => {
 
@@ -62,8 +61,7 @@ const StaffPortal: React.FC = () => {
                 <Route path="/staff/structure/organisations" exact component={Organisations}/>
                 <Route path="/staff/structure/faculties" exact component={Faculties}/>
                 <Route path="/staff/structure/departments" exact component={Departments}/>
-
-                <Route path="/staff/courses" exact component={CoursesContainer}/>
+                <Route path="/staff/courses" exact component={Courses}/>
 
                 <Route path="/staff/schemes" exact component={SchemesContainer}/>
                 <Route path="/staff/themes" exact component={ThemesContainer}/>
