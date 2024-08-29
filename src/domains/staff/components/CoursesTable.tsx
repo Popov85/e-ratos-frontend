@@ -9,12 +9,9 @@ import cellEditFactory from 'react-bootstrap-table2-editor';
 import filterFactory, {Comparator, dateFilter, selectFilter, textFilter} from 'react-bootstrap-table2-filter';
 import {FaCaretSquareDown, FaCaretSquareUp, FaPencilAlt, FaTrashAlt} from "react-icons/fa";
 // @ts-ignore
-import CourseEditModal from "./CourseEditModal";
-// @ts-ignore
 import CourseAssociateModal from "./CourseAssociateModal";
 import ConfirmModal from "../../common/components/ConfirmModal";
-// @ts-ignore
-import {minLength2, required} from "../../../utils/validators";
+import {minLength2, required} from "../../../utils/validators/validators";
 // @ts-ignore
 import {staffFilter} from "../../../utils/filters/staffFilter";
 // @ts-ignore
@@ -30,12 +27,13 @@ import {TableObject} from "../types/table/TableObject";
 import {Dispatch} from "redux";
 import {useDispatch} from "react-redux";
 import {deleteCourse, disassociateCourseWithLMS} from "../actions/coursesActions";
+import CourseEditModal from "./CourseEditModal";
 
 type Props = {
     userInfo: UserInfo,
     authorization: Authorization,
     courses: Array<Course>,
-    accesses: TableObject,
+    accesses: TableObject | null,
     expanded: boolean,
     onTableChange: (type: string, {cellEdit}: any) => void;
 }
@@ -129,7 +127,7 @@ const CoursesTable: React.FC<Props> = props => {
             filter: selectFilter({
                 options: accesses
             }),
-            formatter: (cell: any) => accesses[cell],
+            formatter: (cell: any) => accesses![cell],
             title: (cell: any) => cell,
             style: utilsCSS.getShortCellStyle,
             headerStyle: () => utilsCSS.getDefaultHeaderStyle('100px', 'center'),
@@ -255,7 +253,7 @@ const CoursesTable: React.FC<Props> = props => {
                 <ConfirmModal show={remove.mode} deactivateModal={deactivateDeleteModal}
                               action="Delete the selected course?"
                               params={[remove.deletableCourseId]}
-                              doActionIfOK={dispatch(deleteCourse(remove.deletableCourseId))}/>
+                              doActionIfOK={()=>dispatch(deleteCourse(remove.deletableCourseId))}/>
             }
             {
                 associate.mode &&

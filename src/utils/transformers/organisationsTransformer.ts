@@ -26,7 +26,7 @@ export const organisationsTransformer = {
      * @returns {*}
      */
     toSelect(organisations: Organisation[]): FormSelect[] {
-        return organisations.map((o: Organisation) => ({
+        return organisations.map((o: Organisation): FormSelect => ({
             value: o.orgId as string,
             label: o.name,
         }));

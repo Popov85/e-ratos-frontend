@@ -1,6 +1,13 @@
 import React from 'react';
+import {WrappedFieldInputProps, WrappedFieldMetaProps} from "redux-form";
 
-const FieldText = props => {
+type Props = {
+    placeholder?: string;
+    input: WrappedFieldInputProps;
+    meta: WrappedFieldMetaProps;
+}
+
+const FieldText: React.FC<Props> = props => {
     const {touched, error} = props.meta;
     const hasError = touched && error;
     return (
@@ -8,7 +15,7 @@ const FieldText = props => {
                 <textarea
                        placeholder={props.placeholder}
                        className={`form-control ${!touched ? '' : error ? 'is-invalid': 'is-valid'}`}
-                       onChange={e => props.input.onChange(e)}
+                       onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => props.input.onChange(e)}
                        value={props.input.value}
                 />
                 {hasError && <div className="invalid-feedback">{error}</div>}

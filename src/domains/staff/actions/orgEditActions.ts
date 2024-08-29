@@ -53,7 +53,7 @@ export const saveOrg = (org: Organisation) => {
                 dispatch(addOrgInStore(organisation));
                 dispatch(loadingSuccess("Successfully added an org!"));
             })
-            .catch((e: Error) => {
+            .catch((e: Error): void => {
                 console.warn("Error saving organisation!", e);
                 dispatch(loadingFailure(new Error("Failed to save an org!")));
             })
@@ -71,7 +71,7 @@ export const updateOrg = (org: Organisation) => {
                 dispatch(updateOrgInStore(result));
                 dispatch(loadingSuccess("Successfully updated the org!"));
             })
-            .catch((e: Error) => {
+            .catch((e: Error): void => {
                 console.warn("Error updating organisation!", e);
                 dispatch(loadingFailure(new Error("Failed to update the org!")));
             })

@@ -1,12 +1,11 @@
 import {createSelector} from "reselect";
 // @ts-ignore
-import {facultiesTransformer} from "../../../utils/transformers/facultiesTransformer";
-// @ts-ignore
 import {dummy, dummyArray} from "../../../utils/constants";
 import {RootState} from "../../../store/rootReducer";
 import {Faculty} from "../types/Faculty";
 import {TableObject} from "../types/table/TableObject";
 import {FormSelect} from "../types/form/FormSelect";
+import {facultiesTransformer} from "../../../utils/transformers/facultiesTransformer";
 
 interface FacProps {
     facId?: number;
@@ -21,7 +20,7 @@ export const getAllFaculties = (state: RootState) => state.staff.faculties.conte
 export const getFacById = createSelector(
     [getAllFaculties, getFacIdFromProps],
     (faculties: Faculty[], facId?: number): Faculty | null => {
-        if (!faculties || facId === undefined) return null;
+        if (!faculties || faculties.length ===0 || facId === undefined) return null;
         return faculties.find((f: Faculty): boolean => f.facId === facId) || null;
     }
 ) as (state: RootState, props: FacProps) => Faculty | null;
@@ -30,14 +29,14 @@ export const getFacById = createSelector(
 export const getAllFacForFilter = createSelector(
     getAllFaculties,
     (faculties: Array<Faculty>): TableObject | null => {
-    if (!faculties) return null;
+    if (!faculties || faculties.length ===0) return null;
     return facultiesTransformer.toObject(faculties);
 }) as (state: RootState, props: FacProps) => TableObject | null;
 
 
 // For Select drop-down
 export const getAllFacForEdit = createSelector(getAllFaculties, (faculties) => {
-    if (!faculties) return null;
+    if (!faculties || faculties.length ===0) return null;
     return facultiesTransformer.toSelect(faculties);
 });
 

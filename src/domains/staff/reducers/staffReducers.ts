@@ -12,6 +12,8 @@ import {positionsReducer} from "./positionsReducer";
 import {affiliationSelectorReducer} from "./affiliationSelectorReducer";
 import {profileReducer} from "./profileReducer";
 import {coursesReducer} from "./coursesReducer";
+import {courseEditReducer} from "./courseEditReducer";
+import {accessReducer} from "./accessReducer";
 //@ts-ignore
 import {resultsReducer} from "./resultsReducer";
 //@ts-ignore
@@ -27,11 +29,7 @@ import {reportOnContentReducer} from "./reportOnContentReducer";
 //@ts-ignore
 import {reportOnResultsReducer} from "./reportOnResultsReducer";
 //@ts-ignore
-import {courseEditReducer} from "./courseEditReducer";
-//@ts-ignore
 import {lmsReducer} from "./lmsReducer";
-//@ts-ignore
-import {accessReducer} from "./accessReducer";
 //@ts-ignore
 import {themeEditReducer} from "./themeEditReducer";
 //@ts-ignore
@@ -89,6 +87,8 @@ export type RootStaffState = {
     affiliationSelector: ReturnType<typeof affiliationSelectorReducer>,
     profile: ReturnType<typeof profileReducer>,
     courses: ReturnType<typeof coursesReducer>,
+    courseEdit: ReturnType<typeof courseEditReducer>,
+    access: ReturnType<typeof accessReducer>,
 
     ltiVersions: any,
     results: any,
@@ -99,7 +99,6 @@ export type RootStaffState = {
     resources: any,
     helps:any,
     lms: any,
-    access: any,
     strategy: any,
     settings: any,
     modes: any,
@@ -112,7 +111,6 @@ export type RootStaffState = {
     affiliationSelectorCacheable: any,
     reportOnContent: any,
     reportOnResults: any,
-    courseEdit: any,
     themeEdit: any,
     resourceEdit: any,
     schemeEdit: any,
@@ -136,6 +134,8 @@ const staffReducers = combineReducers<RootStaffState>({
     affiliationSelector: affiliationSelectorReducer,
     profile: profileReducer,
     courses: coursesReducer,
+    courseEdit: courseEditReducer,
+    access: accessReducer,
 
     ltiVersions: ltiVersionsReducer,
     results: resultsReducer,
@@ -146,7 +146,6 @@ const staffReducers = combineReducers<RootStaffState>({
     resources: resourcesReducer,
     helps:helpsReducer,
     lms: lmsReducer,
-    access: accessReducer,
     strategy: strategyReducer,
     settings: settingsReducer,
     modes: modesReducer,
@@ -159,7 +158,6 @@ const staffReducers = combineReducers<RootStaffState>({
     affiliationSelectorCacheable: affiliationSelectorCacheableReducer,
     reportOnContent: reportOnContentReducer,
     reportOnResults: reportOnResultsReducer,
-    courseEdit: courseEditReducer,
     themeEdit: themeEditReducer,
     resourceEdit: resourceEditReducer,
     schemeEdit: schemeEditReducer,

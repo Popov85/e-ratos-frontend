@@ -4,8 +4,6 @@ import {FaCompress, FaExpand, FaPlus, FaSync} from "react-icons/fa";
 import LoadingOverlay from 'react-loading-overlay';
 import Error from "../../common/components/Error";
 import Overlay from "../../common/components/Overlay";
-//@ts-ignore
-import CourseEditModal from "./CourseEditModal";
 import {getUserInfo} from "../../common/selectors/userSelector";
 import {Dispatch} from "redux";
 import {useDispatch, useSelector} from "react-redux";
@@ -15,6 +13,7 @@ import {clearAllCoursesFailures, getAllCoursesByDepartment, updateCourseName} fr
 import {getAllAccessesForTable} from "../selectors/accessSelector";
 import {TableObject} from "../types/table/TableObject";
 import CoursesTable from "./CoursesTable";
+import CourseEditModal from "./CourseEditModal";
 
 
 const Courses: React.FC = () => {
@@ -31,7 +30,7 @@ const Courses: React.FC = () => {
 
     const courses = useSelector((state: RootState) => state.staff.courses);
 
-    const accesses: TableObject = useSelector((state: RootState) => getAllAccessesForTable(state));
+    const accesses: TableObject | null = useSelector((state: RootState) => getAllAccessesForTable(state));
 
     const [newMode, setNewMode] = useState<boolean>(false);
 
