@@ -14,6 +14,8 @@ import {profileReducer} from "./profileReducer";
 import {coursesReducer} from "./coursesReducer";
 import {courseEditReducer} from "./courseEditReducer";
 import {accessReducer} from "./accessReducer";
+import {lmsReducer} from "./lmsReducer";
+import {lmsEditReducer} from "./lmsEditReducer";
 //@ts-ignore
 import {resultsReducer} from "./resultsReducer";
 //@ts-ignore
@@ -29,11 +31,7 @@ import {reportOnContentReducer} from "./reportOnContentReducer";
 //@ts-ignore
 import {reportOnResultsReducer} from "./reportOnResultsReducer";
 //@ts-ignore
-import {lmsReducer} from "./lmsReducer";
-//@ts-ignore
 import {themeEditReducer} from "./themeEditReducer";
-//@ts-ignore
-import {lmsEditReducer} from "./lmsEditReducer";
 //@ts-ignore
 import {ltiVersionsReducer} from "./ltiVersionsReducer";
 //@ts-ignore
@@ -90,6 +88,9 @@ export type RootStaffState = {
     courseEdit: ReturnType<typeof courseEditReducer>,
     access: ReturnType<typeof accessReducer>,
 
+    lms: ReturnType<typeof lmsReducer>,
+    lmsEdit: ReturnType<typeof lmsEditReducer>,
+
     ltiVersions: any,
     results: any,
     resultDetails: any,
@@ -98,7 +99,6 @@ export type RootStaffState = {
     schemes: any,
     resources: any,
     helps:any,
-    lms: any,
     strategy: any,
     settings: any,
     modes: any,
@@ -117,7 +117,6 @@ export type RootStaffState = {
     helpEdit: any,
     modeEdit: any,
     settingsEdit: any,
-    lmsEdit: any,
     questionMcqEdit: any
 }
 
@@ -136,6 +135,7 @@ const staffReducers = combineReducers<RootStaffState>({
     courses: coursesReducer,
     courseEdit: courseEditReducer,
     access: accessReducer,
+    lms: lmsReducer,
 
     ltiVersions: ltiVersionsReducer,
     results: resultsReducer,
@@ -145,7 +145,6 @@ const staffReducers = combineReducers<RootStaffState>({
     schemes: schemesReducer,
     resources: resourcesReducer,
     helps:helpsReducer,
-    lms: lmsReducer,
     strategy: strategyReducer,
     settings: settingsReducer,
     modes: modesReducer,

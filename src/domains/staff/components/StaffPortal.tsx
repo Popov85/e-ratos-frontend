@@ -15,8 +15,6 @@ import ReportOnResultsContainer from "../containers/ReportOnResultsContainer";
 //@ts-ignore
 import ThemesContainer from "../containers/ThemesContainer";
 //@ts-ignore
-import LmsContainer from "../containers/LmsContainer";
-//@ts-ignore
 import QuestionsMcqContainer from "../containers/QuestionsMcqContainer";
 //@ts-ignore
 import ResourcesContainer from "../containers/ResourcesContainer";
@@ -36,6 +34,7 @@ import Users from "./Users";
 import Profile from "./Profile";
 import Password from "./Password";
 import Courses from "./Courses";
+import Lms from "./Lms";
 
 const StaffPortal: React.FC = () => {
 
@@ -62,6 +61,7 @@ const StaffPortal: React.FC = () => {
                 <Route path="/staff/structure/faculties" exact component={Faculties}/>
                 <Route path="/staff/structure/departments" exact component={Departments}/>
                 <Route path="/staff/courses" exact component={Courses}/>
+                <Route path="/staff/lms" exact component={Lms}/>
 
                 <Route path="/staff/schemes" exact component={SchemesContainer}/>
                 <Route path="/staff/themes" exact component={ThemesContainer}/>
@@ -70,7 +70,6 @@ const StaffPortal: React.FC = () => {
                 <Route path="/staff/helps" exact component={HelpsContainer}/>
                 <Route path="/staff/groups" exact component={Groups}/>
                 <Route path="/staff/complaints" exact component={Complaints}/>
-                <Route path="/staff/lms" exact component={LmsContainer}/>
                 <Route path="/staff/results" exact component={ResultsContainer}/>
                 <Route path="/staff/results/details/:resultId" exact component={ResultsViewerManager}/>
                 <Route path="/staff/report/on-content" exact component={ReportOnContentContainer}/>

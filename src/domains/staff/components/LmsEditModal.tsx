@@ -1,22 +1,26 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Modal from "react-bootstrap/Modal";
 import {Alert} from "react-bootstrap";
+// @ts-ignore
 import LmsEditContainer from "../containers/LmsEditContainer";
 
-const LmsEditModal = props => {
+type Props = {
+    show: boolean;
+    deactivateModal: () => void;
+    editableLmsId?: number;
+}
 
-    const {editableLmsId} = props;
+const LmsEditModal: React.FC<Props> = ({show, editableLmsId, deactivateModal}) => {
 
     return (
         <Modal
             id='lmsEdit'
-            show={props.show}
+            show={show}
             backdrop='static'
             keyboard={false}
             scrollable={true}
             centered>
-            <Alert variant="info" onClose={() => props.deactivateModal()} className="text-center m-0" dismissible >
+            <Alert variant="info" onClose={() => deactivateModal()} className="text-center m-0" dismissible >
                 <strong>LMS</strong>
                 {
                     editableLmsId ? '[edit]' : '[new]'
@@ -27,12 +31,6 @@ const LmsEditModal = props => {
             </Modal.Body>
         </Modal>
     );
-};
-
-LmsEditModal.propTypes = {
-    show: PropTypes.bool.isRequired,
-    editableLmsId: PropTypes.number, // Nullable for new objects
-    deactivateModal: PropTypes.func.isRequired
 };
 
 export default LmsEditModal;
