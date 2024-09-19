@@ -1,4 +1,4 @@
-import {combineReducers} from "redux";
+import { combineReducers } from "@reduxjs/toolkit";
 import {FormStateMap, reducer as formReducer} from "redux-form";
 import {authReducer, AuthState} from "../domains/common/reducers/authReducer";
 import {registrationReducer, RegistrationState} from "../domains/common/reducers/registrationReducer";

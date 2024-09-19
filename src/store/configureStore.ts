@@ -1,21 +1,11 @@
-import { applyMiddleware, compose, createStore, Store } from "redux";
-import thunk, { ThunkMiddleware } from "redux-thunk";
-import rootReducer, { RootState } from "./rootReducer";
+import { configureStore } from "@reduxjs/toolkit";
+import rootReducer from "./rootReducer";
 
-// Define the type for the composeEnhancers function
-declare global {
-    interface Window {
-        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-    }
-}
-
-// Use the Redux DevTools extension if available, otherwise fall back to the default compose function
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-// Create the Redux store with the rootReducer, middleware, and enhancers
-const store: Store<RootState> = createStore(
-    rootReducer,
-    composeEnhancers(applyMiddleware(thunk as ThunkMiddleware<RootState>))
-);
+// Configure the store with Redux Toolkit
+const store = configureStore({
+    reducer: rootReducer,  // rootReducer includes all slices (auth, registration, session, etc.)
+    devTools: process.env.E_RATOS_PROFILE === "dev",  // Automatically enable Redux DevTools in development
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware(), // Thunk is included by default
+});
 
 export default store;
