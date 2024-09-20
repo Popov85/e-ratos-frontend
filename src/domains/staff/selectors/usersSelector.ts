@@ -15,7 +15,6 @@ export const getAllUsers = (state: RootState) => state.staff.users.content;
 export const getUserById = createSelector(
     [getAllUsers, getUserIdFromProps],
     (users: Array<Staff>, userId: number | undefined) => {
-        if (!users) return null;
+        if (!users || users.length === 0) return null;
         return users.find((s: Staff): boolean => s.staffId === userId) || null;
     }) as (state: RootState, props: StaffProps) => Staff | null;
-;

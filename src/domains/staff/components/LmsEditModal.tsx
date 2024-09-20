@@ -1,8 +1,7 @@
 import React from 'react';
 import Modal from "react-bootstrap/Modal";
 import {Alert} from "react-bootstrap";
-// @ts-ignore
-import LmsEditContainer from "../containers/LmsEditContainer";
+import LmsEdit from "./LmsEdit";
 
 type Props = {
     show: boolean;
@@ -27,7 +26,7 @@ const LmsEditModal: React.FC<Props> = ({show, editableLmsId, deactivateModal}) =
                 }
             </Alert>
             <Modal.Body>
-                <LmsEditContainer lmsId = {editableLmsId}/>
+                <LmsEdit lmsId = {editableLmsId}/>
             </Modal.Body>
         </Modal>
     );

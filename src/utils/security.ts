@@ -44,7 +44,6 @@ export const isEditable = (authenticated: UserInfo, staff: Staff, access: any): 
 /**
  * Generates LTI client secret programmatically;
  * For this we use, about 70 symbols
- * @deprecated
  * @param length
  * @returns {string} client secret for LTI tool consumer
  */
