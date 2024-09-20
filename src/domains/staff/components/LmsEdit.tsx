@@ -7,10 +7,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../store/rootReducer";
 import {UserInfo} from "../../common/types/UserInfo";
 import {getUserInfo} from "../../common/selectors/userSelector";
-import {clearLMSState, saveLMS, updateLMS} from "../actions/lmsEditActions";
+import {saveLMS, updateLMS} from "../actions/lmsEditActions";
 import {reset} from "redux-form";
 import {LMS} from "../types/LMS";
 import {getLMSById} from "../selectors/lmsSelector";
+import {clearLMSState} from "../reducers/lmsEditReducer";
 
 type Props = {
     lmsId?: number
@@ -44,7 +45,7 @@ const LmsEdit: React.FC<Props> = ({lmsId}) => {
         }
     };
 
-    const {isLoading, error, message} = lmsEdit;
+    const {isLoading, errorMessage, successMessage} = lmsEdit;
 
     return (
         <div>
@@ -55,19 +56,19 @@ const LmsEdit: React.FC<Props> = ({lmsId}) => {
                             <span>Saving...</span>
                         </div>
                     )}
-                    {error && (
+                    {errorMessage && (
                         <div className="alert alert-danger text-center p-1" role="alert">
                             <span className="text-danger">
                                 <strong>
-                                    <Failure message={error.message}/>
+                                    <Failure message={errorMessage}/>
                                 </strong>
                             </span>
                         </div>
                     )}
-                    {message && (
+                    {successMessage && (
                         <div className="alert alert-success text-center p-1" role="success">
                             <span className="text-success">
-                                <strong>{message}</strong>
+                                <strong>{successMessage}</strong>
                             </span>
                         </div>
                     )}
@@ -85,12 +86,12 @@ const LmsEdit: React.FC<Props> = ({lmsId}) => {
                                         }
                                         : undefined
                                 }
-                                finished={!!message}
+                                finished={!!successMessage}
                                 disabled={isLoading}
                                 onSubmit={handleSubmit}
                             />
                         </div>
-                        <div className="form-group text-center mt-n2 mb-2" hidden={!!message}>
+                        <div className="form-group text-center mt-n2 mb-2" hidden={!!successMessage}>
                             <a href="#" className="badge badge-secondary" onClick={() => dispatch(reset('lms-edit'))}>
                                 Reset
                             </a>

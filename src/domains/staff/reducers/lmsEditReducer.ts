@@ -1,39 +1,57 @@
-import {
-    CLEAR_SAVING_LMS,
-    LMSEditActionTypes,
-    SAVING_LMS,
-    SAVING_LMS_FAILURE,
-    SAVING_LMS_SUCCESS
-} from "../actions/lmsEditActions";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { saveLMS, updateLMS } from '../actions/lmsEditActions'; // Import async thunks
 
 type LMSEditState = {
     isLoading: boolean;
-    error: Error | null;
-    message: string | null;
-}
+    errorMessage: string | null;
+    successMessage: string | null;
+};
 
-const initState: LMSEditState = {
+const initialState: LMSEditState = {
     isLoading: false,
-    error: null,
-    message: null
-}
+    errorMessage: null,
+    successMessage: null,
+};
 
-export const lmsEditReducer = (state: LMSEditState = initState, action: LMSEditActionTypes): LMSEditState => {
-    switch (action.type) {
-        case SAVING_LMS: {
-            return {...state, isLoading: action.payload?.isLoading ?? false};
-        }
-        case SAVING_LMS_FAILURE: {
-            console.warn("Error saving an LMS!", action.payload?.error);
-            return {...state, error: action.payload?.error ?? null};
-        }
-        case SAVING_LMS_SUCCESS: {
-            return {...state, message: action.payload?.message ?? null};
-        }
-        case CLEAR_SAVING_LMS: {
-            return {...state, error: null, message: null};
-        }
-        default:
-            return state;
-    }
-}
+const lmsEditSlice = createSlice({
+    name: 'lmsEdit',
+    initialState,
+    reducers: {
+        clearLMSState: (state) => {
+            state.errorMessage = null;
+            state.successMessage = null;
+        },
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(saveLMS.pending, (state) => {
+                state.isLoading = true;
+                state.errorMessage = null;
+                state.successMessage = null;
+            })
+            .addCase(saveLMS.fulfilled, (state, action: PayloadAction<string>) => {
+                state.isLoading = false;
+                state.successMessage = action.payload;
+            })
+            .addCase(saveLMS.rejected, (state, action) => {
+                state.isLoading = false;
+                state.errorMessage = action.payload as string;
+            })
+            .addCase(updateLMS.pending, (state) => {
+                state.isLoading = true;
+                state.errorMessage = null;
+                state.successMessage = null;
+            })
+            .addCase(updateLMS.fulfilled, (state, action: PayloadAction<string>) => {
+                state.isLoading = false;
+                state.successMessage = action.payload;
+            })
+            .addCase(updateLMS.rejected, (state, action) => {
+                state.isLoading = false;
+                state.errorMessage = action.payload as string;
+            });
+    },
+});
+
+export const { clearLMSState } = lmsEditSlice.actions;
+export const lmsEditReducer = lmsEditSlice.reducer;

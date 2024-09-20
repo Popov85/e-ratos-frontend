@@ -1,72 +1,36 @@
 import {lmsAPI} from "../_api/lmsAPI";
 import {addLMSInStore, updateLMSInStore} from "./lmsActions";
-import {GenericAction} from "../../common/types/GenericAction";
 import {LMS} from "../types/LMS";
-import {Dispatch} from "redux";
+import {createAsyncThunk} from "@reduxjs/toolkit";
 
-export const SAVING_LMS = "SAVING_LMS" as const;
-export const SAVING_LMS_FAILURE = "SAVING_LMS_FAILURE" as const;
-export const SAVING_LMS_SUCCESS = "SAVING_LMS_SUCCESS" as const;
-export const CLEAR_SAVING_LMS = "CLEAR_SAVING_LMS" as const;
-
-// Action types using GenericAction
-export type SavingLMSAction = GenericAction<typeof SAVING_LMS, { isLoading: boolean }>;
-export type SavingLMSFailureAction = GenericAction<typeof SAVING_LMS_FAILURE, { error: Error }>;
-export type SavingLMSSuccessAction = GenericAction<typeof SAVING_LMS_SUCCESS, { message: string }>;
-export type ClearSavingLMSAction = GenericAction<typeof CLEAR_SAVING_LMS>;
-
-// Union type for all actions
-export type LMSEditActionTypes =
-    | SavingLMSAction
-    | SavingLMSFailureAction
-    | SavingLMSSuccessAction
-    | ClearSavingLMSAction;
-
-
-const loading = (isLoading: boolean): SavingLMSAction => ({
-    type: SAVING_LMS,
-    payload: {isLoading}
-});
-
-export const loadingFailure = (error: Error): SavingLMSFailureAction => ({
-    type: SAVING_LMS_FAILURE,
-    payload: {error}
-});
-
-export const loadingSuccess = (message: string): SavingLMSSuccessAction => ({
-    type: SAVING_LMS_SUCCESS,
-    payload: {message}
-});
-
-export const clearLMSState = (): ClearSavingLMSAction => ({
-    type: CLEAR_SAVING_LMS
-});
-
-export const saveLMS = (lms: LMS) => {
-    return (dispatch: Dispatch<LMSEditActionTypes> | any): void => {
-        dispatch(clearLMSState());
-        dispatch(loading(true));
-        lmsAPI.saveLMS(lms).then((lms: LMS): void => {
-            dispatch(addLMSInStore(lms));
-            dispatch(loadingSuccess("Successfully added an LMS!"));
-        }).catch((e: Error): void => {
-            console.warn("Error saving LMS!", e);
-            dispatch(loadingFailure(new Error("Failed to save an LMS!")));
-        }).finally(() => dispatch(loading(false)));
+// Async thunk for saving LMS
+export const saveLMS = createAsyncThunk(
+    'lmsEdit/saveLMS',
+    async (lms: LMS, { dispatch, rejectWithValue }) => {
+        return lmsAPI.saveLMS(lms)
+            .then((savedLMS: LMS): string => {
+                dispatch(addLMSInStore(savedLMS));
+                return 'Successfully added an LMS!';
+            })
+            .catch((error: Error) => {
+                console.warn("Error saving LMS!", error);
+                return rejectWithValue('Failed to save LMS');
+            });
     }
-}
+);
 
-export const updateLMS = (lms: LMS) => {
-    return (dispatch: Dispatch<LMSEditActionTypes> | any): void => {
-        dispatch(clearLMSState());
-        dispatch(loading(true));
-        lmsAPI.updateLMS(lms).then((lms: LMS): void => {
-            dispatch(updateLMSInStore(lms));
-            dispatch(loadingSuccess("Successfully updated the LMS!"));
-        }).catch( (e: Error): void=> {
-            console.warn("Error updating LMS!", e);
-            dispatch(loadingFailure(new Error("Failed to update the LMS!")));
-        }).finally(() => dispatch(loading(false)));
+// Async thunk for updating LMS
+export const updateLMS = createAsyncThunk(
+    'lmsEdit/updateLMS',
+    async (lms: LMS, { dispatch, rejectWithValue }) => {
+        return lmsAPI.updateLMS(lms)
+            .then((updatedLMS: LMS): string => {
+                dispatch(updateLMSInStore(updatedLMS));  // Dispatch success action
+                return 'Successfully updated the LMS!';  // Return success message
+            })
+            .catch((error: Error) => {
+                console.warn("Error updating LMS!", error);
+                return rejectWithValue('Failed to update LMS');  // Handle error
+            });
     }
-}
-
+);
