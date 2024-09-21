@@ -7,15 +7,14 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 export const saveLMS = createAsyncThunk(
     'lmsEdit/saveLMS',
     async (lms: LMS, { dispatch, rejectWithValue }) => {
-        return lmsAPI.saveLMS(lms)
-            .then((savedLMS: LMS): string => {
-                dispatch(addLMSInStore(savedLMS));
-                return 'Successfully added an LMS!';
-            })
-            .catch((error: Error) => {
-                console.warn("Error saving LMS!", error);
-                return rejectWithValue('Failed to save LMS');
-            });
+        try {
+            const savedLMS: LMS = await lmsAPI.saveLMS(lms); // Await the promise
+            dispatch(addLMSInStore(savedLMS));  // Dispatch action on success
+            return 'Successfully added an LMS!';  // Return success message
+        } catch (error: any) {
+            console.warn("Error saving LMS!", error);
+            return rejectWithValue('Failed to save LMS');  // Pass the error message
+        }
     }
 );
 
@@ -23,14 +22,13 @@ export const saveLMS = createAsyncThunk(
 export const updateLMS = createAsyncThunk(
     'lmsEdit/updateLMS',
     async (lms: LMS, { dispatch, rejectWithValue }) => {
-        return lmsAPI.updateLMS(lms)
-            .then((updatedLMS: LMS): string => {
-                dispatch(updateLMSInStore(updatedLMS));  // Dispatch success action
-                return 'Successfully updated the LMS!';  // Return success message
-            })
-            .catch((error: Error) => {
-                console.warn("Error updating LMS!", error);
-                return rejectWithValue('Failed to update LMS');  // Handle error
-            });
+        try {
+            const updatedLMS: LMS = await lmsAPI.updateLMS(lms); // Await the API call
+            dispatch(updateLMSInStore(updatedLMS));  // Dispatch the action to store the updated LMS
+            return 'Successfully updated the LMS!';  // Return success message
+        } catch (error: any) {
+            console.warn("Error updating LMS!", error);
+            return rejectWithValue('Failed to update LMS');  // Handle the error
+        }
     }
 );

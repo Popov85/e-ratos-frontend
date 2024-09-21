@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import Failure from "../../common/components/Failure";
-// @ts-ignore
 import LmsEditForm from "../forms/LmsEditForm";
 import {Dispatch} from "redux";
 import {useDispatch, useSelector} from "react-redux";
