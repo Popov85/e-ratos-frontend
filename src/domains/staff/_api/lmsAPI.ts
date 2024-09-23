@@ -17,14 +17,12 @@ export const lmsAPI = {
     },
 
     //--------------------------------------------PATCH-es--------------------------------------------------------------
-    async updateLMSName(lmsId: number, name: string): Promise<number> {
-        const result: AxiosResponse = await instance.patch(`/org-admin/lms/${lmsId}/name`, {value: name});
-        return result.status;
+    async updateLMSName(lmsId: number, name: string): Promise<void> {
+        await instance.patch(`/org-admin/lms/${lmsId}/name`, {value: name});
     },
 
-    async deleteLMS(lmsId: number): Promise<number>   {
-        const result: AxiosResponse = await instance.delete(`/org-admin/lms/${lmsId}`);
-        return result.status;
+    async deleteLMS(lmsId: number): Promise<void>   {
+        await instance.delete(`/org-admin/lms/${lmsId}`);
     },
 
     //--------------------------------------------Min set-s of information----------------------------------------------
