@@ -119,12 +119,8 @@ export const updateLMSName = (lmsId: number, name: string) => {
     return (dispatch: Dispatch<LMSActionTypes>): void => {
         dispatch(clearUpdatingFailure());
         dispatch(updating(true));
-        lmsAPI.updateLMSName(lmsId, name).then((status: number): void => {
-            if (status >= 200 && status < 300) {
-                dispatch(updateLMSNameInStore(lmsId, name));
-            } else {
-                throw new Error("Failed to execute API to update an LMS name!");
-            }
+        lmsAPI.updateLMSName(lmsId, name).then((): void => {
+            dispatch(updateLMSNameInStore(lmsId, name));
         }).catch((e: Error): void => {
             console.warn("Error updating LMS name!", e);
             dispatch(updatingFailure(new Error("Failed to update LMS's name")));
@@ -136,12 +132,8 @@ export const deleteLMS = (lmsId: number) => {
     return (dispatch: Dispatch<LMSActionTypes>): void => {
         dispatch(clearUpdatingFailure());
         dispatch(updating(true));
-        lmsAPI.deleteLMS(lmsId).then((status: number): void => {
-            if (status >= 200 && status < 300) {
-                dispatch(deleteLMSFromStore(lmsId));
-            } else {
-                throw new Error("Failed to execute API to delete an LMS!");
-            }
+        lmsAPI.deleteLMS(lmsId).then((): void => {
+            dispatch(deleteLMSFromStore(lmsId));
         }).catch((e: Error): void => {
             console.warn("Error deleting LMS!", e);
             dispatch(updatingFailure(new Error("Failed to delete LMS!")));
