@@ -15,8 +15,8 @@ type LMSState = {
     contentMin: Array<LMSDropDown>;
     isLoading: boolean;
     isUpdating: boolean;
-    error: string | null;
-    errorUpdate: string | null;
+    errorMessage: string | null;
+    errorUpdateMessage: string | null;
 }
 
 const initState: LMSState = {
@@ -24,8 +24,8 @@ const initState: LMSState = {
     contentMin: [] as Array<LMSDropDown>,
     isLoading: false,
     isUpdating: false,
-    error: null,
-    errorUpdate: null,
+    errorMessage: null,
+    errorUpdateMessage: null,
 };
 
 // LMS slice
@@ -34,14 +34,14 @@ const lmsSlice = createSlice({
     initialState: initState,
     reducers: {
         clearLoadingFailure(state) {
-            state.error = null;
+            state.errorMessage = null;
         },
         clearUpdatingFailure(state) {
-            state.errorUpdate = null;
+            state.errorUpdateMessage = null;
         },
         clearAllLMSFailures(state) {
-            state.error = null;
-            state.errorUpdate = null;
+            state.errorMessage = null;
+            state.errorUpdateMessage = null;
         },
         addLMSInStore(state, action: PayloadAction<LMS>) {
             state.content.push(action.payload);
@@ -62,7 +62,7 @@ const lmsSlice = createSlice({
             })
             .addCase(getAllLMSByOrganisation.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.payload as string;
+                state.errorMessage = action.payload as string;
             })
             .addCase(getAllLMSByOrganisationId.pending, (state) => {
                 state.isLoading = true;
@@ -73,7 +73,7 @@ const lmsSlice = createSlice({
             })
             .addCase(getAllLMSByOrganisationId.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.payload as string;
+                state.errorMessage = action.payload as string;
             })
             .addCase(updateLMSName.pending, (state) => {
                 state.isUpdating = true;
@@ -85,24 +85,24 @@ const lmsSlice = createSlice({
             })
             .addCase(updateLMSName.rejected, (state, action) => {
                 state.isUpdating = false;
-                state.errorUpdate = action.payload as string;
+                state.errorUpdateMessage = action.payload as string;
             })
             .addCase(deleteLMS.pending, (state) => {
-                state.isUpdating = true;
+                state.isLoading = true;
             })
             .addCase(deleteLMS.fulfilled, (state, action: PayloadAction<number>) => {
-                state.isUpdating = false;
+                state.isLoading = false;
                 state.content = state.content.filter((lms) => lms.lmsId !== action.payload);
             })
             .addCase(deleteLMS.rejected, (state, action) => {
-                state.isUpdating = false;
-                state.errorUpdate = action.payload as string;
+                state.isLoading = false;
+                state.errorUpdateMessage = action.payload as string;
             })
             .addCase(getLMSesByOrganisationForDropDown.fulfilled, (state, action: PayloadAction<Array<LMSDropDown>>) => {
                 state.contentMin = action.payload;
             })
             .addCase(getLMSesByOrganisationForDropDown.rejected, (state, action) => {
-                state.error = action.payload as string;
+                state.errorMessage = action.payload as string;
             });
     },
 });

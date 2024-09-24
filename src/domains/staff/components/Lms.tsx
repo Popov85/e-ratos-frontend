@@ -64,7 +64,7 @@ const Lms: React.FC = () => {
         }
     };
 
-    const {isLoading, isUpdating, error, errorUpdate, content} = lms;
+    const {isLoading, isUpdating, errorMessage, content} = lms;
 
     return (
         <div className="container-fluid p-0">
@@ -74,7 +74,7 @@ const Lms: React.FC = () => {
                         <strong>LMS management</strong>
                     </h5>
                 </div>
-                {(error || errorUpdate) && (
+                {errorMessage && (
                     <Error message="Operation failed!" close={() => dispatch(clearAllLMSFailures())}/>
                 )}
                 {!isLoading && (
