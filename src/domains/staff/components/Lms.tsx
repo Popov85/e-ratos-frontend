@@ -35,11 +35,11 @@ const Lms: React.FC = () => {
     const [expanded, setExpanded] = useState<boolean>(false);
 
     useEffect(() => {
-        dispatch(clearLoadingFailure())
         loadLMSBasedOnRole();
     }, []);
 
     const loadLMSBasedOnRole = (): void => {
+        dispatch(clearLoadingFailure())
         dispatch(getAllLMSByOrganisation());
     };
 
@@ -64,7 +64,7 @@ const Lms: React.FC = () => {
         }
     };
 
-    const {isLoading, isUpdating, errorMessage, content} = lms;
+    const {isLoading, isUpdating, errorMessage, errorUpdateMessage, content} = lms;
 
     return (
         <div className="container-fluid p-0">
@@ -74,7 +74,7 @@ const Lms: React.FC = () => {
                         <strong>LMS management</strong>
                     </h5>
                 </div>
-                {errorMessage && (
+                {(errorMessage || errorUpdateMessage) && (
                     <Error message="Operation failed!" close={() => dispatch(clearAllLMSFailures())}/>
                 )}
                 {!isLoading && (
