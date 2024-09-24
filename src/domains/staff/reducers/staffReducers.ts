@@ -14,8 +14,8 @@ import {profileReducer} from "./profileReducer";
 import {coursesReducer} from "./coursesReducer";
 import {courseEditReducer} from "./courseEditReducer";
 import {accessReducer} from "./accessReducer";
-import {lmsReducer} from "./lmsReducer";
-import {lmsEditReducer} from "./lmsEditReducer";
+import lmsReducer from "./lmsReducer";
+import lmsEditReducer from "./lmsEditReducer";
 //@ts-ignore
 import {resultsReducer} from "./resultsReducer";
 //@ts-ignore
@@ -70,6 +70,7 @@ import {themesSupportReducer} from "./themesSupportReducer";
 import {modeEditReducer} from "./modeEditReducer";
 //@ts-ignore
 import {settingsEditReducer} from "./settingsEditReducer";
+
 
 // Define the RootState type
 export type RootStaffState = {

@@ -54,4 +54,4 @@ const lmsEditSlice = createSlice({
 });
 
 export const { clearLMSState } = lmsEditSlice.actions;
-export const lmsEditReducer = lmsEditSlice.reducer;
+export default lmsEditSlice.reducer;

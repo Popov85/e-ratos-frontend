@@ -10,9 +10,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../store/rootReducer";
 import {UserInfo} from "../../common/types/UserInfo";
 import {getUserInfo} from "../../common/selectors/userSelector";
-import {clearAllLMSFailures, getAllLMSByOrganisation, updateLMSName} from "../actions/lmsActions";
 import LmsTable from "./LmsTable";
 import LmsEditModal from "./LmsEditModal";
+import {getAllLMSByOrganisation, updateLMSName} from "../actions/lmsActions";
+import {clearAllLMSFailures, clearLoadingFailure} from "../reducers/lmsReducer";
 
 
 const Lms: React.FC = () => {
@@ -34,6 +35,7 @@ const Lms: React.FC = () => {
     const [expanded, setExpanded] = useState<boolean>(false);
 
     useEffect(() => {
+        dispatch(clearLoadingFailure())
         loadLMSBasedOnRole();
     }, []);
 
@@ -51,7 +53,7 @@ const Lms: React.FC = () => {
 
     const handleUpdate = (lmsId: number, dataField: string, newValue: string): void => {
         if (dataField === "name") {
-            dispatch(updateLMSName(lmsId, newValue));
+            dispatch(updateLMSName({lmsId, name: newValue}));
         }
     };
 
@@ -112,7 +114,7 @@ const Lms: React.FC = () => {
                 {content && (
                     <div className="pb-5">
                         <LoadingOverlay
-                            active={!!isUpdating}
+                            active={isUpdating}
                             spinner
                             text='Performing API call...'
                         >
@@ -125,7 +127,7 @@ const Lms: React.FC = () => {
                         </LoadingOverlay>
                     </div>
                 )}
-                <Overlay show={!!isLoading}/>
+                <Overlay show={isLoading}/>
                 {newMode && (
                     <LmsEditModal show={newMode} deactivateModal={deactivateModal}/>
                 )}

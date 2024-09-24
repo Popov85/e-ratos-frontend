@@ -21,8 +21,8 @@ import {CopyToClipboard} from "react-copy-to-clipboard";
 import {LMS} from "../types/LMS";
 import {Dispatch} from "redux";
 import {useDispatch} from "react-redux";
-import {deleteLMS} from "../actions/lmsActions";
 import LmsEditModal from "./LmsEditModal";
+import {deleteLMS} from "../actions/lmsActions";
 
 type Props = {
     authorization: Authorization,

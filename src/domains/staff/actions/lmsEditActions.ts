@@ -1,7 +1,7 @@
 import {lmsAPI} from "../_api/lmsAPI";
-import {addLMSInStore, updateLMSInStore} from "./lmsActions";
 import {LMS} from "../types/LMS";
 import {createAsyncThunk} from "@reduxjs/toolkit";
+import {addLMSInStore, updateLMSInStore} from "../reducers/lmsReducer";
 
 // Async thunk for saving LMS
 export const saveLMS = createAsyncThunk<string, LMS,  { rejectValue: string }>(

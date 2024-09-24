@@ -1,20 +1,13 @@
-import {
-    ADD_LMS_IN_STORE,
-    CLEAR_ALL_LMS_FAILURES,
-    CLEAR_LOADING_ALL_LMS_FAILURE,
-    CLEAR_UPDATING_LMS_FAILURE, DELETE_LMS_FROM_STORE,
-    LMSActionTypes,
-    LOADING_ALL_LMS,
-    LOADING_ALL_LMS_FAILURE,
-    SET_ALL_LMS,
-    SET_ALL_LMS_MIN,
-    UPDATE_LMS_IN_STORE,
-    UPDATE_LMS_NAME_IN_STORE,
-    UPDATING_LMS,
-    UPDATING_LMS_FAILURE
-} from "../actions/lmsActions";
-import {LMS} from "../types/LMS";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {LMSDropDown} from "../_api/lmsAPI";
+import {LMS} from "../types/LMS";
+import {
+    deleteLMS,
+    getAllLMSByOrganisation,
+    getAllLMSByOrganisationId,
+    getLMSesByOrganisationForDropDown,
+    updateLMSName
+} from "../actions/lmsActions";
 
 // Define the state interface
 type LMSState = {
@@ -22,80 +15,104 @@ type LMSState = {
     contentMin: Array<LMSDropDown>;
     isLoading: boolean;
     isUpdating: boolean;
-    error: Error | null;
-    errorUpdate: Error | null;
+    error: string | null;
+    errorUpdate: string | null;
 }
 
-
 const initState: LMSState = {
-    content: [],
-    contentMin: [],
+    content: [] as Array<LMS>,
+    contentMin: [] as Array<LMSDropDown>,
     isLoading: false,
     isUpdating: false,
     error: null,
-    errorUpdate:null
-}
+    errorUpdate: null,
+};
 
-export const lmsReducer = (state: LMSState = initState, action: LMSActionTypes): LMSState => {
-    switch (action.type) {
-        case LOADING_ALL_LMS: {
-            return {...state, isLoading: action.payload?.isLoading ?? false};
-        }
-        case LOADING_ALL_LMS_FAILURE: {
-            console.warn("Error loading lmses!", action.payload?.error);
-            return {...state, error: action.payload?.error || null};
-        }
-        case CLEAR_LOADING_ALL_LMS_FAILURE: {
-            return {...state, error: null};
-        }
-        case UPDATING_LMS: {
-            return {...state, isUpdating: action.payload?.isUpdating ?? false};
-        }
-        case UPDATING_LMS_FAILURE: {
-            console.warn("Error updating an LMS!", action.payload?.errorUpdate);
-            return {...state, errorUpdate: action.payload?.errorUpdate ?? null};
-        }
-        case CLEAR_UPDATING_LMS_FAILURE: {
-            return {...state, errorUpdate: null};
-        }
-        case CLEAR_ALL_LMS_FAILURES: {
-            return {...state, error: null, errorUpdate: null};
-        }
-        case SET_ALL_LMS: {
-            return {...state, content: action.payload ?? []};
-        }
-        case SET_ALL_LMS_MIN: { // For drop-downs
-            return {...state, contentMin: action.payload ?? []};
-        }
-        case ADD_LMS_IN_STORE: {
-            if (action.payload) {
-                return {...state, content: [...state.content, action.payload]};
-            }
-            return state;
-        }
-        case UPDATE_LMS_IN_STORE: {
-            if (action.payload) {
-                const lms: LMS = action.payload;
-                return {...state, content: state.content.map((l: LMS): LMS => l.lmsId === lms.lmsId ? lms : l)}
-            }
-            return state;
+// LMS slice
+const lmsSlice = createSlice({
+    name: "lms",
+    initialState: initState,
+    reducers: {
+        clearLoadingFailure(state) {
+            state.error = null;
+        },
+        clearUpdatingFailure(state) {
+            state.errorUpdate = null;
+        },
+        clearAllLMSFailures(state) {
+            state.error = null;
+            state.errorUpdate = null;
+        },
+        addLMSInStore(state, action: PayloadAction<LMS>) {
+            state.content.push(action.payload);
+        },
+        updateLMSInStore(state, action: PayloadAction<LMS>) {
+            const lms = action.payload;
+            state.content = state.content.map((l) => (l.lmsId === lms.lmsId ? lms : l));
+        },
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(getAllLMSByOrganisation.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getAllLMSByOrganisation.fulfilled, (state, action: PayloadAction<Array<LMS>>) => {
+                state.isLoading = false;
+                state.content = action.payload;
+            })
+            .addCase(getAllLMSByOrganisation.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload as string;
+            })
+            .addCase(getAllLMSByOrganisationId.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getAllLMSByOrganisationId.fulfilled, (state, action: PayloadAction<Array<LMS>>) => {
+                state.isLoading = false;
+                state.content = action.payload;
+            })
+            .addCase(getAllLMSByOrganisationId.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload as string;
+            })
+            .addCase(updateLMSName.pending, (state) => {
+                state.isUpdating = true;
+            })
+            .addCase(updateLMSName.fulfilled, (state, action: PayloadAction<{ lmsId: number; name: string }>) => {
+                state.isUpdating = false;
+                const { lmsId, name } = action.payload;
+                state.content = state.content.map((lms) => (lms.lmsId === lmsId ? { ...lms, name } : lms));
+            })
+            .addCase(updateLMSName.rejected, (state, action) => {
+                state.isUpdating = false;
+                state.errorUpdate = action.payload as string;
+            })
+            .addCase(deleteLMS.pending, (state) => {
+                state.isUpdating = true;
+            })
+            .addCase(deleteLMS.fulfilled, (state, action: PayloadAction<number>) => {
+                state.isUpdating = false;
+                state.content = state.content.filter((lms) => lms.lmsId !== action.payload);
+            })
+            .addCase(deleteLMS.rejected, (state, action) => {
+                state.isUpdating = false;
+                state.errorUpdate = action.payload as string;
+            })
+            .addCase(getLMSesByOrganisationForDropDown.fulfilled, (state, action: PayloadAction<Array<LMSDropDown>>) => {
+                state.contentMin = action.payload;
+            })
+            .addCase(getLMSesByOrganisationForDropDown.rejected, (state, action) => {
+                state.error = action.payload as string;
+            });
+    },
+});
 
-        }
-        case UPDATE_LMS_NAME_IN_STORE: {
-            if (action.payload) {
-                const {lmsId, name} = action.payload;
-                return {...state, content: state.content.map((lms: LMS) => lms.lmsId === lmsId ? {...lms, name} : lms)}
-            }
-            return state;
-        }
-        case DELETE_LMS_FROM_STORE: {
-            if (action.payload) {
-                const {lmsId} = action.payload;
-                return {...state, content: state.content.filter((lms: LMS): boolean => lms.lmsId !== lmsId)}
-            }
-            return state;
-        }
-        default:
-            return state;
-    }
-}
+export const {
+    clearLoadingFailure,
+    clearUpdatingFailure,
+    clearAllLMSFailures,
+    addLMSInStore,
+    updateLMSInStore,
+} = lmsSlice.actions;
+
+export default lmsSlice.reducer;
