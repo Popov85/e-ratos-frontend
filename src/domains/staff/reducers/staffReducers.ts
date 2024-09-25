@@ -10,7 +10,7 @@ import {usersReducer} from "./usersReducer";
 import {userEditReducer} from "./userEditReducer";
 import {positionsReducer} from "./positionsReducer";
 import {affiliationSelectorReducer} from "./affiliationSelectorReducer";
-import {profileReducer} from "./profileReducer";
+import profileReducer from "./profileReducer";
 import {coursesReducer} from "./coursesReducer";
 import {courseEditReducer} from "./courseEditReducer";
 import {accessReducer} from "./accessReducer";

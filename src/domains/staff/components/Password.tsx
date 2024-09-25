@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import Failure from "../../common/components/Failure";
 import {LinkContainer} from "react-router-bootstrap";
 import {FaEye, FaEyeSlash} from "react-icons/fa";
-import {clearUserPasswordFailure, getPasswordUpdated} from "../actions/profileAction";
+import {getPasswordUpdated} from "../actions/profileAction";
 import {Dispatch} from "redux";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../store/rootReducer";
@@ -11,6 +11,7 @@ import {UserInfo} from "../../common/types/UserInfo";
 import {getUserInfo} from "../../common/selectors/userSelector";
 import {Password} from "../types/Password";
 import PasswordsForm, {PasswordEditOwnProps} from "../forms/PasswordsForm";
+import {clearUserPasswordFailure} from "../reducers/profileReducer";
 
 
 const Password: React.FC = () => {
@@ -41,7 +42,7 @@ const Password: React.FC = () => {
         dispatch(getPasswordUpdated(pass));
     };
 
-    const {isPasswordUpdating, errorUpdatingPassword, message} = profile;
+    const {isPasswordUpdating, errorMessageUpdatingPassword, message} = profile;
 
     return (
         <div className="container-fluid p-0">
@@ -59,11 +60,11 @@ const Password: React.FC = () => {
                                 <span>Saving...</span>
                             </div>
                         )}
-                        {errorUpdatingPassword && (
+                        {errorMessageUpdatingPassword && (
                             <div className="alert alert-danger text-center p-1" role="alert">
                                 <span className="text-danger">
                                     <strong>
-                                        <Failure message={errorUpdatingPassword.message}/>
+                                        <Failure message={errorMessageUpdatingPassword}/>
                                     </strong>
                                 </span>
                             </div>

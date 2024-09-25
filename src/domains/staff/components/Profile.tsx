@@ -7,9 +7,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../store/rootReducer";
 import {UserInfo} from "../../common/types/UserInfo";
 import {getUserInfo} from "../../common/selectors/userSelector";
-import {clearUserProfileFailure, getProfileUpdated} from "../actions/profileAction";
+import { getProfileUpdated} from "../actions/profileAction";
 import {Profile} from "../types/Profile";
 import ProfileForm from "../forms/ProfileForm";
+import {clearUserProfileFailure} from "../reducers/profileReducer";
 
 
 const Profile: React.FC = () => {
@@ -52,11 +53,11 @@ const Profile: React.FC = () => {
                                 <span>Saving...</span>
                             </div>
                         )}
-                        {profile.errorUpdatingProfile && (
+                        {profile.errorMessageUpdatingProfile && (
                             <div className="alert alert-danger text-center p-1" role="alert">
                                 <span className="text-danger">
                                     <strong>
-                                        <Failure message={profile.errorUpdatingProfile.message} />
+                                        <Failure message={profile.errorMessageUpdatingProfile} />
                                     </strong>
                                 </span>
                             </div>
